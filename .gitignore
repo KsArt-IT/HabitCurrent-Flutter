@@ -1,0 +1,15 @@
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# Cursor AI
+.cursor
+
+.project/
+.srs/
+.srs
