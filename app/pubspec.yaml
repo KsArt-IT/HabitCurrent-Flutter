@@ -10,28 +10,33 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
   cupertino_icons: ^1.0.8
+  flutter_bloc: ^9.1.0
+  get_it: ^8.0.3
+  auto_route: ^10.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.4.15
+  auto_route_generator: ^10.0.1
+  flutter_launcher_icons: ^0.9.3
 
   flutter_lints: ^5.0.0
 
 flutter:
 
   uses-material-design: true
-
   # assets:
-    # - assets/images/
-
+  # - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
@@ -51,3 +56,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_intl:
+  enabled: true
