@@ -1,4 +1,9 @@
 {
     "@@locale": "en",
-    "appTitle": "Habit Current"
+    "appTitle": "Habit Current",
+    "tabFlow": "Flow",
+    "tabWeek": "Week",
+    "tabMonth": "Month",
+    "tabSettings": "Settings",
+    "-": ""
 }

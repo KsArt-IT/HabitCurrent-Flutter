@@ -1,4 +1,9 @@
 {
     "@@locale": "ru",
-    "appTitle": "Развивай привычки"
+    "appTitle": "Развивай привычки",
+    "tabFlow": "Поток",
+    "tabWeek": "Неделя",
+    "tabMonth": "Месяц",
+    "tabSettings": "Настройки",
+    "-": ""
 }

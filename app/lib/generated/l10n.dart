@@ -59,6 +59,28 @@ class S {
   String get appTitle {
     return Intl.message('Habit Current', name: 'appTitle', desc: '', args: []);
   }
+
+  /// `Flow`
+  String get tabFlow {
+    return Intl.message('Flow', name: 'tabFlow', desc: '', args: []);
+  }
+
+  /// `Week`
+  String get tabWeek {
+    return Intl.message('Week', name: 'tabWeek', desc: '', args: []);
+  }
+
+  /// `Month`
+  String get tabMonth {
+    return Intl.message('Month', name: 'tabMonth', desc: '', args: []);
+  }
+
+  /// `Settings`
+  String get tabSettings {
+    return Intl.message('Settings', name: 'tabSettings', desc: '', args: []);
+  }
+
+  // skipped getter for the '-' key
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
