@@ -23,7 +23,7 @@ class HabitCurrentApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('en'), // TODO: get from settings
+      // locale: const Locale('en'), // TODO: get from settings
       routerConfig: getIt<AppRouter>().config(),
     );
   }
