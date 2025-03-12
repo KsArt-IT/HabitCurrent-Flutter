@@ -80,6 +80,16 @@ class S {
     return Intl.message('Settings', name: 'tabSettings', desc: '', args: []);
   }
 
+  /// `Add new habit`
+  String get addNewHabit {
+    return Intl.message(
+      'Add new habit',
+      name: 'addNewHabit',
+      desc: '',
+      args: [],
+    );
+  }
+
   // skipped getter for the '-' key
 }
 
