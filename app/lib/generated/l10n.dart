@@ -90,6 +90,11 @@ class S {
     );
   }
 
+  /// `Continue`
+  String get continues {
+    return Intl.message('Continue', name: 'continues', desc: '', args: []);
+  }
+
   // skipped getter for the '-' key
 }
 

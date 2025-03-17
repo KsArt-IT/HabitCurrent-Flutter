@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "addNewHabit": MessageLookupByLibrary.simpleMessage("Добавить привычку"),
     "appTitle": MessageLookupByLibrary.simpleMessage("Развивай привычки"),
+    "continues": MessageLookupByLibrary.simpleMessage("Продолжить"),
     "tabFlow": MessageLookupByLibrary.simpleMessage("Поток"),
     "tabMonth": MessageLookupByLibrary.simpleMessage("Месяц"),
     "tabSettings": MessageLookupByLibrary.simpleMessage("Настройки"),
