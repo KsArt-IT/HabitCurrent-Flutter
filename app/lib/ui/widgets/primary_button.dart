@@ -5,10 +5,12 @@ class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,
     required this.label,
+    this.disabled = false,
     required this.onPressed,
   });
 
   final String label;
+  final bool disabled;
   final VoidCallback onPressed;
 
   @override
@@ -19,9 +21,12 @@ class PrimaryButton extends StatelessWidget {
       height: Constants.buttonHeight,
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: disabled ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: theme.colorScheme.secondary,
+          disabledBackgroundColor: theme.colorScheme.secondaryFixed,
+          foregroundColor: theme.colorScheme.onSecondary,
+
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Constants.buttonRadius),
           ),
