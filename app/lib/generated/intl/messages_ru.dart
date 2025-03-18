@@ -25,9 +25,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "addNewHabit": MessageLookupByLibrary.simpleMessage("Добавить привычку"),
     "appTitle": MessageLookupByLibrary.simpleMessage("Развивай привычки"),
     "continues": MessageLookupByLibrary.simpleMessage("Продолжить"),
+    "enterYourName": MessageLookupByLibrary.simpleMessage(
+      "Пожалуйста, введите ваше имя, чтобы мы знали, как к вам обращаться",
+    ),
+    "name": MessageLookupByLibrary.simpleMessage("Имя"),
+    "nameError": MessageLookupByLibrary.simpleMessage(
+      "Пожалуйста, введите ваше имя",
+    ),
+    "nameErrorEmpty": MessageLookupByLibrary.simpleMessage(
+      "Имя должно содержать 3-20 буквы",
+    ),
+    "nameErrorInvalid": MessageLookupByLibrary.simpleMessage(
+      "Имя может содержать только буквы",
+    ),
+    "namePlaceholder": MessageLookupByLibrary.simpleMessage("Введите ваше имя"),
     "tabFlow": MessageLookupByLibrary.simpleMessage("Поток"),
     "tabMonth": MessageLookupByLibrary.simpleMessage("Месяц"),
     "tabSettings": MessageLookupByLibrary.simpleMessage("Настройки"),
     "tabWeek": MessageLookupByLibrary.simpleMessage("Неделя"),
+    "welcome": MessageLookupByLibrary.simpleMessage(
+      "Добро пожаловать в полезный трекер привычек",
+    ),
   };
 }

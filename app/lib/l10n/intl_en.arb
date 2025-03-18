@@ -1,11 +1,21 @@
 {
     "@@locale": "en",
     "appTitle": "Habit Current",
+    "-": "Tabs",
     "tabFlow": "Flow",
     "tabWeek": "Week",
     "tabMonth": "Month",
     "tabSettings": "Settings",
-    "addNewHabit": "Add new habit",
+    "--": "Hello",
+    "welcome": "Welcome to the useful habits tracker",
+    "enterYourName": "Please enter your name so we know how to address you",
+    "namePlaceholder": "Enter your name",
+    "name": "Name",
+    "nameError": "Please enter your name",
+    "nameErrorEmpty": "Name must contain 3-20 letters",
+    "nameErrorInvalid": "Name can only contain letters",
+    "---": "Buttons",
     "continues": "Continue",
-    "-": ""
+    "addNewHabit": "Add new habit",
+    "-//": ""
 }

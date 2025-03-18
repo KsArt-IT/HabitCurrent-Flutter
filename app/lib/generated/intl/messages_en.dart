@@ -25,9 +25,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "addNewHabit": MessageLookupByLibrary.simpleMessage("Add new habit"),
     "appTitle": MessageLookupByLibrary.simpleMessage("Habit Current"),
     "continues": MessageLookupByLibrary.simpleMessage("Continue"),
+    "enterYourName": MessageLookupByLibrary.simpleMessage(
+      "Please enter your name so we know how to address you",
+    ),
+    "name": MessageLookupByLibrary.simpleMessage("Name"),
+    "nameError": MessageLookupByLibrary.simpleMessage("Please enter your name"),
+    "nameErrorEmpty": MessageLookupByLibrary.simpleMessage(
+      "Name must contain 3-20 letters",
+    ),
+    "nameErrorInvalid": MessageLookupByLibrary.simpleMessage(
+      "Name can only contain letters",
+    ),
+    "namePlaceholder": MessageLookupByLibrary.simpleMessage("Enter your name"),
     "tabFlow": MessageLookupByLibrary.simpleMessage("Flow"),
     "tabMonth": MessageLookupByLibrary.simpleMessage("Month"),
     "tabSettings": MessageLookupByLibrary.simpleMessage("Settings"),
     "tabWeek": MessageLookupByLibrary.simpleMessage("Week"),
+    "welcome": MessageLookupByLibrary.simpleMessage(
+      "Welcome to the useful habits tracker",
+    ),
   };
 }

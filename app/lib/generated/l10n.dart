@@ -60,6 +60,8 @@ class S {
     return Intl.message('Habit Current', name: 'appTitle', desc: '', args: []);
   }
 
+  // skipped getter for the '-' key
+
   /// `Flow`
   String get tabFlow {
     return Intl.message('Flow', name: 'tabFlow', desc: '', args: []);
@@ -80,6 +82,80 @@ class S {
     return Intl.message('Settings', name: 'tabSettings', desc: '', args: []);
   }
 
+  // skipped getter for the '--' key
+
+  /// `Welcome to the useful habits tracker`
+  String get welcome {
+    return Intl.message(
+      'Welcome to the useful habits tracker',
+      name: 'welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter your name so we know how to address you`
+  String get enterYourName {
+    return Intl.message(
+      'Please enter your name so we know how to address you',
+      name: 'enterYourName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your name`
+  String get namePlaceholder {
+    return Intl.message(
+      'Enter your name',
+      name: 'namePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message('Name', name: 'name', desc: '', args: []);
+  }
+
+  /// `Please enter your name`
+  String get nameError {
+    return Intl.message(
+      'Please enter your name',
+      name: 'nameError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name must contain 3-20 letters`
+  String get nameErrorEmpty {
+    return Intl.message(
+      'Name must contain 3-20 letters',
+      name: 'nameErrorEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name can only contain letters`
+  String get nameErrorInvalid {
+    return Intl.message(
+      'Name can only contain letters',
+      name: 'nameErrorInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the '---' key
+
+  /// `Continue`
+  String get continues {
+    return Intl.message('Continue', name: 'continues', desc: '', args: []);
+  }
+
   /// `Add new habit`
   String get addNewHabit {
     return Intl.message(
@@ -90,12 +166,7 @@ class S {
     );
   }
 
-  /// `Continue`
-  String get continues {
-    return Intl.message('Continue', name: 'continues', desc: '', args: []);
-  }
-
-  // skipped getter for the '-' key
+  // skipped getter for the '-//' key
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
