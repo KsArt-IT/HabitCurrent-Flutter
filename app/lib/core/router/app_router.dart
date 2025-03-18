@@ -8,11 +8,9 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(
-      page: OnboardRoute.page,
-      initial: true,
-      path: '/',
-    ),
+    AutoRoute(page: SplashRoute.page, initial: true, path: '/'),
+    AutoRoute(page: OnboardRoute.page, path: '/${OnboardRoute.name}'),
+    AutoRoute(page: HelloRoute.page, path: '/${HelloRoute.name}'),
     AutoRoute(
       page: HomeRoute.page,
       // initial: false,
@@ -26,3 +24,6 @@ class AppRouter extends RootStackRouter {
     ),
   ];
 }
+/*
+dart run build_runner build
+*/
