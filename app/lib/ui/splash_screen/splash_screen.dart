@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/core/theme/app_theme.dart';
 import 'package:habit_current/generated/l10n.dart';
+import 'package:habit_current/ui/widgets/radial_gradient_background.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -31,36 +32,17 @@ class _SplashScreenState extends State<SplashScreen> {
     final theme = Theme.of(context);
     final S strings = S.of(context);
 
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: RadialGradient(
-          colors: [
-            theme.colorScheme.tertiaryFixed,
-            theme.colorScheme.onTertiaryFixed,
-          ],
-          center: Alignment.topCenter,
-          stops: [0.3, 1.0],
-          radius: 2.3,
-        ),
-      ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Image.asset(theme.getImagePath('onboard_logo.png')),
+    return RadialGradientBackground(
+      body: Column(
+        children: [
+          Expanded(child: Image.asset(theme.getImagePath('onboard_logo.png'))),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(strings.appTitle, style: theme.textTheme.titleLarge),
             ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  strings.appTitle,
-                  style: theme.textTheme.titleLarge,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
