@@ -28,6 +28,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterYourName": MessageLookupByLibrary.simpleMessage(
       "Please enter your name so we know how to address you",
     ),
+    "habitEnterNameHint": MessageLookupByLibrary.simpleMessage(
+      "Enter Habit Name",
+    ),
     "name": MessageLookupByLibrary.simpleMessage("Name"),
     "nameError": MessageLookupByLibrary.simpleMessage("Please enter your name"),
     "nameErrorEmpty": MessageLookupByLibrary.simpleMessage(

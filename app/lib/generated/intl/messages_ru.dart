@@ -28,6 +28,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterYourName": MessageLookupByLibrary.simpleMessage(
       "Пожалуйста, введите ваше имя, чтобы мы знали, как к вам обращаться",
     ),
+    "habitEnterNameHint": MessageLookupByLibrary.simpleMessage(
+      "Введите привычку",
+    ),
     "name": MessageLookupByLibrary.simpleMessage("Имя"),
     "nameError": MessageLookupByLibrary.simpleMessage(
       "Пожалуйста, введите ваше имя",

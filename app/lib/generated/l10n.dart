@@ -166,6 +166,16 @@ class S {
     );
   }
 
+  /// `Enter Habit Name`
+  String get habitEnterNameHint {
+    return Intl.message(
+      'Enter Habit Name',
+      name: 'habitEnterNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
   // skipped getter for the '-//' key
 }
 

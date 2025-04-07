@@ -17,5 +17,6 @@
     "---": "Buttons",
     "continues": "Продовжити",
     "addNewHabit": "Додати звичку",
+    "habitEnterNameHint": "Введіть звичку",
     "-//": ""
 }

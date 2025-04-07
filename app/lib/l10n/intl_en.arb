@@ -17,5 +17,6 @@
     "---": "Buttons",
     "continues": "Continue",
     "addNewHabit": "Add new habit",
+    "habitEnterNameHint": "Enter Habit Name",
     "-//": ""
 }
