@@ -11,6 +11,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: SplashRoute.page, initial: true, path: '/'),
     AutoRoute(page: OnboardRoute.page, path: '/${OnboardRoute.name}'),
     AutoRoute(page: HelloRoute.page, path: '/${HelloRoute.name}'),
+    AutoRoute(page: HabitCreateRoute.page, path: '/${HabitCreateRoute.name}'),
     AutoRoute(
       page: HomeRoute.page,
       // initial: false,
