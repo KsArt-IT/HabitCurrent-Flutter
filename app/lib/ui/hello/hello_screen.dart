@@ -70,8 +70,8 @@ class _HelloScreenState extends State<HelloScreen> {
           key: _formKey,
           child: Column(
             children: [
-              Text(strings.welcome, style: theme.textTheme.titleLarge),
-              Text(strings.enterYourName, style: theme.textTheme.bodyMedium),
+              Text(strings.welcome, style: theme.textTheme.displayLarge),
+              Text(strings.enterYourName, style: theme.textTheme.displaySmall),
               Spacer(),
               TextFormField(
                 controller: _nameController,
