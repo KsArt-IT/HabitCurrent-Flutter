@@ -23,20 +23,18 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: disabled ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: theme.colorScheme.secondary,
-          disabledBackgroundColor: theme.colorScheme.secondaryFixed,
+          backgroundColor: theme.colorScheme.surfaceContainerLow,
+          disabledBackgroundColor: theme.colorScheme.surfaceContainerLowest,
           foregroundColor: theme.colorScheme.onSecondary,
-
+          disabledForegroundColor: theme.colorScheme.onInverseSurface,
+          textStyle: theme.textTheme.labelLarge,
+          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Constants.buttonRadius),
           ),
+          // elevation: 6,
         ),
-        child: Text(
-          label,
-          style: theme.textTheme.labelLarge?.copyWith(
-            color: theme.colorScheme.onSecondary,
-          ),
-        ),
+        child: Text(label),
       ),
     );
   }
