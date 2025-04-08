@@ -11,6 +11,8 @@ sealed class AppColors {
   static const Color gray900 = Color(0xFF1F1F1F);
   static const Color gray950 = Color(0xFF0F0F0F);
 
+  static const Color error = Color(0xFFC93400);
+  static const Color onError = Color(0xFFC93400);
   static const Color onboardColor = brandColor;
   static const Color onboardColorDark = gray950;
 }
