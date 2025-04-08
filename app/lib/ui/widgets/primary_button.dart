@@ -24,9 +24,9 @@ class PrimaryButton extends StatelessWidget {
         onPressed: disabled ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: theme.colorScheme.surfaceContainerLow,
-          disabledBackgroundColor: theme.colorScheme.surfaceContainerLowest,
+          disabledBackgroundColor: theme.colorScheme.tertiaryFixed,
           foregroundColor: theme.colorScheme.onSecondary,
-          disabledForegroundColor: theme.colorScheme.onInverseSurface,
+          disabledForegroundColor: theme.colorScheme.onTertiaryFixed,
           textStyle: theme.textTheme.labelLarge,
           elevation: 0,
           shape: RoundedRectangleBorder(
