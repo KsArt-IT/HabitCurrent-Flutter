@@ -16,8 +16,8 @@ class RadialGradientBackground extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [
-            theme.colorScheme.tertiaryFixed,
-            theme.colorScheme.onTertiaryFixed,
+            theme.colorScheme.tertiaryFixedDim,
+            theme.colorScheme.onTertiaryFixedVariant,
           ],
           center: Alignment.topCenter,
           stops: [0.3, 1.0],
