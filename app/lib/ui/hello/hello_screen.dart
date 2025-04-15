@@ -75,17 +75,11 @@ class _HelloScreenState extends State<HelloScreen> {
               Spacer(),
               TextFormField(
                 controller: _nameController,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: theme.colorScheme.onPrimary,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 16,
-                ),
+                style: theme.textTheme.bodyLarge,
                 decoration: InputDecoration(
                   hintText: strings.namePlaceholder,
-                  hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.colorScheme.onTertiaryContainer,
-                  ),
-                  errorStyle: TextStyle(color: theme.colorScheme.error),
+                  hintStyle: theme.textTheme.headlineSmall,
+                  errorStyle: theme.textTheme.headlineSmall?.copyWith(color: theme.colorScheme.error),
                   filled: true,
                   fillColor: theme.colorScheme.tertiaryContainer,
                   contentPadding: const EdgeInsets.symmetric(
@@ -97,7 +91,7 @@ class _HelloScreenState extends State<HelloScreen> {
                       Constants.textFieldRadius,
                     ),
                     borderSide: BorderSide(
-                      color: theme.colorScheme.tertiaryFixedDim,
+                      color: theme.colorScheme.outlineVariant,
                       width: 1,
                     ),
                   ),
@@ -106,7 +100,7 @@ class _HelloScreenState extends State<HelloScreen> {
                       Constants.textFieldRadius,
                     ),
                     borderSide: BorderSide(
-                      color: theme.colorScheme.tertiaryFixedDim,
+                      color: theme.colorScheme.outlineVariant,
                       width: 1,
                     ),
                   ),
@@ -115,7 +109,7 @@ class _HelloScreenState extends State<HelloScreen> {
                       Constants.textFieldRadius,
                     ),
                     borderSide: BorderSide(
-                      color: theme.colorScheme.tertiaryFixedDim,
+                      color: theme.colorScheme.outlineVariant,
                       width: 2,
                     ),
                   ),
