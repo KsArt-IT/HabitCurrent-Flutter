@@ -7,10 +7,11 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:habit_current/app/habit_current_app.dart';
+import 'package:habit_current/core/router/app_router.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(HabitCurrentApp());
+    await tester.pumpWidget(HabitCurrentApp(router: AppRouter()));
   });
 }
