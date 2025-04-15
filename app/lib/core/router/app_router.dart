@@ -2,16 +2,29 @@ import 'package:auto_route/auto_route.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
-class AppRouter extends RootStackRouter {
+final class AppRouter extends RootStackRouter {
   @override
   RouteType get defaultRouteType => RouteType.material();
 
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: SplashRoute.page, initial: true, path: '/'),
-    AutoRoute(page: OnboardRoute.page, path: '/${OnboardRoute.name}'),
-    AutoRoute(page: HelloRoute.page, path: '/${HelloRoute.name}'),
-    AutoRoute(page: HabitCreateRoute.page, path: '/${HabitCreateRoute.name}'),
+    AutoRoute(
+      page: SplashRoute.page,
+      initial: true,
+      path: '/', //
+    ),
+    AutoRoute(
+      page: OnboardRoute.page,
+      path: '/${OnboardRoute.name}', //
+    ),
+    AutoRoute(
+      page: HelloRoute.page,
+      path: '/${HelloRoute.name}', //
+    ),
+    AutoRoute(
+      page: HabitCreateRoute.page,
+      path: '/${HabitCreateRoute.name}', //
+    ),
     AutoRoute(
       page: HomeRoute.page,
       // initial: false,
