@@ -1,36 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/core/theme/app_theme.dart';
 import 'package:habit_current/generated/l10n.dart';
 import 'package:habit_current/ui/widgets/radial_gradient_background.dart';
 
 @RoutePage()
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _navigateToNextScreen();
-  }
-
-  Future<void> _navigateToNextScreen() async {
-    await Future.delayed(const Duration(seconds: 2));
-    if (mounted) {
-      context.router.replace(const OnboardRoute());
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final S strings = S.of(context);
+    debugPrint('SplashScreen build');
 
     return RadialGradientBackground(
       body: Column(
