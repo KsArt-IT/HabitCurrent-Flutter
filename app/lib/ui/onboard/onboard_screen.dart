@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:habit_current/core/router/app_router.gr.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/theme/app_theme.dart';
 import 'package:habit_current/generated/l10n.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
@@ -14,6 +15,9 @@ class OnboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final S strings = S.of(context);
+    final AppBloc appBloc = context.read<AppBloc>();
+    debugPrint('OnboardScreen build');
+
     return RadialGradientBackground(
       body: Column(
         children: [
@@ -26,7 +30,7 @@ class OnboardScreen extends StatelessWidget {
                 PrimaryButton(
                   label: strings.continues,
                   onPressed: () {
-                    context.router.replace(const HelloRoute());
+                    appBloc.add(AppOnboardNextEvent());
                   },
                 ),
               ],
