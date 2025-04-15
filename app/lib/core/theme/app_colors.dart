@@ -14,5 +14,4 @@ sealed class AppColors {
   static const Color error = Color(0xFFC93400);
   static const Color onError = Color(0xFFC93400);
   static const Color onboardColor = brandColor;
-  static const Color onboardColorDark = gray950;
 }
