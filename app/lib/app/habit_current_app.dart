@@ -35,7 +35,6 @@ class HabitCurrentApp extends StatelessWidget {
             switch (state) {
               case AppInitialState():
                 debugPrint('AppInitialState');
-              // router.replace(const SplashRoute());
               case AppOnboardState():
                 debugPrint('AppOnboardState');
                 router.replace(const OnboardRoute());
@@ -45,8 +44,8 @@ class HabitCurrentApp extends StatelessWidget {
               case AppHabitCreateState():
                 debugPrint('AppHabitCreateState');
                 router.push(const HabitCreateRoute());
-              case AppLoadedState(name: final name):
-                debugPrint('AppLoadedState: $name');
+              case AppLoadedState(user: final user):
+                debugPrint('AppLoadedState: ${user.name}');
                 router.replace(const HomeRoute());
               case AppErrorState(error: final error):
                 debugPrint('AppErrorState: $error');
