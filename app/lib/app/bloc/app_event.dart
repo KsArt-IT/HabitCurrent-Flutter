@@ -7,4 +7,12 @@ sealed class AppEvent extends Equatable {
 }
 
 final class AppLoadNameEvent extends AppEvent {}
-final class AppOnboardNextEvent extends AppEvent {}
+
+final class AppInitNameEvent extends AppEvent {}
+
+final class AppUpdateNameEvent extends AppEvent {
+  final String name;
+  const AppUpdateNameEvent({required this.name});
+  @override
+  List<Object?> get props => [name];
+}

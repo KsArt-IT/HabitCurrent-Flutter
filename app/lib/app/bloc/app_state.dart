@@ -9,11 +9,11 @@ sealed class AppState extends Equatable {
 final class AppInitialState extends AppState {}
 
 final class AppLoadedState extends AppState {
-  final String name;
-  const AppLoadedState({required this.name});
+  final User user;
+  const AppLoadedState({required this.user});
 
   @override
-  List<Object?> get props => [name];
+  List<Object?> get props => [user];
 }
 
 final class AppOnboardState extends AppState {}
