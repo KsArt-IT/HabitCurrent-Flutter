@@ -3,6 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/app.dart';
 import 'package:habit_current/app/app_bloc_observer.dart';
 import 'package:habit_current/core/router/app_router.dart';
+import 'package:habit_current/data/database/database.dart';
+import 'package:habit_current/data/services/data/data_service.dart';
+import 'package:habit_current/data/services/data/local_data_service.dart';
+import 'package:habit_current/data/services/settings/local_settings_service.dart';
+import 'package:habit_current/data/services/settings/settings_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -12,6 +17,20 @@ void main() async {
   final router = AppRouter();
   // SharedPreferences for settings
   final preferences = await SharedPreferences.getInstance();
+  // Database
+  final database = AppDatabase();
 
-  runApp(App(router: router, preferences: preferences));
+  runApp(
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<DataService>(
+          create: (_) => LocalDataService(database: database),
+        ),
+        RepositoryProvider<SettingsService>(
+          create: (_) => LocalSettingsService(preferences: preferences),
+        ),
+      ],
+      child: App(router: router),
+    ),
+  );
 }
