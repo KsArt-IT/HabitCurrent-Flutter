@@ -1,15 +1,15 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
-import 'package:habit_current/data/models/models.dart';
+import 'package:habit_current/data/database/tables.dart';
 
 part 'database.g.dart';
 
 @DriftDatabase(
   tables: [
-    UserModel,
-    HabitModel,
-    HourIntervalModel,
-    HourIntervalCompletedModel,
+    Users,
+    Habits,
+    HourIntervals,
+    HourIntervalCompleteds,
   ],
 )
 class AppDatabase extends _$AppDatabase {
