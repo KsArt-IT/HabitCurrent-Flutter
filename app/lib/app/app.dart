@@ -5,7 +5,7 @@ import 'package:habit_current/app/habit_current_app.dart';
 import 'package:habit_current/core/router/app_router.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/data/local_data_repository.dart';
-import 'package:habit_current/data/repositories/settings/local_storage_settings_repository.dart';
+import 'package:habit_current/data/repositories/settings/local_settings_repository.dart';
 import 'package:habit_current/data/repositories/settings/settings_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/settings/settings_service.dart';
@@ -23,7 +23,7 @@ class App extends StatelessWidget {
         RepositoryProvider<SettingsRepository>(
           create: (context) {
             final SettingsService service = context.read<SettingsService>();
-            return LocalStorageSettingsRepository(service: service);
+            return LocalSettingsRepository(service: service);
           },
         ),
         RepositoryProvider<DataRepository>(

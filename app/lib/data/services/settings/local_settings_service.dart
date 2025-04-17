@@ -1,8 +1,8 @@
-import 'package:habit_current/data/services/settings_service.dart';
+import 'package:habit_current/data/services/settings/settings_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final class LocalStorageSettingsService implements SettingsService {
-  LocalStorageSettingsService({required SharedPreferences preferences})
+final class LocalSettingsService implements SettingsService {
+  LocalSettingsService({required SharedPreferences preferences})
     : _preferences = preferences;
 
   final SharedPreferences _preferences;
