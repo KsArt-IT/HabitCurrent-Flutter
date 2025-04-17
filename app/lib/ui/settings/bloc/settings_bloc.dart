@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:habit_current/data/repositories/settings_repository.dart';
+import 'package:habit_current/data/repositories/settings/settings_repository.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';
