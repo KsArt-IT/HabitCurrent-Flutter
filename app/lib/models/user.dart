@@ -1,18 +1,24 @@
-import 'package:flutter/foundation.dart';
-
 final class User {
   final int id;
   final String name;
   final String? avatar;
+  final DateTime created;
 
-  User({required this.id, required this.name, this.avatar});
+  User({
+    required this.id,
+    required this.name,
+    this.avatar,
+    required this.created,
+  });
 
   User copyWith({
     String? name,
-    String? avatar, //
+    String? avatar,
+    DateTime? created, //
   }) => User(
     id: id,
     name: name ?? this.name,
-    avatar: avatar ?? this.avatar, //
+    avatar: avatar ?? this.avatar,
+    created: created ?? this.created,
   );
 }
