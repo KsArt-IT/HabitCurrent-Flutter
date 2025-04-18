@@ -7,8 +7,8 @@ class Habits extends Table {
   TextColumn get name => text().withLength(min: 1, max: 50)();
   TextColumn get details => text().nullable()();
 
-  DateTimeColumn get created => dateTime().nullable().clientDefault(()=> DateTime.now())();
-  DateTimeColumn get updated => dateTime().nullable().withDefault(currentDateAndTime)();
+  DateTimeColumn get created => dateTime().clientDefault(()=> DateTime.now())();
+  DateTimeColumn get updated => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get completed => dateTime().nullable()();
 
   IntColumn get weekDaysRaw => integer()();
