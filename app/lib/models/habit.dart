@@ -7,7 +7,7 @@ final class Habit {
   final int userId;
   final String name;
   final String? details;
-  final DateTime created;
+  final DateTime? created;
   final DateTime? updated;
   final DateTime? completed;
 
@@ -18,16 +18,16 @@ final class Habit {
   bool get isActive => completed == null;
 
   const Habit({
-    required this.id,
+    this.id = 0,
     required this.userId,
     required this.name,
     this.details,
-    required this.created,
+    this.created,
     this.updated,
     this.completed,
     required this.weekDays,
     required this.intervals,
-    required this.completedIntervals,
+    this.completedIntervals = const [],
   });
 
   Habit copyWith({
