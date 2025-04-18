@@ -12,4 +12,7 @@ abstract final class Constants {
   static const double paddingMedium = 16;
   static const double paddingLarge = 24;
   static const double paddingXLarge = 32;
+
+  static final regExpName = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$');
+  static final regExpHabit = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z0-9\s]+$');
 }
