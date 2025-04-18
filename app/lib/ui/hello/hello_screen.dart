@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/generated/l10n.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
 import 'package:habit_current/ui/widgets/radial_gradient_background.dart';
@@ -42,8 +43,7 @@ class _HelloScreenState extends State<HelloScreen> {
   }
 
   bool _isValidName(String name) {
-    if (name.isEmpty) return false;
-    if (name.length < 3 || name.length > 20) return false;
+    if (name.isEmpty || name.length < 3 || name.length > 20) return false;
     // Проверка на наличие только букв (кириллица и латиница)
     return RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$').hasMatch(name);
   }
@@ -79,7 +79,9 @@ class _HelloScreenState extends State<HelloScreen> {
                 decoration: InputDecoration(
                   hintText: strings.namePlaceholder,
                   hintStyle: theme.textTheme.headlineSmall,
-                  errorStyle: theme.textTheme.headlineSmall?.copyWith(color: theme.colorScheme.error),
+                  errorStyle: theme.textTheme.headlineSmall?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
                   filled: true,
                   fillColor: theme.colorScheme.tertiaryContainer,
                   contentPadding: const EdgeInsets.symmetric(
@@ -140,7 +142,9 @@ class _HelloScreenState extends State<HelloScreen> {
                 label: strings.continues,
                 disabled: !_isNameValid,
                 onPressed: () {
-                  context.router.replace(const HomeRoute());
+                  context.read<AppBloc>().add(
+                    AppUpdateNameEvent(name: _nameController.text.trim()),
+                  );
                 },
               ),
             ],
