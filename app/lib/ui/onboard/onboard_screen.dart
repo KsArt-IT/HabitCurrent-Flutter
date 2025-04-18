@@ -30,7 +30,7 @@ class OnboardScreen extends StatelessWidget {
                 PrimaryButton(
                   label: strings.continues,
                   onPressed: () {
-                    appBloc.add(AppOnboardNextEvent());
+                    appBloc.add(AppInitNameEvent());
                   },
                 ),
               ],
