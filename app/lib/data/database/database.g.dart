@@ -358,7 +358,7 @@ class $HabitsTable extends Habits with TableInfo<$HabitsTable, Habit> {
   late final GeneratedColumn<DateTime> created = GeneratedColumn<DateTime>(
     'created',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
     clientDefault: () => DateTime.now(),
@@ -370,7 +370,7 @@ class $HabitsTable extends Habits with TableInfo<$HabitsTable, Habit> {
   late final GeneratedColumn<DateTime> updated = GeneratedColumn<DateTime>(
     'updated',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
     defaultValue: currentDateAndTime,
@@ -502,14 +502,16 @@ class $HabitsTable extends Habits with TableInfo<$HabitsTable, Habit> {
         DriftSqlType.string,
         data['${effectivePrefix}details'],
       ),
-      created: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created'],
-      ),
-      updated: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated'],
-      ),
+      created:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}created'],
+          )!,
+      updated:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}updated'],
+          )!,
       completed: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}completed'],
@@ -533,8 +535,8 @@ class Habit extends DataClass implements Insertable<Habit> {
   final int userId;
   final String name;
   final String? details;
-  final DateTime? created;
-  final DateTime? updated;
+  final DateTime created;
+  final DateTime updated;
   final DateTime? completed;
   final int weekDaysRaw;
   const Habit({
@@ -542,8 +544,8 @@ class Habit extends DataClass implements Insertable<Habit> {
     required this.userId,
     required this.name,
     this.details,
-    this.created,
-    this.updated,
+    required this.created,
+    required this.updated,
     this.completed,
     required this.weekDaysRaw,
   });
@@ -556,12 +558,8 @@ class Habit extends DataClass implements Insertable<Habit> {
     if (!nullToAbsent || details != null) {
       map['details'] = Variable<String>(details);
     }
-    if (!nullToAbsent || created != null) {
-      map['created'] = Variable<DateTime>(created);
-    }
-    if (!nullToAbsent || updated != null) {
-      map['updated'] = Variable<DateTime>(updated);
-    }
+    map['created'] = Variable<DateTime>(created);
+    map['updated'] = Variable<DateTime>(updated);
     if (!nullToAbsent || completed != null) {
       map['completed'] = Variable<DateTime>(completed);
     }
@@ -578,14 +576,8 @@ class Habit extends DataClass implements Insertable<Habit> {
           details == null && nullToAbsent
               ? const Value.absent()
               : Value(details),
-      created:
-          created == null && nullToAbsent
-              ? const Value.absent()
-              : Value(created),
-      updated:
-          updated == null && nullToAbsent
-              ? const Value.absent()
-              : Value(updated),
+      created: Value(created),
+      updated: Value(updated),
       completed:
           completed == null && nullToAbsent
               ? const Value.absent()
@@ -604,8 +596,8 @@ class Habit extends DataClass implements Insertable<Habit> {
       userId: serializer.fromJson<int>(json['userId']),
       name: serializer.fromJson<String>(json['name']),
       details: serializer.fromJson<String?>(json['details']),
-      created: serializer.fromJson<DateTime?>(json['created']),
-      updated: serializer.fromJson<DateTime?>(json['updated']),
+      created: serializer.fromJson<DateTime>(json['created']),
+      updated: serializer.fromJson<DateTime>(json['updated']),
       completed: serializer.fromJson<DateTime?>(json['completed']),
       weekDaysRaw: serializer.fromJson<int>(json['weekDaysRaw']),
     );
@@ -618,8 +610,8 @@ class Habit extends DataClass implements Insertable<Habit> {
       'userId': serializer.toJson<int>(userId),
       'name': serializer.toJson<String>(name),
       'details': serializer.toJson<String?>(details),
-      'created': serializer.toJson<DateTime?>(created),
-      'updated': serializer.toJson<DateTime?>(updated),
+      'created': serializer.toJson<DateTime>(created),
+      'updated': serializer.toJson<DateTime>(updated),
       'completed': serializer.toJson<DateTime?>(completed),
       'weekDaysRaw': serializer.toJson<int>(weekDaysRaw),
     };
@@ -630,8 +622,8 @@ class Habit extends DataClass implements Insertable<Habit> {
     int? userId,
     String? name,
     Value<String?> details = const Value.absent(),
-    Value<DateTime?> created = const Value.absent(),
-    Value<DateTime?> updated = const Value.absent(),
+    DateTime? created,
+    DateTime? updated,
     Value<DateTime?> completed = const Value.absent(),
     int? weekDaysRaw,
   }) => Habit(
@@ -639,8 +631,8 @@ class Habit extends DataClass implements Insertable<Habit> {
     userId: userId ?? this.userId,
     name: name ?? this.name,
     details: details.present ? details.value : this.details,
-    created: created.present ? created.value : this.created,
-    updated: updated.present ? updated.value : this.updated,
+    created: created ?? this.created,
+    updated: updated ?? this.updated,
     completed: completed.present ? completed.value : this.completed,
     weekDaysRaw: weekDaysRaw ?? this.weekDaysRaw,
   );
@@ -703,8 +695,8 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
   final Value<int> userId;
   final Value<String> name;
   final Value<String?> details;
-  final Value<DateTime?> created;
-  final Value<DateTime?> updated;
+  final Value<DateTime> created;
+  final Value<DateTime> updated;
   final Value<DateTime?> completed;
   final Value<int> weekDaysRaw;
   const HabitsCompanion({
@@ -756,8 +748,8 @@ class HabitsCompanion extends UpdateCompanion<Habit> {
     Value<int>? userId,
     Value<String>? name,
     Value<String?>? details,
-    Value<DateTime?>? created,
-    Value<DateTime?>? updated,
+    Value<DateTime>? created,
+    Value<DateTime>? updated,
     Value<DateTime?>? completed,
     Value<int>? weekDaysRaw,
   }) {
@@ -1116,7 +1108,7 @@ class $HourIntervalCompletedsTable extends HourIntervalCompleteds
   late final GeneratedColumn<DateTime> completed = GeneratedColumn<DateTime>(
     'completed',
     aliasedName,
-    true,
+    false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
     clientDefault: () => DateTime.now(),
@@ -1184,10 +1176,11 @@ class $HourIntervalCompletedsTable extends HourIntervalCompleteds
             DriftSqlType.int,
             data['${effectivePrefix}time'],
           )!,
-      completed: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}completed'],
-      ),
+      completed:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}completed'],
+          )!,
     );
   }
 
@@ -1202,12 +1195,12 @@ class HourIntervalCompleted extends DataClass
   final int id;
   final int habitId;
   final int time;
-  final DateTime? completed;
+  final DateTime completed;
   const HourIntervalCompleted({
     required this.id,
     required this.habitId,
     required this.time,
-    this.completed,
+    required this.completed,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1215,9 +1208,7 @@ class HourIntervalCompleted extends DataClass
     map['id'] = Variable<int>(id);
     map['habit_id'] = Variable<int>(habitId);
     map['time'] = Variable<int>(time);
-    if (!nullToAbsent || completed != null) {
-      map['completed'] = Variable<DateTime>(completed);
-    }
+    map['completed'] = Variable<DateTime>(completed);
     return map;
   }
 
@@ -1226,10 +1217,7 @@ class HourIntervalCompleted extends DataClass
       id: Value(id),
       habitId: Value(habitId),
       time: Value(time),
-      completed:
-          completed == null && nullToAbsent
-              ? const Value.absent()
-              : Value(completed),
+      completed: Value(completed),
     );
   }
 
@@ -1242,7 +1230,7 @@ class HourIntervalCompleted extends DataClass
       id: serializer.fromJson<int>(json['id']),
       habitId: serializer.fromJson<int>(json['habitId']),
       time: serializer.fromJson<int>(json['time']),
-      completed: serializer.fromJson<DateTime?>(json['completed']),
+      completed: serializer.fromJson<DateTime>(json['completed']),
     );
   }
   @override
@@ -1252,7 +1240,7 @@ class HourIntervalCompleted extends DataClass
       'id': serializer.toJson<int>(id),
       'habitId': serializer.toJson<int>(habitId),
       'time': serializer.toJson<int>(time),
-      'completed': serializer.toJson<DateTime?>(completed),
+      'completed': serializer.toJson<DateTime>(completed),
     };
   }
 
@@ -1260,12 +1248,12 @@ class HourIntervalCompleted extends DataClass
     int? id,
     int? habitId,
     int? time,
-    Value<DateTime?> completed = const Value.absent(),
+    DateTime? completed,
   }) => HourIntervalCompleted(
     id: id ?? this.id,
     habitId: habitId ?? this.habitId,
     time: time ?? this.time,
-    completed: completed.present ? completed.value : this.completed,
+    completed: completed ?? this.completed,
   );
   HourIntervalCompleted copyWithCompanion(
     HourIntervalCompletedsCompanion data,
@@ -1306,7 +1294,7 @@ class HourIntervalCompletedsCompanion
   final Value<int> id;
   final Value<int> habitId;
   final Value<int> time;
-  final Value<DateTime?> completed;
+  final Value<DateTime> completed;
   const HourIntervalCompletedsCompanion({
     this.id = const Value.absent(),
     this.habitId = const Value.absent(),
@@ -1338,7 +1326,7 @@ class HourIntervalCompletedsCompanion
     Value<int>? id,
     Value<int>? habitId,
     Value<int>? time,
-    Value<DateTime?>? completed,
+    Value<DateTime>? completed,
   }) {
     return HourIntervalCompletedsCompanion(
       id: id ?? this.id,
@@ -1582,8 +1570,8 @@ typedef $$HabitsTableCreateCompanionBuilder =
       required int userId,
       required String name,
       Value<String?> details,
-      Value<DateTime?> created,
-      Value<DateTime?> updated,
+      Value<DateTime> created,
+      Value<DateTime> updated,
       Value<DateTime?> completed,
       required int weekDaysRaw,
     });
@@ -1593,8 +1581,8 @@ typedef $$HabitsTableUpdateCompanionBuilder =
       Value<int> userId,
       Value<String> name,
       Value<String?> details,
-      Value<DateTime?> created,
-      Value<DateTime?> updated,
+      Value<DateTime> created,
+      Value<DateTime> updated,
       Value<DateTime?> completed,
       Value<int> weekDaysRaw,
     });
@@ -1767,8 +1755,8 @@ class $$HabitsTableTableManager
                 Value<int> userId = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String?> details = const Value.absent(),
-                Value<DateTime?> created = const Value.absent(),
-                Value<DateTime?> updated = const Value.absent(),
+                Value<DateTime> created = const Value.absent(),
+                Value<DateTime> updated = const Value.absent(),
                 Value<DateTime?> completed = const Value.absent(),
                 Value<int> weekDaysRaw = const Value.absent(),
               }) => HabitsCompanion(
@@ -1787,8 +1775,8 @@ class $$HabitsTableTableManager
                 required int userId,
                 required String name,
                 Value<String?> details = const Value.absent(),
-                Value<DateTime?> created = const Value.absent(),
-                Value<DateTime?> updated = const Value.absent(),
+                Value<DateTime> created = const Value.absent(),
+                Value<DateTime> updated = const Value.absent(),
                 Value<DateTime?> completed = const Value.absent(),
                 required int weekDaysRaw,
               }) => HabitsCompanion.insert(
@@ -1999,14 +1987,14 @@ typedef $$HourIntervalCompletedsTableCreateCompanionBuilder =
       Value<int> id,
       required int habitId,
       required int time,
-      Value<DateTime?> completed,
+      Value<DateTime> completed,
     });
 typedef $$HourIntervalCompletedsTableUpdateCompanionBuilder =
     HourIntervalCompletedsCompanion Function({
       Value<int> id,
       Value<int> habitId,
       Value<int> time,
-      Value<DateTime?> completed,
+      Value<DateTime> completed,
     });
 
 class $$HourIntervalCompletedsTableFilterComposer
@@ -2140,7 +2128,7 @@ class $$HourIntervalCompletedsTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> habitId = const Value.absent(),
                 Value<int> time = const Value.absent(),
-                Value<DateTime?> completed = const Value.absent(),
+                Value<DateTime> completed = const Value.absent(),
               }) => HourIntervalCompletedsCompanion(
                 id: id,
                 habitId: habitId,
@@ -2152,7 +2140,7 @@ class $$HourIntervalCompletedsTableTableManager
                 Value<int> id = const Value.absent(),
                 required int habitId,
                 required int time,
-                Value<DateTime?> completed = const Value.absent(),
+                Value<DateTime> completed = const Value.absent(),
               }) => HourIntervalCompletedsCompanion.insert(
                 id: id,
                 habitId: habitId,
