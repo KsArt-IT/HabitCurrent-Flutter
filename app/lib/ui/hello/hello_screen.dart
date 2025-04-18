@@ -45,7 +45,7 @@ class _HelloScreenState extends State<HelloScreen> {
   bool _isValidName(String name) {
     if (name.isEmpty || name.length < 3 || name.length > 20) return false;
     // Проверка на наличие только букв (кириллица и латиница)
-    return RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$').hasMatch(name);
+    return Constants.regExpName.hasMatch(name);
   }
 
   String? _getNameErrorText(String? value) {
@@ -54,7 +54,7 @@ class _HelloScreenState extends State<HelloScreen> {
     if (name.isEmpty || name.length < 3 || name.length > 20) {
       return strings.nameErrorEmpty;
     }
-    if (!RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$').hasMatch(name)) {
+    if (!Constants.regExpName.hasMatch(name)) {
       return strings.nameErrorInvalid;
     }
     return null;
