@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:habit_current/generated/l10n.dart';
+import 'package:habit_current/l10n/intl_exp.dart';
 
 enum HomeTab { flow, week, month, settings }
 
 extension HomeTabExt on HomeTab {
   String getLabel(BuildContext context) => switch (this) {
-    HomeTab.flow => S.of(context).tabFlow,
-    HomeTab.week => S.of(context).tabWeek,
-    HomeTab.month => S.of(context).tabMonth,
-    HomeTab.settings => S.of(context).tabSettings,
+    HomeTab.flow => context.l10n.tabFlow,
+    HomeTab.week => context.l10n.tabWeek,
+    HomeTab.month => context.l10n.tabMonth,
+    HomeTab.settings => context.l10n.tabSettings,
   };
 
   IconData get icon => switch (this) {
