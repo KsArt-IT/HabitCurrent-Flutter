@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/core/utils/constants.dart';
-import 'package:habit_current/generated/l10n.dart';
+import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/ui/home/home_tab.dart';
 import 'package:habit_current/ui/home/widget/tab_item_button.dart';
 
@@ -22,11 +22,12 @@ class HomeScreen extends StatelessWidget {
       builder: (context, child) {
         final tabsRouter = context.tabsRouter;
         final theme = Theme.of(context);
+        final strings = context.l10n;
 
         return Scaffold(
           appBar: AppBar(
             backgroundColor: theme.colorScheme.inversePrimary,
-            title: Text(S.of(context).appTitle),
+            title: Text(strings.appTitle),
             centerTitle: true,
           ),
           body: child,
@@ -40,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             },
             backgroundColor: theme.colorScheme.primary,
             foregroundColor: theme.colorScheme.onPrimary,
-            tooltip: S.of(context).addNewHabit,
+            tooltip: strings.addNewHabit,
             child: const Icon(Icons.add),
           ),
           bottomNavigationBar: BottomAppBar(
