@@ -18,9 +18,21 @@
     "continueBtn": "Продовжити",
     "createBtn": "Створити",
     "addNewHabit": "Додати звичку",
+    "delete": "Видалити",
+    "addTime": "Додати час",
+
     "n_4": "---Habits---",
     "createHabit": "Створити звичку",
-    "habitEnterNameHint": "Введіть звичку",
+
+    "habitEnterName": "Введіть звичку",
+    "habitEnterNameHint": "Назва",
+
+    "howOften": "Як часто",
+    "daily": "Щодня",
+    "yourSchedule": "Ваш графік",
+
+    "chooseDay": "Виберіть день",
+    "chooseTime": "Виберіть час",
     "habitEnterNameError": "Будь ласка, введіть звичку, повинна містити 3-20 букв",
     "n_n": "---"
 }

@@ -63,13 +63,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addNewHabit => 'Add new habit';
 
   @override
-  String get n_4 => '---Habits---';
+  String get delete => 'Delete';
 
   @override
-  String get habitEnterNameHint => 'Enter Habit Name';
+  String get addTime => 'Add Time';
+
+  @override
+  String get n_4 => '---Habits Create---';
 
   @override
   String get createHabit => 'Create a Habit';
+
+  @override
+  String get habitEnterName => 'Enter Habit Name';
+
+  @override
+  String get habitEnterNameHint => 'Name';
+
+  @override
+  String get howOften => 'How Often';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get yourSchedule => 'Your own schedule';
+
+  @override
+  String get chooseDay => 'Choose a day';
+
+  @override
+  String get chooseTime => 'Choose a time';
 
   @override
   String get habitEnterNameError => 'Please enter a habit name, it must contain 3-20 letters';

@@ -205,23 +205,71 @@ abstract class AppLocalizations {
   /// **'Add new habit'**
   String get addNewHabit;
 
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @addTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Time'**
+  String get addTime;
+
   /// No description provided for @n_4.
   ///
   /// In en, this message translates to:
-  /// **'---Habits---'**
+  /// **'---Habits Create---'**
   String get n_4;
-
-  /// No description provided for @habitEnterNameHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter Habit Name'**
-  String get habitEnterNameHint;
 
   /// No description provided for @createHabit.
   ///
   /// In en, this message translates to:
   /// **'Create a Habit'**
   String get createHabit;
+
+  /// No description provided for @habitEnterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Habit Name'**
+  String get habitEnterName;
+
+  /// No description provided for @habitEnterNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get habitEnterNameHint;
+
+  /// No description provided for @howOften.
+  ///
+  /// In en, this message translates to:
+  /// **'How Often'**
+  String get howOften;
+
+  /// No description provided for @daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get daily;
+
+  /// No description provided for @yourSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Your own schedule'**
+  String get yourSchedule;
+
+  /// No description provided for @chooseDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a day'**
+  String get chooseDay;
+
+  /// No description provided for @chooseTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a time'**
+  String get chooseTime;
 
   /// No description provided for @habitEnterNameError.
   ///

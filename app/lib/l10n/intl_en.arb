@@ -18,9 +18,22 @@
     "continueBtn": "Continue",
     "createBtn": "Create",
     "addNewHabit": "Add new habit",
-    "n_4": "---Habits---",
-    "habitEnterNameHint": "Enter Habit Name",
+    "delete": "Delete",
+    "addTime": "Add Time",
+    
+    "n_4": "---Habits Create---",
     "createHabit": "Create a Habit",
+    
+    "habitEnterName": "Enter Habit Name",
+    "habitEnterNameHint": "Name",
+
+    "howOften": "How Often",
+    "daily": "Daily",
+    "yourSchedule": "Your own schedule",
+    
+    "chooseDay": "Choose a day",
+    "chooseTime": "Choose a time",
+    
     "habitEnterNameError": "Please enter a habit name, it must contain 3-20 letters",
     "n_n": "---"
 }

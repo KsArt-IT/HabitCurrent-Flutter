@@ -63,13 +63,37 @@ class AppLocalizationsUk extends AppLocalizations {
   String get addNewHabit => 'Додати звичку';
 
   @override
+  String get delete => 'Видалити';
+
+  @override
+  String get addTime => 'Додати час';
+
+  @override
   String get n_4 => '---Habits---';
 
   @override
-  String get habitEnterNameHint => 'Введіть звичку';
+  String get createHabit => 'Створити звичку';
 
   @override
-  String get createHabit => 'Створити звичку';
+  String get habitEnterName => 'Введіть звичку';
+
+  @override
+  String get habitEnterNameHint => 'Назва';
+
+  @override
+  String get howOften => 'Як часто';
+
+  @override
+  String get daily => 'Щодня';
+
+  @override
+  String get yourSchedule => 'Ваш графік';
+
+  @override
+  String get chooseDay => 'Виберіть день';
+
+  @override
+  String get chooseTime => 'Виберіть час';
 
   @override
   String get habitEnterNameError => 'Будь ласка, введіть звичку, повинна містити 3-20 букв';

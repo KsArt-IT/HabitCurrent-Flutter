@@ -18,9 +18,22 @@
     "continueBtn": "Продолжить",
     "createBtn": "Создать",
     "addNewHabit": "Добавить привычку",
+    "delete": "Удалить",
+    "addTime": "Добавить время",
+
     "n_4": "---Habits---",
-    "habitEnterNameHint": "Введите привычку",
     "createHabit": "Создать привычку",
+
+    "habitEnterName": "Введите привычку",
+    "habitEnterNameHint": "Название",
+    
+    "howOften": "Как часто",
+    "daily": "Каждый день",
+    "yourSchedule": "Ваш график",
+
+    "chooseDay": "Выберите день",
+    "chooseTime": "Выберите время",
+
     "habitEnterNameError": "Пожалуйста, введите привычку, должна содержать 3-20 букв",
     "n_n": "---"
 }
