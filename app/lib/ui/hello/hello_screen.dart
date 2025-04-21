@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/generated/l10n.dart';
+import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
 import 'package:habit_current/ui/widgets/radial_gradient_background.dart';
 
@@ -49,7 +49,7 @@ class _HelloScreenState extends State<HelloScreen> {
   }
 
   String? _getNameErrorText(String? value) {
-    final S strings = S.of(context);
+    final strings = context.l10n;
     final name = value?.trim() ?? '';
     if (name.isEmpty || name.length < 3 || name.length > 20) {
       return strings.nameErrorEmpty;
@@ -63,7 +63,7 @@ class _HelloScreenState extends State<HelloScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final S strings = S.of(context);
+    final strings = context.l10n;
     return Scaffold(
       body: RadialGradientBackground(
         body: Form(
@@ -139,7 +139,7 @@ class _HelloScreenState extends State<HelloScreen> {
               ),
               SizedBox(height: Constants.textFieldSpacing),
               PrimaryButton(
-                label: strings.continues,
+                label: strings.continueBtn,
                 disabled: !_isNameValid,
                 onPressed: () {
                   context.read<AppBloc>().add(
