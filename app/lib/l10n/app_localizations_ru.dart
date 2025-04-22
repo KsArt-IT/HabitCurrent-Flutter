@@ -96,6 +96,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get chooseTime => 'Выберите время';
 
   @override
+  String get reminder => 'Напоминание';
+
+  @override
+  String get withoutReminder => 'Без напоминания';
+
+  @override
+  String get enableReminders => 'Включить напоминания';
+
+  @override
   String get habitEnterNameError => 'Пожалуйста, введите привычку, должна содержать 3-20 букв';
 
   @override

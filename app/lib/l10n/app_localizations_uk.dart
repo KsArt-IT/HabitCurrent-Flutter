@@ -96,6 +96,15 @@ class AppLocalizationsUk extends AppLocalizations {
   String get chooseTime => 'Виберіть час';
 
   @override
+  String get reminder => 'Нагадування';
+
+  @override
+  String get withoutReminder => 'Без нагадування';
+
+  @override
+  String get enableReminders => 'Увімкнути нагадування';
+
+  @override
   String get habitEnterNameError => 'Будь ласка, введіть звичку, повинна містити 3-20 букв';
 
   @override

@@ -32,7 +32,12 @@
     "yourSchedule": "Your own schedule",
     
     "chooseDay": "Choose a day",
+    
     "chooseTime": "Choose a time",
+
+    "reminder": "Reminder",
+    "withoutReminder": "Without Reminder",
+    "enableReminders": "Enable Reminders",
     
     "habitEnterNameError": "Please enter a habit name, it must contain 3-20 letters",
     "n_n": "---"

@@ -32,8 +32,13 @@
     "yourSchedule": "Ваш график",
 
     "chooseDay": "Выберите день",
+
     "chooseTime": "Выберите время",
 
+    "reminder": "Напоминание",
+    "withoutReminder": "Без напоминания",
+    "enableReminders": "Включить напоминания",
+    
     "habitEnterNameError": "Пожалуйста, введите привычку, должна содержать 3-20 букв",
     "n_n": "---"
 }

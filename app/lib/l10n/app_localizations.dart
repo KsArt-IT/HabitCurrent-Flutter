@@ -271,6 +271,24 @@ abstract class AppLocalizations {
   /// **'Choose a time'**
   String get chooseTime;
 
+  /// No description provided for @reminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get reminder;
+
+  /// No description provided for @withoutReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Without Reminder'**
+  String get withoutReminder;
+
+  /// No description provided for @enableReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Reminders'**
+  String get enableReminders;
+
   /// No description provided for @habitEnterNameError.
   ///
   /// In en, this message translates to:

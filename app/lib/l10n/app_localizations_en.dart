@@ -96,6 +96,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseTime => 'Choose a time';
 
   @override
+  String get reminder => 'Reminder';
+
+  @override
+  String get withoutReminder => 'Without Reminder';
+
+  @override
+  String get enableReminders => 'Enable Reminders';
+
+  @override
   String get habitEnterNameError => 'Please enter a habit name, it must contain 3-20 letters';
 
   @override
