@@ -23,8 +23,7 @@ final class LocalDataService implements DataService {
   Future<UserModel?> loadUserByName(String name) async {
     try {
       final data =
-          await database.managers.users
-              .filter((f) => f.name.equals(name))
+          await (database.users.select()..where((f) => f.name.equals(name)))
               .getSingleOrNull();
       if (data == null) return null;
 
@@ -92,7 +91,6 @@ final class LocalDataService implements DataService {
             ),
           );
         }
-        // При создании hourIntervalCompleteds отсутствует
       });
       final habitRow = await loadHabitById(habitId);
       if (habitRow == null) {
@@ -124,21 +122,6 @@ final class LocalDataService implements DataService {
           HourIntervalsCompanion.insert(habitId: habit.id, time: interval.time),
         );
       }
-      // ! Completed нельзя обновлять
-      /*
-      await database.hourIntervalCompleteds.deleteWhere(
-        (f) => f.habitId.equals(habit.id),
-      );
-      for (final completed in habit.completedIntervals) {
-        await database.hourIntervalCompleteds.insertOnConflictUpdate(
-          HourIntervalCompletedsCompanion.insert(
-            habitId: habit.id,
-            time: completed.time,
-            completed: Value(completed.completed),
-          ),
-        );
-      }
-      */
     });
   }
 
