@@ -12,28 +12,89 @@ final class HabitCreateBloc extends Bloc<HabitCreateEvent, HabitCreateState> {
   final DataRepository dataRepository;
   final int userId;
 
-  HabitCreateBloc({required this.dataRepository, required this.userId}): super(const HabitCreateState()) {
-    // on<HabitCreateEvent>(_onHabitCreateEvent);
-    // on<HabitCreateNameChangedEvent>(_onHabitCreateNameChangedEvent);
-    // on<HabitCreateColorChangedEvent>(_onHabitCreateColorChangedEvent);
-    // on<HabitCreateIconChangedEvent>(_onHabitCreateIconChangedEvent);
+  HabitCreateBloc({required this.dataRepository, required this.userId})
+    : super(const HabitCreateState()) {
+    on<NameChangedEvent>(_onNameChangedEvent);
+    on<DailyOrWeekToggledEvent>(_onDailyOrWeekToggledEvent);
+    on<TimeAddedEvent>(_onTimeAddedEvent);
+    on<TimeRemovedEvent>(_onTimeRemovedEvent);
+    on<WeekDayChangedEvent>(_onWeekDayChangedEvent);
+    on<ReminderToggledEvent>(_onReminderToggledEvent);
 
-    on<HabitCreateSaveEvent>(_onHabitCreateSaveEvent);
+    on<SubmitHabitEvent>(_onHabitCreateSaveEvent);
+  }
+
+  void _onNameChangedEvent(
+    NameChangedEvent event,
+    Emitter<HabitCreateState> emit,
+  ) {
+    emit(state.copyWith(name: event.name));
+  }
+
+  void _onDailyOrWeekToggledEvent(
+    DailyOrWeekToggledEvent event,
+    Emitter<HabitCreateState> emit,
+  ) {
+    emit(state.copyWith(frequency: event.frequency));
+  }
+
+  void _onWeekDayChangedEvent(
+    WeekDayChangedEvent event,
+    Emitter<HabitCreateState> emit,
+  ) {
+    final weekDays = state.weekDays.toList();
+    if (weekDays.contains(event.weekDay)) {
+      weekDays.remove(event.weekDay);
+    } else {
+      weekDays.add(event.weekDay);
+    }
+    emit(state.copyWith(weekDays: weekDays.toSet()));
+  }
+
+  void _onTimeAddedEvent(
+    TimeAddedEvent event,
+    Emitter<HabitCreateState> emit, //
+  ) {
+    int time = state.intervals.last + 60;
+    if (time > 1440) {
+      time = 1440;
+    }
+    emit(state.copyWith(intervals: [...state.intervals, time]));
+  }
+
+  void _onTimeRemovedEvent(
+    TimeRemovedEvent event,
+    Emitter<HabitCreateState> emit,
+  ) {
+    if (state.intervals.length > 1) {
+      emit(
+        state.copyWith(
+          intervals: state.intervals.sublist(0, state.intervals.length - 1),
+        ),
+      );
+    }
+  }
+
+  void _onReminderToggledEvent(
+    ReminderToggledEvent event,
+    Emitter<HabitCreateState> emit,
+  ) {
+    emit(state.copyWith(isReminder: event.enabled));
   }
 
   void _onHabitCreateSaveEvent(
-    HabitCreateSaveEvent event,
+    SubmitHabitEvent event,
     Emitter<HabitCreateState> emit,
   ) async {
     // Save the habit to the database
     await dataRepository.createHabit(
       Habit(
-      userId: userId,
-      name: state.name,
-      details: state.details,
-      weekDays: state.weekDays,
-      intervals: state.intervals,
-      )
+        userId: userId,
+        name: state.name,
+        details: state.details,
+        weekDays: state.weekDays,
+        intervals: state.intervals.map((e) => HourInterval(time: e)).toList(),
+      ),
     );
 
     // Закончить создание привычки
