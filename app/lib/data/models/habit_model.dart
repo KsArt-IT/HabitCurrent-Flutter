@@ -7,7 +7,7 @@ final class HabitModel {
 
   final String name;
   final String? details;
-  final DateTime created;
+  final DateTime? created;
   final DateTime? updated;
   final DateTime? completed;
 
@@ -20,7 +20,7 @@ final class HabitModel {
     required this.userId,
     required this.name,
     this.details,
-    required this.created,
+    this.created,
     this.updated,
     this.completed,
     required this.weekDaysRaw,
