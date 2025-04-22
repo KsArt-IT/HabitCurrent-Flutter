@@ -10,17 +10,20 @@ sealed class AppTheme {
     fontFamily: _fontFamily,
     appBarTheme: AppBarTheme(backgroundColor: AppColors.gray50),
     scaffoldBackgroundColor: AppColors.gray50,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.brandColor,
-      brightness: Brightness.light,
-    ).copyWith(
-      // Primary gray50 gray950
-      // primary: AppColors.gray950,
-      // onPrimary: AppColors.gray50,
-      // inversePrimary: AppColors.gray50,
-      
+    colorScheme: ColorScheme.light().copyWith(
+      primary: AppColors.gray950,
+      onPrimary: AppColors.gray950,
+      inversePrimary: AppColors.gray50,
+
       primaryContainer: AppColors.error, //AppColors.gray950,
       onPrimaryContainer: AppColors.error,
+      //
+      secondary: AppColors.gray50,
+      //
+      primaryFixed: AppColors.gray900,
+      //
+      secondaryContainer: AppColors.gray50,
+      onSecondaryContainer: AppColors.gray950,
       // Error
       error: AppColors.error,
       onError: AppColors.onError,
@@ -31,7 +34,7 @@ sealed class AppTheme {
       onTertiaryFixed: AppColors.gray600,
       //
       surface: AppColors.gray100,
-      onSurface: AppColors.gray950,
+      onSurface: AppColors.gray50,
       // Onboard Background
       tertiaryFixedDim: AppColors.onboardColor,
       onTertiaryFixedVariant: AppColors.gray50,
@@ -40,6 +43,22 @@ sealed class AppTheme {
       onTertiaryContainer: AppColors.gray950,
       // Outline
       outlineVariant: AppColors.gray300,
+    ),
+    unselectedWidgetColor: AppColors.gray600,
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return AppColors.gray900; // выбран
+        }
+        return AppColors.gray600; // не выбран
+      }),
+      visualDensity: VisualDensity.compact,
+    ),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.all(Colors.transparent),
+      checkColor: MaterialStateProperty.all(AppColors.gray900),
+      side: BorderSide(color: AppColors.gray600),
+      visualDensity: VisualDensity.compact,
     ),
     // Text Theme
     textTheme: const TextTheme(
@@ -61,17 +80,17 @@ sealed class AppTheme {
       ),
       titleLarge: TextStyle(
         fontSize: 32,
-        fontWeight: FontWeight.w500,
-        color: AppColors.gray600,
+        fontWeight: FontWeight.w600,
+        color: AppColors.gray950,
       ),
       titleMedium: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
-        color: AppColors.gray600,
+        color: AppColors.gray950,
       ),
       titleSmall: TextStyle(
         fontSize: 14,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
         color: AppColors.gray600,
       ),
       // hint light
@@ -108,7 +127,7 @@ sealed class AppTheme {
       labelSmall: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w300,
-        color: AppColors.gray600,
+        color: AppColors.gray950,
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
@@ -135,17 +154,16 @@ sealed class AppTheme {
     fontFamily: _fontFamily,
     appBarTheme: AppBarTheme(backgroundColor: AppColors.gray950),
     scaffoldBackgroundColor: AppColors.gray950,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.brandColor,
-      brightness: Brightness.dark,
-    ).copyWith(
+    colorScheme: ColorScheme.dark().copyWith(
       // Primary gray50 gray950
-      primary: AppColors.gray950,
-      onPrimary: AppColors.gray50,
-      inversePrimary: AppColors.gray950,
+      primary: AppColors.gray50,
+      onPrimary: AppColors.gray950,
+      inversePrimary: AppColors.gray50,
 
       primaryContainer: AppColors.error,
       onPrimaryContainer: AppColors.error,
+      //
+      primaryFixed : AppColors.brandColor,
       // Error
       error: AppColors.error,
       onError: AppColors.onError,
@@ -171,6 +189,25 @@ sealed class AppTheme {
       onTertiaryContainer: AppColors.gray50,
       // Outline
       outlineVariant: AppColors.gray900,
+      //
+      surface: AppColors.gray900,
+      onSurface: AppColors.gray50,
+    ),
+    unselectedWidgetColor: AppColors.gray700,
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.resolveWith((states) {
+        if (states.contains(MaterialState.selected)) {
+          return AppColors.brandColor; // выбран
+        }
+        return AppColors.gray700; // не выбран
+      }),
+      visualDensity: VisualDensity.compact,
+    ),
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.all(Colors.transparent),
+      checkColor: MaterialStateProperty.all(AppColors.brandColor),
+      side: BorderSide(color: AppColors.gray700),
+      visualDensity: VisualDensity.compact,
     ),
     // Text Theme
     textTheme: const TextTheme(
@@ -193,7 +230,7 @@ sealed class AppTheme {
       // AppBar
       titleLarge: TextStyle(
         fontSize: 32,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         color: AppColors.gray50,
       ),
       titleMedium: TextStyle(
@@ -203,8 +240,8 @@ sealed class AppTheme {
       ),
       titleSmall: TextStyle(
         fontSize: 14,
-        fontWeight: FontWeight.w500,
-        color: AppColors.gray50,
+        fontWeight: FontWeight.w400,
+        color: AppColors.gray700,
       ),
       // hint light
       headlineSmall: TextStyle(
@@ -241,7 +278,7 @@ sealed class AppTheme {
       labelSmall: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w300,
-        color: AppColors.gray950,
+        color: AppColors.gray50,
       ),
     ),
   );
