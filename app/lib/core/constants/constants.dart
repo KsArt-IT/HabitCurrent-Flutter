@@ -14,6 +14,8 @@ abstract final class Constants {
   static const double paddingXLarge = 32;
 
   static const double borderRadius = 24;
+  static const double timeContainerHeight = 44;
+  static const double timeContainerRadius = 16;
 
   static final regExpName = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$');
   static final regExpHabit = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z0-9\s]+$');
