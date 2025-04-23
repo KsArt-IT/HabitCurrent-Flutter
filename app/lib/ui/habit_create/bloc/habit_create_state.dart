@@ -1,6 +1,6 @@
 part of 'habit_create_bloc.dart';
 
-enum StatsStatus { initial, loading, change, valid, success, failure }
+enum StatsStatus { initial, loading, valid, success, failure }
 
 enum Frequency { daily, weekly }
 
@@ -37,6 +37,8 @@ final class HabitCreateState extends Equatable {
     Frequency? frequency,
     Set<WeekDays>? weekDays,
     List<int>? intervals,
+    int? selectedTime,
+    int? selectedTimeIndex,
     bool? isReminder,
   }) {
     StatsStatus checkStatus = status ?? StatsStatus.valid;
