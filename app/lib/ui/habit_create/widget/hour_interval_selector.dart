@@ -4,6 +4,8 @@ import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/int_ext.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/ui/habit_create/bloc/habit_create_bloc.dart';
+import 'package:habit_current/ui/habit_create/widget/time_container.dart';
+import 'package:habit_current/ui/widgets/sized_outlined_button.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
 import 'package:habit_current/ui/widgets/text_form_title.dart';
 
@@ -32,9 +34,10 @@ class HourIntervalSelector extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: PrimaryButton(
+                child: SizedOutlinedButton(
                   label: strings.delete,
                   disabled: intervals.length < 2,
+                  negative: true,
                   onPressed: () {
                     context.read<HabitCreateBloc>().add(TimeRemovedEvent());
                   },
@@ -42,7 +45,7 @@ class HourIntervalSelector extends StatelessWidget {
               ),
               const SizedBox(width: Constants.paddingMedium),
               Expanded(
-                child: PrimaryButton(
+                child: SizedOutlinedButton(
                   label: strings.addTime,
                   disabled: intervals.length >= 12,
                   onPressed: () {
@@ -62,24 +65,16 @@ class HourIntervalSelector extends StatelessWidget {
             padding: const EdgeInsets.all(0),
             physics: const NeverScrollableScrollPhysics(),
             children:
-                intervals.map((time) {
-                  return Container(
-                    alignment: Alignment.center,
-                    color: Colors.transparent,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: Constants.timeContainerHeight,
-                      decoration: BoxDecoration(
-                        color: theme.colorScheme.secondaryContainer,
-                        borderRadius: BorderRadius.circular(
-                          Constants.timeContainerRadius,
-                        ),
-                      ),
-                      child: Text(
-                        time.toTime(),
-                        style: theme.textTheme.labelSmall,
-                      ),
-                    ),
+                intervals.indexed.map((indexed) {
+                  final time = indexed.$2;
+                  final index = indexed.$1;
+                  return TimeContainer(
+                    time: time,
+                    onTap: () {
+                      context.read<HabitCreateBloc>().add(
+                        TimeSelectedEvent(index),
+                      );
+                    },
                   );
                 }).toList(),
           ),
