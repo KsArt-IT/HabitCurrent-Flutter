@@ -5,8 +5,8 @@ import 'package:habit_current/core/extension/int_ext.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/ui/habit_create/bloc/habit_create_bloc.dart';
 import 'package:habit_current/ui/habit_create/widget/time_container.dart';
+import 'package:habit_current/ui/habit_create/widget/time_picker.dart';
 import 'package:habit_current/ui/widgets/sized_outlined_button.dart';
-import 'package:habit_current/ui/widgets/primary_button.dart';
 import 'package:habit_current/ui/widgets/text_form_title.dart';
 
 class HourIntervalSelector extends StatelessWidget {
@@ -17,6 +17,8 @@ class HourIntervalSelector extends StatelessWidget {
     final intervals = context.select(
       (HabitCreateBloc bloc) => bloc.state.intervals,
     );
+    final bloc = context.read<HabitCreateBloc>();
+
     final strings = context.l10n;
     final theme = Theme.of(context);
 
@@ -70,10 +72,20 @@ class HourIntervalSelector extends StatelessWidget {
                   final index = indexed.$1;
                   return TimeContainer(
                     time: time,
-                    onTap: () {
-                      context.read<HabitCreateBloc>().add(
-                        TimeSelectedEvent(index),
+                    onTap: () async {
+                      final pickedTime = await pickTime(
+                        context,
+                        initialTime: time.toTimeOfDay(),
                       );
+
+                      if (pickedTime != null) {
+                        bloc.add(
+                          TimeChangedEvent(
+                            index: index,
+                            time: pickedTime.toMinutes(),
+                          ),
+                        );
+                      }
                     },
                   );
                 }).toList(),
