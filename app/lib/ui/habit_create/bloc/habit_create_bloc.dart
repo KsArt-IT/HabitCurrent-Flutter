@@ -15,10 +15,14 @@ final class HabitCreateBloc extends Bloc<HabitCreateEvent, HabitCreateState> {
   HabitCreateBloc({required this.dataRepository, required this.userId})
     : super(const HabitCreateState()) {
     on<NameChangedEvent>(_onNameChangedEvent);
+
     on<DailyOrWeekToggledEvent>(_onDailyOrWeekToggledEvent);
+    on<WeekDayChangedEvent>(_onWeekDayChangedEvent);
+
     on<TimeAddedEvent>(_onTimeAddedEvent);
     on<TimeRemovedEvent>(_onTimeRemovedEvent);
-    on<WeekDayChangedEvent>(_onWeekDayChangedEvent);
+    on<TimeChangedEvent>(_onTimeChangedEvent);
+
     on<ReminderToggledEvent>(_onReminderToggledEvent);
 
     on<SubmitHabitEvent>(_onHabitCreateSaveEvent);
@@ -72,6 +76,17 @@ final class HabitCreateBloc extends Bloc<HabitCreateEvent, HabitCreateState> {
           intervals: state.intervals.sublist(0, state.intervals.length - 1),
         ),
       );
+    }
+  }
+
+  void _onTimeChangedEvent(
+    TimeChangedEvent event,
+    Emitter<HabitCreateState> emit,
+  ) {
+    if (event.index >= 0 && event.index < state.intervals.length) {
+      final List<int> intervals = state.intervals.toList();
+      intervals[event.index] = event.time;
+      emit(state.copyWith(intervals: intervals));
     }
   }
 
