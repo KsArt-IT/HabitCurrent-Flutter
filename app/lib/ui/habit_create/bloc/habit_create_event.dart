@@ -43,11 +43,14 @@ class TimeAddedEvent extends HabitCreateEvent {}
 
 class TimeRemovedEvent extends HabitCreateEvent {}
 
-final class TimeSelectedEvent extends HabitCreateEvent {
+final class TimeChangedEvent extends HabitCreateEvent {
   final int index;
-  const TimeSelectedEvent(this.index);
+  final int time;
+
+  const TimeChangedEvent({required this.index, required this.time});
+
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [index, time];
 }
 
 final class ReminderToggledEvent extends HabitCreateEvent {
