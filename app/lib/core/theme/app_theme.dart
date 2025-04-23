@@ -11,14 +11,15 @@ sealed class AppTheme {
     appBarTheme: AppBarTheme(backgroundColor: AppColors.gray50),
     scaffoldBackgroundColor: AppColors.gray50,
     colorScheme: ColorScheme.light().copyWith(
-      primary: AppColors.gray950,
+      primary: AppColors.gray100,
       onPrimary: AppColors.gray950,
       inversePrimary: AppColors.gray50,
 
-      primaryContainer: AppColors.error, //AppColors.gray950,
-      onPrimaryContainer: AppColors.error,
+      // primaryContainer: AppColors.error, //AppColors.gray950,
+      // onPrimaryContainer: AppColors.error,
       //
-      secondary: AppColors.gray50,
+      // secondary: AppColors.gray50,
+      // onSecondary: AppColors.gray950,
       //
       primaryFixed: AppColors.gray900,
       //
@@ -29,9 +30,13 @@ sealed class AppTheme {
       onError: AppColors.onError,
       // Buttons
       surfaceContainerLow: AppColors.gray950,
+      onSurfaceVariant: AppColors.gray50,
       // Buttons disabled
       tertiaryFixed: AppColors.gray300,
       onTertiaryFixed: AppColors.gray600,
+      //
+      tertiary: AppColors.gray900,
+      onTertiary: AppColors.gray950,
       //
       surface: AppColors.gray100,
       onSurface: AppColors.gray50,
@@ -160,25 +165,27 @@ sealed class AppTheme {
       onPrimary: AppColors.gray950,
       inversePrimary: AppColors.gray50,
 
-      primaryContainer: AppColors.error,
-      onPrimaryContainer: AppColors.error,
+      // primaryContainer: AppColors.error,
+      // onPrimaryContainer: AppColors.error,
       //
-      primaryFixed : AppColors.brandColor,
+      primaryFixed: AppColors.brandColor,
       // Error
       error: AppColors.error,
       onError: AppColors.onError,
       // Buttons
       surfaceContainerLow: AppColors.gray50,
+      onSurfaceVariant: AppColors.gray950,
+      // Buttons disabled
       tertiaryFixed: AppColors.gray700,
       onTertiaryFixed: AppColors.gray600,
       //
-      secondary: AppColors.gray50,
-      onSecondary: AppColors.gray950,
+      // secondary: AppColors.gray50,
+      // onSecondary: AppColors.gray950,
       secondaryFixed: AppColors.gray700,
       //
       secondaryContainer: AppColors.gray950,
       onSecondaryContainer: AppColors.gray50,
-
+      //
       tertiary: AppColors.gray900,
       onTertiary: AppColors.gray50,
       // Onboard Background
