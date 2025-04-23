@@ -1,6 +1,6 @@
 part of 'habit_create_bloc.dart';
 
-enum StatsStatus { initial, loading, valid, success, failure }
+enum StatsStatus { initial, loading, change, valid, success, failure }
 
 enum Frequency { daily, weekly }
 
