@@ -41,56 +41,70 @@ class _HabitCreateBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = context.l10n;
     final theme = Theme.of(context);
-    final bloc = context.watch<HabitCreateBloc>();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(strings.createHabit, style: theme.textTheme.titleLarge),
-        centerTitle: true,
-        leading: IconButton(
-          color: theme.colorScheme.onPrimary,
-          icon: Icon(
-            Icons.arrow_back_ios_new,
-            color: theme.colorScheme.inversePrimary,
+    return BlocListener<HabitCreateBloc, HabitCreateState>(
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        if (state.status == StatsStatus.success) {
+          context.router.pop();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(strings.createHabit, style: theme.textTheme.titleLarge),
+          centerTitle: true,
+          leading: IconButton(
+            color: theme.colorScheme.onPrimary,
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: theme.colorScheme.inversePrimary,
+            ),
+            onPressed: () => context.router.pop(),
           ),
-          onPressed: () => context.router.pop(),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(Constants.paddingMedium),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // MARK: - Habit name
-                    HabitNameEditWidget(),
-                    // MARK: - Frequency selector
-                    const SizedBox(height: Constants.paddingMedium),
-                    FrequencySelector(selectorDays: WeekDaysSelector()),
-                    // MARK: - Time selector
-                    const SizedBox(height: Constants.paddingMedium),
-                    HourIntervalSelector(),
-                    // MARK: - Reminder selector
-                    const SizedBox(height: Constants.paddingMedium),
-                    ReminderSelector(),
-                  ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(Constants.paddingMedium),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // MARK: - Habit name
+                      HabitNameEditWidget(),
+                      // MARK: - Frequency selector
+                      const SizedBox(height: Constants.paddingMedium),
+                      FrequencySelector(selectorDays: WeekDaysSelector()),
+                      // MARK: - Time selector
+                      const SizedBox(height: Constants.paddingMedium),
+                      HourIntervalSelector(),
+                      // MARK: - Reminder selector
+                      const SizedBox(height: Constants.paddingMedium),
+                      ReminderSelector(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(Constants.paddingMedium),
-              child: PrimaryButton(
-                label: strings.createBtn,
-                disabled: bloc.state.status != StatsStatus.valid,
-                onPressed: () => bloc.add(SubmitHabitEvent()),
+              Padding(
+                padding: const EdgeInsets.all(Constants.paddingMedium),
+                child: BlocBuilder<HabitCreateBloc, HabitCreateState>(
+                  buildWhen: (previous, current) => previous.status != current.status,
+                  builder: (context, state) {
+                    return PrimaryButton(
+                      label: strings.createBtn,
+                      disabled: state.status != StatsStatus.valid,
+                      onPressed: () {
+                        context.read<HabitCreateBloc>().add(SubmitHabitEvent());
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
