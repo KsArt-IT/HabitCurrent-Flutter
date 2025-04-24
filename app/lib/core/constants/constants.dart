@@ -17,6 +17,11 @@ abstract final class Constants {
   static const double timeContainerHeight = 44;
   static const double timeContainerRadius = 16;
 
+  static const double tabItemButtonSize = 70;
+  static const double tabItemRadius = tabItemButtonSize / 2;
+  
+  static const double fabSpacing = 48;
+
   static final regExpName = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$');
   static final regExpHabit = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z0-9\s]+$');
 }
