@@ -48,6 +48,7 @@ class _HabitCreateBody extends StatelessWidget {
         title: Text(strings.createHabit, style: theme.textTheme.titleLarge),
         centerTitle: true,
         leading: IconButton(
+          color: theme.colorScheme.onPrimary,
           icon: Icon(
             Icons.arrow_back_ios_new,
             color: theme.colorScheme.inversePrimary,
