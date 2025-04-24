@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
-import 'package:habit_current/core/utils/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/ui/home/home_tab.dart';
 import 'package:habit_current/ui/home/widget/tab_item_button.dart';
@@ -45,9 +45,7 @@ class HomeScreen extends StatelessWidget {
           ),
           bottomNavigationBar: BottomAppBar(
             padding: const EdgeInsets.all(0),
-            // color: theme.colorScheme.surface,
-            // elevation: 8,
-            // notchMargin: 0,
+            color: theme.colorScheme.surface,
             shape: const CircularNotchedRectangle(),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -71,7 +69,7 @@ class HomeScreen extends StatelessWidget {
         active: tabsRouter.activeIndex,
         onTap: tabsRouter.setActiveIndex,
       ),
-      SizedBox(width: AppConstants.fabSpacing),
+      SizedBox(width: Constants.fabSpacing),
       TabItemButton(
         tab: HomeTab.month,
         active: tabsRouter.activeIndex,
