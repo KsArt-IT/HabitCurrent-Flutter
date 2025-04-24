@@ -6,7 +6,7 @@ import 'package:habit_current/ui/habit_create/bloc/habit_create_bloc.dart';
 import 'package:habit_current/ui/widgets/text_form_title.dart';
 
 class HabitNameEditWidget extends StatelessWidget {
-  const HabitNameEditWidget({super.key,});
+  const HabitNameEditWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,20 @@ class HabitNameEditWidget extends StatelessWidget {
           SizedBox(height: Constants.paddingMedium),
           TextField(
             style: theme.textTheme.bodyLarge,
+            cursorColor: theme.colorScheme.onPrimary,
             decoration: InputDecoration(
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Constants.textFieldRadius),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Constants.textFieldRadius),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(Constants.textFieldRadius),
+                borderSide: BorderSide.none,
+              ),
               filled: true,
               fillColor: theme.colorScheme.secondaryContainer,
               hintText: strings.habitEnterNameHint,
@@ -40,7 +52,10 @@ class HabitNameEditWidget extends StatelessWidget {
                 vertical: Constants.textFieldPaddingVertical,
               ),
             ),
-            onChanged: (value) => context.read<HabitCreateBloc>().add(NameChangedEvent(name: value)),
+            onChanged:
+                (value) => context.read<HabitCreateBloc>().add(
+                  NameChangedEvent(name: value),
+                ),
           ),
         ],
       ),
