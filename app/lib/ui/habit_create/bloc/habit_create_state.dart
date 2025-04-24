@@ -4,6 +4,8 @@ enum StatsStatus { initial, loading, valid, success, failure }
 
 enum Frequency { daily, weekly }
 
+enum Reminder { enabled, disabled }
+
 final class HabitCreateState extends Equatable {
   final StatsStatus status;
 
@@ -16,7 +18,7 @@ final class HabitCreateState extends Equatable {
   // Hour intervals
   final List<int> intervals;
   // ReminderSelector
-  final bool isReminder;
+  final Reminder reminder;
 
   const HabitCreateState({
     this.status = StatsStatus.initial,
@@ -27,7 +29,7 @@ final class HabitCreateState extends Equatable {
     this.frequency = Frequency.daily,
     this.weekDays = const {},
     this.intervals = const [420],
-    this.isReminder = false,
+    this.reminder = Reminder.disabled,
   });
 
   HabitCreateState copyWith({
@@ -39,7 +41,7 @@ final class HabitCreateState extends Equatable {
     List<int>? intervals,
     int? selectedTime,
     int? selectedTimeIndex,
-    bool? isReminder,
+    Reminder? reminder,
   }) {
     StatsStatus checkStatus = status ?? StatsStatus.valid;
     if ((name ?? this.name).isEmpty ||
@@ -55,7 +57,7 @@ final class HabitCreateState extends Equatable {
       frequency: frequency ?? this.frequency,
       weekDays: weekDays ?? this.weekDays,
       intervals: intervals ?? this.intervals,
-      isReminder: isReminder ?? this.isReminder,
+      reminder: reminder ?? this.reminder,
     );
   }
 
@@ -67,6 +69,6 @@ final class HabitCreateState extends Equatable {
     frequency,
     weekDays,
     intervals,
-    isReminder,
+    reminder,
   ];
 }

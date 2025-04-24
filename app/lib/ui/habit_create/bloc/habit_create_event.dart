@@ -54,8 +54,8 @@ final class TimeChangedEvent extends HabitCreateEvent {
 }
 
 final class ReminderToggledEvent extends HabitCreateEvent {
-  final bool enabled;
-  const ReminderToggledEvent(this.enabled);
+  final Reminder value;
+  const ReminderToggledEvent(this.value);
   @override
-  List<Object?> get props => [enabled];
+  List<Object?> get props => [value];
 }

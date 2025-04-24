@@ -9,18 +9,21 @@ class ReminderSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isReminder = context.select(
-      (HabitCreateBloc bloc) => bloc.state.isReminder,
+    final reminder = context.select(
+      (HabitCreateBloc bloc) => bloc.state.reminder,
     );
     final strings = context.l10n;
     final theme = Theme.of(context);
 
-    RadioListTile radioListTile({required String title, required bool value}) {
+    RadioListTile radioListTile({
+      required String title,
+      required Reminder value,
+    }) {
       return RadioListTile(
         title: Text(
           title,
           style:
-              isReminder
+              reminder == value
                   ? theme.textTheme.titleSmall?.copyWith(
                     color: theme.colorScheme.primaryFixed,
                   )
@@ -32,7 +35,7 @@ class ReminderSelector extends StatelessWidget {
         controlAffinity: ListTileControlAffinity.leading,
         radioScaleFactor: 1.2,
         value: value,
-        groupValue: isReminder,
+        groupValue: reminder,
         onChanged: (value) {
           context.read<HabitCreateBloc>().add(ReminderToggledEvent(value));
         },
@@ -53,8 +56,14 @@ class ReminderSelector extends StatelessWidget {
         children: [
           Text(strings.reminder, style: theme.textTheme.titleMedium),
           const SizedBox(height: Constants.paddingMedium),
-          radioListTile(title: strings.withoutReminder, value: false),
-          radioListTile(title: strings.enableReminders, value: true),
+          radioListTile(
+            title: strings.withoutReminder,
+            value: Reminder.disabled,
+          ),
+          radioListTile(
+            title: strings.enableReminders,
+            value: Reminder.enabled,
+          ),
         ],
       ),
     );

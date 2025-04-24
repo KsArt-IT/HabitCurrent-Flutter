@@ -94,7 +94,7 @@ final class HabitCreateBloc extends Bloc<HabitCreateEvent, HabitCreateState> {
     ReminderToggledEvent event,
     Emitter<HabitCreateState> emit,
   ) {
-    emit(state.copyWith(isReminder: event.enabled));
+    emit(state.copyWith(reminder: event.value));
   }
 
   void _onHabitCreateSaveEvent(
