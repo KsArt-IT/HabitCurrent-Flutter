@@ -13,7 +13,7 @@ sealed class AppTheme {
     colorScheme: ColorScheme.light().copyWith(
       primary: AppColors.gray100,
       onPrimary: AppColors.gray950,
-      inversePrimary: AppColors.gray50,
+      inversePrimary: AppColors.gray950,
 
       // primaryContainer: AppColors.error, //AppColors.gray950,
       // onPrimaryContainer: AppColors.error,
@@ -104,6 +104,11 @@ sealed class AppTheme {
         fontWeight: FontWeight.w300,
         color: AppColors.gray800,
       ),
+      headlineMedium: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w300,
+        color: AppColors.gray950,
+      ),
       bodyLarge: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
@@ -161,8 +166,8 @@ sealed class AppTheme {
     scaffoldBackgroundColor: AppColors.gray950,
     colorScheme: ColorScheme.dark().copyWith(
       // Primary gray50 gray950
-      primary: AppColors.gray50,
-      onPrimary: AppColors.gray950,
+      primary: AppColors.gray900,
+      onPrimary: AppColors.gray50,
       inversePrimary: AppColors.gray50,
 
       // primaryContainer: AppColors.error,
@@ -255,6 +260,11 @@ sealed class AppTheme {
         fontSize: 14,
         fontWeight: FontWeight.w300,
         color: AppColors.gray800,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w300,
+        color: AppColors.gray50,
       ),
       bodyLarge: TextStyle(
         fontSize: 16,
