@@ -21,8 +21,8 @@ class HabitCreateScreen extends StatelessWidget {
     final appState = context.read<AppBloc>().state;
 
     int userId = 0;
-    if (appState is AppLoadedState) {
-      userId = appState.user.id;
+    if (appState is AppHabitCreateState) {
+      userId = appState.userId;
     }
 
     return BlocProvider(
@@ -46,7 +46,8 @@ class _HabitCreateBody extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status == StatsStatus.success) {
-          context.router.pop();
+          // Оповестим, что нужно обновить список привычек
+          context.read<AppBloc>().add(AppHabitCreatedEvent());
         }
       },
       child: Scaffold(
