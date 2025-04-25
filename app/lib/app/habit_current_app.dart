@@ -39,6 +39,9 @@ class HabitCurrentApp extends StatelessWidget {
       builder: (context, child) {
         return BlocListener<AppBloc, AppState>(
           listener: (context, state) {
+            print('--------------------------------');
+            print('state: $state');
+            print('--------------------------------');
             switch (state) {
               case AppInitialState():
                 debugPrint('AppInitialState');
@@ -48,15 +51,17 @@ class HabitCurrentApp extends StatelessWidget {
               case AppHelloState():
                 debugPrint('AppHelloState');
                 router.replace(const HelloRoute());
-              case AppHabitCreateState():
-                debugPrint('AppHabitCreateState');
-                router.push(const HabitCreateRoute());
               case AppLoadedState(user: final user):
                 debugPrint('AppLoadedState: ${user.name}');
                 router.replace(const HomeRoute());
+              case AppHabitCreateState():
+                debugPrint('AppHabitCreateState');
+                router.push(const HabitCreateRoute());
+              case AppHabitCreatedState():
+                debugPrint('AppHabitCreatedState');
               case AppErrorState(error: final error):
                 debugPrint('AppErrorState: $error');
-              // TO-DO: отобразить ошибку;
+              // TODO: отобразить ошибку;
             }
           },
           child: child,
