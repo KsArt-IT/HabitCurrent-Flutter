@@ -43,11 +43,11 @@ class _HabitFlowBody extends StatelessWidget {
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
         if (state is AppHabitCreatedState) {
-          print('_HabitFlowBody::AppHabitCreatedState');
           context.read<HabitFlowBloc>().add(HabitCreatedEvent());
         }
       },
       child: RefreshIndicator(
+        color: theme.colorScheme.primaryFixed,
         onRefresh: () async {
           context.read<HabitFlowBloc>().add(RefreshHabitsEvent());
         },
@@ -96,7 +96,7 @@ class _HabitFlowBody extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: Constants.paddingMedium,
                 crossAxisSpacing: Constants.paddingMedium,
-                childAspectRatio: 1,
+                childAspectRatio: 1.2,
               ),
               itemCount: todayHabits.length,
               itemBuilder: (context, index) {
