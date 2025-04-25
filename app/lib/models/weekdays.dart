@@ -19,8 +19,9 @@ enum WeekDays {
     WeekDays.saturday => 32,
     WeekDays.sunday => 64,
   };
+  static WeekDays get today => WeekDays.values[DateTime.now().weekday - 1];
   static const int none = 0;
-  static final int allDays = 127;
+  static const int allDays = 127;
   static Set<WeekDays> fromInt(int value) =>
       WeekDays.values.where((element) => value & element.toBit != 0).toSet();
 }
