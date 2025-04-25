@@ -14,7 +14,6 @@ sealed class AppTheme {
       primary: AppColors.gray100,
       onPrimary: AppColors.gray950,
       inversePrimary: AppColors.gray950,
-
       // primaryContainer: AppColors.error, //AppColors.gray950,
       // onPrimaryContainer: AppColors.error,
       //
@@ -23,6 +22,8 @@ sealed class AppTheme {
       //
       primaryFixed: AppColors.gray900,
       onPrimaryFixed: AppColors.brandColor,
+      //
+      secondaryFixed: AppColors.gray950,
       //
       secondaryContainer: AppColors.gray50,
       onSecondaryContainer: AppColors.gray950,
@@ -188,7 +189,7 @@ sealed class AppTheme {
       //
       // secondary: AppColors.gray50,
       // onSecondary: AppColors.gray950,
-      secondaryFixed: AppColors.gray700,
+      secondaryFixed: AppColors.gray950,
       //
       secondaryContainer: AppColors.gray950,
       onSecondaryContainer: AppColors.gray50,
