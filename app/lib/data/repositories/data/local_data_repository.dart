@@ -46,6 +46,15 @@ final class LocalDataRepository implements DataRepository {
   }
 
   @override
+  Future<List<Habit>> loadHabitsByUserIdFromDate(int userId, DateTime date) async {
+    final habits = await _service.loadHabitsByUserIdFromDate(userId, date);
+    if (habits.isEmpty) {
+      return [];
+    }
+    return habits.map((e) => e.toDomain()).toList();
+  }
+
+  @override
   Future<Habit> createHabit(Habit habit) async {
     final model = await _service.createHabit(habit.toModel());
     return model.toDomain();
