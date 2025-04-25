@@ -73,6 +73,10 @@ final class LocalDataService implements DataService {
   Future<HabitModel> createHabit(HabitModel habit) async {
     try {
       int habitId = -1;
+      print("---------------------------");
+      print('createHabit: ${habit.userId} ${habit.name} ${habit.details} ${habit.weekDaysRaw}');
+      print('intervals: ${habit.intervals.map((e) => e.time).toList()}');
+      print("---------------------------");
       await database.transaction(() async {
         habitId = await database.habits.insertOnConflictUpdate(
           HabitsCompanion.insert(
@@ -183,6 +187,47 @@ final class LocalDataService implements DataService {
     }
   }
 
+  @override
+  Future<List<HabitModel>> loadHabitsByUserIdFromDate(int userId, DateTime date) async {
+    try {
+      final rows =
+          await (database.habits.select()
+                ..where((f) => f.userId.equals(userId))
+                ..where(
+                  (f) =>
+                      f.completed.isNull() |
+                      f.completed.year.isBiggerOrEqualValue(date.year) &
+                      f.completed.month.isBiggerOrEqualValue(date.month) &
+                      f.completed.day.isBiggerOrEqualValue(date.day),
+                ))
+              .get();
+      return Future.wait(
+        rows.map((habitRow) async {
+          return HabitModel(
+            id: habitRow.id,
+            userId: habitRow.userId,
+            name: habitRow.name,
+            details: habitRow.details,
+            created: habitRow.created,
+            updated: habitRow.updated,
+            completed: habitRow.completed,
+            weekDaysRaw: habitRow.weekDaysRaw,
+            intervals: await _loadHourIntervalsByHabitId(habitRow.id),
+            completedIntervals:
+                await _loadHourIntervalCompletedsByHabitIdFromDate(
+                  habitRow.id,
+                  date,
+                ),
+          );
+        }),
+      ).then((List<HabitModel> habitModels) {
+        return habitModels;
+      });
+    } catch (e) {
+      throw Exception('Error loading habits by user id: $e');
+    }
+  }
+
   // MARK: - HourInterval
   Future<List<HourIntervalModel>> _loadHourIntervalsByHabitId(
     int habitId,
@@ -211,6 +256,34 @@ final class LocalDataService implements DataService {
       final rows =
           await (database.hourIntervalCompleteds.select()
                 ..where((f) => f.habitId.equals(habitId)))
+              .get();
+      return rows
+          .map(
+            (e) => HourIntervalCompletedModel(
+              id: e.id,
+              habitId: e.habitId,
+              time: e.time,
+              completed: e.completed,
+            ),
+          )
+          .toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<HourIntervalCompletedModel>>
+  _loadHourIntervalCompletedsByHabitIdFromDate(
+    int habitId,
+    DateTime date,
+  ) async {
+    try {
+      final rows =
+          await (database.hourIntervalCompleteds.select()
+                ..where((f) => f.habitId.equals(habitId))
+                ..where((f) => f.completed.year.equals(date.year))
+                ..where((f) => f.completed.month.equals(date.month))
+                ..where((f) => f.completed.day.equals(date.day)))
               .get();
       return rows
           .map(
