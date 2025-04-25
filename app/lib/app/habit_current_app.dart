@@ -59,6 +59,7 @@ class HabitCurrentApp extends StatelessWidget {
                 router.push(const HabitCreateRoute());
               case AppHabitCreatedState():
                 debugPrint('AppHabitCreatedState');
+                router.pop();
               case AppErrorState(error: final error):
                 debugPrint('AppErrorState: $error');
               // TODO: отобразить ошибку;
