@@ -7,6 +7,11 @@ abstract interface class DataService {
   Future<void> deleteUserById(int id);
 
   Future<List<HabitModel>> loadHabitsByUserId(int userId);
+  Future<List<HabitModel>> loadHabitsByUserIdFromDate(
+    int userId,
+    DateTime date,
+  );
+  
   Future<HabitModel> createHabit(HabitModel habit);
   Future<void> saveHabit(HabitModel habit);
   Future<void> deleteHabitById(int id);
