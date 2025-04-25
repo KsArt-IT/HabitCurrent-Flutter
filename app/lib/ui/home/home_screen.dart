@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
@@ -36,7 +38,7 @@ class HomeScreen extends StatelessWidget {
             shape: const CircleBorder(),
             key: const Key('homeView_add_floatingActionButton'),
             onPressed: () {
-              context.router.push(const HabitCreateRoute());
+              context.read<AppBloc>().add(AppHabitCreateEvent());
             },
             backgroundColor: theme.colorScheme.primary,
             foregroundColor: theme.colorScheme.onPrimary,
