@@ -108,5 +108,17 @@ class AppLocalizationsUk extends AppLocalizations {
   String get habitEnterNameError => 'Будь ласка, введіть звичку, повинна містити 3-20 букв';
 
   @override
+  String get n_5 => '---Flow---';
+
+  @override
+  String get noHabits => 'У вас немає доданих звичок';
+
+  @override
+  String get noHabitsToday => 'У вас немає доданих звичок на сьогодні';
+
+  @override
+  String get errorUnknown => 'Помилка! Будь ласка, спробуйте пізніше';
+
+  @override
   String get n_n => '---';
 }

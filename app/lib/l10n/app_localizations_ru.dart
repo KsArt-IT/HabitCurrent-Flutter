@@ -108,5 +108,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get habitEnterNameError => 'Пожалуйста, введите привычку, должна содержать 3-20 букв';
 
   @override
+  String get n_5 => '---Flow---';
+
+  @override
+  String get noHabits => 'У вас нет добавленных привычек';
+
+  @override
+  String get noHabitsToday => 'У вас нет добавленных привычек на сегодня';
+
+  @override
+  String get errorUnknown => 'Ошибка! Пожалуйста, попробуйте позже';
+
+  @override
   String get n_n => '---';
 }

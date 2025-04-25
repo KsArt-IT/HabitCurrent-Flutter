@@ -40,5 +40,11 @@
     "enableReminders": "Enable Reminders",
     
     "habitEnterNameError": "Please enter a habit name, it must contain 3-20 letters",
+
+    "n_5": "---Flow---",
+    "noHabits": "You have no habits added yet.",
+    "noHabitsToday": "You have no added habits for today.",
+    "errorUnknown": "Error! Please try again later.",
+
     "n_n": "---"
 }

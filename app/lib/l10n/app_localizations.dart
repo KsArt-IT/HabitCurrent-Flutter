@@ -295,6 +295,30 @@ abstract class AppLocalizations {
   /// **'Please enter a habit name, it must contain 3-20 letters'**
   String get habitEnterNameError;
 
+  /// No description provided for @n_5.
+  ///
+  /// In en, this message translates to:
+  /// **'---Flow---'**
+  String get n_5;
+
+  /// No description provided for @noHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no habits added yet.'**
+  String get noHabits;
+
+  /// No description provided for @noHabitsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'You have no added habits for today.'**
+  String get noHabitsToday;
+
+  /// No description provided for @errorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Error! Please try again later.'**
+  String get errorUnknown;
+
   /// No description provided for @n_n.
   ///
   /// In en, this message translates to:

@@ -108,5 +108,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get habitEnterNameError => 'Please enter a habit name, it must contain 3-20 letters';
 
   @override
+  String get n_5 => '---Flow---';
+
+  @override
+  String get noHabits => 'You have no habits added yet.';
+
+  @override
+  String get noHabitsToday => 'You have no added habits for today.';
+
+  @override
+  String get errorUnknown => 'Error! Please try again later.';
+
+  @override
   String get n_n => '---';
 }
