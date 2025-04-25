@@ -16,3 +16,7 @@ final class AppUpdateNameEvent extends AppEvent {
   @override
   List<Object?> get props => [name];
 }
+
+final class AppHabitCreateEvent extends AppEvent {}
+
+final class AppHabitCreatedEvent extends AppEvent {}
