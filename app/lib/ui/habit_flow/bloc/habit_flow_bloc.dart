@@ -1,0 +1,89 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_current/data/repositories/data/data_repository.dart';
+import 'package:habit_current/models/habit.dart';
+
+part 'habit_flow_state.dart';
+part 'habit_flow_event.dart';
+
+class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
+  final DataRepository _repository;
+
+  HabitFlowBloc({required DataRepository repository})
+    : _repository = repository,
+      super(const HabitFlowState()) {
+    on<LoadHabitsEvent>(_onLoadHabits);
+    on<RefreshHabitsEvent>(_onRefreshHabits);
+    on<HabitCreatedEvent>(_onHabitCreated);
+  }
+
+  Future<void> _onLoadHabits(
+    LoadHabitsEvent event,
+    Emitter<HabitFlowState> emit,
+  ) async {
+    emit(state.copyWith(userId: event.userId, status: HabitFlowStatus.loading));
+
+    try {
+      final habits = await _repository.loadHabitsByUserIdFromDate(
+        event.userId,
+        DateTime.now(),
+      );
+      if (habits.isEmpty) {
+        emit(state.copyWith(status: HabitFlowStatus.success, habits: []));
+        return;
+      }
+      print("-----------------------------");
+      print("habits: ${habits.length}");
+      print("-----------------------------");
+      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HabitFlowStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onRefreshHabits(
+    RefreshHabitsEvent event,
+    Emitter<HabitFlowState> emit,
+  ) async {
+    try {
+      final habits = await _repository.loadHabitsByUserIdFromDate(
+        state.userId,
+        DateTime.now(),
+      );
+
+      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HabitFlowStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onHabitCreated(
+    HabitCreatedEvent event,
+    Emitter<HabitFlowState> emit,
+  ) async {
+    try {
+      final habits = await _repository.loadHabitsByUserIdFromDate(
+        state.userId,
+        DateTime.now(),
+      );
+      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HabitFlowStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+}
