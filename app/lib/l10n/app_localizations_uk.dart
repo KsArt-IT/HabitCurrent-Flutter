@@ -120,5 +120,8 @@ class AppLocalizationsUk extends AppLocalizations {
   String get errorUnknown => 'Помилка! Будь ласка, спробуйте пізніше';
 
   @override
+  String get edit => 'Редагувати';
+
+  @override
   String get n_n => '---';
 }

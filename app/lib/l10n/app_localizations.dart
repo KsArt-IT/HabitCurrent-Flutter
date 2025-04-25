@@ -319,6 +319,12 @@ abstract class AppLocalizations {
   /// **'Error! Please try again later.'**
   String get errorUnknown;
 
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
   /// No description provided for @n_n.
   ///
   /// In en, this message translates to:

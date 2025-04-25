@@ -120,5 +120,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorUnknown => 'Error! Please try again later.';
 
   @override
+  String get edit => 'Edit';
+
+  @override
   String get n_n => '---';
 }
