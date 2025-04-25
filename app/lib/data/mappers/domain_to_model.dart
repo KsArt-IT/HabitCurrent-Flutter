@@ -23,7 +23,7 @@ extension HabitToModel on Habit {
     created: created,
     updated: updated,
     completed: completed,
-    weekDaysRaw: weekDays.toInt(),
+    weekDaysRaw: weekDays.isNotEmpty ? weekDays.toInt() : WeekDays.allDays,
     intervals: intervals.map((e) => e.toModel(id)).toList(),
     completedIntervals: completedIntervals.map((e) => e.toModel(id)).toList(),
   );

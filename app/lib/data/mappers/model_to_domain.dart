@@ -26,7 +26,7 @@ extension HabitToDomain on HabitModel {
       created: created,
       updated: updated,
       completed: completed,
-      weekDays: WeekDays.fromInt(weekDaysRaw),
+      weekDays: weekDaysRaw > 0 ? WeekDays.fromInt(weekDaysRaw) : WeekDays.values.toSet(),
       intervals: intervals.map((e) => e.toDomain()).toList(),
       completedIntervals: completedIntervals.map((e) => e.toDomain()).toList(),
     );
