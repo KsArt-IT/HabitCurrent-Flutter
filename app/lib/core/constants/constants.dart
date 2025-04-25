@@ -21,6 +21,8 @@ abstract final class Constants {
   static const double tabItemRadius = tabItemButtonSize / 2;
   
   static const double fabSpacing = 48;
+  
+  static const double iconSize = 22;
 
   static final regExpName = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$');
   static final regExpHabit = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z0-9\s]+$');
