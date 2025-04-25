@@ -20,7 +20,15 @@ final class AppOnboardState extends AppState {}
 
 final class AppHelloState extends AppState {}
 
-final class AppHabitCreateState extends AppState {}
+final class AppHabitCreateState extends AppState {
+  final int userId;
+  const AppHabitCreateState({required this.userId});
+
+  @override
+  List<Object?> get props => [userId];
+}
+
+final class AppHabitCreatedState extends AppState {}
 
 final class AppErrorState extends AppState {
   final String error;
