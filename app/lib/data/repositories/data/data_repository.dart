@@ -8,6 +8,7 @@ abstract interface class DataRepository {
   Future<void> deleteUserById(int id);
 
   Future<List<Habit>> loadHabitsByUserId(int userId);
+  Future<List<Habit>> loadHabitsByUserIdFromDate(int userId, DateTime date);
   Future<Habit> createHabit(Habit habit);
   Future<void> saveHabit(Habit habit);
   Future<void> deleteHabitById(int id);
