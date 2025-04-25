@@ -107,7 +107,8 @@ final class HabitCreateBloc extends Bloc<HabitCreateEvent, HabitCreateState> {
         userId: userId,
         name: state.name,
         details: state.details,
-        weekDays: state.weekDays,
+        // если Frequency.weekly, то передаем список, иначе пустой список
+        weekDays: state.frequency == Frequency.weekly ? state.weekDays : {},
         intervals: state.intervals.map((e) => HourInterval(time: e)).toList(),
       ),
     );
