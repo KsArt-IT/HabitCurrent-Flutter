@@ -96,7 +96,7 @@ final class LocalDataService implements DataService {
           );
         }
       });
-      final habitRow = await loadHabitById(habitId);
+      final habitRow = await loadHabitById(habitId, DateTime.now());
       if (habitRow == null) {
         throw Exception('Habit not found after creation');
       }
@@ -129,7 +129,8 @@ final class LocalDataService implements DataService {
     });
   }
 
-  Future<HabitModel?> loadHabitById(int id) async {
+  @override
+  Future<HabitModel?> loadHabitById(int id, DateTime date) async {
     try {
       final habitRow =
           await (database.habits.select()..where((f) => f.id.equals(id)))
@@ -146,8 +147,9 @@ final class LocalDataService implements DataService {
         completed: habitRow.completed,
         weekDaysRaw: habitRow.weekDaysRaw,
         intervals: await _loadHourIntervalsByHabitId(habitRow.id),
-        completedIntervals: await _loadHourIntervalCompletedsByHabitId(
+        completedIntervals: await _loadHourIntervalCompletedsByHabitIdFromDate(
           habitRow.id,
+          date,
         ),
       );
     } catch (e) {
@@ -262,6 +264,7 @@ final class LocalDataService implements DataService {
             (e) => HourIntervalCompletedModel(
               id: e.id,
               habitId: e.habitId,
+              intervalId: e.intervalId,
               time: e.time,
               completed: e.completed,
             ),
@@ -290,6 +293,7 @@ final class LocalDataService implements DataService {
             (e) => HourIntervalCompletedModel(
               id: e.id,
               habitId: e.habitId,
+              intervalId: e.intervalId,
               time: e.time,
               completed: e.completed,
             ),
@@ -315,7 +319,9 @@ final class LocalDataService implements DataService {
       final id = await database.hourIntervalCompleteds.insertOnConflictUpdate(
         HourIntervalCompletedsCompanion.insert(
           habitId: completed.habitId,
+          intervalId: completed.intervalId,
           time: completed.time,
+          completed: Value(completed.completed),
         ),
       );
       final intervalRow =
@@ -328,23 +334,12 @@ final class LocalDataService implements DataService {
       return HourIntervalCompletedModel(
         id: intervalRow.id,
         habitId: intervalRow.habitId,
+        intervalId: intervalRow.intervalId,
         time: intervalRow.time,
         completed: intervalRow.completed,
       );
     } catch (e) {
       throw Exception('Error creating hour interval completed: $e');
     }
-  }
-
-  @override
-  Future<void> saveHourIntervalCompleted(HourIntervalCompletedModel completed) {
-    return database.hourIntervalCompleteds.update().write(
-      HourIntervalCompletedsCompanion(
-        id: Value(completed.id),
-        habitId: Value(completed.habitId),
-        time: Value(completed.time),
-        completed: Value(completed.completed),
-      ),
-    );
   }
 }
