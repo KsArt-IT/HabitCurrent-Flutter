@@ -3,6 +3,7 @@ import 'package:habit_current/data/mappers/model_to_domain.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/models/habit.dart';
+import 'package:habit_current/models/hour_interval_completed.dart';
 import 'package:habit_current/models/user.dart';
 
 final class LocalDataRepository implements DataRepository {
@@ -46,12 +47,21 @@ final class LocalDataRepository implements DataRepository {
   }
 
   @override
-  Future<List<Habit>> loadHabitsByUserIdFromDate(int userId, DateTime date) async {
+  Future<List<Habit>> loadHabitsByUserIdFromDate(
+    int userId,
+    DateTime date,
+  ) async {
     final habits = await _service.loadHabitsByUserIdFromDate(userId, date);
     if (habits.isEmpty) {
       return [];
     }
     return habits.map((e) => e.toDomain()).toList();
+  }
+
+  @override
+  Future<Habit?> loadHabitById(int id, DateTime date) async {
+    final habit = await _service.loadHabitById(id, date);
+    return habit?.toDomain();
   }
 
   @override
@@ -68,5 +78,21 @@ final class LocalDataRepository implements DataRepository {
   @override
   Future<void> deleteHabitById(int id) {
     return _service.deleteHabitById(id);
+  }
+
+  @override
+  Future<HourIntervalCompleted> createHourIntervalCompleted(
+    int habitId,
+    HourIntervalCompleted interval,
+  ) async {
+    final model = await _service.createHourIntervalCompleted(
+      interval.toModel(habitId),
+    );
+    return model.toDomain();
+  }
+
+  @override
+  Future<void> deleteHourIntervalCompletedById(int id) {
+    return _service.deleteHourIntervalCompletedById(id);
   }
 }
