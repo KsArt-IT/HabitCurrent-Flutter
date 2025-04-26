@@ -1092,6 +1092,17 @@ class $HourIntervalCompletedsTable extends HourIntervalCompleteds
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _intervalIdMeta = const VerificationMeta(
+    'intervalId',
+  );
+  @override
+  late final GeneratedColumn<int> intervalId = GeneratedColumn<int>(
+    'interval_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _timeMeta = const VerificationMeta('time');
   @override
   late final GeneratedColumn<int> time = GeneratedColumn<int>(
@@ -1114,7 +1125,13 @@ class $HourIntervalCompletedsTable extends HourIntervalCompleteds
     clientDefault: () => DateTime.now(),
   );
   @override
-  List<GeneratedColumn> get $columns => [id, habitId, time, completed];
+  List<GeneratedColumn> get $columns => [
+    id,
+    habitId,
+    intervalId,
+    time,
+    completed,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1137,6 +1154,14 @@ class $HourIntervalCompletedsTable extends HourIntervalCompleteds
       );
     } else if (isInserting) {
       context.missing(_habitIdMeta);
+    }
+    if (data.containsKey('interval_id')) {
+      context.handle(
+        _intervalIdMeta,
+        intervalId.isAcceptableOrUnknown(data['interval_id']!, _intervalIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_intervalIdMeta);
     }
     if (data.containsKey('time')) {
       context.handle(
@@ -1171,6 +1196,11 @@ class $HourIntervalCompletedsTable extends HourIntervalCompleteds
             DriftSqlType.int,
             data['${effectivePrefix}habit_id'],
           )!,
+      intervalId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}interval_id'],
+          )!,
       time:
           attachedDatabase.typeMapping.read(
             DriftSqlType.int,
@@ -1194,11 +1224,13 @@ class HourIntervalCompleted extends DataClass
     implements Insertable<HourIntervalCompleted> {
   final int id;
   final int habitId;
+  final int intervalId;
   final int time;
   final DateTime completed;
   const HourIntervalCompleted({
     required this.id,
     required this.habitId,
+    required this.intervalId,
     required this.time,
     required this.completed,
   });
@@ -1207,6 +1239,7 @@ class HourIntervalCompleted extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['habit_id'] = Variable<int>(habitId);
+    map['interval_id'] = Variable<int>(intervalId);
     map['time'] = Variable<int>(time);
     map['completed'] = Variable<DateTime>(completed);
     return map;
@@ -1216,6 +1249,7 @@ class HourIntervalCompleted extends DataClass
     return HourIntervalCompletedsCompanion(
       id: Value(id),
       habitId: Value(habitId),
+      intervalId: Value(intervalId),
       time: Value(time),
       completed: Value(completed),
     );
@@ -1229,6 +1263,7 @@ class HourIntervalCompleted extends DataClass
     return HourIntervalCompleted(
       id: serializer.fromJson<int>(json['id']),
       habitId: serializer.fromJson<int>(json['habitId']),
+      intervalId: serializer.fromJson<int>(json['intervalId']),
       time: serializer.fromJson<int>(json['time']),
       completed: serializer.fromJson<DateTime>(json['completed']),
     );
@@ -1239,6 +1274,7 @@ class HourIntervalCompleted extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'habitId': serializer.toJson<int>(habitId),
+      'intervalId': serializer.toJson<int>(intervalId),
       'time': serializer.toJson<int>(time),
       'completed': serializer.toJson<DateTime>(completed),
     };
@@ -1247,11 +1283,13 @@ class HourIntervalCompleted extends DataClass
   HourIntervalCompleted copyWith({
     int? id,
     int? habitId,
+    int? intervalId,
     int? time,
     DateTime? completed,
   }) => HourIntervalCompleted(
     id: id ?? this.id,
     habitId: habitId ?? this.habitId,
+    intervalId: intervalId ?? this.intervalId,
     time: time ?? this.time,
     completed: completed ?? this.completed,
   );
@@ -1261,6 +1299,8 @@ class HourIntervalCompleted extends DataClass
     return HourIntervalCompleted(
       id: data.id.present ? data.id.value : this.id,
       habitId: data.habitId.present ? data.habitId.value : this.habitId,
+      intervalId:
+          data.intervalId.present ? data.intervalId.value : this.intervalId,
       time: data.time.present ? data.time.value : this.time,
       completed: data.completed.present ? data.completed.value : this.completed,
     );
@@ -1271,6 +1311,7 @@ class HourIntervalCompleted extends DataClass
     return (StringBuffer('HourIntervalCompleted(')
           ..write('id: $id, ')
           ..write('habitId: $habitId, ')
+          ..write('intervalId: $intervalId, ')
           ..write('time: $time, ')
           ..write('completed: $completed')
           ..write(')'))
@@ -1278,13 +1319,14 @@ class HourIntervalCompleted extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, habitId, time, completed);
+  int get hashCode => Object.hash(id, habitId, intervalId, time, completed);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is HourIntervalCompleted &&
           other.id == this.id &&
           other.habitId == this.habitId &&
+          other.intervalId == this.intervalId &&
           other.time == this.time &&
           other.completed == this.completed);
 }
@@ -1293,30 +1335,36 @@ class HourIntervalCompletedsCompanion
     extends UpdateCompanion<HourIntervalCompleted> {
   final Value<int> id;
   final Value<int> habitId;
+  final Value<int> intervalId;
   final Value<int> time;
   final Value<DateTime> completed;
   const HourIntervalCompletedsCompanion({
     this.id = const Value.absent(),
     this.habitId = const Value.absent(),
+    this.intervalId = const Value.absent(),
     this.time = const Value.absent(),
     this.completed = const Value.absent(),
   });
   HourIntervalCompletedsCompanion.insert({
     this.id = const Value.absent(),
     required int habitId,
+    required int intervalId,
     required int time,
     this.completed = const Value.absent(),
   }) : habitId = Value(habitId),
+       intervalId = Value(intervalId),
        time = Value(time);
   static Insertable<HourIntervalCompleted> custom({
     Expression<int>? id,
     Expression<int>? habitId,
+    Expression<int>? intervalId,
     Expression<int>? time,
     Expression<DateTime>? completed,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (habitId != null) 'habit_id': habitId,
+      if (intervalId != null) 'interval_id': intervalId,
       if (time != null) 'time': time,
       if (completed != null) 'completed': completed,
     });
@@ -1325,12 +1373,14 @@ class HourIntervalCompletedsCompanion
   HourIntervalCompletedsCompanion copyWith({
     Value<int>? id,
     Value<int>? habitId,
+    Value<int>? intervalId,
     Value<int>? time,
     Value<DateTime>? completed,
   }) {
     return HourIntervalCompletedsCompanion(
       id: id ?? this.id,
       habitId: habitId ?? this.habitId,
+      intervalId: intervalId ?? this.intervalId,
       time: time ?? this.time,
       completed: completed ?? this.completed,
     );
@@ -1344,6 +1394,9 @@ class HourIntervalCompletedsCompanion
     }
     if (habitId.present) {
       map['habit_id'] = Variable<int>(habitId.value);
+    }
+    if (intervalId.present) {
+      map['interval_id'] = Variable<int>(intervalId.value);
     }
     if (time.present) {
       map['time'] = Variable<int>(time.value);
@@ -1359,6 +1412,7 @@ class HourIntervalCompletedsCompanion
     return (StringBuffer('HourIntervalCompletedsCompanion(')
           ..write('id: $id, ')
           ..write('habitId: $habitId, ')
+          ..write('intervalId: $intervalId, ')
           ..write('time: $time, ')
           ..write('completed: $completed')
           ..write(')'))
@@ -1986,6 +2040,7 @@ typedef $$HourIntervalCompletedsTableCreateCompanionBuilder =
     HourIntervalCompletedsCompanion Function({
       Value<int> id,
       required int habitId,
+      required int intervalId,
       required int time,
       Value<DateTime> completed,
     });
@@ -1993,6 +2048,7 @@ typedef $$HourIntervalCompletedsTableUpdateCompanionBuilder =
     HourIntervalCompletedsCompanion Function({
       Value<int> id,
       Value<int> habitId,
+      Value<int> intervalId,
       Value<int> time,
       Value<DateTime> completed,
     });
@@ -2013,6 +2069,11 @@ class $$HourIntervalCompletedsTableFilterComposer
 
   ColumnFilters<int> get habitId => $composableBuilder(
     column: $table.habitId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get intervalId => $composableBuilder(
+    column: $table.intervalId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2046,6 +2107,11 @@ class $$HourIntervalCompletedsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get intervalId => $composableBuilder(
+    column: $table.intervalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get time => $composableBuilder(
     column: $table.time,
     builder: (column) => ColumnOrderings(column),
@@ -2071,6 +2137,11 @@ class $$HourIntervalCompletedsTableAnnotationComposer
 
   GeneratedColumn<int> get habitId =>
       $composableBuilder(column: $table.habitId, builder: (column) => column);
+
+  GeneratedColumn<int> get intervalId => $composableBuilder(
+    column: $table.intervalId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<int> get time =>
       $composableBuilder(column: $table.time, builder: (column) => column);
@@ -2127,11 +2198,13 @@ class $$HourIntervalCompletedsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> habitId = const Value.absent(),
+                Value<int> intervalId = const Value.absent(),
                 Value<int> time = const Value.absent(),
                 Value<DateTime> completed = const Value.absent(),
               }) => HourIntervalCompletedsCompanion(
                 id: id,
                 habitId: habitId,
+                intervalId: intervalId,
                 time: time,
                 completed: completed,
               ),
@@ -2139,11 +2212,13 @@ class $$HourIntervalCompletedsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int habitId,
+                required int intervalId,
                 required int time,
                 Value<DateTime> completed = const Value.absent(),
               }) => HourIntervalCompletedsCompanion.insert(
                 id: id,
                 habitId: habitId,
+                intervalId: intervalId,
                 time: time,
                 completed: completed,
               ),
