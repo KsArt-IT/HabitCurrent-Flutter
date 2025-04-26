@@ -8,6 +8,8 @@ enum Reminder { enabled, disabled }
 
 final class HabitCreateState extends Equatable {
   final StatsStatus status;
+  
+  final int? habitId;
 
   final String name;
   final String? details;
@@ -22,7 +24,7 @@ final class HabitCreateState extends Equatable {
 
   const HabitCreateState({
     this.status = StatsStatus.initial,
-
+    this.habitId = 0,
     this.name = '',
     this.details,
 
@@ -34,6 +36,7 @@ final class HabitCreateState extends Equatable {
 
   HabitCreateState copyWith({
     StatsStatus? status,
+    int? habitId,
     String? name,
     String? details,
     Frequency? frequency,
@@ -52,6 +55,7 @@ final class HabitCreateState extends Equatable {
 
     return HabitCreateState(
       status: checkStatus,
+      habitId: habitId ?? this.habitId,
       name: name ?? this.name,
       details: details ?? this.details,
       frequency: frequency ?? this.frequency,
@@ -64,6 +68,7 @@ final class HabitCreateState extends Equatable {
   @override
   List<Object?> get props => [
     status,
+    habitId,
     name,
     details,
     frequency,

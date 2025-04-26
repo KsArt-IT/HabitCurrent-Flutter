@@ -47,7 +47,9 @@ class _HabitCreateBody extends StatelessWidget {
       listener: (context, state) {
         if (state.status == StatsStatus.success) {
           // Оповестим, что нужно обновить список привычек
-          context.read<AppBloc>().add(AppHabitCreatedEvent());
+          context.read<AppBloc>().add(
+            AppHabitReloadEvent(habitId: state.habitId),
+          );
         }
       },
       child: Scaffold(
@@ -92,7 +94,8 @@ class _HabitCreateBody extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(Constants.paddingMedium),
                 child: BlocBuilder<HabitCreateBloc, HabitCreateState>(
-                  buildWhen: (previous, current) => previous.status != current.status,
+                  buildWhen:
+                      (previous, current) => previous.status != current.status,
                   builder: (context, state) {
                     return PrimaryButton(
                       label: strings.createBtn,

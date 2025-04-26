@@ -102,7 +102,7 @@ final class HabitCreateBloc extends Bloc<HabitCreateEvent, HabitCreateState> {
     Emitter<HabitCreateState> emit,
   ) async {
     // Save the habit to the database
-    await dataRepository.createHabit(
+    final habit = await dataRepository.createHabit(
       Habit(
         userId: userId,
         name: state.name,
@@ -114,6 +114,6 @@ final class HabitCreateBloc extends Bloc<HabitCreateEvent, HabitCreateState> {
     );
 
     // Закончить создание привычки
-    emit(state.copyWith(status: StatsStatus.success));
+    emit(state.copyWith(status: StatsStatus.success, habitId: habit.id));
   }
 }
