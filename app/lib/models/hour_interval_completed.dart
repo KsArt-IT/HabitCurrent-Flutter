@@ -1,20 +1,13 @@
 final class HourIntervalCompleted {
   final int id;
+  final int intervalId;
   final int time;
   final DateTime completed;
 
   const HourIntervalCompleted({
-    required this.id,
+    this.id = 0,
+    required this.intervalId,
     required this.time,
     required this.completed,
   });
-
-  HourIntervalCompleted copyWith({
-    int? time,
-    DateTime? completed, //
-  }) => HourIntervalCompleted(
-    id: this.id,
-    time: time ?? this.time,
-    completed: completed ?? this.completed,
-  );
 }
