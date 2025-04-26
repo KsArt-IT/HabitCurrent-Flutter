@@ -41,6 +41,7 @@ extension HourIntervalCompletedToModel on HourIntervalCompleted {
   HourIntervalCompletedModel toModel(int habitId) => HourIntervalCompletedModel(
     id: id,
     habitId: habitId,
+    intervalId: intervalId,
     time: time,
     completed: completed,
   );
