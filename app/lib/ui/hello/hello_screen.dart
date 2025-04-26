@@ -76,6 +76,7 @@ class _HelloScreenState extends State<HelloScreen> {
               TextFormField(
                 controller: _nameController,
                 style: theme.textTheme.bodyLarge,
+                cursorColor: theme.colorScheme.onPrimary,
                 decoration: InputDecoration(
                   hintText: strings.namePlaceholder,
                   hintStyle: theme.textTheme.headlineSmall,
