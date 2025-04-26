@@ -11,7 +11,7 @@ abstract interface class DataService {
     int userId,
     DateTime date,
   );
-  
+  Future<HabitModel?> loadHabitById(int id, DateTime date);
   Future<HabitModel> createHabit(HabitModel habit);
   Future<void> saveHabit(HabitModel habit);
   Future<void> deleteHabitById(int id);
@@ -19,7 +19,6 @@ abstract interface class DataService {
   Future<HourIntervalCompletedModel> createHourIntervalCompleted(
     HourIntervalCompletedModel completed,
   );
-  Future<void> saveHourIntervalCompleted(HourIntervalCompletedModel completed);
   Future<void> deleteHourIntervalCompletedById(int id);
 
   Future<void> close();
