@@ -20,3 +20,17 @@ final class AppUpdateNameEvent extends AppEvent {
 final class AppHabitCreateEvent extends AppEvent {}
 
 final class AppHabitCreatedEvent extends AppEvent {}
+
+final class AppHabitViewEvent extends AppEvent {
+  final Habit habit;
+  const AppHabitViewEvent({required this.habit});
+  @override
+  List<Object?> get props => [habit];
+}
+
+final class AppHabitReloadEvent extends AppEvent {
+  final int? habitId;
+  const AppHabitReloadEvent({this.habitId});
+  @override
+  List<Object?> get props => [habitId];
+}

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/settings/settings_repository.dart';
+import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/user.dart';
 
 part 'app_event.dart';
@@ -19,6 +20,8 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppUpdateNameEvent>(_onCreateNameEvent);
     on<AppHabitCreateEvent>(_onHabitCreateEvent);
     on<AppHabitCreatedEvent>(_onHabitCreatedEvent);
+    on<AppHabitViewEvent>(_onHabitViewEvent);
+    on<AppHabitReloadEvent>(_onHabitsReloadEvent);
     // on<AppUpdateLanguageEvent>(_onLanguageChanged);
     // on<AppUpdateThemeEvent>(_onDarkThemeChanged);
     // on<AppSaveEvent>(_onSave);
@@ -84,6 +87,20 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitCreatedEvent event,
     Emitter<AppState> emit,
   ) async {
-    emit(AppHabitCreatedState());
+    emit(AppHabitReloadState());
+  }
+
+  void _onHabitViewEvent(
+    AppHabitViewEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    emit(AppHabitViewState(habit: event.habit));
+  }
+
+  void _onHabitsReloadEvent(
+    AppHabitReloadEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    emit(AppHabitReloadState(habitId: event.habitId));
   }
 }

@@ -1,9 +1,7 @@
 part of 'app_bloc.dart';
 
-sealed class AppState extends Equatable {
+sealed class AppState {
   const AppState();
-  @override
-  List<Object?> get props => [];
 }
 
 final class AppInitialState extends AppState {}
@@ -11,9 +9,6 @@ final class AppInitialState extends AppState {}
 final class AppLoadedState extends AppState {
   final User user;
   const AppLoadedState({required this.user});
-
-  @override
-  List<Object?> get props => [user];
 }
 
 final class AppOnboardState extends AppState {}
@@ -23,17 +18,19 @@ final class AppHelloState extends AppState {}
 final class AppHabitCreateState extends AppState {
   final int userId;
   const AppHabitCreateState({required this.userId});
-
-  @override
-  List<Object?> get props => [userId];
 }
 
-final class AppHabitCreatedState extends AppState {}
+final class AppHabitViewState extends AppState {
+  final Habit habit;
+  const AppHabitViewState({required this.habit});
+}
+
+final class AppHabitReloadState extends AppState {
+  final int? habitId;
+  const AppHabitReloadState({this.habitId});
+}
 
 final class AppErrorState extends AppState {
   final String error;
   const AppErrorState({required this.error});
-
-  @override
-  List<Object?> get props => [error];
 }
