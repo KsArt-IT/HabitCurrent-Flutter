@@ -14,7 +14,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       super(const HabitFlowState()) {
     on<LoadHabitsEvent>(_onLoadHabits);
     on<RefreshHabitsEvent>(_onRefreshHabits);
-    on<HabitCreatedEvent>(_onHabitCreated);
+    on<HabitReloadEvent>(_onHabitReload);
   }
 
   Future<void> _onLoadHabits(
@@ -67,15 +67,30 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     }
   }
 
-  Future<void> _onHabitCreated(
-    HabitCreatedEvent event,
+  Future<void> _onHabitReload(
+    HabitReloadEvent event,
     Emitter<HabitFlowState> emit,
   ) async {
     try {
-      final habits = await _repository.loadHabitsByUserIdFromDate(
-        state.userId,
-        DateTime.now(),
-      );
+      List<Habit> habits = state.habits.toList();
+      if (event.habitId != null) {
+        final habit = await _repository.loadHabitById(
+          event.habitId!,
+          DateTime.now(),
+        );
+        if (habit == null) return;
+        final index = state.habits.indexWhere((e) => e.id == habit.id);
+        if (index != -1) {
+          habits[index] = habit;
+        } else {
+          habits.add(habit);
+        }
+      } else {
+        habits = await _repository.loadHabitsByUserIdFromDate(
+          state.userId,
+          DateTime.now(),
+        );
+      }
       emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
     } catch (e) {
       emit(

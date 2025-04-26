@@ -11,3 +11,9 @@ class LoadHabitsEvent extends HabitFlowEvent {
 class RefreshHabitsEvent extends HabitFlowEvent {}
 
 class HabitCreatedEvent extends HabitFlowEvent {}
+
+class HabitReloadEvent extends HabitFlowEvent {
+  final int? habitId;
+
+  HabitReloadEvent({this.habitId});
+}

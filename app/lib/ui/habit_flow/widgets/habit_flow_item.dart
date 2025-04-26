@@ -5,8 +5,13 @@ import 'package:habit_current/models/habit.dart';
 
 class HabitFlowItem extends StatelessWidget {
   final Habit habit;
+  final VoidCallback onPressed;
 
-  const HabitFlowItem({super.key, required this.habit});
+  const HabitFlowItem({
+    super.key,
+    required this.habit,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +19,7 @@ class HabitFlowItem extends StatelessWidget {
     final strings = context.l10n;
 
     return InkWell(
-      onTap: () {
-        // context.read<HabitFlowBloc>().add(
-        //   CompleteHabitIntervalEvent(habitId: habit.id),
-        // );
-      },
+      onTap: () {},
       borderRadius: BorderRadius.circular(Constants.borderRadius),
       child: Ink(
         padding: const EdgeInsets.fromLTRB(
@@ -81,7 +82,7 @@ class HabitFlowItem extends StatelessWidget {
                 ),
                 IconButton(
                   padding: EdgeInsets.all(Constants.paddingMedium),
-                  onPressed: () {},
+                  onPressed: onPressed,
                   color: theme.colorScheme.onPrimaryFixed,
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(

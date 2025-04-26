@@ -42,8 +42,10 @@ class _HabitFlowBody extends StatelessWidget {
 
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
-        if (state is AppHabitCreatedState) {
-          context.read<HabitFlowBloc>().add(HabitCreatedEvent());
+        if (state is AppHabitReloadState) {
+          context.read<HabitFlowBloc>().add(
+            HabitReloadEvent(habitId: state.habitId),
+          );
         }
       },
       child: RefreshIndicator(
@@ -101,7 +103,14 @@ class _HabitFlowBody extends StatelessWidget {
               itemCount: todayHabits.length,
               itemBuilder: (context, index) {
                 final habit = todayHabits[index];
-                return HabitFlowItem(habit: habit);
+                return HabitFlowItem(
+                  habit: habit,
+                  onPressed: () {
+                    context.read<AppBloc>().add(
+                      AppHabitViewEvent(habit: habit),
+                    );
+                  },
+                );
               },
             );
           },
