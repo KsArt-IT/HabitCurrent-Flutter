@@ -123,5 +123,29 @@ class AppLocalizationsUk extends AppLocalizations {
   String get edit => 'Редагувати';
 
   @override
+  String get n_6 => '---WeekDays---';
+
+  @override
+  String get monday => 'Понеділок';
+
+  @override
+  String get tuesday => 'Вівторок';
+
+  @override
+  String get wednesday => 'Середа';
+
+  @override
+  String get thursday => 'Четвер';
+
+  @override
+  String get friday => 'П\'ятниця';
+
+  @override
+  String get saturday => 'Субота';
+
+  @override
+  String get sunday => 'Неділя';
+
+  @override
   String get n_n => '---';
 }

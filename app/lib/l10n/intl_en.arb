@@ -47,5 +47,14 @@
     "errorUnknown": "Error! Please try again later.",
     "edit": "Edit",
 
+    "n_6": "---WeekDays---",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    
     "n_n": "---"
 }
