@@ -17,3 +17,9 @@ class HabitReloadEvent extends HabitFlowEvent {
 
   HabitReloadEvent({this.habitId});
 }
+
+class HabitDeletedEvent extends HabitFlowEvent {
+  final int habitId;
+
+  HabitDeletedEvent({required this.habitId});
+}
