@@ -1,14 +1,14 @@
-enum WeekDays {
-  monday("Monday"),
-  tuesday("Tuesday"),
-  wednesday("Wednesday"),
-  thursday("Thursday"),
-  friday("Friday"),
-  saturday("Saturday"),
-  sunday("Sunday");
+import 'package:flutter/widgets.dart';
+import 'package:habit_current/l10n/app_localizations.dart';
 
-  final String name;
-  const WeekDays(this.name);
+enum WeekDays {
+  monday,
+  tuesday,
+  wednesday,
+  thursday,
+  friday,
+  saturday,
+  sunday;
 
   int get toBit => switch (this) {
     WeekDays.monday => 1,
@@ -18,6 +18,15 @@ enum WeekDays {
     WeekDays.friday => 16,
     WeekDays.saturday => 32,
     WeekDays.sunday => 64,
+  };
+  String getDayName(BuildContext context) => switch (this) {
+    WeekDays.monday => AppLocalizations.of(context).monday,
+    WeekDays.tuesday => AppLocalizations.of(context).tuesday,
+    WeekDays.wednesday => AppLocalizations.of(context).wednesday,
+    WeekDays.thursday => AppLocalizations.of(context).thursday,
+    WeekDays.friday => AppLocalizations.of(context).friday,
+    WeekDays.saturday => AppLocalizations.of(context).saturday,
+    WeekDays.sunday => AppLocalizations.of(context).sunday,
   };
   static WeekDays get today => WeekDays.values[DateTime.now().weekday - 1];
   static const int none = 0;
