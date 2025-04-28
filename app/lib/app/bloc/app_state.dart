@@ -25,6 +25,11 @@ final class AppHabitViewState extends AppState {
   const AppHabitViewState({required this.habit});
 }
 
+final class AppHabitEditState extends AppState {
+  final Habit habit;
+  const AppHabitEditState({required this.habit});
+}
+
 final class AppHabitReloadState extends AppState {
   final int? habitId;
   const AppHabitReloadState({this.habitId});
