@@ -6,10 +6,14 @@ import 'package:habit_current/models/habit.dart';
 class HabitFlowItem extends StatelessWidget {
   final Habit habit;
   final VoidCallback onPressed;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   const HabitFlowItem({
     super.key,
     required this.habit,
+    required this.onDelete,
+    required this.onEdit,
     required this.onPressed,
   });
 
@@ -55,14 +59,14 @@ class HabitFlowItem extends StatelessWidget {
                   itemBuilder:
                       (context) => [
                         PopupMenuItem(
-                          value: 'edit',
+                          onTap: onEdit,
                           child: Text(
                             strings.edit,
                             style: theme.textTheme.bodyMedium,
                           ),
                         ),
                         PopupMenuItem(
-                          value: 'delete',
+                          onTap: onDelete,
                           child: Text(
                             strings.delete,
                             style: theme.textTheme.bodyMedium,
