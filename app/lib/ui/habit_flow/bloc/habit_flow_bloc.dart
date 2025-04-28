@@ -15,6 +15,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     on<LoadHabitsEvent>(_onLoadHabits);
     on<RefreshHabitsEvent>(_onRefreshHabits);
     on<HabitReloadEvent>(_onHabitReload);
+    on<HabitDeletedEvent>(_onHabitDeleted);
   }
 
   Future<void> _onLoadHabits(
@@ -99,6 +100,20 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
           errorMessage: e.toString(),
         ),
       );
+    }
+  }
+
+  Future<void> _onHabitDeleted(
+    HabitDeletedEvent event,
+    Emitter<HabitFlowState> emit,
+  ) async {
+    try {
+      await _repository.deleteHabitById(event.habitId);
+      List<Habit> habits = state.habits.toList();
+      habits.removeWhere((e) => e.id == event.habitId);
+      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+    } catch (e) {
+      emit(state.copyWith(status: HabitFlowStatus.error, errorMessage: e.toString()));
     }
   }
 }
