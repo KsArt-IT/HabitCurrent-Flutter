@@ -54,12 +54,15 @@ class HabitCurrentApp extends StatelessWidget {
               case AppLoadedState(user: final user):
                 debugPrint('AppLoadedState: ${user.name}');
                 router.replace(const HomeRoute());
-              case AppHabitCreateState():
-                debugPrint('AppHabitCreateState');
-                router.push(const HabitCreateRoute());
               case AppHabitViewState():
                 debugPrint('AppHabitViewState');
                 router.push(const HabitViewRoute());
+              case AppHabitCreateState():
+                debugPrint('AppHabitCreateState');
+                router.push(const HabitEditRoute());
+              case AppHabitEditState():
+                debugPrint('AppHabitEditState');
+                router.push(const HabitEditRoute());
               case AppHabitReloadState():
                 debugPrint('AppHabitsReloadState');
                 router.pop();
