@@ -10,7 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i11;
-import 'package:habit_current/ui/habit_create/habit_create_screen.dart' as _i1;
+import 'package:habit_current/ui/habit_edit/habit_edit_screen.dart' as _i1;
 import 'package:habit_current/ui/habit_flow/habit_flow_screen.dart' as _i2;
 import 'package:habit_current/ui/habit_month/habit_month_screen.dart' as _i3;
 import 'package:habit_current/ui/habit_view/habit_view_screen.dart' as _i4;
@@ -22,17 +22,17 @@ import 'package:habit_current/ui/settings/settings_screen.dart' as _i9;
 import 'package:habit_current/ui/splash_screen/splash_screen.dart' as _i10;
 
 /// generated route for
-/// [_i1.HabitCreateScreen]
-class HabitCreateRoute extends _i11.PageRouteInfo<void> {
-  const HabitCreateRoute({List<_i11.PageRouteInfo>? children})
-    : super(HabitCreateRoute.name, initialChildren: children);
+/// [_i1.HabitEditScreen]
+class HabitEditRoute extends _i11.PageRouteInfo<void> {
+  const HabitEditRoute({List<_i11.PageRouteInfo>? children})
+    : super(HabitEditRoute.name, initialChildren: children);
 
-  static const String name = 'HabitCreateRoute';
+  static const String name = 'HabitEditRoute';
 
   static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i1.HabitCreateScreen();
+      return const _i1.HabitEditScreen();
     },
   );
 }

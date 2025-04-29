@@ -22,8 +22,8 @@ final class AppRouter extends RootStackRouter {
       path: '/${HelloRoute.name}', //
     ),
     AutoRoute(
-      page: HabitCreateRoute.page,
-      path: '/${HabitCreateRoute.name}', //
+      page: HabitEditRoute.page,
+      path: '/${HabitEditRoute.name}', //
     ),
     AutoRoute(
       page: HabitViewRoute.page,
