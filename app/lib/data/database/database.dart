@@ -25,6 +25,14 @@ class AppDatabase extends _$AppDatabase {
       web: DriftWebOptions(
         sqlite3Wasm: Uri.parse('sqlite3.wasm'),
         driftWorker: Uri.parse('drift_worker.dart.js'),
+        onResult: (result) {
+          if (result.missingFeatures.isNotEmpty) {
+            print(
+              'Using ${result.chosenImplementation} due to unsupported '
+              'browser features: ${result.missingFeatures}',
+            );
+          }
+        },
       ),
     );
   }
