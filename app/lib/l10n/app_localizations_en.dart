@@ -60,6 +60,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createBtn => 'Create';
 
   @override
+  String get saveBtn => 'Save';
+
+  @override
   String get addNewHabit => 'Add new habit';
 
   @override
@@ -73,6 +76,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createHabit => 'Create a Habit';
+
+  @override
+  String editHabit(Object name) {
+    return 'Edit: $name';
+  }
 
   @override
   String get habitEnterName => 'Enter Habit Name';

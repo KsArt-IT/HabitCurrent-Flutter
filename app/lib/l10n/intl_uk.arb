@@ -17,12 +17,14 @@
     "n_3": "---Buttons---",
     "continueBtn": "Продовжити",
     "createBtn": "Створити",
+    "saveBtn": "Зберегти",
     "addNewHabit": "Додати звичку",
     "delete": "Видалити",
     "addTime": "Додати час",
 
     "n_4": "---Habits---",
     "createHabit": "Створити звичку",
+    "editHabit": "Редагувати: {name}",
 
     "habitEnterName": "Введіть звичку",
     "habitEnterNameHint": "Назва",

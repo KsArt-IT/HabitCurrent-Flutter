@@ -199,6 +199,12 @@ abstract class AppLocalizations {
   /// **'Create'**
   String get createBtn;
 
+  /// No description provided for @saveBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveBtn;
+
   /// No description provided for @addNewHabit.
   ///
   /// In en, this message translates to:
@@ -228,6 +234,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create a Habit'**
   String get createHabit;
+
+  /// No description provided for @editHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit: {name}'**
+  String editHabit(Object name);
 
   /// No description provided for @habitEnterName.
   ///

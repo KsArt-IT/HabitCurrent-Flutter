@@ -17,13 +17,15 @@
     "n_3": "---Buttons---",
     "continueBtn": "Continue",
     "createBtn": "Create",
+    "saveBtn": "Save",
     "addNewHabit": "Add new habit",
     "delete": "Delete",
     "addTime": "Add Time",
     
     "n_4": "---Habits Create---",
     "createHabit": "Create a Habit",
-    
+    "editHabit": "Edit: {name}",
+
     "habitEnterName": "Enter Habit Name",
     "habitEnterNameHint": "Name",
 
