@@ -8,6 +8,7 @@ import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/data/local_data_service.dart';
 import 'package:habit_current/data/services/settings/local_settings_service.dart';
 import 'package:habit_current/data/services/settings/settings_service.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -19,7 +20,14 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   // Database
   final database = AppDatabase();
-
+  assert(() {
+    getApplicationDocumentsDirectory().then((dir) {
+      print('--------------------------------');
+      print(dir);
+      print('--------------------------------');
+    });
+    return true;
+  }());
   runApp(
     MultiRepositoryProvider(
       providers: [
