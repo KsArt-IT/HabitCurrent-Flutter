@@ -65,19 +65,28 @@ final class LocalDataService implements DataService {
 
   // MARK: - Habit
   @override
-  Future<void> deleteHabitById(int id) {
-    return database.habits.deleteOne(HabitsCompanion(id: Value(id)));
+  Future<void> deleteHabitById(int id) async {
+    try {
+      await database.transaction(() async {
+        // Удаляем интервалы и завершенные интервалы
+        await database.hourIntervals.deleteWhere((f) => f.habitId.equals(id));
+        await database.hourIntervalCompleteds.deleteWhere(
+          (f) => f.habitId.equals(id),
+        );
+        // Удаляем привычку
+        await database.habits.deleteOne(HabitsCompanion(id: Value(id)));
+      });
+    } catch (e) {
+      throw Exception('Error deleting habit: $e');
+    }
   }
 
   @override
   Future<HabitModel> createHabit(HabitModel habit) async {
     try {
       int habitId = -1;
-      print("---------------------------");
-      print('createHabit: ${habit.userId} ${habit.name} ${habit.details} ${habit.weekDaysRaw}');
-      print('intervals: ${habit.intervals.map((e) => e.time).toList()}');
-      print("---------------------------");
       await database.transaction(() async {
+        // Создаем привычку
         habitId = await database.habits.insertOnConflictUpdate(
           HabitsCompanion.insert(
             userId: habit.userId,
@@ -87,6 +96,7 @@ final class LocalDataService implements DataService {
           ),
         );
 
+        // Создаем интервалы
         for (final interval in habit.intervals) {
           await database.hourIntervals.insertOnConflictUpdate(
             HourIntervalsCompanion.insert(
@@ -96,6 +106,8 @@ final class LocalDataService implements DataService {
           );
         }
       });
+
+      // Загружаем созданную привычку
       final habitRow = await loadHabitById(habitId, DateTime.now());
       if (habitRow == null) {
         throw Exception('Habit not found after creation');
@@ -108,25 +120,57 @@ final class LocalDataService implements DataService {
 
   @override
   Future<void> saveHabit(HabitModel habit) async {
-    await database.transaction(() async {
-      await database.habits.update().write(
-        HabitsCompanion(
-          id: Value(habit.id),
-          userId: Value(habit.userId),
-          name: Value(habit.name),
-          details: Value(habit.details),
-          weekDaysRaw: Value(habit.weekDaysRaw),
-        ),
-      );
-      await database.hourIntervals.deleteWhere(
-        (f) => f.habitId.equals(habit.id),
-      );
-      for (final interval in habit.intervals) {
-        await database.hourIntervals.insertOnConflictUpdate(
-          HourIntervalsCompanion.insert(habitId: habit.id, time: interval.time),
+    // Получаем текущие интервалы
+    final oldIntervals = await _loadHourIntervalsByHabitId(habit.id);
+    try {
+      await database.transaction(() async {
+        // Обновляем основную запись привычки
+        await database.habits.update().write(
+          HabitsCompanion(
+            id: Value(habit.id),
+            userId: Value(habit.userId),
+            name: Value(habit.name),
+            details: Value(habit.details),
+            created: Value(habit.created!),
+            completed: Value(habit.completed),
+            weekDaysRaw: Value(habit.weekDaysRaw),
+          ),
         );
-      }
-    });
+
+        final newIntervals = habit.intervals;
+
+        // Удаляем интервалы и завершенные интервалы, которых больше нет
+        final intervalsToDelete = oldIntervals.where(
+          (old) => !newIntervals.any((newInterval) => newInterval.id == old.id),
+        );
+        for (final interval in intervalsToDelete) {
+          await database.hourIntervals.deleteOne(
+            HourIntervalsCompanion(id: Value(interval.id)),
+          );
+          await database.hourIntervalCompleteds.deleteWhere(
+            (f) => f.intervalId.equals(interval.id),
+          );
+        }
+
+        // Обновляем или добавляем новые интервалы
+        for (final interval in newIntervals) {
+          await database.hourIntervals.insertOnConflictUpdate(
+            interval.id == 0
+                ? HourIntervalsCompanion.insert(
+                  habitId: habit.id,
+                  time: interval.time,
+                )
+                : HourIntervalsCompanion(
+                  id: Value(interval.id),
+                  habitId: Value(habit.id),
+                  time: Value(interval.time),
+                ),
+          );
+        }
+      });
+    } catch (e) {
+      throw Exception('Error saving habit: $e');
+    }
   }
 
   @override
@@ -190,7 +234,10 @@ final class LocalDataService implements DataService {
   }
 
   @override
-  Future<List<HabitModel>> loadHabitsByUserIdFromDate(int userId, DateTime date) async {
+  Future<List<HabitModel>> loadHabitsByUserIdFromDate(
+    int userId,
+    DateTime date,
+  ) async {
     try {
       final rows =
           await (database.habits.select()
@@ -199,8 +246,8 @@ final class LocalDataService implements DataService {
                   (f) =>
                       f.completed.isNull() |
                       f.completed.year.isBiggerOrEqualValue(date.year) &
-                      f.completed.month.isBiggerOrEqualValue(date.month) &
-                      f.completed.day.isBiggerOrEqualValue(date.day),
+                          f.completed.month.isBiggerOrEqualValue(date.month) &
+                          f.completed.day.isBiggerOrEqualValue(date.day),
                 ))
               .get();
       return Future.wait(
