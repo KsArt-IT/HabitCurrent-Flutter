@@ -45,3 +45,5 @@ app.*.map.json
 /android/app/release
 
 untranslated_messages.json
+
+/web/drift_worker.dart.*
