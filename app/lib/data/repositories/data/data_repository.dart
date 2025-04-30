@@ -10,12 +10,20 @@ abstract interface class DataRepository {
 
   Future<List<Habit>> loadHabitsByUserId(int userId);
   Future<List<Habit>> loadHabitsByUserIdFromDate(int userId, DateTime date);
+  Future<List<Habit>> loadHabitsByUserIdFromDateRange({
+    required int userId,
+    required DateTime start,
+    required DateTime end,
+  });
   Future<Habit?> loadHabitById(int id, DateTime date);
   Future<Habit> createHabit(Habit habit);
   Future<void> saveHabit(Habit habit);
   Future<void> deleteHabitById(int id);
 
-  Future<HourIntervalCompleted> createHourIntervalCompleted(int habitId, HourIntervalCompleted interval);
+  Future<HourIntervalCompleted> createHourIntervalCompleted(
+    int habitId,
+    HourIntervalCompleted interval,
+  );
   Future<void> deleteHourIntervalCompletedById(int id);
 
   Future<void> close();
