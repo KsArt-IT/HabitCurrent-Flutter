@@ -52,9 +52,22 @@ final class LocalDataRepository implements DataRepository {
     DateTime date,
   ) async {
     final habits = await _service.loadHabitsByUserIdFromDate(userId, date);
-    if (habits.isEmpty) {
-      return [];
-    }
+    if (habits.isEmpty) return [];
+    return habits.map((e) => e.toDomain()).toList();
+  }
+
+  @override
+  Future<List<Habit>> loadHabitsByUserIdFromDateRange({
+    required int userId,
+    required DateTime start,
+    required DateTime end,
+  }) async {
+    final habits = await _service.loadHabitsByUserIdFromDateRange(
+      userId,
+      start,
+      end,
+    );
+    if (habits.isEmpty) return [];
     return habits.map((e) => e.toDomain()).toList();
   }
 
