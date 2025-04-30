@@ -1,23 +1,22 @@
 part of 'habit_flow_bloc.dart';
 
-enum HabitFlowStatus { initial, loading, success, error }
 
 class HabitFlowState  extends Equatable {
   final int userId;
-  final HabitFlowStatus status;
+  final HabitStatus status;
   final List<Habit> habits;
   final String? errorMessage;
 
   const HabitFlowState({
     this.userId = 0,
-    this.status = HabitFlowStatus.initial,
+    this.status = HabitStatus.initial,
     this.habits = const [],
     this.errorMessage,
   });
 
   HabitFlowState copyWith({
     int? userId,
-    HabitFlowStatus? status,
+    HabitStatus? status,
     List<Habit>? habits,
     String? errorMessage,
   }) {

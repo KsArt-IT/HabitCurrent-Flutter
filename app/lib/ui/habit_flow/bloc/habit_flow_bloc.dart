@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
+import 'package:habit_current/models/habit_status.dart';
 
 part 'habit_flow_state.dart';
 part 'habit_flow_event.dart';
@@ -22,7 +23,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     LoadHabitsEvent event,
     Emitter<HabitFlowState> emit,
   ) async {
-    emit(state.copyWith(userId: event.userId, status: HabitFlowStatus.loading));
+    emit(state.copyWith(userId: event.userId, status: HabitStatus.loading));
 
     try {
       final habits = await _repository.loadHabitsByUserIdFromDate(
@@ -30,17 +31,17 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
         DateTime.now(),
       );
       if (habits.isEmpty) {
-        emit(state.copyWith(status: HabitFlowStatus.success, habits: []));
+        emit(state.copyWith(status: HabitStatus.success, habits: []));
         return;
       }
       print("-----------------------------");
       print("habits: ${habits.length}");
       print("-----------------------------");
-      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+      emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitFlowStatus.error,
+          status: HabitStatus.error,
           errorMessage: e.toString(),
         ),
       );
@@ -57,11 +58,11 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
         DateTime.now(),
       );
 
-      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+      emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitFlowStatus.error,
+          status: HabitStatus.error,
           errorMessage: e.toString(),
         ),
       );
@@ -92,11 +93,11 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
           DateTime.now(),
         );
       }
-      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+      emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitFlowStatus.error,
+          status: HabitStatus.error,
           errorMessage: e.toString(),
         ),
       );
@@ -111,9 +112,9 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       await _repository.deleteHabitById(event.habitId);
       List<Habit> habits = state.habits.toList();
       habits.removeWhere((e) => e.id == event.habitId);
-      emit(state.copyWith(status: HabitFlowStatus.success, habits: habits));
+      emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
-      emit(state.copyWith(status: HabitFlowStatus.error, errorMessage: e.toString()));
+      emit(state.copyWith(status: HabitStatus.error, errorMessage: e.toString()));
     }
   }
 }
