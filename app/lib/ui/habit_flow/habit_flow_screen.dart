@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/models/habit_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 import 'package:habit_current/ui/habit_flow/bloc/habit_flow_bloc.dart';
 import 'package:habit_current/ui/habit_flow/widgets/habit_flow_item.dart';
@@ -55,11 +56,11 @@ class _HabitFlowBody extends StatelessWidget {
         },
         child: BlocBuilder<HabitFlowBloc, HabitFlowState>(
           builder: (context, state) {
-            if (state.status == HabitFlowStatus.loading) {
+            if (state.status == HabitStatus.loading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state.status == HabitFlowStatus.error) {
+            if (state.status == HabitStatus.error) {
               return Center(
                 child: Text(
                   state.errorMessage ?? strings.errorUnknown,
@@ -77,7 +78,7 @@ class _HabitFlowBody extends StatelessWidget {
             }
 
             // Фильтруем привычки по текущему дню недели
-            final weekDay = WeekDays.today;
+            final weekDay = WeekDays.fromDate();
             final todayHabits =
                 state.habits
                     .where((habit) => habit.weekDays.contains(weekDay))
