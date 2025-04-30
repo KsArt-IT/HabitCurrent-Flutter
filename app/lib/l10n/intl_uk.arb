@@ -57,6 +57,13 @@
     "friday": "П'ятниця",
     "saturday": "Субота",
     "sunday": "Неділя",
-    
+
+    "mondayShort": "Пн",
+    "tuesdayShort": "Вт",
+    "wednesdayShort": "Ср",
+    "thursdayShort": "Чт",
+    "fridayShort": "Пт",
+    "saturdayShort": "Сб",
+    "sundayShort": "Вс",
     "n_n": "---"
 }

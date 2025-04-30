@@ -57,6 +57,14 @@
     "friday": "Friday",
     "saturday": "Saturday",
     "sunday": "Sunday",
+
+    "mondayShort": "Mon",
+    "tuesdayShort": "Tue",
+    "wednesdayShort": "Wed",
+    "thursdayShort": "Thu",
+    "fridayShort": "Fri",
+    "saturdayShort": "Sat",
+    "sundayShort": "Sun",
     
     "n_n": "---"
 }
