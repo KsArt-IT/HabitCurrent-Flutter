@@ -11,6 +11,11 @@ abstract interface class DataService {
     int userId,
     DateTime date,
   );
+  Future<List<HabitModel>> loadHabitsByUserIdFromDateRange(
+    int userId,
+    DateTime start,
+    DateTime end,
+  );
   Future<HabitModel?> loadHabitById(int id, DateTime date);
   Future<HabitModel> createHabit(HabitModel habit);
   Future<void> saveHabit(HabitModel habit);
