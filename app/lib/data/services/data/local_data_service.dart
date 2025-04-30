@@ -277,6 +277,45 @@ final class LocalDataService implements DataService {
     }
   }
 
+  @override
+  Future<List<HabitModel>> loadHabitsByUserIdFromDateRange(
+    int userId,
+    DateTime start,
+    DateTime end,
+  ) async {
+    try {
+      final rows =
+          await (database.habits.select()
+                ..where((f) => f.userId.equals(userId))
+                ..where((f) => f.created.isBiggerOrEqualValue(start))
+                ..where((f) => f.created.isSmallerOrEqualValue(end)))
+              .get();
+      return Future.wait(
+        rows.map((habitRow) async {
+          return HabitModel(
+            id: habitRow.id,
+            userId: habitRow.userId,
+            name: habitRow.name,
+            details: habitRow.details,
+            created: habitRow.created,
+            updated: habitRow.updated,
+            completed: habitRow.completed,
+            weekDaysRaw: habitRow.weekDaysRaw,
+            intervals: await _loadHourIntervalsByHabitId(habitRow.id),
+            completedIntervals:
+                await _loadHourIntervalCompletedsByHabitIdFromDateRange(
+                  habitRow.id,
+                  start,
+                  end,
+                ),
+          );
+        }),
+      );
+    } catch (e) {
+      throw Exception('Error loading habits by user id: $e');
+    }
+  }
+
   // MARK: - HourInterval
   Future<List<HourIntervalModel>> _loadHourIntervalsByHabitId(
     int habitId,
@@ -334,6 +373,35 @@ final class LocalDataService implements DataService {
                 ..where((f) => f.completed.year.equals(date.year))
                 ..where((f) => f.completed.month.equals(date.month))
                 ..where((f) => f.completed.day.equals(date.day)))
+              .get();
+      return rows
+          .map(
+            (e) => HourIntervalCompletedModel(
+              id: e.id,
+              habitId: e.habitId,
+              intervalId: e.intervalId,
+              time: e.time,
+              completed: e.completed,
+            ),
+          )
+          .toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<HourIntervalCompletedModel>>
+  _loadHourIntervalCompletedsByHabitIdFromDateRange(
+    int habitId,
+    DateTime start,
+    DateTime end,
+  ) async {
+    try {
+      final rows =
+          await (database.hourIntervalCompleteds.select()
+                ..where((f) => f.habitId.equals(habitId))
+                ..where((f) => f.completed.isBiggerOrEqualValue(start))
+                ..where((f) => f.completed.isSmallerOrEqualValue(end)))
               .get();
       return rows
           .map(
