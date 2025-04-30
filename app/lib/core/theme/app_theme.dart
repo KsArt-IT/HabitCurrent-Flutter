@@ -21,6 +21,7 @@ sealed class AppTheme {
       // onSecondary: AppColors.gray950,
       //
       primaryFixed: AppColors.gray900,
+      primaryFixedDim: AppColors.gray950,
       onPrimaryFixed: AppColors.brandColor,
       //
       secondaryFixed: AppColors.gray950,
@@ -176,6 +177,7 @@ sealed class AppTheme {
       // onPrimaryContainer: AppColors.error,
       //
       primaryFixed: AppColors.brandColor,
+      primaryFixedDim: AppColors.brandColor,
       onPrimaryFixed: AppColors.brandColor,
       // Error
       error: AppColors.error,
