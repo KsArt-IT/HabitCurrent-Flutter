@@ -67,9 +67,18 @@ class HabitWeekCard extends StatelessWidget {
             ],
           ),
           // const SizedBox(height: Constants.paddingSmall),
-          const WeekDaysWidget(),
-          const SizedBox(height: Constants.paddingMedium),
-          WeekStatusWidget(weekStatus: habitWeek.weekStatus),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Constants.paddingMedium,
+            ),
+            child: Column(
+              children: [
+                const WeekDaysWidget(),
+                const SizedBox(height: Constants.paddingMedium),
+                WeekStatusWidget(weekStatus: habitWeek.weekStatus),
+              ],
+            ),
+          ),
         ],
       ),
     );
