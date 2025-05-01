@@ -4,6 +4,8 @@ import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/habit_status.dart';
+import 'package:habit_current/models/habit_week.dart';
+import 'package:habit_current/models/week_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_week_event.dart';
@@ -68,11 +70,8 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     );
   }
 
-  Future<List<HabitWeekStatus>> _loadHabits(
-    int userId,
-    DateTime currentDate,
-  ) async {
-    final weekRange = currentDate.toWeekRange();
+  Future<List<HabitWeek>> _loadHabits(int userId, DateTime date) async {
+    final weekRange = date.toWeekRange();
 
     final habits = await repository.loadHabitsByUserIdFromDateRange(
       userId: userId,
@@ -80,24 +79,38 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
       end: weekRange.end,
     );
 
-    return habits.map((habit) {
-      final habitLength = habit.intervals.length;
-      final List<WeekStatus> weekStatuses = [];
+    if (habits.isEmpty) return [];
+    return _filterAndSortHabits(habits, date);
+  }
 
-      DateTime day = weekRange.start.toEndOfDay();
-      while (day.isBeforeOrEqual(weekRange.end)) {
-        final status = _calculateWeekStatus(
-          habit: habit,
-          day: day,
-          habitLength: habitLength,
-          currentDate: currentDate,
+  List<HabitWeek> _filterAndSortHabits(List<Habit> habits, DateTime date) {
+    final weekRange = date.toWeekRange();
+    final dayStart = weekRange.start.toEndOfDay();
+    final dayEnd = weekRange.end;
+    return (habits.map((habit) {
+        final habitLength = habit.intervals.length;
+        final List<WeekStatus> weekStatuses = [];
+
+        DateTime day = dayStart;
+        while (day.isBeforeOrEqual(dayEnd)) {
+          final status = _calculateWeekStatus(
+            habit: habit,
+            day: day,
+            habitLength: habitLength,
+            currentDate: date,
+          );
+          weekStatuses.add(status);
+          day = day.add(const Duration(days: 1));
+        }
+
+        return HabitWeek(
+          id: habit.id,
+          name: habit.name,
+          weekStatus: weekStatuses,
         );
-        weekStatuses.add(status);
-        day = day.add(const Duration(days: 1));
-      }
-
-      return HabitWeekStatus(habit: habit, weekStatus: weekStatuses);
-    }).toList();
+      }).toList()
+      // Сортируем по имени
+      ..sort((a, b) => a.name.compareTo(b.name)));
   }
 
   WeekStatus _calculateWeekStatus({
