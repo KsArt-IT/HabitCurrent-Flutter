@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/habit_status.dart';
+import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_flow_event.dart';
 part 'habit_flow_state.dart';
@@ -19,6 +20,14 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     on<DeleteHabitEvent>(_onDeleteHabit);
   }
 
+  List<Habit> _filterAndSortHabits(List<Habit> habits, DateTime date) {
+    // Фильтруем привычки по текущему дню недели
+    final weekDay = WeekDays.fromDate(date);
+    return (habits.where((habit) => habit.weekDays.contains(weekDay)).toList()
+      // Сортируем по имени
+      ..sort((a, b) => a.name.compareTo(b.name)));
+  }
+
   Future<void> _onLoadHabits(
     LoadHabitsEvent event,
     Emitter<HabitFlowState> emit,
@@ -26,18 +35,22 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     emit(state.copyWith(userId: event.userId, status: HabitStatus.loading));
 
     try {
+      final date = DateTime.now();
       final habits = await _repository.loadHabitsByUserIdFromDate(
         event.userId,
-        DateTime.now(),
+        date,
       );
       if (habits.isEmpty) {
         emit(state.copyWith(status: HabitStatus.success, habits: []));
         return;
       }
-      print("-----------------------------");
-      print("habits: ${habits.length}");
-      print("-----------------------------");
-      emit(state.copyWith(status: HabitStatus.success, habits: habits));
+
+      emit(
+        state.copyWith(
+          status: HabitStatus.success,
+          habits: _filterAndSortHabits(habits, date),
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
@@ -50,12 +63,18 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     Emitter<HabitFlowState> emit,
   ) async {
     try {
+      final date = DateTime.now();
       final habits = await _repository.loadHabitsByUserIdFromDate(
         state.userId,
-        DateTime.now(),
+        date,
       );
 
-      emit(state.copyWith(status: HabitStatus.success, habits: habits));
+      emit(
+        state.copyWith(
+          status: HabitStatus.success,
+          habits: _filterAndSortHabits(habits, date),
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
@@ -68,12 +87,10 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     Emitter<HabitFlowState> emit,
   ) async {
     try {
-      List<Habit> habits = state.habits.toList();
+      final date = DateTime.now();
+      List<Habit> habits = List<Habit>.from(state.habits);
       if (event.habitId != null) {
-        final habit = await _repository.loadHabitById(
-          event.habitId!,
-          DateTime.now(),
-        );
+        final habit = await _repository.loadHabitById(event.habitId!, date);
         if (habit == null) return;
         final index = state.habits.indexWhere((e) => e.id == habit.id);
         if (index != -1) {
@@ -84,10 +101,15 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       } else {
         habits = await _repository.loadHabitsByUserIdFromDate(
           state.userId,
-          DateTime.now(),
+          date,
         );
       }
-      emit(state.copyWith(status: HabitStatus.success, habits: habits));
+      emit(
+        state.copyWith(
+          status: HabitStatus.success,
+          habits: _filterAndSortHabits(habits, date),
+        ),
+      );
     } catch (e) {
       emit(
         state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
@@ -101,7 +123,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
   ) async {
     try {
       await _repository.deleteHabitById(event.habitId);
-      List<Habit> habits = state.habits.toList();
+      List<Habit> habits = List<Habit>.from(state.habits);
       habits.removeWhere((e) => e.id == event.habitId);
       emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {

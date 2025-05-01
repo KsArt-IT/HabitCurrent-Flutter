@@ -77,14 +77,7 @@ class _HabitFlowBody extends StatelessWidget {
               );
             }
 
-            // Фильтруем привычки по текущему дню недели
-            final weekDay = WeekDays.fromDate();
-            final todayHabits =
-                state.habits
-                    .where((habit) => habit.weekDays.contains(weekDay))
-                    .toList();
-
-            if (todayHabits.isEmpty) {
+            if (state.habits.isEmpty) {
               return Center(
                 child: Text(
                   strings.noHabitsToday,
@@ -101,9 +94,9 @@ class _HabitFlowBody extends StatelessWidget {
                 crossAxisSpacing: Constants.paddingMedium,
                 childAspectRatio: 1.2,
               ),
-              itemCount: todayHabits.length,
+              itemCount: state.habits.length,
               itemBuilder: (context, index) {
-                final habit = todayHabits[index];
+                final habit = state.habits[index];
                 return HabitFlowItem(
                   habit: habit,
                   onDelete: () {
