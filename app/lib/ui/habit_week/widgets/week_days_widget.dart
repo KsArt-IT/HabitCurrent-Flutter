@@ -6,7 +6,9 @@ class WeekDaysWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.titleSmall;
+    final textStyle = Theme.of(context).textTheme.titleSmall?.copyWith(
+      color: Theme.of(context).colorScheme.onSecondary,
+    );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
