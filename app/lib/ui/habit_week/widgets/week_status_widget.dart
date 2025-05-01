@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/ui/habit_week/bloc/habit_week_bloc.dart';
+import 'package:habit_current/models/week_status.dart';
 
 class WeekStatusWidget extends StatelessWidget {
   final List<WeekStatus> weekStatus;
