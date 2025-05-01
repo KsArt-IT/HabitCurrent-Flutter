@@ -74,12 +74,9 @@ class _HabitWeekBody extends StatelessWidget {
                 Constants.paddingXLarge,
               ),
               itemCount: state.completedHabits.length,
-              itemBuilder: (context, index) {
-                return HabitWeekCard(
-                  name: state.completedHabits[index].habit.name,
-                  weekStatus: state.completedHabits[index].weekStatus,
-                );
-              },
+              itemBuilder:
+                  (context, index) =>
+                      HabitWeekCard(habitWeek: state.completedHabits[index]),
             );
           },
         ),
