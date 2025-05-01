@@ -79,7 +79,7 @@ class HourIntervalSelector extends StatelessWidget {
               crossAxisSpacing: Constants.paddingMedium,
               mainAxisSpacing: Constants.paddingSmall,
             ),
-            padding: const EdgeInsets.all(0),
+            padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: intervals.length,
             itemBuilder:

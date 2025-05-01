@@ -24,7 +24,7 @@ class WeekDaysSelector extends StatelessWidget {
             crossAxisCount: 2,
             childAspectRatio: 4,
           ),
-          padding: const EdgeInsets.all(0),
+          padding: EdgeInsets.zero,
           itemCount: WeekDays.values.length,
           itemBuilder: (context, index) {
             final day = WeekDays.values[index];
@@ -40,7 +40,7 @@ class WeekDaysSelector extends StatelessWidget {
                         : theme.textTheme.titleSmall,
               ),
               value: isSelected,
-              contentPadding: const EdgeInsets.all(0),
+              contentPadding: EdgeInsets.zero,
               controlAffinity: ListTileControlAffinity.leading,
               onChanged: (_) {
                 context.read<HabitEditBloc>().add(ChangeWeekDayEvent(day));

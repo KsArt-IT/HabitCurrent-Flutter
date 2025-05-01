@@ -41,7 +41,7 @@ Future<TimeOfDay?> pickTime(
                 height: Constants.buttonHeight,
                 child: CupertinoButton(
                   color: theme.colorScheme.surfaceContainerLow,
-                  padding: const EdgeInsets.all(0),
+                  padding: EdgeInsets.zero,
                   borderRadius: BorderRadius.circular(Constants.buttonRadius),
                   child: Text('Done', style: theme.textTheme.labelLarge),
                   onPressed: () {

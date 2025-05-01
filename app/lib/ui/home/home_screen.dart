@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
             child: const Icon(Icons.add),
           ),
           bottomNavigationBar: BottomAppBar(
-            padding: const EdgeInsets.all(0),
+            padding: EdgeInsets.zero,
             color: theme.colorScheme.surface,
             shape: const CircularNotchedRectangle(),
             child: Row(

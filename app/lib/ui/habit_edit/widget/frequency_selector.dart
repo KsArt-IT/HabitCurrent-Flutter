@@ -33,7 +33,7 @@ class FrequencySelector extends StatelessWidget {
         ),
         visualDensity: VisualDensity.compact,
         dense: true,
-        contentPadding: const EdgeInsets.all(0),
+        contentPadding: EdgeInsets.zero,
         controlAffinity: ListTileControlAffinity.leading,
         radioScaleFactor: 1.2,
         value: value,
