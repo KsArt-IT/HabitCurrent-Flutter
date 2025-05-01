@@ -45,7 +45,7 @@ class _HabitFlowBody extends StatelessWidget {
       listener: (context, state) {
         if (state is AppHabitReloadState) {
           context.read<HabitFlowBloc>().add(
-            HabitReloadEvent(habitId: state.habitId),
+            ReloadHabitEvent(habitId: state.habitId),
           );
         }
       },
@@ -108,7 +108,7 @@ class _HabitFlowBody extends StatelessWidget {
                   habit: habit,
                   onDelete: () {
                     context.read<HabitFlowBloc>().add(
-                      HabitDeletedEvent(habitId: habit.id),
+                      DeleteHabitEvent(habitId: habit.id),
                     );
                   },
                   onEdit: () {

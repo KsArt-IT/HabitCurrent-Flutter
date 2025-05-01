@@ -12,14 +12,14 @@ class RefreshHabitsEvent extends HabitFlowEvent {}
 
 class HabitCreatedEvent extends HabitFlowEvent {}
 
-class HabitReloadEvent extends HabitFlowEvent {
+class ReloadHabitEvent extends HabitFlowEvent {
   final int? habitId;
 
-  HabitReloadEvent({this.habitId});
+  ReloadHabitEvent({this.habitId});
 }
 
-class HabitDeletedEvent extends HabitFlowEvent {
+class DeleteHabitEvent extends HabitFlowEvent {
   final int habitId;
 
-  HabitDeletedEvent({required this.habitId});
+  DeleteHabitEvent({required this.habitId});
 }

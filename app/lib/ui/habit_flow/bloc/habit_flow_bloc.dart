@@ -4,8 +4,8 @@ import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/habit_status.dart';
 
-part 'habit_flow_state.dart';
 part 'habit_flow_event.dart';
+part 'habit_flow_state.dart';
 
 class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
   final DataRepository _repository;
@@ -15,8 +15,8 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       super(const HabitFlowState()) {
     on<LoadHabitsEvent>(_onLoadHabits);
     on<RefreshHabitsEvent>(_onRefreshHabits);
-    on<HabitReloadEvent>(_onHabitReload);
-    on<HabitDeletedEvent>(_onHabitDeleted);
+    on<ReloadHabitEvent>(_onReloadHabit);
+    on<DeleteHabitEvent>(_onDeleteHabit);
   }
 
   Future<void> _onLoadHabits(
@@ -40,10 +40,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
       emit(
-        state.copyWith(
-          status: HabitStatus.error,
-          errorMessage: e.toString(),
-        ),
+        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
       );
     }
   }
@@ -61,16 +58,13 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
       emit(
-        state.copyWith(
-          status: HabitStatus.error,
-          errorMessage: e.toString(),
-        ),
+        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
       );
     }
   }
 
-  Future<void> _onHabitReload(
-    HabitReloadEvent event,
+  Future<void> _onReloadHabit(
+    ReloadHabitEvent event,
     Emitter<HabitFlowState> emit,
   ) async {
     try {
@@ -96,16 +90,13 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
       emit(
-        state.copyWith(
-          status: HabitStatus.error,
-          errorMessage: e.toString(),
-        ),
+        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
       );
     }
   }
 
-  Future<void> _onHabitDeleted(
-    HabitDeletedEvent event,
+  Future<void> _onDeleteHabit(
+    DeleteHabitEvent event,
     Emitter<HabitFlowState> emit,
   ) async {
     try {
@@ -114,7 +105,9 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       habits.removeWhere((e) => e.id == event.habitId);
       emit(state.copyWith(status: HabitStatus.success, habits: habits));
     } catch (e) {
-      emit(state.copyWith(status: HabitStatus.error, errorMessage: e.toString()));
+      emit(
+        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
+      );
     }
   }
 }
