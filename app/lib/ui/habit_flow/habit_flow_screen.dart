@@ -87,7 +87,12 @@ class _HabitFlowBody extends StatelessWidget {
             }
 
             return GridView.builder(
-              padding: const EdgeInsets.all(Constants.paddingMedium),
+              padding: const EdgeInsets.fromLTRB(
+                Constants.paddingMedium,
+                Constants.paddingSmall,
+                Constants.paddingMedium,
+                Constants.paddingXLarge,
+              ),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: Constants.paddingMedium,
