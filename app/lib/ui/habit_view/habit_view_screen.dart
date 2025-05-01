@@ -35,69 +35,75 @@ class _HabitViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final habit = context.read<HabitViewBloc>().state.habit;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          context.read<HabitViewBloc>().state.habit.name,
-          style: theme.textTheme.titleLarge,
-        ),
+        title: Text(habit.name, style: theme.textTheme.titleLarge),
         centerTitle: true,
         leading: IconButton(
-          color: theme.colorScheme.onPrimary,
           icon: Icon(
             Icons.arrow_back_ios_new,
             color: theme.colorScheme.inversePrimary,
           ),
           onPressed: () {
-            final habitId = context.read<HabitViewBloc>().state.habit.id;
-            context.read<AppBloc>().add(AppHabitReloadEvent(habitId: habitId));
+            context.read<AppBloc>().add(AppHabitReloadEvent(habitId: habit.id));
           },
         ),
       ),
       body: BlocBuilder<HabitViewBloc, HabitViewState>(
         builder: (context, state) {
-          return Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(Constants.paddingMedium),
-                padding: const EdgeInsets.all(Constants.paddingMedium),
-                alignment: Alignment.topLeft,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.surface,
-                  borderRadius: BorderRadius.circular(Constants.borderRadius),
-                ),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 3.0,
-                    crossAxisSpacing: Constants.paddingMedium,
-                    mainAxisSpacing: Constants.paddingSmall,
-                  ),
-                  itemCount: state.habit.intervals.length,
-                  itemBuilder: (context, index) {
-                    final interval = state.habit.intervals[index];
-                    final isSelected =
-                        state.habit.completedIntervals
-                            .where((e) => e.intervalId == interval.id)
-                            .isNotEmpty;
-                    return CheckboxListTile(
-                      title: Text(interval.time.toTime()),
-                      contentPadding: const EdgeInsets.all(0),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: isSelected,
-                      onChanged: (_) {
-                        context.read<HabitViewBloc>().add(
-                          HabitViewChangedEvent(index: index),
-                        );
-                      },
-                    );
-                  },
-                ),
+          return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Constants.paddingMedium,
+            ),
+            child: Container(
+              padding: const EdgeInsets.all(Constants.paddingMedium),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surface,
+                borderRadius: BorderRadius.circular(Constants.borderRadius),
               ),
-              Spacer(),
-            ],
+              child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 4.0,
+                  crossAxisSpacing: Constants.paddingMedium,
+                  mainAxisSpacing: 0,
+                ),
+                padding: EdgeInsets.zero,
+                itemCount: state.habit.intervals.length,
+                itemBuilder: (context, index) {
+                  final interval = state.habit.intervals[index];
+                  final isSelected = state.habit.completedIntervals.any(
+                    (e) => e.intervalId == interval.id,
+                  );
+
+                  return CheckboxListTile(
+                    title: Text(
+                      interval.time.toTime(),
+                      style:
+                          isSelected
+                              ? theme.textTheme.titleSmall?.copyWith(
+                                color: theme.colorScheme.primaryFixed,
+                              )
+                              : theme.textTheme.titleSmall,
+                    ),
+                    contentPadding: EdgeInsets.zero,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    visualDensity: VisualDensity.compact,
+                    dense: true,
+                    value: isSelected,
+                    onChanged: (_) {
+                      context.read<HabitViewBloc>().add(
+                        HabitViewChangedEvent(index: index),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
           );
         },
       ),
