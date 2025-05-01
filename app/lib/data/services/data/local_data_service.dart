@@ -53,7 +53,7 @@ final class LocalDataService implements DataService {
 
   @override
   Future<void> saveUser(UserModel user) {
-    return database.users.update().write(
+    return database.users.insertOnConflictUpdate(
       UsersCompanion(
         id: Value(user.id),
         name: Value(user.name),
@@ -125,7 +125,7 @@ final class LocalDataService implements DataService {
     try {
       await database.transaction(() async {
         // Обновляем основную запись привычки
-        await database.habits.update().write(
+        await database.habits.insertOnConflictUpdate(
           HabitsCompanion(
             id: Value(habit.id),
             userId: Value(habit.userId),
