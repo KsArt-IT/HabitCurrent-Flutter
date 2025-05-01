@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
-import 'package:habit_current/ui/habit_week/bloc/habit_week_bloc.dart';
+import 'package:habit_current/models/habit_week.dart';
 import 'package:habit_current/ui/habit_week/widgets/week_days_widget.dart';
 import 'package:habit_current/ui/habit_week/widgets/week_status_widget.dart';
 
 class HabitWeekCard extends StatelessWidget {
-  final String name;
-  final List<WeekStatus> weekStatus;
+  final HabitWeek habitWeek;
 
-  const HabitWeekCard({
-    super.key,
-    required this.name,
-    required this.weekStatus,
-  });
+  const HabitWeekCard({super.key, required this.habitWeek});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +33,7 @@ class HabitWeekCard extends StatelessWidget {
               const SizedBox(width: Constants.paddingMedium),
               Expanded(
                 child: Text(
-                  name,
+                  habitWeek.name,
                   style: theme.textTheme.titleMedium,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -74,7 +69,7 @@ class HabitWeekCard extends StatelessWidget {
           // const SizedBox(height: Constants.paddingSmall),
           const WeekDaysWidget(),
           const SizedBox(height: Constants.paddingMedium),
-          WeekStatusWidget(weekStatus: weekStatus),
+          WeekStatusWidget(weekStatus: habitWeek.weekStatus),
         ],
       ),
     );
