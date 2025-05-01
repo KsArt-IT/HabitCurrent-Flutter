@@ -1,26 +1,10 @@
 part of 'habit_week_bloc.dart';
 
-class HabitWeekStatus {
-  final Habit habit;
-  final List<WeekStatus> weekStatus;
-
-  HabitWeekStatus({required this.habit, required this.weekStatus});
-}
-
-enum WeekStatus {
-  skipped,
-  completed,
-  partiallyCompleted,
-  notCompleted,
-  notStarted,
-  closed,
-}
-
 class HabitWeekState extends Equatable {
   final int userId;
   final DateTime date;
   final HabitStatus status;
-  final List<HabitWeekStatus> completedHabits;
+  final List<HabitWeek> completedHabits;
 
   const HabitWeekState({
     this.userId = 0,
@@ -33,7 +17,7 @@ class HabitWeekState extends Equatable {
     int? userId,
     DateTime? date,
     HabitStatus? status,
-    List<HabitWeekStatus>? completedHabits,
+    List<HabitWeek>? completedHabits,
   }) {
     return HabitWeekState(
       userId: userId ?? this.userId,
