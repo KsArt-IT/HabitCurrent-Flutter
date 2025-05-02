@@ -3,9 +3,9 @@ import 'package:equatable/equatable.dart';
 import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
-import 'package:habit_current/models/habit_status.dart';
+import 'package:habit_current/models/habit_state_status.dart';
 import 'package:habit_current/models/habit_week.dart';
-import 'package:habit_current/models/week_status.dart';
+import 'package:habit_current/models/habit_day_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_week_event.dart';
@@ -25,14 +25,14 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     LoadHabitWeekEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
-    emit(state.copyWith(status: HabitStatus.loading));
+    emit(state.copyWith(status: HabitStateStatus.loading));
     final currentDate = DateTime.now().toEndOfDay();
     final completedHabits = await _loadHabits(event.userId, currentDate);
     emit(
       state.copyWith(
         userId: event.userId,
         date: currentDate,
-        status: HabitStatus.success,
+        status: HabitStateStatus.success,
         completedHabits: completedHabits,
       ),
     );
@@ -42,13 +42,14 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     ReloadHabitEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
+    // TODO: переделать на загрузку 1 habit за месяц
     final currentDate = DateTime.now().toEndOfDay();
     final completedHabits = await _loadHabits(state.userId, currentDate);
     emit(
       state.copyWith(
         userId: state.userId,
         date: currentDate,
-        status: HabitStatus.success,
+        status: HabitStateStatus.success,
         completedHabits: completedHabits,
       ),
     );
@@ -64,7 +65,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
       state.copyWith(
         userId: state.userId,
         date: currentDate,
-        status: HabitStatus.success,
+        status: HabitStateStatus.success,
         completedHabits: completedHabits,
       ),
     );
@@ -89,11 +90,11 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     final dayEnd = weekRange.end;
     return (habits.map((habit) {
         final habitLength = habit.intervals.length;
-        final List<WeekStatus> weekStatuses = [];
+        final List<HabitDayStatus> weekStatuses = [];
 
         DateTime day = dayStart;
         while (day.isBeforeOrEqual(dayEnd)) {
-          final status = _calculateWeekStatus(
+          final status = _calculateStatus(
             habit: habit,
             day: day,
             habitLength: habitLength,
@@ -113,33 +114,40 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
       ..sort((a, b) => a.name.compareTo(b.name)));
   }
 
-  WeekStatus _calculateWeekStatus({
+  HabitDayStatus _calculateStatus({
     required Habit habit,
     required DateTime day,
     required int habitLength,
     required DateTime currentDate,
   }) {
-    final weekDayEnum = WeekDays.fromDate(day);
-
-    if (!habit.weekDays.contains(weekDayEnum) || habit.created!.isAfter(day)) {
-      return WeekStatus.skipped;
+    // закрыто
+    if (habit.completed != null && day.isAfter(habit.completed!.toEndOfDay())) {
+      return HabitDayStatus.closed;
     }
 
-    if (habit.completed != null && day.isAfter(habit.completed!)) {
-      return WeekStatus.closed;
+    // не начато
+    if (habit.created != null && day.isBefore(habit.created!)) {
+      return HabitDayStatus.notStarted;
     }
 
+    // не в этот день, пропуск
+    if (!habit.weekDays.contains(WeekDays.fromDate(day))) {
+      return HabitDayStatus.skipped;
+    }
+
+    // ожидает выполнения, завтра
     if (day.isAfter(currentDate)) {
-      return WeekStatus.notStarted;
+      return HabitDayStatus.awaitsExecution;
     }
 
+    // сколько выполнено
     final completedCount =
         habit.completedIntervals
             .where((e) => e.completed.isSameDate(day))
             .length;
 
-    if (completedCount == habitLength) return WeekStatus.completed;
-    if (completedCount > 0) return WeekStatus.partiallyCompleted;
-    return WeekStatus.notCompleted;
+    if (completedCount == habitLength) return HabitDayStatus.completed;
+    if (completedCount > 0) return HabitDayStatus.partiallyCompleted;
+    return HabitDayStatus.notCompleted;
   }
 }
