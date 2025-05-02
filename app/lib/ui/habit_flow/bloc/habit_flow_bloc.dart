@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
-import 'package:habit_current/models/habit_status.dart';
+import 'package:habit_current/models/habit_state_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_flow_event.dart';
@@ -32,7 +32,9 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     LoadHabitsEvent event,
     Emitter<HabitFlowState> emit,
   ) async {
-    emit(state.copyWith(userId: event.userId, status: HabitStatus.loading));
+    emit(
+      state.copyWith(userId: event.userId, status: HabitStateStatus.loading),
+    );
 
     try {
       final date = DateTime.now();
@@ -41,19 +43,22 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
         date,
       );
       if (habits.isEmpty) {
-        emit(state.copyWith(status: HabitStatus.success, habits: []));
+        emit(state.copyWith(status: HabitStateStatus.success, habits: []));
         return;
       }
 
       emit(
         state.copyWith(
-          status: HabitStatus.success,
+          status: HabitStateStatus.success,
           habits: _filterAndSortHabits(habits, date),
         ),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
+        state.copyWith(
+          status: HabitStateStatus.error,
+          errorMessage: e.toString(),
+        ),
       );
     }
   }
@@ -71,13 +76,16 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
 
       emit(
         state.copyWith(
-          status: HabitStatus.success,
+          status: HabitStateStatus.success,
           habits: _filterAndSortHabits(habits, date),
         ),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
+        state.copyWith(
+          status: HabitStateStatus.error,
+          errorMessage: e.toString(),
+        ),
       );
     }
   }
@@ -106,13 +114,16 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       }
       emit(
         state.copyWith(
-          status: HabitStatus.success,
+          status: HabitStateStatus.success,
           habits: _filterAndSortHabits(habits, date),
         ),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
+        state.copyWith(
+          status: HabitStateStatus.error,
+          errorMessage: e.toString(),
+        ),
       );
     }
   }
@@ -125,10 +136,13 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       await _repository.deleteHabitById(event.habitId);
       List<Habit> habits = List<Habit>.from(state.habits);
       habits.removeWhere((e) => e.id == event.habitId);
-      emit(state.copyWith(status: HabitStatus.success, habits: habits));
+      emit(state.copyWith(status: HabitStateStatus.success, habits: habits));
     } catch (e) {
       emit(
-        state.copyWith(status: HabitStatus.error, errorMessage: e.toString()),
+        state.copyWith(
+          status: HabitStateStatus.error,
+          errorMessage: e.toString(),
+        ),
       );
     }
   }
