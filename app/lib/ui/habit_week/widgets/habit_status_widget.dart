@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/models/week_status.dart';
+import 'package:habit_current/models/habit_day_status.dart';
 
-class WeekStatusWidget extends StatelessWidget {
-  final List<WeekStatus> weekStatus;
-  const WeekStatusWidget({super.key, required this.weekStatus});
+class HabitStatusWidget extends StatelessWidget {
+  final List<HabitDayStatus> weekStatus;
+  const HabitStatusWidget({super.key, required this.weekStatus});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    Widget _buildWeekStatus(WeekStatus status) => switch (status) {
-      WeekStatus.completed => Container(
+    Widget _buildWeekStatus(HabitDayStatus status) => switch (status) {
+      HabitDayStatus.completed => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
@@ -19,7 +19,7 @@ class WeekStatusWidget extends StatelessWidget {
           shape: BoxShape.circle,
         ),
       ),
-      WeekStatus.partiallyCompleted => Container(
+      HabitDayStatus.partiallyCompleted => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
@@ -27,15 +27,16 @@ class WeekStatusWidget extends StatelessWidget {
           shape: BoxShape.circle,
         ),
       ),
-      WeekStatus.notCompleted => Container(
+      HabitDayStatus.notCompleted => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
-          color: theme.colorScheme.error,
+          color: theme.colorScheme.secondaryFixed.withAlpha(100),
+          // color: theme.colorScheme.error,
           shape: BoxShape.circle,
         ),
       ),
-      WeekStatus.notStarted => Container(
+      HabitDayStatus.awaitsExecution => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
@@ -47,7 +48,7 @@ class WeekStatusWidget extends StatelessWidget {
           ),
         ),
       ),
-      WeekStatus.closed => Container(
+      HabitDayStatus.skipped => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
@@ -55,7 +56,15 @@ class WeekStatusWidget extends StatelessWidget {
           shape: BoxShape.circle,
         ),
       ),
-      WeekStatus.skipped => Container(
+      HabitDayStatus.notStarted => Container(
+        width: Constants.statusSize,
+        height: Constants.statusSize,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          shape: BoxShape.circle,
+        ),
+      ),
+      HabitDayStatus.closed => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
