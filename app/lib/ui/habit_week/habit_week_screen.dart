@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
-import 'package:habit_current/models/habit_status.dart';
+import 'package:habit_current/models/habit_state_status.dart';
 import 'package:habit_current/ui/habit_week/bloc/habit_week_bloc.dart';
 import 'package:habit_current/ui/habit_week/widgets/habit_week_card.dart';
 
@@ -47,26 +47,26 @@ class _HabitWeekBody extends StatelessWidget {
           );
         }
       },
-      child: RefreshIndicator(
-        color: theme.colorScheme.primaryFixed,
-        onRefresh: () async {
-          context.read<HabitWeekBloc>().add(
-            RefreshHabitWeekEvent(DateTime.now()),
-          );
-        },
-        child: BlocBuilder<HabitWeekBloc, HabitWeekState>(
-          builder: (context, state) {
-            if (state.status == HabitStatus.loading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+      child: BlocBuilder<HabitWeekBloc, HabitWeekState>(
+        builder: (context, state) {
+          if (state.status == HabitStateStatus.loading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            if (state.completedHabits.isEmpty) {
-              return Center(
-                child: Text(strings.noHabits, style: theme.textTheme.bodyLarge),
+          if (state.completedHabits.isEmpty) {
+            return Center(
+              child: Text(strings.noHabits, style: theme.textTheme.bodyLarge),
+            );
+          }
+
+          return RefreshIndicator(
+            color: theme.colorScheme.primaryFixed,
+            onRefresh: () async {
+              context.read<HabitWeekBloc>().add(
+                RefreshHabitWeekEvent(DateTime.now()),
               );
-            }
-
-            return ListView.builder(
+            },
+            child: ListView.builder(
               padding: const EdgeInsets.fromLTRB(
                 Constants.paddingMedium,
                 Constants.paddingSmall,
@@ -75,11 +75,11 @@ class _HabitWeekBody extends StatelessWidget {
               ),
               itemCount: state.completedHabits.length,
               itemBuilder:
-                  (context, index) =>
+                  (_, index) =>
                       HabitWeekCard(habitWeek: state.completedHabits[index]),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
