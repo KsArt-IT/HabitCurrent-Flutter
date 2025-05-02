@@ -3,13 +3,13 @@ import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/models/habit.dart';
 
-class HabitFlowItem extends StatelessWidget {
+class HabitFlowCard extends StatelessWidget {
   final Habit habit;
   final VoidCallback onPressed;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
-  const HabitFlowItem({
+  const HabitFlowCard({
     super.key,
     required this.habit,
     required this.onDelete,
@@ -53,7 +53,7 @@ class HabitFlowItem extends StatelessWidget {
                 PopupMenuButton<String>(
                   icon: Icon(
                     Icons.more_horiz,
-                    color: theme.colorScheme.onPrimary,
+                    color: theme.colorScheme.secondaryFixed,
                     size: Constants.iconSize,
                   ),
                   itemBuilder:
