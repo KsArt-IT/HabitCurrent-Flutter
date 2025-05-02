@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/database/database.dart';
 import 'package:habit_current/data/models/models.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
@@ -244,10 +245,11 @@ final class LocalDataService implements DataService {
                 ..where((f) => f.userId.equals(userId))
                 ..where(
                   (f) =>
-                      f.completed.isNull() |
-                      f.completed.year.isBiggerOrEqualValue(date.year) &
-                          f.completed.month.isBiggerOrEqualValue(date.month) &
-                          f.completed.day.isBiggerOrEqualValue(date.day),
+                      f.created.isSmallerOrEqualValue(date.toEndOfDay()) &
+                      (f.completed.isNull() |
+                          f.completed.isBiggerOrEqualValue(
+                            date.toStartOfDay(),
+                          )),
                 ))
               .get();
       return Future.wait(
@@ -287,8 +289,14 @@ final class LocalDataService implements DataService {
       final rows =
           await (database.habits.select()
                 ..where((f) => f.userId.equals(userId))
-                ..where((f) => f.created.isBiggerOrEqualValue(start))
-                ..where((f) => f.created.isSmallerOrEqualValue(end)))
+                ..where(
+                  (f) =>
+                      f.created.isSmallerOrEqualValue(end.toEndOfDay()) &
+                      (f.completed.isNull() |
+                          f.completed.isBiggerOrEqualValue(
+                            start.toStartOfDay(),
+                          )),
+                ))
               .get();
       return Future.wait(
         rows.map((habitRow) async {
@@ -370,9 +378,12 @@ final class LocalDataService implements DataService {
       final rows =
           await (database.hourIntervalCompleteds.select()
                 ..where((f) => f.habitId.equals(habitId))
-                ..where((f) => f.completed.year.equals(date.year))
-                ..where((f) => f.completed.month.equals(date.month))
-                ..where((f) => f.completed.day.equals(date.day)))
+                ..where(
+                  (f) =>
+                      f.completed.year.equals(date.year) &
+                      f.completed.month.equals(date.month) &
+                      f.completed.day.equals(date.day),
+                ))
               .get();
       return rows
           .map(
@@ -400,8 +411,11 @@ final class LocalDataService implements DataService {
       final rows =
           await (database.hourIntervalCompleteds.select()
                 ..where((f) => f.habitId.equals(habitId))
-                ..where((f) => f.completed.isBiggerOrEqualValue(start))
-                ..where((f) => f.completed.isSmallerOrEqualValue(end)))
+                ..where(
+                  (f) =>
+                      f.completed.isBiggerOrEqualValue(start.toStartOfDay()) &
+                      f.completed.isSmallerOrEqualValue(end.toEndOfDay()),
+                ))
               .get();
       return rows
           .map(
