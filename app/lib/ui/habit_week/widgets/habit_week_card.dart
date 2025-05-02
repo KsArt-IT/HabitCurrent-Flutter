@@ -3,7 +3,7 @@ import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/models/habit_week.dart';
 import 'package:habit_current/ui/habit_week/widgets/week_days_widget.dart';
-import 'package:habit_current/ui/habit_week/widgets/week_status_widget.dart';
+import 'package:habit_current/ui/habit_week/widgets/habit_status_widget.dart';
 
 class HabitWeekCard extends StatelessWidget {
   final HabitWeek habitWeek;
@@ -43,7 +43,7 @@ class HabitWeekCard extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 icon: Icon(
                   Icons.more_horiz,
-                  color: theme.colorScheme.onPrimary,
+                  color: theme.colorScheme.secondaryFixed,
                   size: Constants.iconSize,
                 ),
                 itemBuilder:
@@ -75,7 +75,7 @@ class HabitWeekCard extends StatelessWidget {
               children: [
                 const WeekDaysWidget(),
                 const SizedBox(height: Constants.paddingMedium),
-                WeekStatusWidget(weekStatus: habitWeek.weekStatus),
+                HabitStatusWidget(weekStatus: habitWeek.weekStatus),
               ],
             ),
           ),
