@@ -4,10 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
-import 'package:habit_current/models/habit_status.dart';
-import 'package:habit_current/models/weekdays.dart';
+import 'package:habit_current/models/habit_state_status.dart';
 import 'package:habit_current/ui/habit_flow/bloc/habit_flow_bloc.dart';
-import 'package:habit_current/ui/habit_flow/widgets/habit_flow_item.dart';
+import 'package:habit_current/ui/habit_flow/widgets/habit_flow_card.dart';
 
 @RoutePage()
 class HabitFlowScreen extends StatelessWidget {
@@ -56,11 +55,11 @@ class _HabitFlowBody extends StatelessWidget {
         },
         child: BlocBuilder<HabitFlowBloc, HabitFlowState>(
           builder: (context, state) {
-            if (state.status == HabitStatus.loading) {
+            if (state.status == HabitStateStatus.loading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state.status == HabitStatus.error) {
+            if (state.status == HabitStateStatus.error) {
               return Center(
                 child: Text(
                   state.errorMessage ?? strings.errorUnknown,
@@ -102,7 +101,7 @@ class _HabitFlowBody extends StatelessWidget {
               itemCount: state.habits.length,
               itemBuilder: (context, index) {
                 final habit = state.habits[index];
-                return HabitFlowItem(
+                return HabitFlowCard(
                   habit: habit,
                   onDelete: () {
                     context.read<HabitFlowBloc>().add(
