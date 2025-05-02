@@ -59,10 +59,12 @@ class _HabitMonthBody extends StatelessWidget {
               MonthSelector(),
               // TODO: тут 2 надписи и статус передать за этот месяц нет или вобще нет привычек
               if (state.statusHabits.isEmpty)
-                Center(
-                  child: Text(
-                    strings.noHabits,
-                    style: theme.textTheme.bodyLarge,
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      strings.noHabits,
+                      style: theme.textTheme.bodyLarge,
+                    ),
                   ),
                 ),
               if (state.statusHabits.isNotEmpty)
