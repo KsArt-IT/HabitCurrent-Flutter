@@ -8,6 +8,8 @@ abstract final class Constants {
   static const double textFieldPaddingVertical = 12;
   static const double textFieldSpacing = 24;
 
+  static const double paddingSmaller = 6;
+  static const double paddingAdjust = 10;
   static const double paddingSmall = 8;
   static const double paddingMedium = 16;
   static const double paddingLarge = 24;
