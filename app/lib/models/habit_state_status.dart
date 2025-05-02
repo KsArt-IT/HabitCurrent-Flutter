@@ -1,4 +1,4 @@
-enum HabitStatus {
+enum HabitStateStatus {
   initial,
   loading,
   success,
