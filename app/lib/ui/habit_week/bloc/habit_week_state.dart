@@ -3,12 +3,12 @@ part of 'habit_week_bloc.dart';
 class HabitWeekState extends Equatable {
   final int userId;
   final DateTime date;
-  final HabitStatus status;
+  final HabitStateStatus status;
   final List<HabitWeek> completedHabits;
 
   const HabitWeekState({
     this.userId = 0,
-    this.status = HabitStatus.initial,
+    this.status = HabitStateStatus.initial,
     required this.date,
     this.completedHabits = const [],
   });
@@ -16,7 +16,7 @@ class HabitWeekState extends Equatable {
   HabitWeekState copyWith({
     int? userId,
     DateTime? date,
-    HabitStatus? status,
+    HabitStateStatus? status,
     List<HabitWeek>? completedHabits,
   }) {
     return HabitWeekState(
