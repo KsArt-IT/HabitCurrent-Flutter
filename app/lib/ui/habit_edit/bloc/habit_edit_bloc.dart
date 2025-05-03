@@ -57,8 +57,13 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
   void _onStartEditHabitEvent(
     StartEditHabitEvent event,
     Emitter<HabitEditState> emit,
-  ) {
-    emit(HabitEditState.fromHabit(event.habit));
+  ) async {
+    final habit = await dataRepository.loadHabitById(
+      event.habitId,
+      DateTime.now(),
+    );
+    if (habit == null) return;
+    emit(HabitEditState.fromHabit(habit));
   }
 
   Future<void> _saveHabitEvent() async {
