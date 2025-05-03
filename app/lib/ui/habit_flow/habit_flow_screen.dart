@@ -103,16 +103,6 @@ class _HabitFlowBody extends StatelessWidget {
                 final habit = state.habits[index];
                 return HabitFlowCard(
                   habit: habit,
-                  onDelete: () {
-                    context.read<HabitFlowBloc>().add(
-                      DeleteHabitEvent(habitId: habit.id),
-                    );
-                  },
-                  onEdit: () {
-                    context.read<AppBloc>().add(
-                      AppHabitEditEvent(habit: habit),
-                    );
-                  },
                   onPressed: () {
                     context.read<AppBloc>().add(
                       AppHabitViewEvent(habit: habit),
