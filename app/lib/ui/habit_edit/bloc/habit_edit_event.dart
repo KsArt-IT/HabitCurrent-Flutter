@@ -18,10 +18,10 @@ final class CreateHabitEvent extends HabitEditEvent {}
 
 // Редактирование привычки
 final class StartEditHabitEvent extends HabitEditEvent {
-  final Habit habit;
-  const StartEditHabitEvent({required this.habit});
+  final int habitId;
+  const StartEditHabitEvent({required this.habitId});
   @override
-  List<Object?> get props => [habit];
+  List<Object?> get props => [habitId];
 }
 
 final class SaveHabitEvent extends HabitEditEvent {}
