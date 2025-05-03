@@ -39,7 +39,7 @@ class HabitEditScreen extends StatelessWidget {
   HabitEditEvent? _stateToHabitEvent(AppState state) {
     return switch (state) {
       AppHabitCreateState() => StartCreateHabitEvent(userId: state.userId),
-      AppHabitEditState() => StartEditHabitEvent(habit: state.habit),
+      AppHabitEditState() => StartEditHabitEvent(habitId: state.habitId),
       _ => null,
     };
   }
@@ -57,9 +57,6 @@ class _HabitEditBody extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status == StatsStatus.success) {
-          print('--------------------------------');
-          print('AppHabitReloadEvent(habitId: ${state.habitId})');
-          print('--------------------------------');
           context.read<AppBloc>().add(
             AppHabitReloadEvent(habitId: state.habitId),
           );
@@ -125,7 +122,6 @@ class _HabitEditBody extends StatelessWidget {
                         label: isEdit ? strings.saveBtn : strings.createBtn,
                         disabled: state.status != StatsStatus.valid,
                         onPressed: () {
-                          print('SaveHabitEvent');
                           context.read<HabitEditBloc>().add(SaveHabitEvent());
                         },
                       );
