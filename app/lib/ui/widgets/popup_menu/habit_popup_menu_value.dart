@@ -1,0 +1,1 @@
+enum HabitPopupMenuValue { edit, delete }
