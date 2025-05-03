@@ -29,15 +29,22 @@ final class AppHabitViewEvent extends AppEvent {
 }
 
 final class AppHabitEditEvent extends AppEvent {
-  final Habit habit;
-  const AppHabitEditEvent({required this.habit});
+  final int habitId;
+  const AppHabitEditEvent({required this.habitId});
   @override
-  List<Object?> get props => [habit];
+  List<Object?> get props => [habitId];
 }
 
 final class AppHabitReloadEvent extends AppEvent {
   final int? habitId;
   const AppHabitReloadEvent({this.habitId});
+  @override
+  List<Object?> get props => [habitId];
+}
+
+final class AppHabitDeleteEvent extends AppEvent {
+  final int? habitId;
+  const AppHabitDeleteEvent({this.habitId});
   @override
   List<Object?> get props => [habitId];
 }

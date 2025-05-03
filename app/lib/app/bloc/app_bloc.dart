@@ -23,6 +23,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppHabitViewEvent>(_onHabitViewEvent);
     on<AppHabitEditEvent>(_onHabitEditEvent);
     on<AppHabitReloadEvent>(_onHabitsReloadEvent);
+    on<AppHabitDeleteEvent>(_onHabitDeleteEvent);
     // on<AppUpdateLanguageEvent>(_onLanguageChanged);
     // on<AppUpdateThemeEvent>(_onDarkThemeChanged);
     // on<AppSaveEvent>(_onSave);
@@ -102,13 +103,23 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitEditEvent event,
     Emitter<AppState> emit,
   ) async {
-    emit(AppHabitEditState(habit: event.habit));
+    emit(AppHabitEditState(habitId: event.habitId));
   }
 
   void _onHabitsReloadEvent(
     AppHabitReloadEvent event,
     Emitter<AppState> emit,
   ) async {
+    emit(AppHabitReloadState(habitId: event.habitId));
+  }
+
+  void _onHabitDeleteEvent(
+    AppHabitDeleteEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    if (event.habitId == null) return;
+
+    await dataRepository.deleteHabitById(event.habitId!);
     emit(AppHabitReloadState(habitId: event.habitId));
   }
 }
