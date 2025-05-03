@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/models/habit.dart';
+import 'package:habit_current/ui/widgets/popup_menu/habit_popup_menu.dart';
 
 class HabitFlowCard extends StatelessWidget {
   final Habit habit;
   final VoidCallback onPressed;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
 
   const HabitFlowCard({
     super.key,
     required this.habit,
-    required this.onDelete,
-    required this.onEdit,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final strings = context.l10n;
 
     return InkWell(
       onTap: () {},
@@ -50,30 +45,7 @@ class HabitFlowCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                PopupMenuButton<String>(
-                  icon: Icon(
-                    Icons.more_horiz,
-                    color: theme.colorScheme.secondaryFixed,
-                    size: Constants.iconSize,
-                  ),
-                  itemBuilder:
-                      (context) => [
-                        PopupMenuItem(
-                          onTap: onEdit,
-                          child: Text(
-                            strings.edit,
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                        ),
-                        PopupMenuItem(
-                          onTap: onDelete,
-                          child: Text(
-                            strings.delete,
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                        ),
-                      ],
-                ),
+                HabitPopupMenu(habitId: habit.id),
               ],
             ),
             const Spacer(),
