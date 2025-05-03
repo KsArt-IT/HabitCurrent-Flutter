@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/models/habit_week.dart';
-import 'package:habit_current/ui/habit_week/widgets/week_days_widget.dart';
 import 'package:habit_current/ui/habit_week/widgets/habit_status_widget.dart';
+import 'package:habit_current/ui/habit_week/widgets/week_days_widget.dart';
+import 'package:habit_current/ui/widgets/popup_menu/habit_popup_menu.dart';
 
 class HabitWeekCard extends StatelessWidget {
   final HabitWeek habitWeek;
@@ -13,7 +13,6 @@ class HabitWeekCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final strings = context.l10n;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: Constants.paddingSmall),
@@ -39,34 +38,9 @@ class HabitWeekCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              PopupMenuButton<String>(
-                padding: EdgeInsets.zero,
-                icon: Icon(
-                  Icons.more_horiz,
-                  color: theme.colorScheme.secondaryFixed,
-                  size: Constants.iconSize,
-                ),
-                itemBuilder:
-                    (context) => [
-                      PopupMenuItem(
-                        onTap: () {},
-                        child: Text(
-                          strings.edit,
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {},
-                        child: Text(
-                          strings.delete,
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                      ),
-                    ],
-              ),
+              HabitPopupMenu(habitId: habitWeek.id),
             ],
           ),
-          // const SizedBox(height: Constants.paddingSmall),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: Constants.paddingMedium,
