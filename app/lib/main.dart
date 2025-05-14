@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/app.dart';
@@ -6,6 +7,8 @@ import 'package:habit_current/core/router/app_router.dart';
 import 'package:habit_current/data/database/database.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/data/local_data_service.dart';
+import 'package:habit_current/data/services/notification/local_notification_service.dart';
+import 'package:habit_current/data/services/notification/notification_service.dart';
 import 'package:habit_current/data/services/settings/local_settings_service.dart';
 import 'package:habit_current/data/services/settings/settings_service.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,6 +23,10 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
   // Database
   final database = AppDatabase();
+  // Local Notification Service
+  final NotificationService notificationService = LocalNotificationService();
+  await notificationService.initialize();
+  // Path to the application documents directory
   assert(() {
     getApplicationDocumentsDirectory().then((dir) {
       print('--------------------------------');
@@ -36,6 +43,9 @@ void main() async {
         ),
         RepositoryProvider<SettingsService>(
           create: (_) => LocalSettingsService(preferences: preferences),
+        ),
+        RepositoryProvider<NotificationService>(
+          create: (_) => notificationService,
         ),
       ],
       child: App(router: router),
