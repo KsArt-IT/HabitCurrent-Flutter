@@ -18,13 +18,17 @@ abstract interface class DataService {
   );
   Future<HabitModel?> loadHabitById(int id, DateTime date);
   Future<HabitModel> createHabit(HabitModel habit);
-  Future<void> saveHabit(HabitModel habit);
+  Future<HabitModel> saveHabit(HabitModel habit);
   Future<void> deleteHabitById(int id);
 
   Future<HourIntervalCompletedModel> createHourIntervalCompleted(
     HourIntervalCompletedModel completed,
   );
   Future<void> deleteHourIntervalCompletedById(int id);
+
+  Future<List<HabitNotificationModel>> loadNotificationsByHabitId(int habitId);
+  Future<void> deleteNotificationById(int id);
+  Future<void> deleteNotificationByHabitId(int habitId);
 
   Future<void> close();
 }
