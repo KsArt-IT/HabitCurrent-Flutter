@@ -10,6 +10,7 @@ part 'database.g.dart';
     Habits,
     HourIntervals,
     HourIntervalCompleteds,
+    HabitNotificationDatas,
   ],
 )
 class AppDatabase extends _$AppDatabase {

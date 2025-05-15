@@ -1420,6 +1420,568 @@ class HourIntervalCompletedsCompanion
   }
 }
 
+class $HabitNotificationDatasTable extends HabitNotificationDatas
+    with TableInfo<$HabitNotificationDatasTable, HabitNotificationData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HabitNotificationDatasTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<int> userId = GeneratedColumn<int>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _habitIdMeta = const VerificationMeta(
+    'habitId',
+  );
+  @override
+  late final GeneratedColumn<int> habitId = GeneratedColumn<int>(
+    'habit_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _intervalIdMeta = const VerificationMeta(
+    'intervalId',
+  );
+  @override
+  late final GeneratedColumn<int> intervalId = GeneratedColumn<int>(
+    'interval_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _identifierMeta = const VerificationMeta(
+    'identifier',
+  );
+  @override
+  late final GeneratedColumn<int> identifier = GeneratedColumn<int>(
+    'identifier',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _weekDayMeta = const VerificationMeta(
+    'weekDay',
+  );
+  @override
+  late final GeneratedColumn<int> weekDay = GeneratedColumn<int>(
+    'week_day',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _timeMeta = const VerificationMeta('time');
+  @override
+  late final GeneratedColumn<int> time = GeneratedColumn<int>(
+    'time',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _repeatsMeta = const VerificationMeta(
+    'repeats',
+  );
+  @override
+  late final GeneratedColumn<bool> repeats = GeneratedColumn<bool>(
+    'repeats',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("repeats" IN (0, 1))',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    userId,
+    habitId,
+    intervalId,
+    identifier,
+    title,
+    weekDay,
+    time,
+    repeats,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'habit_notification_datas';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<HabitNotificationData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('habit_id')) {
+      context.handle(
+        _habitIdMeta,
+        habitId.isAcceptableOrUnknown(data['habit_id']!, _habitIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_habitIdMeta);
+    }
+    if (data.containsKey('interval_id')) {
+      context.handle(
+        _intervalIdMeta,
+        intervalId.isAcceptableOrUnknown(data['interval_id']!, _intervalIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_intervalIdMeta);
+    }
+    if (data.containsKey('identifier')) {
+      context.handle(
+        _identifierMeta,
+        identifier.isAcceptableOrUnknown(data['identifier']!, _identifierMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_identifierMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('week_day')) {
+      context.handle(
+        _weekDayMeta,
+        weekDay.isAcceptableOrUnknown(data['week_day']!, _weekDayMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_weekDayMeta);
+    }
+    if (data.containsKey('time')) {
+      context.handle(
+        _timeMeta,
+        time.isAcceptableOrUnknown(data['time']!, _timeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_timeMeta);
+    }
+    if (data.containsKey('repeats')) {
+      context.handle(
+        _repeatsMeta,
+        repeats.isAcceptableOrUnknown(data['repeats']!, _repeatsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_repeatsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  HabitNotificationData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HabitNotificationData(
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      userId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}user_id'],
+          )!,
+      habitId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}habit_id'],
+          )!,
+      intervalId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}interval_id'],
+          )!,
+      identifier:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}identifier'],
+          )!,
+      title:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}title'],
+          )!,
+      weekDay:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}week_day'],
+          )!,
+      time:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}time'],
+          )!,
+      repeats:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.bool,
+            data['${effectivePrefix}repeats'],
+          )!,
+    );
+  }
+
+  @override
+  $HabitNotificationDatasTable createAlias(String alias) {
+    return $HabitNotificationDatasTable(attachedDatabase, alias);
+  }
+}
+
+class HabitNotificationData extends DataClass
+    implements Insertable<HabitNotificationData> {
+  final int id;
+  final int userId;
+  final int habitId;
+  final int intervalId;
+  final int identifier;
+  final String title;
+  final int weekDay;
+  final int time;
+  final bool repeats;
+  const HabitNotificationData({
+    required this.id,
+    required this.userId,
+    required this.habitId,
+    required this.intervalId,
+    required this.identifier,
+    required this.title,
+    required this.weekDay,
+    required this.time,
+    required this.repeats,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['user_id'] = Variable<int>(userId);
+    map['habit_id'] = Variable<int>(habitId);
+    map['interval_id'] = Variable<int>(intervalId);
+    map['identifier'] = Variable<int>(identifier);
+    map['title'] = Variable<String>(title);
+    map['week_day'] = Variable<int>(weekDay);
+    map['time'] = Variable<int>(time);
+    map['repeats'] = Variable<bool>(repeats);
+    return map;
+  }
+
+  HabitNotificationDatasCompanion toCompanion(bool nullToAbsent) {
+    return HabitNotificationDatasCompanion(
+      id: Value(id),
+      userId: Value(userId),
+      habitId: Value(habitId),
+      intervalId: Value(intervalId),
+      identifier: Value(identifier),
+      title: Value(title),
+      weekDay: Value(weekDay),
+      time: Value(time),
+      repeats: Value(repeats),
+    );
+  }
+
+  factory HabitNotificationData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HabitNotificationData(
+      id: serializer.fromJson<int>(json['id']),
+      userId: serializer.fromJson<int>(json['userId']),
+      habitId: serializer.fromJson<int>(json['habitId']),
+      intervalId: serializer.fromJson<int>(json['intervalId']),
+      identifier: serializer.fromJson<int>(json['identifier']),
+      title: serializer.fromJson<String>(json['title']),
+      weekDay: serializer.fromJson<int>(json['weekDay']),
+      time: serializer.fromJson<int>(json['time']),
+      repeats: serializer.fromJson<bool>(json['repeats']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'userId': serializer.toJson<int>(userId),
+      'habitId': serializer.toJson<int>(habitId),
+      'intervalId': serializer.toJson<int>(intervalId),
+      'identifier': serializer.toJson<int>(identifier),
+      'title': serializer.toJson<String>(title),
+      'weekDay': serializer.toJson<int>(weekDay),
+      'time': serializer.toJson<int>(time),
+      'repeats': serializer.toJson<bool>(repeats),
+    };
+  }
+
+  HabitNotificationData copyWith({
+    int? id,
+    int? userId,
+    int? habitId,
+    int? intervalId,
+    int? identifier,
+    String? title,
+    int? weekDay,
+    int? time,
+    bool? repeats,
+  }) => HabitNotificationData(
+    id: id ?? this.id,
+    userId: userId ?? this.userId,
+    habitId: habitId ?? this.habitId,
+    intervalId: intervalId ?? this.intervalId,
+    identifier: identifier ?? this.identifier,
+    title: title ?? this.title,
+    weekDay: weekDay ?? this.weekDay,
+    time: time ?? this.time,
+    repeats: repeats ?? this.repeats,
+  );
+  HabitNotificationData copyWithCompanion(
+    HabitNotificationDatasCompanion data,
+  ) {
+    return HabitNotificationData(
+      id: data.id.present ? data.id.value : this.id,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      habitId: data.habitId.present ? data.habitId.value : this.habitId,
+      intervalId:
+          data.intervalId.present ? data.intervalId.value : this.intervalId,
+      identifier:
+          data.identifier.present ? data.identifier.value : this.identifier,
+      title: data.title.present ? data.title.value : this.title,
+      weekDay: data.weekDay.present ? data.weekDay.value : this.weekDay,
+      time: data.time.present ? data.time.value : this.time,
+      repeats: data.repeats.present ? data.repeats.value : this.repeats,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HabitNotificationData(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('habitId: $habitId, ')
+          ..write('intervalId: $intervalId, ')
+          ..write('identifier: $identifier, ')
+          ..write('title: $title, ')
+          ..write('weekDay: $weekDay, ')
+          ..write('time: $time, ')
+          ..write('repeats: $repeats')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    userId,
+    habitId,
+    intervalId,
+    identifier,
+    title,
+    weekDay,
+    time,
+    repeats,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HabitNotificationData &&
+          other.id == this.id &&
+          other.userId == this.userId &&
+          other.habitId == this.habitId &&
+          other.intervalId == this.intervalId &&
+          other.identifier == this.identifier &&
+          other.title == this.title &&
+          other.weekDay == this.weekDay &&
+          other.time == this.time &&
+          other.repeats == this.repeats);
+}
+
+class HabitNotificationDatasCompanion
+    extends UpdateCompanion<HabitNotificationData> {
+  final Value<int> id;
+  final Value<int> userId;
+  final Value<int> habitId;
+  final Value<int> intervalId;
+  final Value<int> identifier;
+  final Value<String> title;
+  final Value<int> weekDay;
+  final Value<int> time;
+  final Value<bool> repeats;
+  const HabitNotificationDatasCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.habitId = const Value.absent(),
+    this.intervalId = const Value.absent(),
+    this.identifier = const Value.absent(),
+    this.title = const Value.absent(),
+    this.weekDay = const Value.absent(),
+    this.time = const Value.absent(),
+    this.repeats = const Value.absent(),
+  });
+  HabitNotificationDatasCompanion.insert({
+    this.id = const Value.absent(),
+    required int userId,
+    required int habitId,
+    required int intervalId,
+    required int identifier,
+    required String title,
+    required int weekDay,
+    required int time,
+    required bool repeats,
+  }) : userId = Value(userId),
+       habitId = Value(habitId),
+       intervalId = Value(intervalId),
+       identifier = Value(identifier),
+       title = Value(title),
+       weekDay = Value(weekDay),
+       time = Value(time),
+       repeats = Value(repeats);
+  static Insertable<HabitNotificationData> custom({
+    Expression<int>? id,
+    Expression<int>? userId,
+    Expression<int>? habitId,
+    Expression<int>? intervalId,
+    Expression<int>? identifier,
+    Expression<String>? title,
+    Expression<int>? weekDay,
+    Expression<int>? time,
+    Expression<bool>? repeats,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (habitId != null) 'habit_id': habitId,
+      if (intervalId != null) 'interval_id': intervalId,
+      if (identifier != null) 'identifier': identifier,
+      if (title != null) 'title': title,
+      if (weekDay != null) 'week_day': weekDay,
+      if (time != null) 'time': time,
+      if (repeats != null) 'repeats': repeats,
+    });
+  }
+
+  HabitNotificationDatasCompanion copyWith({
+    Value<int>? id,
+    Value<int>? userId,
+    Value<int>? habitId,
+    Value<int>? intervalId,
+    Value<int>? identifier,
+    Value<String>? title,
+    Value<int>? weekDay,
+    Value<int>? time,
+    Value<bool>? repeats,
+  }) {
+    return HabitNotificationDatasCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      habitId: habitId ?? this.habitId,
+      intervalId: intervalId ?? this.intervalId,
+      identifier: identifier ?? this.identifier,
+      title: title ?? this.title,
+      weekDay: weekDay ?? this.weekDay,
+      time: time ?? this.time,
+      repeats: repeats ?? this.repeats,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
+    }
+    if (habitId.present) {
+      map['habit_id'] = Variable<int>(habitId.value);
+    }
+    if (intervalId.present) {
+      map['interval_id'] = Variable<int>(intervalId.value);
+    }
+    if (identifier.present) {
+      map['identifier'] = Variable<int>(identifier.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (weekDay.present) {
+      map['week_day'] = Variable<int>(weekDay.value);
+    }
+    if (time.present) {
+      map['time'] = Variable<int>(time.value);
+    }
+    if (repeats.present) {
+      map['repeats'] = Variable<bool>(repeats.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HabitNotificationDatasCompanion(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('habitId: $habitId, ')
+          ..write('intervalId: $intervalId, ')
+          ..write('identifier: $identifier, ')
+          ..write('title: $title, ')
+          ..write('weekDay: $weekDay, ')
+          ..write('time: $time, ')
+          ..write('repeats: $repeats')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1428,6 +1990,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $HourIntervalsTable hourIntervals = $HourIntervalsTable(this);
   late final $HourIntervalCompletedsTable hourIntervalCompleteds =
       $HourIntervalCompletedsTable(this);
+  late final $HabitNotificationDatasTable habitNotificationDatas =
+      $HabitNotificationDatasTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1437,6 +2001,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     habits,
     hourIntervals,
     hourIntervalCompleteds,
+    habitNotificationDatas,
   ];
   @override
   DriftDatabaseOptions get options =>
@@ -2258,6 +2823,306 @@ typedef $$HourIntervalCompletedsTableProcessedTableManager =
       HourIntervalCompleted,
       PrefetchHooks Function()
     >;
+typedef $$HabitNotificationDatasTableCreateCompanionBuilder =
+    HabitNotificationDatasCompanion Function({
+      Value<int> id,
+      required int userId,
+      required int habitId,
+      required int intervalId,
+      required int identifier,
+      required String title,
+      required int weekDay,
+      required int time,
+      required bool repeats,
+    });
+typedef $$HabitNotificationDatasTableUpdateCompanionBuilder =
+    HabitNotificationDatasCompanion Function({
+      Value<int> id,
+      Value<int> userId,
+      Value<int> habitId,
+      Value<int> intervalId,
+      Value<int> identifier,
+      Value<String> title,
+      Value<int> weekDay,
+      Value<int> time,
+      Value<bool> repeats,
+    });
+
+class $$HabitNotificationDatasTableFilterComposer
+    extends Composer<_$AppDatabase, $HabitNotificationDatasTable> {
+  $$HabitNotificationDatasTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get habitId => $composableBuilder(
+    column: $table.habitId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get intervalId => $composableBuilder(
+    column: $table.intervalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get identifier => $composableBuilder(
+    column: $table.identifier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get weekDay => $composableBuilder(
+    column: $table.weekDay,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get time => $composableBuilder(
+    column: $table.time,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get repeats => $composableBuilder(
+    column: $table.repeats,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$HabitNotificationDatasTableOrderingComposer
+    extends Composer<_$AppDatabase, $HabitNotificationDatasTable> {
+  $$HabitNotificationDatasTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get habitId => $composableBuilder(
+    column: $table.habitId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get intervalId => $composableBuilder(
+    column: $table.intervalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get identifier => $composableBuilder(
+    column: $table.identifier,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get weekDay => $composableBuilder(
+    column: $table.weekDay,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get time => $composableBuilder(
+    column: $table.time,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get repeats => $composableBuilder(
+    column: $table.repeats,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$HabitNotificationDatasTableAnnotationComposer
+    extends Composer<_$AppDatabase, $HabitNotificationDatasTable> {
+  $$HabitNotificationDatasTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<int> get habitId =>
+      $composableBuilder(column: $table.habitId, builder: (column) => column);
+
+  GeneratedColumn<int> get intervalId => $composableBuilder(
+    column: $table.intervalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get identifier => $composableBuilder(
+    column: $table.identifier,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<int> get weekDay =>
+      $composableBuilder(column: $table.weekDay, builder: (column) => column);
+
+  GeneratedColumn<int> get time =>
+      $composableBuilder(column: $table.time, builder: (column) => column);
+
+  GeneratedColumn<bool> get repeats =>
+      $composableBuilder(column: $table.repeats, builder: (column) => column);
+}
+
+class $$HabitNotificationDatasTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $HabitNotificationDatasTable,
+          HabitNotificationData,
+          $$HabitNotificationDatasTableFilterComposer,
+          $$HabitNotificationDatasTableOrderingComposer,
+          $$HabitNotificationDatasTableAnnotationComposer,
+          $$HabitNotificationDatasTableCreateCompanionBuilder,
+          $$HabitNotificationDatasTableUpdateCompanionBuilder,
+          (
+            HabitNotificationData,
+            BaseReferences<
+              _$AppDatabase,
+              $HabitNotificationDatasTable,
+              HabitNotificationData
+            >,
+          ),
+          HabitNotificationData,
+          PrefetchHooks Function()
+        > {
+  $$HabitNotificationDatasTableTableManager(
+    _$AppDatabase db,
+    $HabitNotificationDatasTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$HabitNotificationDatasTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer:
+              () => $$HabitNotificationDatasTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer:
+              () => $$HabitNotificationDatasTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> userId = const Value.absent(),
+                Value<int> habitId = const Value.absent(),
+                Value<int> intervalId = const Value.absent(),
+                Value<int> identifier = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<int> weekDay = const Value.absent(),
+                Value<int> time = const Value.absent(),
+                Value<bool> repeats = const Value.absent(),
+              }) => HabitNotificationDatasCompanion(
+                id: id,
+                userId: userId,
+                habitId: habitId,
+                intervalId: intervalId,
+                identifier: identifier,
+                title: title,
+                weekDay: weekDay,
+                time: time,
+                repeats: repeats,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int userId,
+                required int habitId,
+                required int intervalId,
+                required int identifier,
+                required String title,
+                required int weekDay,
+                required int time,
+                required bool repeats,
+              }) => HabitNotificationDatasCompanion.insert(
+                id: id,
+                userId: userId,
+                habitId: habitId,
+                intervalId: intervalId,
+                identifier: identifier,
+                title: title,
+                weekDay: weekDay,
+                time: time,
+                repeats: repeats,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$HabitNotificationDatasTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $HabitNotificationDatasTable,
+      HabitNotificationData,
+      $$HabitNotificationDatasTableFilterComposer,
+      $$HabitNotificationDatasTableOrderingComposer,
+      $$HabitNotificationDatasTableAnnotationComposer,
+      $$HabitNotificationDatasTableCreateCompanionBuilder,
+      $$HabitNotificationDatasTableUpdateCompanionBuilder,
+      (
+        HabitNotificationData,
+        BaseReferences<
+          _$AppDatabase,
+          $HabitNotificationDatasTable,
+          HabitNotificationData
+        >,
+      ),
+      HabitNotificationData,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2272,5 +3137,10 @@ class $AppDatabaseManager {
       $$HourIntervalCompletedsTableTableManager(
         _db,
         _db.hourIntervalCompleteds,
+      );
+  $$HabitNotificationDatasTableTableManager get habitNotificationDatas =>
+      $$HabitNotificationDatasTableTableManager(
+        _db,
+        _db.habitNotificationDatas,
       );
 }
