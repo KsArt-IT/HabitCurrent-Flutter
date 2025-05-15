@@ -74,6 +74,8 @@ final class LocalDataService implements DataService {
         await database.hourIntervalCompleteds.deleteWhere(
           (f) => f.habitId.equals(id),
         );
+        // Удаляем уведомления
+        await deleteNotificationByHabitId(id);
         // Удаляем привычку
         await database.habits.deleteOne(HabitsCompanion(id: Value(id)));
       });
@@ -106,6 +108,11 @@ final class LocalDataService implements DataService {
             ),
           );
         }
+
+        // Создаем уведомления
+        for (final notification in habit.notifications) {
+          await _saveNotification(notification);
+        }
       });
 
       // Загружаем созданную привычку
@@ -120,7 +127,7 @@ final class LocalDataService implements DataService {
   }
 
   @override
-  Future<void> saveHabit(HabitModel habit) async {
+  Future<HabitModel> saveHabit(HabitModel habit) async {
     // Получаем текущие интервалы
     final oldIntervals = await _loadHourIntervalsByHabitId(habit.id);
     try {
@@ -168,7 +175,21 @@ final class LocalDataService implements DataService {
                 ),
           );
         }
+
+        // Обновляем уведомления привычки
+        // удалим все уведомления
+        await deleteNotificationByHabitId(habit.id);
+        // добавляем новые уведомления
+        for (final notification in habit.notifications) {
+          await _saveNotification(notification);
+        }
       });
+      // Загружаем созданную привычку
+      final habitRow = await loadHabitById(habit.id, DateTime.now());
+      if (habitRow == null) {
+        throw Exception('Habit not found after creation');
+      }
+      return habitRow;
     } catch (e) {
       throw Exception('Error saving habit: $e');
     }
@@ -196,6 +217,7 @@ final class LocalDataService implements DataService {
           habitRow.id,
           date,
         ),
+        notifications: await loadNotificationsByHabitId(habitRow.id),
       );
     } catch (e) {
       throw Exception('Error loading habit by id: $e');
@@ -224,6 +246,7 @@ final class LocalDataService implements DataService {
             completedIntervals: await _loadHourIntervalCompletedsByHabitId(
               habitRow.id,
             ),
+            notifications: await loadNotificationsByHabitId(habitRow.id),
           );
         }),
       ).then((List<HabitModel> habitModels) {
@@ -269,6 +292,7 @@ final class LocalDataService implements DataService {
                   habitRow.id,
                   date,
                 ),
+            notifications: await loadNotificationsByHabitId(habitRow.id),
           );
         }),
       ).then((List<HabitModel> habitModels) {
@@ -316,6 +340,7 @@ final class LocalDataService implements DataService {
                   start,
                   end,
                 ),
+            notifications: await loadNotificationsByHabitId(habitRow.id),
           );
         }),
       );
@@ -470,5 +495,62 @@ final class LocalDataService implements DataService {
     } catch (e) {
       throw Exception('Error creating hour interval completed: $e');
     }
+  }
+
+  // MARK: - HabitNotification
+  @override
+  Future<List<HabitNotificationModel>> loadNotificationsByHabitId(int habitId) async {
+    try {
+      final rows =
+          await (database.habitNotificationDatas.select()
+                ..where((f) => f.habitId.equals(habitId)))
+              .get();
+      return rows
+          .map(
+            (e) => HabitNotificationModel(
+              id: e.id,
+              userId: e.userId,
+              habitId: e.habitId,
+              intervalId: e.intervalId,
+              identifier: e.identifier,
+              title: e.title,
+              weekDay: e.weekDay,
+              time: e.time,
+              repeats: e.repeats,
+            ),
+          )
+          .toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<void> _saveNotification(HabitNotificationModel notification) {
+    return database.habitNotificationDatas.insertOnConflictUpdate(
+      HabitNotificationDatasCompanion.insert(
+        userId: notification.userId,
+        habitId: notification.habitId,
+        intervalId: notification.intervalId,
+        identifier: notification.identifier,
+        title: notification.title,
+        weekDay: notification.weekDay,
+        time: notification.time,
+        repeats: notification.repeats,
+      ),
+    );
+  }
+
+  @override
+  Future<void> deleteNotificationByHabitId(int habitId) {
+    return database.habitNotificationDatas.deleteWhere(
+      (f) => f.habitId.equals(habitId),
+    );
+  }
+
+  @override
+  Future<void> deleteNotificationById(int id) {
+    return database.habitNotificationDatas.deleteOne(
+      HabitNotificationDatasCompanion(id: Value(id)),
+    );
   }
 }
