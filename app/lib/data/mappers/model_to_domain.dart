@@ -1,8 +1,5 @@
 import 'package:habit_current/data/models/models.dart';
-import 'package:habit_current/models/habit.dart';
-import 'package:habit_current/models/hour_interval.dart';
-import 'package:habit_current/models/hour_interval_completed.dart';
-import 'package:habit_current/models/user.dart';
+import 'package:habit_current/models/models.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 extension UserToDomain on UserModel {
@@ -29,6 +26,7 @@ extension HabitToDomain on HabitModel {
       weekDays: weekDaysRaw > 0 ? WeekDays.fromInt(weekDaysRaw) : WeekDays.values.toSet(),
       intervals: intervals.map((e) => e.toDomain()).toList(),
       completedIntervals: completedIntervals.map((e) => e.toDomain()).toList(),
+      notifications: notifications.map((e) => e.toDomain()).toList(),
     );
   }
 }
@@ -51,4 +49,15 @@ extension HourIntervalCompletedToDomain on HourIntervalCompletedModel {
       completed: completed, //
     );
   }
+}
+
+extension HabitNotificationModelToDomain on HabitNotificationModel {
+  HabitNotification toDomain() => HabitNotification(
+    id: id,
+    intervalId: intervalId,
+    identifier: identifier,
+    weekDay: weekDay,
+    time: time,
+    repeats: repeats,
+  );
 }
