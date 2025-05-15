@@ -1,0 +1,20 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_current/models/habit_notification.dart';
+
+abstract interface class NotificationRepository {
+  Future<void> initialize();
+  Future<bool> requestNotificationPermissions();
+
+  Future<void> scheduleNotifications(
+    String title,
+    List<HabitNotification> notifications,
+  );
+
+  Future<void> cancelNotificationByHabitId(int habitId);
+  Future<void> cancelAllNotifications();
+
+  Future<List<PendingNotificationRequest>> getPendingNotifications();
+  Future<List<ActiveNotification>> getActiveNotifications();
+
+  Future<void> close();
+}
