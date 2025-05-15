@@ -7,6 +7,12 @@ extension IntTime on int {
     return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}";
   }
 
+  DateTime toDateTime(DateTime date) {
+    final hours = this ~/ 60;
+    final minutes = this % 60;
+    return DateTime(date.year, date.month, date.day, hours, minutes);
+  }
+
   TimeOfDay toTimeOfDay() {
     final hours = this ~/ 60;
     final minutes = this % 60;
