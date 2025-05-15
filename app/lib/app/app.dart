@@ -5,9 +5,12 @@ import 'package:habit_current/app/habit_current_app.dart';
 import 'package:habit_current/core/router/app_router.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/data/local_data_repository.dart';
+import 'package:habit_current/data/repositories/notification/local_notification_repository.dart';
+import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/data/repositories/settings/local_settings_repository.dart';
 import 'package:habit_current/data/repositories/settings/settings_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
+import 'package:habit_current/data/services/notification/notification_service.dart';
 import 'package:habit_current/data/services/settings/settings_service.dart';
 import 'package:habit_current/ui/settings/bloc/settings_bloc.dart';
 
@@ -30,6 +33,14 @@ class App extends StatelessWidget {
           create: (context) {
             final DataService service = context.read<DataService>();
             return LocalDataRepository(service: service);
+          },
+          dispose: (repository) => repository.close(),
+        ),
+        RepositoryProvider<NotificationRepository>(
+          create: (context) {
+            final DataService service = context.read<DataService>();
+            final NotificationService notification = context.read<NotificationService>();
+            return LocalNotificationRepository(service: service, notification: notification);
           },
           dispose: (repository) => repository.close(),
         ),
