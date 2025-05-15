@@ -1,3 +1,4 @@
+import 'package:habit_current/models/habit_notification.dart';
 import 'package:habit_current/models/hour_interval.dart';
 import 'package:habit_current/models/hour_interval_completed.dart';
 import 'package:habit_current/models/weekdays.dart';
@@ -14,6 +15,7 @@ final class Habit {
   final Set<WeekDays> weekDays;
   final List<HourInterval> intervals;
   final List<HourIntervalCompleted> completedIntervals;
+  final List<HabitNotification> notifications;
 
   bool get isActive => completed == null;
 
@@ -28,6 +30,7 @@ final class Habit {
     required this.weekDays,
     required this.intervals,
     this.completedIntervals = const [],
+    this.notifications = const [],
   });
 
   Habit copyWith({
@@ -39,6 +42,7 @@ final class Habit {
     Set<WeekDays>? weekDays,
     List<HourInterval>? intervals,
     List<HourIntervalCompleted>? completedIntervals,
+    List<HabitNotification>? notifications,
   }) => Habit(
     id: this.id,
     userId: this.userId,
@@ -51,5 +55,6 @@ final class Habit {
     weekDays: weekDays ?? this.weekDays,
     intervals: intervals ?? this.intervals,
     completedIntervals: completedIntervals ?? this.completedIntervals,
+    notifications: notifications ?? this.notifications,
   );
 }
