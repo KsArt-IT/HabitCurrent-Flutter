@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/app.dart';
 import 'package:habit_current/app/app_bloc_observer.dart';
 import 'package:habit_current/core/router/app_router.dart';
+import 'package:habit_current/core/time_zone/time_zone.dart';
 import 'package:habit_current/data/database/database.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/data/local_data_service.dart';
@@ -17,6 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver();
+  // Initialize time zone
+  await TimeZone.initialize();
   // Navigation
   final router = AppRouter();
   // SharedPreferences for settings
