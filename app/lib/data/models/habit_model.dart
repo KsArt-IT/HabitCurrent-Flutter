@@ -1,3 +1,4 @@
+import 'package:habit_current/data/models/habit_notification_model.dart';
 import 'package:habit_current/data/models/hour_interval_completed_model.dart';
 import 'package:habit_current/data/models/hour_interval_model.dart';
 
@@ -14,6 +15,7 @@ final class HabitModel {
   final int weekDaysRaw;
   final List<HourIntervalModel> intervals;
   final List<HourIntervalCompletedModel> completedIntervals;
+  final List<HabitNotificationModel> notifications;
 
   const HabitModel({
     required this.id,
@@ -26,6 +28,7 @@ final class HabitModel {
     required this.weekDaysRaw,
     required this.intervals,
     required this.completedIntervals,
+    required this.notifications,
   });
 
   HabitModel copyWith({
@@ -39,6 +42,7 @@ final class HabitModel {
     int? weekDaysRaw,
     List<HourIntervalModel>? intervals,
     List<HourIntervalCompletedModel>? completedIntervals,
+    List<HabitNotificationModel>? notifications,
   }) => HabitModel(
     id: id ?? this.id,
     userId: userId ?? this.userId,
@@ -50,5 +54,6 @@ final class HabitModel {
     weekDaysRaw: weekDaysRaw ?? this.weekDaysRaw,
     intervals: intervals ?? this.intervals,
     completedIntervals: completedIntervals ?? this.completedIntervals,
+    notifications: notifications ?? this.notifications,
   );
 }
