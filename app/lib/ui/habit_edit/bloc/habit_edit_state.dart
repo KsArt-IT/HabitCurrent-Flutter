@@ -59,7 +59,8 @@ class HabitEditState extends Equatable {
           habit.weekDays.length == 7 ? Frequency.daily : Frequency.weekly,
       weekDays: habit.weekDays,
       intervals: habit.intervals,
-      reminder: Reminder.disabled,
+      reminder:
+          habit.notifications.isNotEmpty ? Reminder.enabled : Reminder.disabled,
     );
   }
 
