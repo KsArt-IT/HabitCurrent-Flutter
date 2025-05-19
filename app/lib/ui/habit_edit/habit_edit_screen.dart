@@ -30,8 +30,10 @@ class HabitEditScreen extends StatelessWidget {
 
     return BlocProvider(
       create:
-          (context) =>
-              HabitEditBloc(dataRepository: context.read())..add(habitEvent),
+          (context) => HabitEditBloc(
+            dataRepository: context.read(),
+            notificationRepository: context.read(),
+          )..add(habitEvent),
       child: const _HabitEditBody(),
     );
   }
