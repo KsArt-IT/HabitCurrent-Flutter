@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
+import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/models/habit.dart';
+import 'package:habit_current/models/habit_notification.dart';
 import 'package:habit_current/models/hour_interval.dart';
 import 'package:habit_current/models/weekdays.dart';
 
@@ -10,8 +12,12 @@ part 'habit_edit_state.dart';
 
 class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
   final DataRepository dataRepository;
+  final NotificationRepository notificationRepository;
 
-  HabitEditBloc({required this.dataRepository}) : super(HabitEditState()) {
+  HabitEditBloc({
+    required this.dataRepository,
+    required this.notificationRepository,
+  }) : super(HabitEditState()) {
     on<StartCreateHabitEvent>(_onStartCreateHabitEvent);
 
     on<StartEditHabitEvent>(_onStartEditHabitEvent);
@@ -38,7 +44,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     emit(state.copyWith(status: StatsStatus.initial, userId: event.userId));
   }
 
-  Future<int> _createHabitEvent() async {
+  Future<Habit> _createHabit() async {
     // Save the habit to the database
     final habit = await dataRepository.createHabit(
       Habit(
@@ -50,7 +56,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
         intervals: state.intervals,
       ),
     );
-    return habit.id;
+    return habit;
   }
 
   // Редактирование привычки
@@ -66,29 +72,41 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     emit(HabitEditState.fromHabit(habit));
   }
 
-  Future<void> _saveHabitEvent() async {
+  Future<Habit> _saveHabit() async {
     final habit = state.habit!.copyWith(
       name: state.name,
       details: state.details,
       weekDays: state.frequency == Frequency.weekly ? state.weekDays : {},
       intervals: state.intervals,
     );
-    await dataRepository.saveHabit(habit);
+    return await dataRepository.saveHabit(habit);
   }
 
+  // Сохранение привычки
   void _onSaveHabitEvent(
     SaveHabitEvent event,
     Emitter<HabitEditState> emit,
   ) async {
+    print("--------------------------------");
     emit(state.copyWith(status: StatsStatus.initial));
-    int habitId;
+    Habit habit;
     if (state.habit != null) {
-      await _saveHabitEvent();
-      habitId = state.habit!.id;
+      // отменим уведомления для habitId
+      await notificationRepository.cancelNotificationByHabitId(state.habit!.id);
+      // сохраним привычку
+      habit = await _saveHabit();
     } else {
-      habitId = await _createHabitEvent();
+      habit = await _createHabit();
     }
-    emit(state.copyWith(status: StatsStatus.success, habitId: habitId));
+    if (state.reminder == Reminder.enabled) {
+      _saveNotifications(habit);
+      print("HabitEditBloc: scheduleNotificationByHabitId");
+      // создадим новые уведомления для habitId
+      await notificationRepository.scheduleNotificationByHabitId(habit.id);
+    }
+    // завершим
+    emit(state.copyWith(status: StatsStatus.success, habitId: habit.id));
+    print("--------------------------------");
   }
 
   // Редактирование параметров привычки
@@ -166,5 +184,51 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     Emitter<HabitEditState> emit,
   ) {
     emit(state.copyWith(reminder: event.value));
+  }
+
+  void _saveNotifications(Habit habit) {
+    final notifications = _generateNotification(
+      habit.weekDays,
+      habit.intervals,
+    );
+    dataRepository.saveNotifications(
+      userId: habit.userId,
+      habitId: habit.id,
+      title: habit.name,
+      notifications: notifications,
+    );
+  }
+
+  List<HabitNotification> _generateNotification(
+    Set<WeekDays> weekDays,
+    List<HourInterval> intervals,
+  ) {
+    print("HabitEditBloc: intervals: ${intervals.length}");
+    if (intervals.isEmpty) return [];
+    List<HabitNotification> notifications = [];
+    for (final interval in intervals) {
+      if (weekDays.isEmpty) {
+        notifications.add(
+          HabitNotification(
+            intervalId: interval.id,
+            weekDay: WeekDays.allDays,
+            time: interval.time,
+            repeats: true,
+          ),
+        );
+      } else {
+        for (final day in weekDays) {
+          notifications.add(
+            HabitNotification(
+              intervalId: interval.id,
+              weekDay: day.weekDay,
+              time: interval.time,
+              repeats: true,
+            ),
+          );
+        }
+      }
+    }
+    return notifications;
   }
 }
