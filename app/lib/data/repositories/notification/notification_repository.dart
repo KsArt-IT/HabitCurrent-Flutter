@@ -10,6 +10,8 @@ abstract interface class NotificationRepository {
     List<HabitNotification> notifications,
   );
 
+  Future<void> scheduleNotificationByHabitId(int habitId);
+  
   Future<void> cancelNotificationByHabitId(int habitId);
   Future<void> cancelAllNotifications();
 
