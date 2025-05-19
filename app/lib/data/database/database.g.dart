@@ -1470,17 +1470,6 @@ class $HabitNotificationDatasTable extends HabitNotificationDatas
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _identifierMeta = const VerificationMeta(
-    'identifier',
-  );
-  @override
-  late final GeneratedColumn<int> identifier = GeneratedColumn<int>(
-    'identifier',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
   static const VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String> title = GeneratedColumn<String>(
@@ -1530,7 +1519,6 @@ class $HabitNotificationDatasTable extends HabitNotificationDatas
     userId,
     habitId,
     intervalId,
-    identifier,
     title,
     weekDay,
     time,
@@ -1574,14 +1562,6 @@ class $HabitNotificationDatasTable extends HabitNotificationDatas
       );
     } else if (isInserting) {
       context.missing(_intervalIdMeta);
-    }
-    if (data.containsKey('identifier')) {
-      context.handle(
-        _identifierMeta,
-        identifier.isAcceptableOrUnknown(data['identifier']!, _identifierMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_identifierMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
@@ -1644,11 +1624,6 @@ class $HabitNotificationDatasTable extends HabitNotificationDatas
             DriftSqlType.int,
             data['${effectivePrefix}interval_id'],
           )!,
-      identifier:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}identifier'],
-          )!,
       title:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
@@ -1684,7 +1659,6 @@ class HabitNotificationData extends DataClass
   final int userId;
   final int habitId;
   final int intervalId;
-  final int identifier;
   final String title;
   final int weekDay;
   final int time;
@@ -1694,7 +1668,6 @@ class HabitNotificationData extends DataClass
     required this.userId,
     required this.habitId,
     required this.intervalId,
-    required this.identifier,
     required this.title,
     required this.weekDay,
     required this.time,
@@ -1707,7 +1680,6 @@ class HabitNotificationData extends DataClass
     map['user_id'] = Variable<int>(userId);
     map['habit_id'] = Variable<int>(habitId);
     map['interval_id'] = Variable<int>(intervalId);
-    map['identifier'] = Variable<int>(identifier);
     map['title'] = Variable<String>(title);
     map['week_day'] = Variable<int>(weekDay);
     map['time'] = Variable<int>(time);
@@ -1721,7 +1693,6 @@ class HabitNotificationData extends DataClass
       userId: Value(userId),
       habitId: Value(habitId),
       intervalId: Value(intervalId),
-      identifier: Value(identifier),
       title: Value(title),
       weekDay: Value(weekDay),
       time: Value(time),
@@ -1739,7 +1710,6 @@ class HabitNotificationData extends DataClass
       userId: serializer.fromJson<int>(json['userId']),
       habitId: serializer.fromJson<int>(json['habitId']),
       intervalId: serializer.fromJson<int>(json['intervalId']),
-      identifier: serializer.fromJson<int>(json['identifier']),
       title: serializer.fromJson<String>(json['title']),
       weekDay: serializer.fromJson<int>(json['weekDay']),
       time: serializer.fromJson<int>(json['time']),
@@ -1754,7 +1724,6 @@ class HabitNotificationData extends DataClass
       'userId': serializer.toJson<int>(userId),
       'habitId': serializer.toJson<int>(habitId),
       'intervalId': serializer.toJson<int>(intervalId),
-      'identifier': serializer.toJson<int>(identifier),
       'title': serializer.toJson<String>(title),
       'weekDay': serializer.toJson<int>(weekDay),
       'time': serializer.toJson<int>(time),
@@ -1767,7 +1736,6 @@ class HabitNotificationData extends DataClass
     int? userId,
     int? habitId,
     int? intervalId,
-    int? identifier,
     String? title,
     int? weekDay,
     int? time,
@@ -1777,7 +1745,6 @@ class HabitNotificationData extends DataClass
     userId: userId ?? this.userId,
     habitId: habitId ?? this.habitId,
     intervalId: intervalId ?? this.intervalId,
-    identifier: identifier ?? this.identifier,
     title: title ?? this.title,
     weekDay: weekDay ?? this.weekDay,
     time: time ?? this.time,
@@ -1792,8 +1759,6 @@ class HabitNotificationData extends DataClass
       habitId: data.habitId.present ? data.habitId.value : this.habitId,
       intervalId:
           data.intervalId.present ? data.intervalId.value : this.intervalId,
-      identifier:
-          data.identifier.present ? data.identifier.value : this.identifier,
       title: data.title.present ? data.title.value : this.title,
       weekDay: data.weekDay.present ? data.weekDay.value : this.weekDay,
       time: data.time.present ? data.time.value : this.time,
@@ -1808,7 +1773,6 @@ class HabitNotificationData extends DataClass
           ..write('userId: $userId, ')
           ..write('habitId: $habitId, ')
           ..write('intervalId: $intervalId, ')
-          ..write('identifier: $identifier, ')
           ..write('title: $title, ')
           ..write('weekDay: $weekDay, ')
           ..write('time: $time, ')
@@ -1823,7 +1787,6 @@ class HabitNotificationData extends DataClass
     userId,
     habitId,
     intervalId,
-    identifier,
     title,
     weekDay,
     time,
@@ -1837,7 +1800,6 @@ class HabitNotificationData extends DataClass
           other.userId == this.userId &&
           other.habitId == this.habitId &&
           other.intervalId == this.intervalId &&
-          other.identifier == this.identifier &&
           other.title == this.title &&
           other.weekDay == this.weekDay &&
           other.time == this.time &&
@@ -1850,7 +1812,6 @@ class HabitNotificationDatasCompanion
   final Value<int> userId;
   final Value<int> habitId;
   final Value<int> intervalId;
-  final Value<int> identifier;
   final Value<String> title;
   final Value<int> weekDay;
   final Value<int> time;
@@ -1860,7 +1821,6 @@ class HabitNotificationDatasCompanion
     this.userId = const Value.absent(),
     this.habitId = const Value.absent(),
     this.intervalId = const Value.absent(),
-    this.identifier = const Value.absent(),
     this.title = const Value.absent(),
     this.weekDay = const Value.absent(),
     this.time = const Value.absent(),
@@ -1871,7 +1831,6 @@ class HabitNotificationDatasCompanion
     required int userId,
     required int habitId,
     required int intervalId,
-    required int identifier,
     required String title,
     required int weekDay,
     required int time,
@@ -1879,7 +1838,6 @@ class HabitNotificationDatasCompanion
   }) : userId = Value(userId),
        habitId = Value(habitId),
        intervalId = Value(intervalId),
-       identifier = Value(identifier),
        title = Value(title),
        weekDay = Value(weekDay),
        time = Value(time),
@@ -1889,7 +1847,6 @@ class HabitNotificationDatasCompanion
     Expression<int>? userId,
     Expression<int>? habitId,
     Expression<int>? intervalId,
-    Expression<int>? identifier,
     Expression<String>? title,
     Expression<int>? weekDay,
     Expression<int>? time,
@@ -1900,7 +1857,6 @@ class HabitNotificationDatasCompanion
       if (userId != null) 'user_id': userId,
       if (habitId != null) 'habit_id': habitId,
       if (intervalId != null) 'interval_id': intervalId,
-      if (identifier != null) 'identifier': identifier,
       if (title != null) 'title': title,
       if (weekDay != null) 'week_day': weekDay,
       if (time != null) 'time': time,
@@ -1913,7 +1869,6 @@ class HabitNotificationDatasCompanion
     Value<int>? userId,
     Value<int>? habitId,
     Value<int>? intervalId,
-    Value<int>? identifier,
     Value<String>? title,
     Value<int>? weekDay,
     Value<int>? time,
@@ -1924,7 +1879,6 @@ class HabitNotificationDatasCompanion
       userId: userId ?? this.userId,
       habitId: habitId ?? this.habitId,
       intervalId: intervalId ?? this.intervalId,
-      identifier: identifier ?? this.identifier,
       title: title ?? this.title,
       weekDay: weekDay ?? this.weekDay,
       time: time ?? this.time,
@@ -1946,9 +1900,6 @@ class HabitNotificationDatasCompanion
     }
     if (intervalId.present) {
       map['interval_id'] = Variable<int>(intervalId.value);
-    }
-    if (identifier.present) {
-      map['identifier'] = Variable<int>(identifier.value);
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
@@ -1972,7 +1923,6 @@ class HabitNotificationDatasCompanion
           ..write('userId: $userId, ')
           ..write('habitId: $habitId, ')
           ..write('intervalId: $intervalId, ')
-          ..write('identifier: $identifier, ')
           ..write('title: $title, ')
           ..write('weekDay: $weekDay, ')
           ..write('time: $time, ')
@@ -2829,7 +2779,6 @@ typedef $$HabitNotificationDatasTableCreateCompanionBuilder =
       required int userId,
       required int habitId,
       required int intervalId,
-      required int identifier,
       required String title,
       required int weekDay,
       required int time,
@@ -2841,7 +2790,6 @@ typedef $$HabitNotificationDatasTableUpdateCompanionBuilder =
       Value<int> userId,
       Value<int> habitId,
       Value<int> intervalId,
-      Value<int> identifier,
       Value<String> title,
       Value<int> weekDay,
       Value<int> time,
@@ -2874,11 +2822,6 @@ class $$HabitNotificationDatasTableFilterComposer
 
   ColumnFilters<int> get intervalId => $composableBuilder(
     column: $table.intervalId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get identifier => $composableBuilder(
-    column: $table.identifier,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2932,11 +2875,6 @@ class $$HabitNotificationDatasTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get identifier => $composableBuilder(
-    column: $table.identifier,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get title => $composableBuilder(
     column: $table.title,
     builder: (column) => ColumnOrderings(column),
@@ -2978,11 +2916,6 @@ class $$HabitNotificationDatasTableAnnotationComposer
 
   GeneratedColumn<int> get intervalId => $composableBuilder(
     column: $table.intervalId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<int> get identifier => $composableBuilder(
-    column: $table.identifier,
     builder: (column) => column,
   );
 
@@ -3049,7 +2982,6 @@ class $$HabitNotificationDatasTableTableManager
                 Value<int> userId = const Value.absent(),
                 Value<int> habitId = const Value.absent(),
                 Value<int> intervalId = const Value.absent(),
-                Value<int> identifier = const Value.absent(),
                 Value<String> title = const Value.absent(),
                 Value<int> weekDay = const Value.absent(),
                 Value<int> time = const Value.absent(),
@@ -3059,7 +2991,6 @@ class $$HabitNotificationDatasTableTableManager
                 userId: userId,
                 habitId: habitId,
                 intervalId: intervalId,
-                identifier: identifier,
                 title: title,
                 weekDay: weekDay,
                 time: time,
@@ -3071,7 +3002,6 @@ class $$HabitNotificationDatasTableTableManager
                 required int userId,
                 required int habitId,
                 required int intervalId,
-                required int identifier,
                 required String title,
                 required int weekDay,
                 required int time,
@@ -3081,7 +3011,6 @@ class $$HabitNotificationDatasTableTableManager
                 userId: userId,
                 habitId: habitId,
                 intervalId: intervalId,
-                identifier: identifier,
                 title: title,
                 weekDay: weekDay,
                 time: time,
