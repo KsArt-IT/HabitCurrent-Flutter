@@ -6,7 +6,6 @@ class HabitNotificationDatas extends Table {
   IntColumn get habitId => integer()();
   IntColumn get intervalId => integer()();
 
-  IntColumn get identifier => integer()();
   TextColumn get title => text()();
   IntColumn get weekDay => integer()();
   IntColumn get time => integer()();
