@@ -30,5 +30,7 @@ abstract interface class DataService {
   Future<void> deleteNotificationById(int id);
   Future<void> deleteNotificationByHabitId(int habitId);
 
+  Future<void> saveNotifications(List<HabitNotificationModel> notifications);
+
   Future<void> close();
 }
