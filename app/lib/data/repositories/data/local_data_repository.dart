@@ -3,6 +3,7 @@ import 'package:habit_current/data/mappers/model_to_domain.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/models/habit.dart';
+import 'package:habit_current/models/habit_notification.dart';
 import 'package:habit_current/models/hour_interval_completed.dart';
 import 'package:habit_current/models/user.dart';
 
@@ -84,8 +85,9 @@ final class LocalDataRepository implements DataRepository {
   }
 
   @override
-  Future<void> saveHabit(Habit habit) {
-    return _service.saveHabit(habit.toModel());
+  Future<Habit> saveHabit(Habit habit) async {
+    final model = await _service.saveHabit(habit.toModel());
+    return model.toDomain();
   }
 
   @override
@@ -107,5 +109,26 @@ final class LocalDataRepository implements DataRepository {
   @override
   Future<void> deleteHourIntervalCompletedById(int id) {
     return _service.deleteHourIntervalCompletedById(id);
+  }
+
+  @override
+  Future<void> saveNotifications({
+    required int userId,
+    required int habitId,
+    required String title,
+    required List<HabitNotification> notifications,
+  }) {
+    final notificationsModel =
+        notifications
+            .map(
+              (e) => e.toModel(
+                userId: userId,
+                habitId: habitId,
+                title: title, //
+              ),
+            )
+            .toList();
+
+    return _service.saveNotifications(notificationsModel);
   }
 }
