@@ -109,10 +109,7 @@ final class LocalDataService implements DataService {
           );
         }
 
-        // Создаем уведомления
-        for (final notification in habit.notifications) {
-          await _saveNotification(notification);
-        }
+        // Уведомления не создаем
       });
 
       // Загружаем созданную привычку
@@ -176,13 +173,8 @@ final class LocalDataService implements DataService {
           );
         }
 
-        // Обновляем уведомления привычки
-        // удалим все уведомления
+        // Удалим все уведомления, но не создаем
         await deleteNotificationByHabitId(habit.id);
-        // добавляем новые уведомления
-        for (final notification in habit.notifications) {
-          await _saveNotification(notification);
-        }
       });
       // Загружаем созданную привычку
       final habitRow = await loadHabitById(habit.id, DateTime.now());
@@ -499,7 +491,9 @@ final class LocalDataService implements DataService {
 
   // MARK: - HabitNotification
   @override
-  Future<List<HabitNotificationModel>> loadNotificationsByHabitId(int habitId) async {
+  Future<List<HabitNotificationModel>> loadNotificationsByHabitId(
+    int habitId,
+  ) async {
     try {
       final rows =
           await (database.habitNotificationDatas.select()
@@ -512,7 +506,6 @@ final class LocalDataService implements DataService {
               userId: e.userId,
               habitId: e.habitId,
               intervalId: e.intervalId,
-              identifier: e.identifier,
               title: e.title,
               weekDay: e.weekDay,
               time: e.time,
@@ -525,13 +518,21 @@ final class LocalDataService implements DataService {
     }
   }
 
+  @override
+  Future<void> saveNotifications(
+    List<HabitNotificationModel> notifications,
+  ) async {
+    for (final notification in notifications) {
+      await _saveNotification(notification);
+    }
+  }
+
   Future<void> _saveNotification(HabitNotificationModel notification) {
     return database.habitNotificationDatas.insertOnConflictUpdate(
       HabitNotificationDatasCompanion.insert(
         userId: notification.userId,
         habitId: notification.habitId,
         intervalId: notification.intervalId,
-        identifier: notification.identifier,
         title: notification.title,
         weekDay: notification.weekDay,
         time: notification.time,
