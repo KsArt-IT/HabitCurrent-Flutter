@@ -4,7 +4,6 @@ final class HabitNotificationModel {
   final int habitId;
   final int intervalId;
 
-  final int identifier;
   final String title;
   final int weekDay;
   final int time;
@@ -17,7 +16,6 @@ final class HabitNotificationModel {
     required this.intervalId,
     
     required this.title,
-    required this.identifier,
     required this.weekDay,
     required this.time,
     required this.repeats,
@@ -40,7 +38,6 @@ final class HabitNotificationModel {
     habitId: habitId ?? this.habitId,
     intervalId: intervalId ?? this.intervalId,
 
-    identifier: identifier ?? this.identifier,
     title: title ?? this.title,
     weekDay: weekDay ?? this.weekDay,
     time: time ?? this.time,
