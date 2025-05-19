@@ -94,9 +94,9 @@ final class LocalNotificationService implements NotificationService {
 
     final DarwinInitializationSettings iosSettings =
         DarwinInitializationSettings(
-          requestAlertPermission: false,
-          requestBadgePermission: false,
-          requestSoundPermission: false,
+          requestAlertPermission: true,
+          requestBadgePermission: true,
+          requestSoundPermission: true,
           notificationCategories: darwinNotificationCategories,
         );
 
@@ -117,12 +117,8 @@ final class LocalNotificationService implements NotificationService {
 
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse response) {
-        // Handle notification response
-        if (response.payload != null) {
-          // Handle the payload
-        }
-      },
+      onDidReceiveNotificationResponse: _onDidReceiveNotification,
+      // onDidReceiveBackgroundNotificationResponse: _onDidReceiveNotification
     );
     if (_isAndroidVersionGreaterThan8()) {
       // Android 8.0 (API level 26) and higher
@@ -133,6 +129,10 @@ final class LocalNotificationService implements NotificationService {
           >()
           ?.createNotificationChannel(notificationChannel);
     }
+  }
+
+  Future<void> _onDidReceiveNotification(NotificationResponse response) async {
+
   }
 
   bool _isAndroidVersionGreaterThan8() {
