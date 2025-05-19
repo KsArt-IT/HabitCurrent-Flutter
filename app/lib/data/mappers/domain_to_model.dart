@@ -58,7 +58,6 @@ extension HabitNotificationToModel on HabitNotification {
     userId: userId,
     habitId: habitId,
     intervalId: intervalId,
-    identifier: identifier,
     title: title,
     weekDay: weekDay,
     time: time,

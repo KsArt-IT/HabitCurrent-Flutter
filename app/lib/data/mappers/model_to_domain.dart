@@ -55,7 +55,6 @@ extension HabitNotificationModelToDomain on HabitNotificationModel {
   HabitNotification toDomain() => HabitNotification(
     id: id,
     intervalId: intervalId,
-    identifier: identifier,
     weekDay: weekDay,
     time: time,
     repeats: repeats,
