@@ -19,6 +19,15 @@ enum WeekDays {
     WeekDays.saturday => 32,
     WeekDays.sunday => 64,
   };
+  int get weekDay => switch (this) {
+    WeekDays.monday => 1,
+    WeekDays.tuesday => 2,
+    WeekDays.wednesday => 3,
+    WeekDays.thursday => 4,
+    WeekDays.friday => 5,
+    WeekDays.saturday => 6,
+    WeekDays.sunday => 7,
+  };
   String getDayName(BuildContext context) => switch (this) {
     WeekDays.monday => AppLocalizations.of(context).monday,
     WeekDays.tuesday => AppLocalizations.of(context).tuesday,
