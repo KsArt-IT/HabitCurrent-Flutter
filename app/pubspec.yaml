@@ -32,6 +32,10 @@ dependencies:
   flutter_local_notifications: ^19.2.0
   flutter_timezone: ^4.1.0
   timezone: ^0.10.1
+  # Permission
+  permission_handler: ^12.0.0
+  # Settings
+  app_settings: ^6.1.1
   # Others
   path_provider: ^2.1.5
   path: ^1.9.1
