@@ -72,6 +72,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get addTime => 'Додати час';
 
   @override
+  String get request => 'Запитати дозвіл';
+
+  @override
+  String get openSettings => 'Відкрити налаштування сповіщень';
+
+  @override
   String get n_4 => '---Habits---';
 
   @override

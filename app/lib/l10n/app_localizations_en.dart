@@ -72,6 +72,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addTime => 'Add Time';
 
   @override
+  String get request => 'Request Permission';
+
+  @override
+  String get openSettings => 'Open Notification Settings';
+
+  @override
   String get n_4 => '---Habits Create---';
 
   @override

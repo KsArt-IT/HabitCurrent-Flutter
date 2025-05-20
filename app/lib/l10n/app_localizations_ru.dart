@@ -72,6 +72,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addTime => 'Добавить время';
 
   @override
+  String get request => 'Запросить разрешение';
+
+  @override
+  String get openSettings => 'Открыть настройки уведомлений';
+
+  @override
   String get n_4 => '---Habits---';
 
   @override

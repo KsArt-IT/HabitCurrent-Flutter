@@ -21,7 +21,10 @@
     "addNewHabit": "Add new habit",
     "delete": "Delete",
     "addTime": "Add Time",
-    
+    "request": "Request Permission",
+    "openSettings": "Open Notification Settings",
+
+
     "n_4": "---Habits Create---",
     "createHabit": "Create a Habit",
     "editHabit": "Edit: {name}",

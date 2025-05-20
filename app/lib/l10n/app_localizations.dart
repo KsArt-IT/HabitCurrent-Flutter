@@ -223,6 +223,18 @@ abstract class AppLocalizations {
   /// **'Add Time'**
   String get addTime;
 
+  /// No description provided for @request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Permission'**
+  String get request;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Notification Settings'**
+  String get openSettings;
+
   /// No description provided for @n_4.
   ///
   /// In en, this message translates to:
