@@ -3,9 +3,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
+import 'package:habit_current/ui/widgets/primary_button.dart';
 
-class ReminderSelector extends StatelessWidget {
+class ReminderSelector extends StatefulWidget {
   const ReminderSelector({super.key});
+
+  @override
+  State<ReminderSelector> createState() => _ReminderSelectorState();
+}
+
+class _ReminderSelectorState extends State<ReminderSelector>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    context.read<HabitEditBloc>().add(CheckPermissionEvent());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<HabitEditBloc>().add(CheckPermissionEvent());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +83,26 @@ class ReminderSelector extends StatelessWidget {
         children: [
           Text(strings.reminder, style: theme.textTheme.titleMedium),
           const SizedBox(height: Constants.paddingMedium),
-          radioListTile(
-            title: strings.withoutReminder,
-            value: Reminder.disabled,
-          ),
-          radioListTile(
-            title: strings.enableReminders,
-            value: Reminder.enabled,
-          ),
+          if (reminder.isGranted)
+            radioListTile(
+              title: strings.withoutReminder,
+              value: Reminder.disabled,
+            ),
+          if (reminder.isGranted)
+            radioListTile(
+              title: strings.enableReminders,
+              value: Reminder.enabled,
+            ),
+          if (!reminder.isGranted)
+            PrimaryButton(
+              label:
+                  reminder == Reminder.request
+                      ? context.l10n.request
+                      : context.l10n.openSettings,
+              onPressed: () {
+                context.read<HabitEditBloc>().add(RequestPermissionEvent());
+              },
+            ),
         ],
       ),
     );
