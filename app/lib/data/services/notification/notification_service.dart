@@ -3,7 +3,11 @@ import 'package:timezone/timezone.dart';
 
 abstract interface class NotificationService {
   Future<void> initialize();
-  Future<bool> requestNotificationPermissions();
+
+  Future<bool> checkNotificationPermission();
+  Future<bool> requestNotificationPermission();
+  void openNotificationSettings();
+
   Future<void> showNotification({
     required String title,
     required String body,
