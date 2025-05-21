@@ -18,6 +18,9 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     required this.dataRepository,
     required this.notificationRepository,
   }) : super(HabitEditState()) {
+    // проверим разрешения
+    on<CheckPermissionEvent>(_onCheckPermissionEvent);
+
     on<StartCreateHabitEvent>(_onStartCreateHabitEvent);
 
     on<StartEditHabitEvent>(_onStartEditHabitEvent);
@@ -34,6 +37,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     on<ChangeTimeIntervalEvent>(_onChangeTimeIntervalEvent);
 
     on<ToggleReminderEvent>(_onToggleReminderEvent);
+    on<RequestPermissionEvent>(_onRequestPermissionEvent);
   }
 
   // Создание привычки
@@ -199,15 +203,59 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     );
   }
 
+  Reminder _getReminderState(bool permission, {bool open = false}) {
+    Reminder reminder = Reminder.disabled;
+    if (!permission) {
+      reminder = open ? Reminder.open : Reminder.request;
+    } else if (state.habit != null) {
+      reminder =
+          state.habit!.notifications.isNotEmpty
+              ? Reminder.enabled
+              : Reminder.disabled;
+    }
+    return reminder;
+  }
+
+  void _onCheckPermissionEvent(
+    CheckPermissionEvent event,
+    Emitter<HabitEditState> emit,
+  ) async {
+    final permission =
+        await notificationRepository.checkNotificationPermission();
+    final reminder = _getReminderState(
+      permission,
+      open: state.reminder == Reminder.open,
+    );
+    emit(state.copyWith(reminder: reminder));
+  }
+
+  void _onRequestPermissionEvent(
+    RequestPermissionEvent event,
+    Emitter<HabitEditState> emit,
+  ) async {
+    if (state.reminder == Reminder.request) {
+      final permission =
+          await notificationRepository.requestNotificationPermission();
+      final reminder = _getReminderState(permission, open: true);
+      emit(
+        state.copyWith(reminder: reminder),
+      );
+    } else {
+      // открыть настройки приложения
+      notificationRepository.openNotificationSettings();
+    }
+  }
+
   List<HabitNotification> _generateNotification(
     Set<WeekDays> weekDays,
     List<HourInterval> intervals,
   ) {
     print("HabitEditBloc: intervals: ${intervals.length}");
     if (intervals.isEmpty) return [];
+    final allDays = weekDays.isEmpty || weekDays.length == 7;
     List<HabitNotification> notifications = [];
     for (final interval in intervals) {
-      if (weekDays.isEmpty) {
+      if (allDays) {
         notifications.add(
           HabitNotification(
             intervalId: interval.id,
