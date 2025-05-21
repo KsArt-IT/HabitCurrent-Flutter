@@ -3,7 +3,10 @@ import 'package:habit_current/models/habit_notification.dart';
 
 abstract interface class NotificationRepository {
   Future<void> initialize();
-  Future<bool> requestNotificationPermissions();
+  
+  Future<bool> checkNotificationPermission();
+  Future<bool> requestNotificationPermission();
+  void openNotificationSettings();
 
   Future<void> scheduleNotifications(
     String title,
