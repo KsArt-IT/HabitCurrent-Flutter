@@ -75,3 +75,7 @@ final class ToggleReminderEvent extends HabitEditEvent {
   @override
   List<Object?> get props => [value];
 }
+
+final class CheckPermissionEvent extends HabitEditEvent {}
+
+final class RequestPermissionEvent extends HabitEditEvent {}
