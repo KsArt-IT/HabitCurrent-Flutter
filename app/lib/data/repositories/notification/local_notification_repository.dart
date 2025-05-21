@@ -51,8 +51,18 @@ final class LocalNotificationRepository implements NotificationRepository {
   }
 
   @override
-  Future<bool> requestNotificationPermissions() {
-    return _notificationService.requestNotificationPermissions();
+  Future<bool> requestNotificationPermission() {
+    return _notificationService.requestNotificationPermission();
+  }
+
+  @override
+  Future<bool> checkNotificationPermission() {
+    return _notificationService.checkNotificationPermission();
+  }
+
+  @override
+  void openNotificationSettings() {
+    _notificationService.openNotificationSettings();
   }
 
   @override
@@ -78,7 +88,9 @@ final class LocalNotificationRepository implements NotificationRepository {
   @override
   Future<void> scheduleNotificationByHabitId(int habitId) async {
     final notifications = await _service.loadNotificationsByHabitId(habitId);
-    print("LocalNotificationRepository: notifications: ${notifications.length}");
+    print(
+      "LocalNotificationRepository: notifications: ${notifications.length}",
+    );
 
     final date = DateTime.now();
     for (final notification in notifications) {
@@ -97,7 +109,11 @@ final class LocalNotificationRepository implements NotificationRepository {
               "habit_${habitId}_time_${notification.intervalId}_day_${notification.weekDay}",
         );
         print("--------------------------------");
-        print("schedule notification: ${notification.title}: $isToday: $scheduledDate, now: $date");
+        print(
+          "schedule notification: ${notification.title //
+          }: $isToday: $scheduledDate (${scheduledDate.weekday //
+          }), now: $date (${date.weekday}) wd: ${notification.weekDay}",
+        );
         print("--------------------------------");
       }
     }
