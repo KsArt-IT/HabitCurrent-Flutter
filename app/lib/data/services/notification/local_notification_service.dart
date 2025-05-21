@@ -1,13 +1,16 @@
 import 'dart:io';
 
+import 'package:app_settings/app_settings.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/timezone.dart';
 
 final class LocalNotificationService implements NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  int id = 0;
+  
   // MARK: - Android Notification Channel
   static const String notificationChannelId = 'habit_notification_channel_id';
   static const String notificationChannelName = 'Notification main channel';
@@ -31,25 +34,14 @@ final class LocalNotificationService implements NotificationService {
         importance: Importance.high,
         priority: Priority.high,
         ticker: 'ticker',
+        playSound: true,
+        enableVibration: true,
       );
-
-  static const darwinNotificationDetails = DarwinNotificationDetails(
-    presentAlert: true,
-    presentBadge: true,
-    presentSound: true,
-  );
-
-  static const NotificationDetails notificationDetails = NotificationDetails(
-    android: androidNotificationDetails,
-    iOS: darwinNotificationDetails,
-    macOS: darwinNotificationDetails,
-  );
 
   // MARK: - iOS Notification Category
   static const String notificationCategoryId = 'habit_notification_category';
 
   static const String navigationActionId = 'navigation_action_id';
-  static const String completedActionId = 'notification_action_id';
   static const String laterAction10Id = 'notification_action_10_id';
   static const String laterAction30Id = 'notification_action_30_id';
   static const String laterAction60Id = 'notification_action_60_id';
@@ -59,7 +51,6 @@ final class LocalNotificationService implements NotificationService {
         DarwinNotificationCategory(
           notificationCategoryId,
           actions: <DarwinNotificationAction>[
-            DarwinNotificationAction.plain(completedActionId, 'Mark as done'),
             DarwinNotificationAction.plain(
               navigationActionId,
               'Open (foreground)',
@@ -86,28 +77,39 @@ final class LocalNotificationService implements NotificationService {
         ),
       ];
 
+  static const darwinNotificationDetails = DarwinNotificationDetails(
+    presentAlert: true,
+    presentBadge: true,
+    presentSound: true,
+    categoryIdentifier: notificationCategoryId,
+    interruptionLevel: InterruptionLevel.active,
+    sound: 'default',
+  );
+
+  static const notificationDetails = NotificationDetails(
+    android: androidNotificationDetails,
+    iOS: darwinNotificationDetails,
+    macOS: darwinNotificationDetails,
+  );
+
   // MARK: - Initialize Notification
   @override
   Future<void> initialize() async {
-    const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    final DarwinInitializationSettings iosSettings =
-        DarwinInitializationSettings(
-          requestAlertPermission: true,
-          requestBadgePermission: true,
-          requestSoundPermission: true,
+    final iosSettings = DarwinInitializationSettings(
+          requestAlertPermission: false,
+          requestBadgePermission: false,
+          requestSoundPermission: false,
           notificationCategories: darwinNotificationCategories,
         );
 
-    final LinuxInitializationSettings linuxSettings =
-        LinuxInitializationSettings(
+    final linuxSettings = LinuxInitializationSettings(
           defaultActionName: 'Open notification',
           defaultIcon: AssetsLinuxIcon('icons/app_icon.png'),
         );
 
-    final InitializationSettings initializationSettings =
-        InitializationSettings(
+    final initializationSettings = InitializationSettings(
           android: androidSettings,
           iOS: iosSettings,
           macOS: iosSettings,
@@ -120,7 +122,7 @@ final class LocalNotificationService implements NotificationService {
       onDidReceiveNotificationResponse: _onDidReceiveNotification,
       // onDidReceiveBackgroundNotificationResponse: _onDidReceiveNotification
     );
-    if (_isAndroidVersionGreaterThan8()) {
+    if (await _isAndroidVersionGreaterThan8()) {
       // Android 8.0 (API level 26) and higher
       // Create the notification channel
       await _flutterLocalNotificationsPlugin
@@ -131,51 +133,96 @@ final class LocalNotificationService implements NotificationService {
     }
   }
 
-  Future<void> _onDidReceiveNotification(NotificationResponse response) async {
-
-  }
-
-  bool _isAndroidVersionGreaterThan8() {
+  static Future<bool> _isAndroidVersionGreaterThan8() async {
     if (!Platform.isAndroid) return false;
 
-    // Platform.version возвращает что-то вроде:
-    // "Android 9 (SDK 28)"
-    final versionString = Platform.version;
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    return androidInfo.version.sdkInt >= 26;
+  }
 
-    final match = RegExp(r'SDK (\d+)').firstMatch(versionString);
-    if (match != null) {
-      final sdkInt = int.tryParse(match.group(1)!);
-      if (sdkInt != null) {
-        return sdkInt > 26;
-      }
+  Future<void> _onDidReceiveNotification(NotificationResponse response) async {}
+
+  @override
+  Future<bool> checkNotificationPermission() async {
+    if (Platform.isAndroid) {
+      final plugin =
+          _flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin
+              >();
+      final permission = await plugin?.areNotificationsEnabled();
+      return permission ?? false;
     }
+    if (Platform.isIOS) {
+      final plugin =
+          _flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                IOSFlutterLocalNotificationsPlugin
+              >();
 
-    return false;
+      final permission = await plugin?.checkPermissions();
+      return permission?.isEnabled ?? false;
+    }
+    if (Platform.isMacOS) {
+      final plugin =
+          _flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                MacOSFlutterLocalNotificationsPlugin
+              >();
+
+      final permission = await plugin?.checkPermissions();
+      return permission?.isEnabled ?? false;
+    }
+    final permission = await Permission.notification.request();
+    return permission.isGranted;
   }
 
   @override
-  Future<bool> requestNotificationPermissions() async {
-    bool granted = true;
-    if (Platform.isIOS || Platform.isMacOS) {
-      if (Platform.isIOS) {
-        granted =
-            await _flutterLocalNotificationsPlugin
-                .resolvePlatformSpecificImplementation<
-                  IOSFlutterLocalNotificationsPlugin
-                >()
-                ?.requestPermissions(alert: true, badge: true, sound: true) ??
-            false;
-      } else if (Platform.isMacOS) {
-        granted =
-            await _flutterLocalNotificationsPlugin
-                .resolvePlatformSpecificImplementation<
-                  MacOSFlutterLocalNotificationsPlugin
-                >()
-                ?.requestPermissions(alert: true, badge: true, sound: true) ??
-            false;
-      }
+  Future<bool> requestNotificationPermission() async {
+    if (Platform.isIOS) {
+      final permission = await _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
+      return permission ?? false;
     }
-    return granted;
+    if (Platform.isMacOS) {
+      final permission = await _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            MacOSFlutterLocalNotificationsPlugin
+          >()
+          ?.requestPermissions(alert: true, badge: true, sound: true);
+      return permission ?? false;
+    }
+    if (Platform.isAndroid) {
+      final plugin =
+          _flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin
+              >();
+      final permission = await plugin?.requestNotificationsPermission();
+      return permission ?? false;
+    }
+    final permission = await Permission.notification.request();
+    return permission.isGranted;
+  }
+
+  @override
+  void openNotificationSettings() {
+    if (Platform.isIOS) {
+      AppSettings.openAppSettings(
+        type: AppSettingsType.appLocale,
+        asAnotherTask: true,
+      );
+    } else if (Platform.isAndroid) {
+      AppSettings.openAppSettings(
+        type: AppSettingsType.notification,
+        asAnotherTask: true,
+      );
+    } else {
+      openAppSettings();
+    }
   }
 
   // MARK: - Get Pending and Active Notifications
@@ -217,6 +264,9 @@ final class LocalNotificationService implements NotificationService {
     required TZDateTime scheduledDate,
     String? payload,
   }) async {
+    print('--------------------------------');
+    print('showNotificationOnDate: $id, $title, $body, $scheduledDate');
+    print('--------------------------------');
     await _flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
