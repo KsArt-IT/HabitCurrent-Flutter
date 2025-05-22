@@ -1,41 +1,50 @@
 part of 'app_bloc.dart';
 
-sealed class AppState {
-  const AppState();
+enum AppStatus {
+  initial,
+  userLoaded,
+  habitCreate,
+  habitView,
+  habitEdit,
+  habitReload,
+  error,
 }
 
-final class AppInitialState extends AppState {}
+class AppState {
+  final AppStatus status;
 
-final class AppLoadedState extends AppState {
-  final User user;
-  const AppLoadedState({required this.user});
-}
-
-final class AppOnboardState extends AppState {}
-
-final class AppHelloState extends AppState {}
-
-final class AppHabitCreateState extends AppState {
-  final int userId;
-  const AppHabitCreateState({required this.userId});
-}
-
-final class AppHabitViewState extends AppState {
-  final Habit habit;
-  const AppHabitViewState({required this.habit});
-}
-
-final class AppHabitEditState extends AppState {
-  final int habitId;
-  const AppHabitEditState({required this.habitId});
-}
-
-final class AppHabitReloadState extends AppState {
+  final User? user;
+  final Reminder reminder;
+  final Habit? habit;
   final int? habitId;
-  const AppHabitReloadState({this.habitId});
-}
+  final String? error;
 
-final class AppErrorState extends AppState {
-  final String error;
-  const AppErrorState({required this.error});
+  const AppState({
+    required this.status,
+    this.user,
+    this.reminder = Reminder.request, // запросить разрешение
+    this.habit,
+    this.habitId,
+    this.error,
+  });
+
+  factory AppState.initial() => const AppState(status: AppStatus.initial);
+
+  AppState copyWith({
+    AppStatus? status,
+    User? user,
+    Reminder? reminder,
+    Habit? habit,
+    int? habitId,
+    String? error,
+  }) {
+    return AppState(
+      status: status ?? this.status,
+      user: user ?? this.user,
+      reminder: reminder ?? this.reminder,
+      habit: habit ?? this.habit,
+      habitId: habitId ?? this.habitId,
+      error: error ?? this.error,
+    );
+  }
 }
