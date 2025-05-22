@@ -4,13 +4,14 @@ import 'package:app_settings/app_settings.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
+import 'package:habit_current/models/reminder.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/timezone.dart';
 
 final class LocalNotificationService implements NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  
+
   // MARK: - Android Notification Channel
   static const String notificationChannelId = 'habit_notification_channel_id';
   static const String notificationChannelName = 'Notification main channel';
@@ -95,27 +96,29 @@ final class LocalNotificationService implements NotificationService {
   // MARK: - Initialize Notification
   @override
   Future<void> initialize() async {
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
 
     final iosSettings = DarwinInitializationSettings(
-          requestAlertPermission: false,
-          requestBadgePermission: false,
-          requestSoundPermission: false,
-          notificationCategories: darwinNotificationCategories,
-        );
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+      notificationCategories: darwinNotificationCategories,
+    );
 
     final linuxSettings = LinuxInitializationSettings(
-          defaultActionName: 'Open notification',
-          defaultIcon: AssetsLinuxIcon('icons/app_icon.png'),
-        );
+      defaultActionName: 'Open notification',
+      defaultIcon: AssetsLinuxIcon('icons/app_icon.png'),
+    );
 
     final initializationSettings = InitializationSettings(
-          android: androidSettings,
-          iOS: iosSettings,
-          macOS: iosSettings,
-          linux: linuxSettings,
-          // windows: windows.initSettings,
-        );
+      android: androidSettings,
+      iOS: iosSettings,
+      macOS: iosSettings,
+      linux: linuxSettings,
+      // windows: windows.initSettings,
+    );
 
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -141,6 +144,19 @@ final class LocalNotificationService implements NotificationService {
   }
 
   Future<void> _onDidReceiveNotification(NotificationResponse response) async {}
+
+  @override
+  Future<Reminder> getNotificationPermissionStatus() async {
+    final permission = await Permission.notification.request();
+    print('permission: $permission');
+    if (permission.isGranted) {
+      return Reminder.enabled;
+    }
+    if (permission.isPermanentlyDenied || permission.isLimited) {
+      return Reminder.open;
+    }
+    return Reminder.request;
+  }
 
   @override
   Future<bool> checkNotificationPermission() async {
