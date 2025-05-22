@@ -2,11 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
-import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
 import 'package:habit_current/ui/home/home_tab.dart';
 import 'package:habit_current/ui/home/widget/tab_item_button.dart';
+import 'package:habit_current/ui/widgets/reminder_button.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -71,7 +71,7 @@ class HomeScreen extends StatelessWidget {
         active: tabsRouter.activeIndex,
         onTap: tabsRouter.setActiveIndex,
       ),
-      SizedBox(width: Constants.fabSpacing),
+      ReminderButton(),
       TabItemButton(
         tab: HomeTab.month,
         active: tabsRouter.activeIndex,
