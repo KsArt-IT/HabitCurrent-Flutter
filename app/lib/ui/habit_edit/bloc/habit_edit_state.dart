@@ -4,15 +4,6 @@ enum StatsStatus { initial, loading, valid, success, failure }
 
 enum Frequency { daily, weekly }
 
-enum Reminder {
-  enabled,
-  disabled,
-  request,
-  open;
-
-  bool get isGranted => this == Reminder.enabled || this == Reminder.disabled;
-}
-
 class HabitEditState extends Equatable {
   final StatsStatus status;
   get isEditing => habit != null;
