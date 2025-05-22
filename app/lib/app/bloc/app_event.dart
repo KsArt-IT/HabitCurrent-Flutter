@@ -6,20 +6,16 @@ sealed class AppEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-final class AppLoadNameEvent extends AppEvent {}
+final class AppInitialEvent extends AppEvent {}
 
-final class AppInitNameEvent extends AppEvent {}
-
-final class AppUpdateNameEvent extends AppEvent {
-  final String name;
-  const AppUpdateNameEvent({required this.name});
+final class AppUserLoadedEvent extends AppEvent {
+  final User user;
+  const AppUserLoadedEvent({required this.user});
   @override
-  List<Object?> get props => [name];
+  List<Object?> get props => [user];
 }
 
 final class AppHabitCreateEvent extends AppEvent {}
-
-final class AppHabitCreatedEvent extends AppEvent {}
 
 final class AppHabitViewEvent extends AppEvent {
   final Habit habit;
@@ -48,3 +44,13 @@ final class AppHabitDeleteEvent extends AppEvent {
   @override
   List<Object?> get props => [habitId];
 }
+
+final class AppReminderCheckEvent extends AppEvent {}
+
+final class AppReminderRequestEvent extends AppEvent {}
+
+final class AppReminderOpenEvent extends AppEvent {}
+
+final class AppReminderEnabledEvent extends AppEvent {}
+
+final class AppReminderDisabledEvent extends AppEvent {}
