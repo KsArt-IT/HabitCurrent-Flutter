@@ -34,40 +34,32 @@ class HabitCurrentApp extends StatelessWidget {
         }
         return supportedLocales.first;
       },
-      // locale: const Locale('en'), // TODO: get from settings
+      locale: const Locale('ru'), // TODO: get from settings
       routerConfig: router.config(),
       builder: (context, child) {
         return BlocListener<AppBloc, AppState>(
           listener: (context, state) {
-            debugPrint('--------------------------------');
-            debugPrint('state: $state');
-            debugPrint('--------------------------------');
-            switch (state) {
-              case AppInitialState():
+            switch (state.status) {
+              case AppStatus.initial:
                 debugPrint('AppInitialState');
-              case AppOnboardState():
-                debugPrint('AppOnboardState');
-                router.replace(const OnboardRoute());
-              case AppHelloState():
-                debugPrint('AppHelloState');
-                router.replace(const HelloRoute());
-              case AppLoadedState(user: final user):
-                debugPrint('AppLoadedState: ${user.name}');
+                // router.replace(const InitialRoute());
+              case AppStatus.userLoaded:
+                debugPrint('AppLoadedState: ${state.user?.name}');
                 router.replace(const HomeRoute());
-              case AppHabitViewState():
+              case AppStatus.habitView:
                 debugPrint('AppHabitViewState');
                 router.push(const HabitViewRoute());
-              case AppHabitCreateState():
+              case AppStatus.habitCreate:
                 debugPrint('AppHabitCreateState');
                 router.push(const HabitEditRoute());
-              case AppHabitEditState():
-                debugPrint('AppHabitEditState');
+              case AppStatus.habitEdit:
+                debugPrint('AppHabitEditState: ${state.habitId}');
                 router.push(const HabitEditRoute());
-              case AppHabitReloadState():
-                debugPrint('AppHabitsReloadState');
+              case AppStatus.habitReload:
+                debugPrint('AppHabitsReloadState: ${state.habitId}');
                 router.pop();
-              case AppErrorState(error: final error):
-                debugPrint('AppErrorState: $error');
+              case AppStatus.error:
+                debugPrint('AppErrorState: ${state.error}');
               // TODO: отобразить ошибку;
             }
           },
