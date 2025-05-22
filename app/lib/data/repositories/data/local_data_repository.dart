@@ -25,6 +25,12 @@ final class LocalDataRepository implements DataRepository {
   }
 
   @override
+  Future<User?> loadLastUser() async {
+    final user = await _service.loadLastUser();
+    return user?.toDomain();
+  }
+
+  @override
   Future<User?> loadUserByName(String name) async {
     final user = await _service.loadUserByName(name);
     return user?.toDomain();

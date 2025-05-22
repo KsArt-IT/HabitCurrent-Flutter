@@ -5,6 +5,7 @@ import 'package:habit_current/models/user.dart';
 
 abstract interface class DataRepository {
   Future<User?> loadUserByName(String name);
+  Future<User?> loadLastUser();
   Future<User> createUserByName(String name);
   Future<void> saveUser(User user);
   Future<void> deleteUserById(int id);
