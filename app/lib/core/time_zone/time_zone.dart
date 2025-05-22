@@ -21,10 +21,6 @@ abstract class TimeZone {
     }
     final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName!));
-    // Initialize timezone
-    // if (Platform.isIOS || Platform.isMacOS) {
-    //   await FlutterTimezone.initializeTimeZone();
-    // }
     if (kDebugMode) {
       print('--------------------------------');
       print('Local timezone: $timeZoneName');
