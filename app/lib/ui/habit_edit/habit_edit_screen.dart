@@ -39,9 +39,9 @@ class HabitEditScreen extends StatelessWidget {
   }
 
   HabitEditEvent? _stateToHabitEvent(AppState state) {
-    return switch (state) {
-      AppHabitCreateState() => StartCreateHabitEvent(userId: state.userId),
-      AppHabitEditState() => StartEditHabitEvent(habitId: state.habitId),
+    return switch (state.status) {
+      AppStatus.habitCreate => StartCreateHabitEvent(userId: state.user!.id),
+      AppStatus.habitEdit => StartEditHabitEvent(habitId: state.habitId!),
       _ => null,
     };
   }
