@@ -52,8 +52,20 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
     requiredDuringInsert: false,
     clientDefault: () => DateTime.now(),
   );
+  static const VerificationMeta _updatedMeta = const VerificationMeta(
+    'updated',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name, avatar, created];
+  late final GeneratedColumn<DateTime> updated = GeneratedColumn<DateTime>(
+    'updated',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    clientDefault: () => DateTime.now(),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, avatar, created, updated];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -89,6 +101,12 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
         created.isAcceptableOrUnknown(data['created']!, _createdMeta),
       );
     }
+    if (data.containsKey('updated')) {
+      context.handle(
+        _updatedMeta,
+        updated.isAcceptableOrUnknown(data['updated']!, _updatedMeta),
+      );
+    }
     return context;
   }
 
@@ -117,6 +135,11 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
             DriftSqlType.dateTime,
             data['${effectivePrefix}created'],
           )!,
+      updated:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}updated'],
+          )!,
     );
   }
 
@@ -131,11 +154,13 @@ class User extends DataClass implements Insertable<User> {
   final String name;
   final String? avatar;
   final DateTime created;
+  final DateTime updated;
   const User({
     required this.id,
     required this.name,
     this.avatar,
     required this.created,
+    required this.updated,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -146,6 +171,7 @@ class User extends DataClass implements Insertable<User> {
       map['avatar'] = Variable<String>(avatar);
     }
     map['created'] = Variable<DateTime>(created);
+    map['updated'] = Variable<DateTime>(updated);
     return map;
   }
 
@@ -156,6 +182,7 @@ class User extends DataClass implements Insertable<User> {
       avatar:
           avatar == null && nullToAbsent ? const Value.absent() : Value(avatar),
       created: Value(created),
+      updated: Value(updated),
     );
   }
 
@@ -169,6 +196,7 @@ class User extends DataClass implements Insertable<User> {
       name: serializer.fromJson<String>(json['name']),
       avatar: serializer.fromJson<String?>(json['avatar']),
       created: serializer.fromJson<DateTime>(json['created']),
+      updated: serializer.fromJson<DateTime>(json['updated']),
     );
   }
   @override
@@ -179,6 +207,7 @@ class User extends DataClass implements Insertable<User> {
       'name': serializer.toJson<String>(name),
       'avatar': serializer.toJson<String?>(avatar),
       'created': serializer.toJson<DateTime>(created),
+      'updated': serializer.toJson<DateTime>(updated),
     };
   }
 
@@ -187,11 +216,13 @@ class User extends DataClass implements Insertable<User> {
     String? name,
     Value<String?> avatar = const Value.absent(),
     DateTime? created,
+    DateTime? updated,
   }) => User(
     id: id ?? this.id,
     name: name ?? this.name,
     avatar: avatar.present ? avatar.value : this.avatar,
     created: created ?? this.created,
+    updated: updated ?? this.updated,
   );
   User copyWithCompanion(UsersCompanion data) {
     return User(
@@ -199,6 +230,7 @@ class User extends DataClass implements Insertable<User> {
       name: data.name.present ? data.name.value : this.name,
       avatar: data.avatar.present ? data.avatar.value : this.avatar,
       created: data.created.present ? data.created.value : this.created,
+      updated: data.updated.present ? data.updated.value : this.updated,
     );
   }
 
@@ -208,13 +240,14 @@ class User extends DataClass implements Insertable<User> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('avatar: $avatar, ')
-          ..write('created: $created')
+          ..write('created: $created, ')
+          ..write('updated: $updated')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, avatar, created);
+  int get hashCode => Object.hash(id, name, avatar, created, updated);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -222,7 +255,8 @@ class User extends DataClass implements Insertable<User> {
           other.id == this.id &&
           other.name == this.name &&
           other.avatar == this.avatar &&
-          other.created == this.created);
+          other.created == this.created &&
+          other.updated == this.updated);
 }
 
 class UsersCompanion extends UpdateCompanion<User> {
@@ -230,29 +264,34 @@ class UsersCompanion extends UpdateCompanion<User> {
   final Value<String> name;
   final Value<String?> avatar;
   final Value<DateTime> created;
+  final Value<DateTime> updated;
   const UsersCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.avatar = const Value.absent(),
     this.created = const Value.absent(),
+    this.updated = const Value.absent(),
   });
   UsersCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     this.avatar = const Value.absent(),
     this.created = const Value.absent(),
+    this.updated = const Value.absent(),
   }) : name = Value(name);
   static Insertable<User> custom({
     Expression<int>? id,
     Expression<String>? name,
     Expression<String>? avatar,
     Expression<DateTime>? created,
+    Expression<DateTime>? updated,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (avatar != null) 'avatar': avatar,
       if (created != null) 'created': created,
+      if (updated != null) 'updated': updated,
     });
   }
 
@@ -261,12 +300,14 @@ class UsersCompanion extends UpdateCompanion<User> {
     Value<String>? name,
     Value<String?>? avatar,
     Value<DateTime>? created,
+    Value<DateTime>? updated,
   }) {
     return UsersCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
       avatar: avatar ?? this.avatar,
       created: created ?? this.created,
+      updated: updated ?? this.updated,
     );
   }
 
@@ -285,6 +326,9 @@ class UsersCompanion extends UpdateCompanion<User> {
     if (created.present) {
       map['created'] = Variable<DateTime>(created.value);
     }
+    if (updated.present) {
+      map['updated'] = Variable<DateTime>(updated.value);
+    }
     return map;
   }
 
@@ -294,7 +338,8 @@ class UsersCompanion extends UpdateCompanion<User> {
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('avatar: $avatar, ')
-          ..write('created: $created')
+          ..write('created: $created, ')
+          ..write('updated: $updated')
           ..write(')'))
         .toString();
   }
@@ -1964,6 +2009,7 @@ typedef $$UsersTableCreateCompanionBuilder =
       required String name,
       Value<String?> avatar,
       Value<DateTime> created,
+      Value<DateTime> updated,
     });
 typedef $$UsersTableUpdateCompanionBuilder =
     UsersCompanion Function({
@@ -1971,6 +2017,7 @@ typedef $$UsersTableUpdateCompanionBuilder =
       Value<String> name,
       Value<String?> avatar,
       Value<DateTime> created,
+      Value<DateTime> updated,
     });
 
 class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
@@ -1998,6 +2045,11 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
 
   ColumnFilters<DateTime> get created => $composableBuilder(
     column: $table.created,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updated => $composableBuilder(
+    column: $table.updated,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -2030,6 +2082,11 @@ class $$UsersTableOrderingComposer
     column: $table.created,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get updated => $composableBuilder(
+    column: $table.updated,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$UsersTableAnnotationComposer
@@ -2052,6 +2109,9 @@ class $$UsersTableAnnotationComposer
 
   GeneratedColumn<DateTime> get created =>
       $composableBuilder(column: $table.created, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updated =>
+      $composableBuilder(column: $table.updated, builder: (column) => column);
 }
 
 class $$UsersTableTableManager
@@ -2086,11 +2146,13 @@ class $$UsersTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<String?> avatar = const Value.absent(),
                 Value<DateTime> created = const Value.absent(),
+                Value<DateTime> updated = const Value.absent(),
               }) => UsersCompanion(
                 id: id,
                 name: name,
                 avatar: avatar,
                 created: created,
+                updated: updated,
               ),
           createCompanionCallback:
               ({
@@ -2098,11 +2160,13 @@ class $$UsersTableTableManager
                 required String name,
                 Value<String?> avatar = const Value.absent(),
                 Value<DateTime> created = const Value.absent(),
+                Value<DateTime> updated = const Value.absent(),
               }) => UsersCompanion.insert(
                 id: id,
                 name: name,
                 avatar: avatar,
                 created: created,
+                updated: updated,
               ),
           withReferenceMapper:
               (p0) =>
