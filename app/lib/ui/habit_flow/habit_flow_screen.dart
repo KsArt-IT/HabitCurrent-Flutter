@@ -14,12 +14,7 @@ class HabitFlowScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = context.read<AppBloc>().state;
-
-    int userId = 0;
-    if (appState is AppLoadedState) {
-      userId = appState.user.id;
-    }
+    final userId = context.read<AppBloc>().state.user?.id ?? 0;
 
     return BlocProvider(
       create:
@@ -42,7 +37,7 @@ class _HabitFlowBody extends StatelessWidget {
 
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
-        if (state is AppHabitReloadState) {
+        if (state.status == AppStatus.habitReload) {
           context.read<HabitFlowBloc>().add(
             ReloadHabitEvent(habitId: state.habitId),
           );
