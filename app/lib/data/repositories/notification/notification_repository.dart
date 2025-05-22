@@ -1,9 +1,11 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/models/habit_notification.dart';
+import 'package:habit_current/models/reminder.dart';
 
 abstract interface class NotificationRepository {
   Future<void> initialize();
-  
+
+  Future<Reminder> getNotificationPermissionStatus();
   Future<bool> checkNotificationPermission();
   Future<bool> requestNotificationPermission();
   void openNotificationSettings();
@@ -14,7 +16,7 @@ abstract interface class NotificationRepository {
   );
 
   Future<void> scheduleNotificationByHabitId(int habitId);
-  
+
   Future<void> cancelNotificationByHabitId(int habitId);
   Future<void> cancelAllNotifications();
 

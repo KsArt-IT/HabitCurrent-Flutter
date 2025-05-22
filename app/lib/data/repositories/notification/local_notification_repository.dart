@@ -4,6 +4,7 @@ import 'package:habit_current/data/repositories/notification/notification_reposi
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
 import 'package:habit_current/models/habit_notification.dart';
+import 'package:habit_current/models/reminder.dart';
 import 'package:habit_current/models/weekdays.dart';
 import 'package:timezone/timezone.dart';
 
@@ -53,6 +54,11 @@ final class LocalNotificationRepository implements NotificationRepository {
   @override
   Future<bool> requestNotificationPermission() {
     return _notificationService.requestNotificationPermission();
+  }
+
+  @override
+  Future<Reminder> getNotificationPermissionStatus() {
+    return _notificationService.getNotificationPermissionStatus();
   }
 
   @override
