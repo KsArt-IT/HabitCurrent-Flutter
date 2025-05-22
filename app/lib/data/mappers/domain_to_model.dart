@@ -7,7 +7,8 @@ extension UserToModel on User {
     id: id,
     name: name,
     avatar: avatar,
-    created: created, //
+    created: created,
+    updated: updated,
   );
 }
 
