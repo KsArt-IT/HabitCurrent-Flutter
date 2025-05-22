@@ -5,6 +5,7 @@ import 'package:habit_current/data/repositories/notification/notification_reposi
 import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/habit_notification.dart';
 import 'package:habit_current/models/hour_interval.dart';
+import 'package:habit_current/models/reminder.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_edit_event.dart';
@@ -103,7 +104,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       habit = await _createHabit();
     }
     if (state.reminder == Reminder.enabled) {
-      _saveNotifications(habit);
+      await _saveNotifications(habit);
       print("HabitEditBloc: scheduleNotificationByHabitId");
       // создадим новые уведомления для habitId
       await notificationRepository.scheduleNotificationByHabitId(habit.id);
@@ -190,12 +191,12 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     emit(state.copyWith(reminder: event.value));
   }
 
-  void _saveNotifications(Habit habit) {
+  Future<void> _saveNotifications(Habit habit) async {
     final notifications = _generateNotification(
       habit.weekDays,
       habit.intervals,
     );
-    dataRepository.saveNotifications(
+    await dataRepository.saveNotifications(
       userId: habit.userId,
       habitId: habit.id,
       title: habit.name,
