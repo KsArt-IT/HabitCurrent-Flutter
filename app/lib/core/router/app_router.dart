@@ -9,9 +9,14 @@ final class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
-      page: SplashRoute.page,
+      page: InitialRoute.page,
       initial: true,
-      path: '/', //
+      path: '/',
+      children: [
+        AutoRoute(page: SplashRoute.page, initial: true),
+        AutoRoute(page: OnboardRoute.page),
+        AutoRoute(page: HelloRoute.page),
+      ],
     ),
     AutoRoute(
       page: OnboardRoute.page,
@@ -31,10 +36,9 @@ final class AppRouter extends RootStackRouter {
     ),
     AutoRoute(
       page: HomeRoute.page,
-      // initial: false,
-      // path: HomeRoute.name,
+      path: '/${HomeRoute.name}',
       children: [
-        AutoRoute(page: HabitFlowRoute.page),
+        AutoRoute(page: HabitFlowRoute.page, initial: true),
         AutoRoute(page: HabitWeekRoute.page),
         AutoRoute(page: HabitMonthRoute.page),
         AutoRoute(page: SettingsRoute.page),
