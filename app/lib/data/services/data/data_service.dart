@@ -2,6 +2,7 @@ import 'package:habit_current/data/models/models.dart';
 
 abstract interface class DataService {
   Future<UserModel?> loadUserByName(String name);
+  Future<UserModel?> loadLastUser();
   Future<UserModel> createUserByName(String name);
   Future<void> saveUser(UserModel user);
   Future<void> deleteUserById(int id);

@@ -21,6 +21,27 @@ final class LocalDataService implements DataService {
   }
 
   @override
+  Future<UserModel?> loadLastUser() async {
+    try {
+      final data =
+          await (database.users.select()
+                ..orderBy([(f) => OrderingTerm.desc(f.updated)]))
+              .getSingleOrNull();
+      if (data == null) return null;
+
+      return UserModel(
+        id: data.id,
+        name: data.name,
+        avatar: data.avatar,
+        created: data.created,
+        updated: data.updated,
+      );
+    } catch (e) {
+      throw Exception('Error loading last user: $e');
+    }
+  }
+
+  @override
   Future<UserModel?> loadUserByName(String name) async {
     try {
       final data =
@@ -33,6 +54,7 @@ final class LocalDataService implements DataService {
         name: data.name,
         avatar: data.avatar,
         created: data.created,
+        updated: data.updated,
       );
     } catch (e) {
       throw Exception('Error loading user: $e');
@@ -527,8 +549,8 @@ final class LocalDataService implements DataService {
     }
   }
 
-  Future<void> _saveNotification(HabitNotificationModel notification) {
-    return database.habitNotificationDatas.insertOnConflictUpdate(
+  Future<void> _saveNotification(HabitNotificationModel notification) async {
+    await database.habitNotificationDatas.insertOnConflictUpdate(
       HabitNotificationDatasCompanion.insert(
         userId: notification.userId,
         habitId: notification.habitId,
@@ -542,15 +564,15 @@ final class LocalDataService implements DataService {
   }
 
   @override
-  Future<void> deleteNotificationByHabitId(int habitId) {
-    return database.habitNotificationDatas.deleteWhere(
+  Future<void> deleteNotificationByHabitId(int habitId) async {
+    await database.habitNotificationDatas.deleteWhere(
       (f) => f.habitId.equals(habitId),
     );
   }
 
   @override
-  Future<void> deleteNotificationById(int id) {
-    return database.habitNotificationDatas.deleteOne(
+  Future<void> deleteNotificationById(int id) async {
+    await database.habitNotificationDatas.deleteOne(
       HabitNotificationDatasCompanion(id: Value(id)),
     );
   }
