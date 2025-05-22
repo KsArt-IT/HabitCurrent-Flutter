@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/int_ext.dart';
-import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/ui/habit_view/bloc/habit_view_bloc.dart';
 
 @RoutePage()
@@ -13,12 +12,7 @@ class HabitViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = context.read<AppBloc>().state;
-    Habit? habit;
-
-    if (appState is AppHabitViewState) {
-      habit = appState.habit;
-    }
+    final habit = context.read<AppBloc>().state.habit;
 
     return BlocProvider(
       create:
