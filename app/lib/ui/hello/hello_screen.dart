@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/ui/initial/bloc/initial_bloc.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
 import 'package:habit_current/ui/widgets/radial_gradient_background.dart';
 
@@ -143,8 +143,8 @@ class _HelloScreenState extends State<HelloScreen> {
                 label: strings.continueBtn,
                 disabled: !_isNameValid,
                 onPressed: () {
-                  context.read<AppBloc>().add(
-                    AppUpdateNameEvent(name: _nameController.text.trim()),
+                  context.read<InitialBloc>().add(
+                    InitialUpdateNameEvent(_nameController.text.trim()),
                   );
                 },
               ),
