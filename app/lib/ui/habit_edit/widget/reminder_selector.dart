@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/models/reminder.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
 
