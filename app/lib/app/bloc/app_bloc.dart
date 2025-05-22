@@ -91,7 +91,8 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppReminderCheckEvent event,
     Emitter<AppState> emit,
   ) async {
-    final reminder = await notificationRepository.getReminderStatus();
+    final reminder =
+        await notificationRepository.getNotificationPermissionStatus();
     emit(state.copyWith(reminder: reminder));
   }
 
@@ -99,8 +100,11 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppReminderRequestEvent event,
     Emitter<AppState> emit,
   ) async {
-    final permission = await notificationRepository.requestNotificationPermission();
-    emit(state.copyWith(reminder: permission ? Reminder.enabled : Reminder.open));
+    final permission =
+        await notificationRepository.requestNotificationPermission();
+    emit(
+      state.copyWith(reminder: permission ? Reminder.enabled : Reminder.open),
+    );
   }
 
   void _onReminderOpenEvent(
