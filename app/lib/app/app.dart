@@ -24,24 +24,23 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<SettingsRepository>(
-          create: (context) {
-            final SettingsService service = context.read<SettingsService>();
-            return LocalSettingsRepository(service: service);
-          },
+          create:
+              (context) => LocalSettingsRepository(
+                service: context.read<SettingsService>(),
+              ),
         ),
         RepositoryProvider<DataRepository>(
-          create: (context) {
-            final DataService service = context.read<DataService>();
-            return LocalDataRepository(service: service);
-          },
+          create:
+              (context) =>
+                  LocalDataRepository(service: context.read<DataService>()),
           dispose: (repository) => repository.close(),
         ),
         RepositoryProvider<NotificationRepository>(
-          create: (context) {
-            final DataService service = context.read<DataService>();
-            final NotificationService notification = context.read<NotificationService>();
-            return LocalNotificationRepository(service: service, notification: notification);
-          },
+          create:
+              (context) => LocalNotificationRepository(
+                service: context.read<DataService>(),
+                notification: context.read<NotificationService>(),
+              ),
           dispose: (repository) => repository.close(),
         ),
       ],
@@ -49,19 +48,12 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider<AppBloc>(
             lazy: false,
-            create: (context) {
-              final SettingsRepository settingsRepository =
-                  context.read<SettingsRepository>();
-              final DataRepository dataRepository =
-                  context.read<DataRepository>();
-
-              final appBloc = AppBloc(
-                settingsRepository: settingsRepository,
-                dataRepository: dataRepository,
-              );
-
-              return appBloc..add(AppLoadNameEvent());
-            },
+            create:
+                (context) => AppBloc(
+                  dataRepository: context.read<DataRepository>(),
+                  notificationRepository:
+                      context.read<NotificationRepository>(),
+                )..add(AppInitialEvent()),
           ),
           BlocProvider<SettingsBloc>(
             lazy: true,
