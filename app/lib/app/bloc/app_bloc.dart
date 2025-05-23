@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/models/habit.dart';
+import 'package:habit_current/models/hour_interval_completed.dart';
 import 'package:habit_current/models/reminder.dart';
 import 'package:habit_current/models/user.dart';
 
@@ -23,6 +24,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppHabitEditEvent>(_onHabitEditEvent);
     on<AppHabitReloadEvent>(_onHabitsReloadEvent);
     on<AppHabitDeleteEvent>(_onHabitDeleteEvent);
+    on<AppHabitMakeDoneEvent>(_onHabitMakeDoneEvent);
 
     on<AppReminderCheckEvent>(_onReminderCheckEvent);
     on<AppReminderRequestEvent>(_onReminderRequestEvent);
@@ -34,6 +36,26 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     // on<AppUpdateThemeEvent>(_onDarkThemeChanged);
     // on<AppSaveEvent>(_onSave);
     // on<AppResetEvent>(_onReset);
+    notificationRepository.observeNotificationReceived(
+      (habitId) async {
+        final habit = await dataRepository.loadHabitById(
+          habitId,
+          DateTime.now(),
+        );
+        if (habit != null) {
+          add(AppHabitViewEvent(habit: habit));
+        }
+      },
+      (habitId, intervalId, weekDay) {
+        add(
+          AppHabitMakeDoneEvent(
+            habitId: habitId,
+            intervalId: intervalId,
+            weekDay: weekDay,
+          ),
+        );
+      },
+    );
   }
 
   void _onInitialEvent(AppInitialEvent event, Emitter<AppState> emit) async {
@@ -87,6 +109,33 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     emit(state.copyWith(status: AppStatus.habitReload, habitId: event.habitId));
   }
 
+  void _onHabitMakeDoneEvent(
+    AppHabitMakeDoneEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    if (state.habit == null) return;
+    final habit = await dataRepository.loadHabitById(
+      event.habitId,
+      DateTime.now(),
+    );
+    if (habit == null) return;
+    final interval =
+        habit.intervals
+            .where((interval) => interval.id == event.intervalId)
+            .firstOrNull;
+    if (interval == null) return;
+    // make done
+    final completed = HourIntervalCompleted(
+      intervalId: interval.id,
+      time: interval.time,
+      completed: DateTime.now(),
+    );
+    await dataRepository.createHourIntervalCompleted(event.habitId, completed);
+    // update
+    emit(state.copyWith(status: AppStatus.habitReload, habitId: event.habitId));
+  }
+
+  // MARK: - Reminder
   void _onReminderCheckEvent(
     AppReminderCheckEvent event,
     Emitter<AppState> emit,
