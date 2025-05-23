@@ -1,26 +1,39 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:habit_current/core/extension/int_ext.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
-import 'package:habit_current/models/habit_notification.dart';
 import 'package:habit_current/models/reminder.dart';
-import 'package:habit_current/models/weekdays.dart';
 import 'package:timezone/timezone.dart';
 
 final class LocalNotificationRepository implements NotificationRepository {
   final DataService _service;
   final NotificationService _notificationService;
 
+  Function(int habitId, int intervalId, int weekDay)? _onNotificationReceived;
+  Function(int habitId)? _onNotificationOpened;
+
   LocalNotificationRepository({
     required DataService service,
     required NotificationService notification,
   }) : _service = service,
-       _notificationService = notification;
+       _notificationService = notification {
+    _notificationService.onNotificationReceived = (
+      habitId,
+      intervalId,
+      weekDay,
+    ) {
+      _onNotificationReceived?.call(habitId, intervalId, weekDay);
+    };
+    _notificationService.onNotificationOpened = (habitId) {
+      _onNotificationOpened?.call(habitId);
+    };
+  }
 
   @override
-  Future<void> close() {
-    return _service.close();
+  Future<void> close() async {
+    _notificationService.onNotificationReceived = null;
+    _notificationService.onNotificationOpened = null;
+    await _service.close();
   }
 
   @override
@@ -72,56 +85,55 @@ final class LocalNotificationRepository implements NotificationRepository {
   }
 
   @override
-  Future<void> scheduleNotifications(
+  Future<void> showNotification(
+    int id,
     String title,
-    List<HabitNotification> notifications,
+    String body,
+    String? payload,
   ) async {
-    final date = DateTime.now();
-    for (final notification in notifications) {
-      final scheduledDate = notification.time.toDateTime(date);
-      if (scheduledDate.isAfter(date)) {
-        _notificationService.showNotificationOnDate(
-          id: notification.id,
-          title: title,
-          body: "",
-          scheduledDate: TZDateTime.from(scheduledDate, local),
-          payload: null,
-        );
-      }
-    }
+    final scheduledDate = TZDateTime.now(local).add(Duration(seconds: 5));
+
+    _notificationService.showNotification(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: scheduledDate,
+      payload: payload,
+    );
   }
 
   @override
   Future<void> scheduleNotificationByHabitId(int habitId) async {
     final notifications = await _service.loadNotificationsByHabitId(habitId);
+    print('--------------------------------');
     print(
       "LocalNotificationRepository: notifications: ${notifications.length}",
     );
 
-    final date = DateTime.now();
+    final date = TZDateTime.now(local);
     for (final notification in notifications) {
-      final scheduledDate = notification.time.toDateTime(date);
-      // проверяем нужно ли сегодня показать
-      final isToday =
-          notification.weekDay == WeekDays.allDays ||
-          notification.weekDay == scheduledDate.weekday;
-      if (isToday && scheduledDate.isAfter(date)) {
-        _notificationService.showNotificationOnDate(
-          id: notification.id,
-          title: notification.title,
-          body: "",
-          scheduledDate: TZDateTime.from(scheduledDate, local),
-          payload:
-              "habit_${habitId}_time_${notification.intervalId}_day_${notification.weekDay}",
-        );
-        print("--------------------------------");
-        print(
-          "schedule notification: ${notification.title //
-          }: $isToday: $scheduledDate (${scheduledDate.weekday //
-          }), now: $date (${date.weekday}) wd: ${notification.weekDay}",
-        );
-        print("--------------------------------");
-      }
+      // отправляем 2 типа уведомлений
+      // 1. на время, каждый день
+      // 2. на день недели, каждую неделю
+      _notificationService.scheduleNotificationOnWeekday(
+        id: notification.id,
+        identifier:
+            "habit_${habitId}_time_${notification.intervalId}_day_${notification.weekDay}",
+        title: notification.title,
+        date: date,
+        time: notification.time,
+        weekday: notification.weekDay,
+      );
     }
+    print('--------------------------------');
+  }
+
+  @override
+  Future<void> observeNotificationReceived(
+    Function(int habitId)? open,
+    Function(int habitId, int intervalId, int weekDay)? markDone,
+  ) async {
+    _onNotificationReceived = markDone;
+    _onNotificationOpened = open;
   }
 }
