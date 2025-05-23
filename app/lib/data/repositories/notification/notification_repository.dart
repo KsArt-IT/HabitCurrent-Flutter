@@ -1,5 +1,4 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:habit_current/models/habit_notification.dart';
 import 'package:habit_current/models/reminder.dart';
 
 abstract interface class NotificationRepository {
@@ -10,9 +9,11 @@ abstract interface class NotificationRepository {
   Future<bool> requestNotificationPermission();
   void openNotificationSettings();
 
-  Future<void> scheduleNotifications(
+  Future<void> showNotification(
+    int id,
     String title,
-    List<HabitNotification> notifications,
+    String body,
+    String? payload,
   );
 
   Future<void> scheduleNotificationByHabitId(int habitId);
@@ -22,6 +23,11 @@ abstract interface class NotificationRepository {
 
   Future<List<PendingNotificationRequest>> getPendingNotifications();
   Future<List<ActiveNotification>> getActiveNotifications();
+
+  Future<void> observeNotificationReceived(
+    Function(int habitId)? open,
+    Function(int habitId, int intervalId, int weekDay)? markDone,
+  );
 
   Future<void> close();
 }
