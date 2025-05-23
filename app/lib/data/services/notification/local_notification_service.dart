@@ -11,6 +11,19 @@ import 'package:timezone/timezone.dart';
 final class LocalNotificationService implements NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  Function(int habitId, int intervalId, int weekDay)? onNotificationReceived;
+  Function(int habitId)? onNotificationOpened;
+
+  // MARK: - Actions
+  static const String openActionId = 'open_action';
+  static const String laterAction10Id = 'later_action_10';
+  static const String laterAction30Id = 'later_action_30';
+  static const String laterAction60Id = 'later_action_60';
+
+  static const String openAction = 'Open';
+  static const String laterAction10 = 'Remind me later in 10 min';
+  static const String laterAction30 = 'Remind me later in 30 min';
+  static const String laterAction60 = 'Remind me later in 60 min';
 
   // MARK: - Android Notification Channel
   static const String notificationChannelId = 'habit_notification_channel_id';
@@ -37,15 +50,16 @@ final class LocalNotificationService implements NotificationService {
         ticker: 'ticker',
         playSound: true,
         enableVibration: true,
+        actions: <AndroidNotificationAction>[
+          AndroidNotificationAction(openActionId, openAction),
+          AndroidNotificationAction(laterAction10Id, laterAction10),
+          AndroidNotificationAction(laterAction30Id, laterAction30),
+          AndroidNotificationAction(laterAction60Id, laterAction60),
+        ],
       );
 
   // MARK: - iOS Notification Category
   static const String notificationCategoryId = 'habit_notification_category';
-
-  static const String navigationActionId = 'navigation_action_id';
-  static const String laterAction10Id = 'notification_action_10_id';
-  static const String laterAction30Id = 'notification_action_30_id';
-  static const String laterAction60Id = 'notification_action_60_id';
 
   final List<DarwinNotificationCategory> darwinNotificationCategories =
       <DarwinNotificationCategory>[
@@ -53,23 +67,23 @@ final class LocalNotificationService implements NotificationService {
           notificationCategoryId,
           actions: <DarwinNotificationAction>[
             DarwinNotificationAction.plain(
-              navigationActionId,
-              'Open (foreground)',
+              openActionId,
+              openAction,
               options: <DarwinNotificationActionOption>{
                 DarwinNotificationActionOption.foreground,
               },
             ),
             DarwinNotificationAction.plain(
               laterAction10Id,
-              'Remind me later in 10 minutes',
+              laterAction10,
             ),
             DarwinNotificationAction.plain(
               laterAction30Id,
-              'Remind me later in 30 minutes',
+              laterAction30,
             ),
             DarwinNotificationAction.plain(
               laterAction60Id,
-              'Remind me later in 60 minutes',
+              laterAction60,
             ),
           ],
           options: <DarwinNotificationCategoryOption>{
@@ -92,6 +106,62 @@ final class LocalNotificationService implements NotificationService {
     iOS: darwinNotificationDetails,
     macOS: darwinNotificationDetails,
   );
+
+  Future<void> _onDidReceiveNotification(NotificationResponse response) async {
+    print('--------------------------------');
+    print('onDidReceiveNotification: $response');
+    print('--------------------------------');
+    if (response.payload == null) return;
+
+    final data = response.payload!.split('_');
+    if (data.length < 5) return;
+
+    final habitId = int.parse(data[1]);
+    final intervalId = int.parse(data[3]);
+    final weekDay = int.parse(data[5]);
+
+    print('habitId: $habitId');
+    print('intervalId: $intervalId');
+    print('weekDay: $weekDay');
+
+// 🟢 Обработка действий
+    switch (response.actionId) {
+      case openActionId:
+        print('Пользователь тапнул по уведомлению');
+        onNotificationOpened?.call(habitId);
+      case laterAction10Id:
+        print('Пользователь нажал "Отметить как выполнено" data: ${response.data.toString()}');
+        showNotificationOnDate(
+          id: 1000000 + habitId,
+          identifier: response.payload!,
+          title: response.payload!,
+          body: response.payload!,
+          scheduledDate: TZDateTime.now(local).add(Duration(minutes: 10)),
+        );
+      case laterAction30Id:
+        print('Пользователь нажал "Отметить как выполнено"');
+        showNotificationOnDate(
+          id: 1000000 + habitId,
+          identifier: response.payload!,
+          title: response.payload!,
+          body: response.payload!,
+          scheduledDate: TZDateTime.now(local).add(Duration(minutes: 30)),
+        );
+      case laterAction60Id:
+        print('Пользователь нажал "Отметить как выполнено"');
+        showNotificationOnDate(
+          id: 1000000 + habitId,
+          identifier: response.payload!,
+          title: response.payload!,
+          body: response.payload!,
+          scheduledDate: TZDateTime.now(local).add(Duration(minutes: 60)),
+        );
+        default:
+          print('Пользователь нажал "Отметить как выполнено"');
+        onNotificationReceived?.call(habitId, intervalId, weekDay);
+    }
+
+  }
 
   // MARK: - Initialize Notification
   @override
@@ -142,8 +212,6 @@ final class LocalNotificationService implements NotificationService {
     final androidInfo = await DeviceInfoPlugin().androidInfo;
     return androidInfo.version.sdkInt >= 26;
   }
-
-  Future<void> _onDidReceiveNotification(NotificationResponse response) async {}
 
   @override
   Future<Reminder> getNotificationPermissionStatus() async {
@@ -256,24 +324,77 @@ final class LocalNotificationService implements NotificationService {
     return activeNotifications;
   }
 
-  // MARK: - Show Notification
+  // MARK: - Schedule Notification
+  // периодические напоминания, каждый день, каждую неделю в определенный день
   @override
-  Future<void> showNotification({
+  Future<void> scheduleNotificationOnWeekday({
+    required int id,
+    required String identifier,
     required String title,
-    required String body,
-    String? payload,
+    String? body,
+
+    required TZDateTime date, // current date and time
+    required int time, // minutes since midnight
+    required int weekday, // 1 = Monday, ..., 7 = Sunday // 127 = every day
   }) async {
-    await _flutterLocalNotificationsPlugin.show(
-      0,
-      'plain title',
-      'plain body',
+    var scheduledDate = TZDateTime(
+      local,
+      date.year,
+      date.month,
+      date.day,
+      time ~/ 60,
+      time % 60,
+    );
+
+    // Обеспечиваем установку на следующий нужный день
+    if (weekday < 8) {
+      while (scheduledDate.weekday != weekday || scheduledDate.isBefore(date)) {
+        scheduledDate = scheduledDate.add(Duration(days: 1));
+      }
+    }
+
+    print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
+
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      scheduledDate,
       notificationDetails,
-      payload: 'item x',
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      payload: identifier,
+      matchDateTimeComponents:
+          weekday < 8
+              ? DateTimeComponents.dayOfWeekAndTime
+              : DateTimeComponents.time,
     );
   }
 
   @override
   Future<void> showNotificationOnDate({
+    required int id,
+    required String identifier,
+    required String title,
+    String? body,
+    required TZDateTime scheduledDate,
+  }) async {
+    print('--------------------------------');
+    print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
+    print('--------------------------------');
+
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      scheduledDate,
+      notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      payload: identifier,
+    );
+  }
+
+  @override
+  Future<void> showNotification({
     required int id,
     required String title,
     required String body,
@@ -281,8 +402,9 @@ final class LocalNotificationService implements NotificationService {
     String? payload,
   }) async {
     print('--------------------------------');
-    print('showNotificationOnDate: $id, $title, $body, $scheduledDate');
+    print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
     print('--------------------------------');
+
     await _flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
@@ -291,7 +413,6 @@ final class LocalNotificationService implements NotificationService {
       notificationDetails,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       payload: payload,
-      matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 
