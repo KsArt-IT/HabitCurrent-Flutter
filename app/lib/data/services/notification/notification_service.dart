@@ -1,13 +1,13 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:habit_current/models/reminder.dart';
 import 'package:timezone/timezone.dart';
 
 abstract interface class NotificationService {
   Future<void> initialize();
-  Function(int habitId, int intervalId, int weekDay)? onNotificationReceived;
-  Function(int habitId)? onNotificationOpened;
+  Future<void> observeNotificationReceived(
+    Function(String identifier, bool isOpen) onReceived,
+  );
 
-  Future<Reminder> getNotificationPermissionStatus();
+  Future<bool?> getNotificationPermissionStatus();
   Future<bool> checkNotificationPermission();
   Future<bool> requestNotificationPermission();
   void openNotificationSettings();
@@ -44,4 +44,6 @@ abstract interface class NotificationService {
 
   Future<List<PendingNotificationRequest>> getPendingNotifications();
   Future<List<ActiveNotification>> getActiveNotifications();
+
+  Future<void> close();
 }
