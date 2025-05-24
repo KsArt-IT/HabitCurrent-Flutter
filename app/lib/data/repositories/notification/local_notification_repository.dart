@@ -2,37 +2,21 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
-import 'package:habit_current/models/reminder.dart';
 import 'package:timezone/timezone.dart';
 
 final class LocalNotificationRepository implements NotificationRepository {
   final DataService _service;
   final NotificationService _notificationService;
 
-  Function(int habitId, int intervalId, int weekDay)? _onNotificationReceived;
-  Function(int habitId)? _onNotificationOpened;
-
   LocalNotificationRepository({
     required DataService service,
     required NotificationService notification,
   }) : _service = service,
-       _notificationService = notification {
-    _notificationService.onNotificationReceived = (
-      habitId,
-      intervalId,
-      weekDay,
-    ) {
-      _onNotificationReceived?.call(habitId, intervalId, weekDay);
-    };
-    _notificationService.onNotificationOpened = (habitId) {
-      _onNotificationOpened?.call(habitId);
-    };
-  }
+       _notificationService = notification;
 
   @override
   Future<void> close() async {
-    _notificationService.onNotificationReceived = null;
-    _notificationService.onNotificationOpened = null;
+    await _notificationService.close();
     await _service.close();
   }
 
@@ -70,7 +54,7 @@ final class LocalNotificationRepository implements NotificationRepository {
   }
 
   @override
-  Future<Reminder> getNotificationPermissionStatus() {
+  Future<bool?> getNotificationPermissionStatus() {
     return _notificationService.getNotificationPermissionStatus();
   }
 
@@ -118,7 +102,8 @@ final class LocalNotificationRepository implements NotificationRepository {
       _notificationService.scheduleNotificationOnWeekday(
         id: notification.id,
         identifier:
-            "habit_${habitId}_time_${notification.intervalId}_day_${notification.weekDay}",
+            "user_${notification.userId}_habit_${notification.habitId //
+            }_time_${notification.intervalId}_day_${notification.weekDay}",
         title: notification.title,
         date: date,
         time: notification.time,
@@ -130,10 +115,8 @@ final class LocalNotificationRepository implements NotificationRepository {
 
   @override
   Future<void> observeNotificationReceived(
-    Function(int habitId)? open,
-    Function(int habitId, int intervalId, int weekDay)? markDone,
+    Function(String identifier, bool isOpen) onReceived,
   ) async {
-    _onNotificationReceived = markDone;
-    _onNotificationOpened = open;
+    _notificationService.observeNotificationReceived(onReceived);
   }
 }
