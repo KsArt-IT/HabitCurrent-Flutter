@@ -4,15 +4,13 @@ import 'package:app_settings/app_settings.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
-import 'package:habit_current/models/reminder.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/timezone.dart';
 
 final class LocalNotificationService implements NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  Function(int habitId, int intervalId, int weekDay)? onNotificationReceived;
-  Function(int habitId)? onNotificationOpened;
+  Function(String identifier, bool isOpen)? _onNotificationReceived;
 
   // MARK: - Actions
   static const String openActionId = 'open_action';
@@ -76,15 +74,12 @@ final class LocalNotificationService implements NotificationService {
             DarwinNotificationAction.plain(
               laterAction10Id,
               laterAction10,
+              options: <DarwinNotificationActionOption>{
+                DarwinNotificationActionOption.authenticationRequired,
+              },
             ),
-            DarwinNotificationAction.plain(
-              laterAction30Id,
-              laterAction30,
-            ),
-            DarwinNotificationAction.plain(
-              laterAction60Id,
-              laterAction60,
-            ),
+            DarwinNotificationAction.plain(laterAction30Id, laterAction30),
+            DarwinNotificationAction.plain(laterAction60Id, laterAction60),
           ],
           options: <DarwinNotificationCategoryOption>{
             DarwinNotificationCategoryOption.hiddenPreviewShowTitle,
@@ -107,60 +102,48 @@ final class LocalNotificationService implements NotificationService {
     macOS: darwinNotificationDetails,
   );
 
-  Future<void> _onDidReceiveNotification(NotificationResponse response) async {
+  void _onDidReceiveNotification(NotificationResponse response) {
     print('--------------------------------');
     print('onDidReceiveNotification: $response');
     print('--------------------------------');
     if (response.payload == null) return;
 
-    final data = response.payload!.split('_');
-    if (data.length < 5) return;
-
-    final habitId = int.parse(data[1]);
-    final intervalId = int.parse(data[3]);
-    final weekDay = int.parse(data[5]);
-
-    print('habitId: $habitId');
-    print('intervalId: $intervalId');
-    print('weekDay: $weekDay');
-
-// 🟢 Обработка действий
+    // 🟢 Обработка действий
     switch (response.actionId) {
       case openActionId:
-        print('Пользователь тапнул по уведомлению');
-        onNotificationOpened?.call(habitId);
+        print('Пользователь нажал "открыть"');
+        _onNotificationReceived?.call(response.payload!, true);
       case laterAction10Id:
-        print('Пользователь нажал "Отметить как выполнено" data: ${response.data.toString()}');
+        print('Пользователь нажал "отложить на 10 минут"');
         showNotificationOnDate(
-          id: 1000000 + habitId,
+          id: 1000000 + (response.id ?? 0),
           identifier: response.payload!,
           title: response.payload!,
           body: response.payload!,
-          scheduledDate: TZDateTime.now(local).add(Duration(minutes: 10)),
+          scheduledDate: TZDateTime.now(local).add(Duration(seconds: 5)),
         );
       case laterAction30Id:
-        print('Пользователь нажал "Отметить как выполнено"');
+        print('Пользователь нажал "отложить на 30 минут"');
         showNotificationOnDate(
-          id: 1000000 + habitId,
+          id: 1000000 + (response.id ?? 0),
           identifier: response.payload!,
           title: response.payload!,
           body: response.payload!,
           scheduledDate: TZDateTime.now(local).add(Duration(minutes: 30)),
         );
       case laterAction60Id:
-        print('Пользователь нажал "Отметить как выполнено"');
+        print('Пользователь нажал "отложить на 60 минут"');
         showNotificationOnDate(
-          id: 1000000 + habitId,
+          id: 1000000 + (response.id ?? 0),
           identifier: response.payload!,
           title: response.payload!,
           body: response.payload!,
           scheduledDate: TZDateTime.now(local).add(Duration(minutes: 60)),
         );
-        default:
-          print('Пользователь нажал "Отметить как выполнено"');
-        onNotificationReceived?.call(habitId, intervalId, weekDay);
+      default:
+        print('Пользователь нажал "Отметить как выполнено"');
+        _onNotificationReceived?.call(response.payload!, false);
     }
-
   }
 
   // MARK: - Initialize Notification
@@ -214,16 +197,41 @@ final class LocalNotificationService implements NotificationService {
   }
 
   @override
-  Future<Reminder> getNotificationPermissionStatus() async {
+  Future<bool?> getNotificationPermissionStatus() async {
+    if (Platform.isIOS) {
+      final plugin =
+          _flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                IOSFlutterLocalNotificationsPlugin
+              >();
+      final permission = await plugin?.checkPermissions();
+      print("permission: ${permission?.isEnabled}");
+      if (permission == null) return null;
+      return permission.isEnabled;
+    }
+    if (Platform.isMacOS) {
+      final plugin =
+          _flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                MacOSFlutterLocalNotificationsPlugin
+              >();
+      final permission = await plugin?.checkPermissions();
+      if (permission == null) return null;
+      return permission.isEnabled;
+    }
+    if (Platform.isAndroid) {
+      final plugin =
+          _flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin
+              >();
+      final permission = await plugin?.areNotificationsEnabled();
+      if (permission == null) return null;
+      return permission;
+    }
     final permission = await Permission.notification.request();
-    print('permission: $permission');
-    if (permission.isGranted) {
-      return Reminder.enabled;
-    }
-    if (permission.isPermanentlyDenied || permission.isLimited) {
-      return Reminder.open;
-    }
-    return Reminder.request;
+    if (!permission.isGranted && !permission.isDenied && permission.isPermanentlyDenied) return null;
+    return permission.isGranted;
   }
 
   @override
@@ -382,7 +390,7 @@ final class LocalNotificationService implements NotificationService {
     print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
     print('--------------------------------');
 
-    await _flutterLocalNotificationsPlugin.zonedSchedule(
+    _flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
       body,
@@ -425,5 +433,17 @@ final class LocalNotificationService implements NotificationService {
   @override
   Future<void> cancelNotification(int id) async {
     await _flutterLocalNotificationsPlugin.cancel(id);
+  }
+
+  @override
+  Future<void> observeNotificationReceived(
+    Function(String identifier, bool isOpen) onReceived,
+  ) async {
+    _onNotificationReceived = onReceived;
+  }
+
+  @override
+  Future<void> close() async {
+    _onNotificationReceived = null;
   }
 }
