@@ -36,26 +36,46 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     // on<AppUpdateThemeEvent>(_onDarkThemeChanged);
     // on<AppSaveEvent>(_onSave);
     // on<AppResetEvent>(_onReset);
-    notificationRepository.observeNotificationReceived(
-      (habitId) async {
-        final habit = await dataRepository.loadHabitById(
-          habitId,
-          DateTime.now(),
-        );
-        if (habit != null) {
-          add(AppHabitViewEvent(habit: habit));
-        }
-      },
-      (habitId, intervalId, weekDay) {
-        add(
-          AppHabitMakeDoneEvent(
-            habitId: habitId,
-            intervalId: intervalId,
-            weekDay: weekDay,
-          ),
-        );
-      },
-    );
+
+    // обрабатываем получение уведомлений
+    notificationRepository.observeNotificationReceived(_onNotificationReceived);
+  }
+
+  // MARK: - Notification Received
+  Future<void> _onNotificationReceived(String identifier, bool isOpen) async {
+    final params = identifier.split('_');
+    if (params.length < 8) return;
+
+    final userId = int.parse(params[1]);
+    final habitId = int.parse(params[3]);
+    final intervalId = int.parse(params[5]);
+    final weekDay = int.parse(params[7]);
+
+    print('--------------------------------');
+    print('identifier: $identifier');
+    print('isOpen: $isOpen');
+    print('userId: $userId login: ${state.user?.id}');
+    print('habitId: $habitId');
+    print('intervalId: $intervalId');
+    print('weekDay: $weekDay');
+    print('--------------------------------');
+    if (userId != state.user?.id) return;
+    if (isOpen) {
+      final habit = await dataRepository.loadHabitById(habitId, DateTime.now());
+      if (habit != null) {
+        add(AppHabitViewEvent(habit: habit));
+      }
+    } else {
+      print('AppHabitMakeDoneEvent');
+      add(
+        AppHabitMakeDoneEvent(
+          habitId: habitId,
+          intervalId: intervalId,
+          weekDay: weekDay,
+        ),
+      );
+    }
+    print('--------------------------------');
   }
 
   void _onInitialEvent(AppInitialEvent event, Emitter<AppState> emit) async {
@@ -73,8 +93,13 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitCreateEvent event,
     Emitter<AppState> emit,
   ) async {
+    print('--------------------------------');
+    print('onHabitCreateEvent');
+    print('--------------------------------');
     if (state.user != null) {
-      emit(state.copyWith(status: AppStatus.habitCreate));
+      emit(
+        state.copyWith(status: AppStatus.habitCreate, update: state.update + 1),
+      );
     }
   }
 
@@ -89,7 +114,13 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitEditEvent event,
     Emitter<AppState> emit,
   ) async {
-    emit(state.copyWith(status: AppStatus.habitEdit, habitId: event.habitId));
+    emit(
+      state.copyWith(
+        status: AppStatus.habitEdit,
+        habitId: event.habitId,
+        update: state.update + 1,
+      ),
+    );
   }
 
   void _onHabitsReloadEvent(
@@ -106,14 +137,20 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     if (event.habitId == null) return;
 
     await dataRepository.deleteHabitById(event.habitId!);
-    emit(state.copyWith(status: AppStatus.habitReload, habitId: event.habitId));
+    emit(
+      state.copyWith(
+        status: AppStatus.habitReload,
+        habitId: event.habitId,
+        update: state.update + 1,
+      ),
+    );
   }
 
   void _onHabitMakeDoneEvent(
     AppHabitMakeDoneEvent event,
     Emitter<AppState> emit,
   ) async {
-    if (state.habit == null) return;
+    print('_onHabitMakeDoneEvent: ${event.habitId} ${event.intervalId}');
     final habit = await dataRepository.loadHabitById(
       event.habitId,
       DateTime.now(),
@@ -132,7 +169,13 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     );
     await dataRepository.createHourIntervalCompleted(event.habitId, completed);
     // update
-    emit(state.copyWith(status: AppStatus.habitReload, habitId: event.habitId));
+    emit(
+      state.copyWith(
+        status: AppStatus.habitReload,
+        habitId: event.habitId,
+        update: state.update + 1,
+      ),
+    );
   }
 
   // MARK: - Reminder
@@ -140,9 +183,18 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppReminderCheckEvent event,
     Emitter<AppState> emit,
   ) async {
-    final reminder =
+    final permission =
         await notificationRepository.getNotificationPermissionStatus();
-    emit(state.copyWith(reminder: reminder));
+    emit(
+      state.copyWith(
+        reminder:
+            permission == null
+                ? Reminder.request
+                : permission
+                ? Reminder.enabled
+                : Reminder.open,
+      ),
+    );
   }
 
   void _onReminderRequestEvent(
@@ -166,10 +218,24 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   void _onReminderEnabledEvent(
     AppReminderEnabledEvent event,
     Emitter<AppState> emit,
-  ) async {}
+  ) async {
+    if (state.reminder == Reminder.disabled) {
+      // перезапустить все уведомления
+      await notificationRepository.cancelAllNotifications();
+      // TODO: перезапустить все уведомления
+      // await notificationRepository.scheduleAllNotifications();
+      emit(state.copyWith(reminder: Reminder.enabled));
+    }
+  }
 
   void _onReminderDisabledEvent(
     AppReminderDisabledEvent event,
     Emitter<AppState> emit,
-  ) async {}
+  ) async {
+    if (state.reminder == Reminder.enabled) {
+      // отменить все уведомления
+      await notificationRepository.cancelAllNotifications();
+      emit(state.copyWith(reminder: Reminder.disabled));
+    }
+  }
 }
