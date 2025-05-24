@@ -10,7 +10,7 @@ enum AppStatus {
   error,
 }
 
-class AppState {
+class AppState extends Equatable {
   final AppStatus status;
 
   final User? user;
@@ -19,6 +19,8 @@ class AppState {
   final int? habitId;
   final String? error;
 
+  final int update;
+
   const AppState({
     required this.status,
     this.user,
@@ -26,9 +28,10 @@ class AppState {
     this.habit,
     this.habitId,
     this.error,
+    this.update = 0,
   });
 
-  factory AppState.initial() => const AppState(status: AppStatus.initial);
+  factory AppState.initial() => AppState(status: AppStatus.initial);
 
   AppState copyWith({
     AppStatus? status,
@@ -37,6 +40,7 @@ class AppState {
     Habit? habit,
     int? habitId,
     String? error,
+    int? update,
   }) {
     return AppState(
       status: status ?? this.status,
@@ -45,6 +49,18 @@ class AppState {
       habit: habit ?? this.habit,
       habitId: habitId ?? this.habitId,
       error: error ?? this.error,
+      update: update ?? this.update,
     );
   }
+
+  @override
+  List<Object?> get props => [
+    status,
+    user,
+    reminder,
+    habit,
+    habitId,
+    error,
+    update,
+  ];
 }
