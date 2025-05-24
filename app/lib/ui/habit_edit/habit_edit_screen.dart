@@ -62,6 +62,7 @@ class _HabitEditBody extends StatelessWidget {
           context.read<AppBloc>().add(
             AppHabitReloadEvent(habitId: state.habitId),
           );
+          context.router.pop();
         }
       },
       builder: (context, state) {

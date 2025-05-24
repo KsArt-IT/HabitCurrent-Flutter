@@ -42,7 +42,7 @@ class HabitCurrentApp extends StatelessWidget {
             switch (state.status) {
               case AppStatus.initial:
                 debugPrint('AppInitialState');
-                // router.replace(const InitialRoute());
+                break;
               case AppStatus.userLoaded:
                 debugPrint('AppLoadedState: ${state.user?.name}');
                 router.replace(const HomeRoute());
@@ -57,7 +57,7 @@ class HabitCurrentApp extends StatelessWidget {
                 router.push(const HabitEditRoute());
               case AppStatus.habitReload:
                 debugPrint('AppHabitsReloadState: ${state.habitId}');
-                router.pop();
+                break;
               case AppStatus.error:
                 debugPrint('AppErrorState: ${state.error}');
               // TODO: отобразить ошибку;

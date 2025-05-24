@@ -42,6 +42,7 @@ class _HabitViewBody extends StatelessWidget {
           ),
           onPressed: () {
             context.read<AppBloc>().add(AppHabitReloadEvent(habitId: habit.id));
+            context.router.pop();
           },
         ),
       ),
