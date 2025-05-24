@@ -52,10 +52,10 @@ class _ReminderButtonState extends State<ReminderButton> with WidgetsBindingObse
           );
         },
         icon: switch (reminder) {
-          Reminder.enabled => const Icon(Icons.notifications),
+          Reminder.enabled => const Icon(Icons.notifications_active),
           Reminder.disabled => const Icon(Icons.notifications_off),
-          Reminder.request => const Icon(Icons.notifications_active),
-          Reminder.open => const Icon(Icons.notifications_none),
+          Reminder.request => const Icon(Icons.notification_important),
+          Reminder.open => const Icon(Icons.edit_notifications),
         },
         padding: const EdgeInsets.all(8),
         iconSize: 24,
