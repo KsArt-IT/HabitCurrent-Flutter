@@ -24,7 +24,7 @@ class AppState extends Equatable {
   const AppState({
     required this.status,
     this.user,
-    this.reminder = Reminder.request, // запросить разрешение
+    this.reminder = Reminder.enabled,
     this.habit,
     this.habitId,
     this.error,
