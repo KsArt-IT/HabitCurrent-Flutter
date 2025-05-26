@@ -27,6 +27,21 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tabSettings => 'Настройки';
 
   @override
+  String get language => 'Язык';
+
+  @override
+  String get theme => 'Тема';
+
+  @override
+  String get notification => 'Разрешение на уведомления';
+
+  @override
+  String get showTestNotification => 'Показать тестовое уведомление';
+
+  @override
+  String get openNotificationSettings => 'Открыть настройки уведомлений';
+
+  @override
   String get n_2 => '---Hello---';
 
   @override

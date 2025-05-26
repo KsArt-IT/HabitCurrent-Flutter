@@ -133,6 +133,36 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get tabSettings;
 
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @theme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get theme;
+
+  /// No description provided for @notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Permission'**
+  String get notification;
+
+  /// No description provided for @showTestNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Test Notification'**
+  String get showTestNotification;
+
+  /// No description provided for @openNotificationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Notification Settings'**
+  String get openNotificationSettings;
+
   /// No description provided for @n_2.
   ///
   /// In en, this message translates to:

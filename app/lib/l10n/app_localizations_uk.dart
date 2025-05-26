@@ -27,6 +27,21 @@ class AppLocalizationsUk extends AppLocalizations {
   String get tabSettings => 'Налаштування';
 
   @override
+  String get language => 'Мова';
+
+  @override
+  String get theme => 'Тема';
+
+  @override
+  String get notification => 'Дозвіл на сповіщення';
+
+  @override
+  String get showTestNotification => 'Показати тестове сповіщення';
+
+  @override
+  String get openNotificationSettings => 'Відкрити налаштування сповіщень';
+
+  @override
   String get n_2 => '---Hello---';
 
   @override

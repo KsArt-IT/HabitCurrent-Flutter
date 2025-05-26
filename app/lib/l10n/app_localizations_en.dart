@@ -27,6 +27,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabSettings => 'Settings';
 
   @override
+  String get language => 'Language';
+
+  @override
+  String get theme => 'Theme';
+
+  @override
+  String get notification => 'Notification Permission';
+
+  @override
+  String get showTestNotification => 'Show Test Notification';
+
+  @override
+  String get openNotificationSettings => 'Open Notification Settings';
+
+  @override
   String get n_2 => '---Hello---';
 
   @override

@@ -6,6 +6,13 @@
     "tabWeek": "Week",
     "tabMonth": "Month",
     "tabSettings": "Settings",
+
+    "language": "Language",
+    "theme": "Theme",
+    "notification": "Notification Permission",
+    "showTestNotification": "Show Test Notification",
+    "openNotificationSettings": "Open Notification Settings",
+
     "n_2": "---Hello---",
     "welcome": "Welcome to the useful habits tracker",
     "enterYourName": "Please enter your name so we know how to address you",
@@ -14,6 +21,7 @@
     "nameError": "Please enter your name",
     "nameErrorEmpty": "Name must contain 3-20 letters",
     "nameErrorInvalid": "Name can only contain letters",
+    
     "n_3": "---Buttons---",
     "continueBtn": "Continue",
     "createBtn": "Create",
@@ -23,7 +31,6 @@
     "addTime": "Add Time",
     "request": "Request Permission",
     "openSettings": "Open Notification Settings",
-
 
     "n_4": "---Habits Create---",
     "createHabit": "Create a Habit",
