@@ -69,12 +69,12 @@ final class LocalNotificationRepository implements NotificationRepository {
   }
 
   @override
-  Future<void> showNotification(
-    int id,
-    String title,
-    String body,
+  Future<void> showNotification({
+    required int id,
+    required String title,
+    required String body,
     String? payload,
-  ) async {
+  }) async {
     final scheduledDate = TZDateTime.now(local).add(Duration(seconds: 5));
 
     _notificationService.showNotification(
