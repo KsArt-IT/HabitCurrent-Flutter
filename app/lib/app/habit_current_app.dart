@@ -6,6 +6,7 @@ import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/core/theme/app_theme.dart';
 import 'package:habit_current/l10n/app_localizations.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/ui/settings/bloc/settings_bloc.dart';
 
 class HabitCurrentApp extends StatelessWidget {
   final AppRouter router;
@@ -14,14 +15,17 @@ class HabitCurrentApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = context.select((SettingsBloc bloc) => bloc.state);
+
     return MaterialApp.router(
       onGenerateTitle: (context) => context.l10n.appTitle,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system, // TODO: get from settings
+      themeMode: settings.theme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale(settings.language),
       localeResolutionCallback: (locale, supportedLocales) {
         if (locale == null) {
           return supportedLocales.first;
@@ -34,7 +38,6 @@ class HabitCurrentApp extends StatelessWidget {
         }
         return supportedLocales.first;
       },
-      locale: const Locale('ru'), // TODO: get from settings
       routerConfig: router.config(),
       builder: (context, child) {
         return BlocListener<AppBloc, AppState>(
