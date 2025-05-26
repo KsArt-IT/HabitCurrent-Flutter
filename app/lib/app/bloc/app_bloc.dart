@@ -32,11 +32,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppReminderEnabledEvent>(_onReminderEnabledEvent);
     on<AppReminderDisabledEvent>(_onReminderDisabledEvent);
 
-    // on<AppUpdateLanguageEvent>(_onLanguageChanged);
-    // on<AppUpdateThemeEvent>(_onDarkThemeChanged);
-    // on<AppSaveEvent>(_onSave);
-    // on<AppResetEvent>(_onReset);
-
+    on<AppShowTestNotificationEvent>(_onShowTestNotification);
     // обрабатываем получение уведомлений
     notificationRepository.observeNotificationReceived(_onNotificationReceived);
   }
@@ -187,6 +183,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         await notificationRepository.getNotificationPermissionStatus();
     emit(
       state.copyWith(
+        status: AppStatus.initial,
         reminder:
             permission == null
                 ? Reminder.request
@@ -204,7 +201,10 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     final permission =
         await notificationRepository.requestNotificationPermission();
     emit(
-      state.copyWith(reminder: permission ? Reminder.enabled : Reminder.open),
+      state.copyWith(
+        status: AppStatus.initial,
+        reminder: permission ? Reminder.enabled : Reminder.open,
+      ),
     );
   }
 
@@ -224,7 +224,9 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
       await notificationRepository.cancelAllNotifications();
       // TODO: перезапустить все уведомления
       // await notificationRepository.scheduleAllNotifications();
-      emit(state.copyWith(reminder: Reminder.enabled));
+      emit(
+        state.copyWith(status: AppStatus.initial, reminder: Reminder.enabled),
+      );
     }
   }
 
@@ -235,7 +237,22 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     if (state.reminder == Reminder.enabled) {
       // отменить все уведомления
       await notificationRepository.cancelAllNotifications();
-      emit(state.copyWith(reminder: Reminder.disabled));
+      emit(
+        state.copyWith(status: AppStatus.initial, reminder: Reminder.disabled),
+      );
     }
+  }
+
+  // MARK: - Show Test Notification
+  void _onShowTestNotification(
+    AppShowTestNotificationEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    await notificationRepository.showNotification(
+      id: 1000001,
+      title: 'Test Notification',
+      body: 'This is a test notification',
+      payload: 'test',
+    );
   }
 }
