@@ -7,6 +7,7 @@ sealed class SettingsEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+// Settings
 final class SettingsLoadEvent extends SettingsEvent {
   const SettingsLoadEvent();
 }
@@ -45,12 +46,12 @@ final class SettingsUpdateLanguageEvent extends SettingsEvent {
 }
 
 final class SettingsUpdateThemeEvent extends SettingsEvent {
-  final bool darkTheme;
+  final String themeName;
 
-  const SettingsUpdateThemeEvent({required this.darkTheme});
+  const SettingsUpdateThemeEvent(this.themeName);
 
   @override
-  List<Object?> get props => [darkTheme];
+  List<Object?> get props => [themeName];
 }
 
 final class SettingsSaveEvent extends SettingsEvent {
