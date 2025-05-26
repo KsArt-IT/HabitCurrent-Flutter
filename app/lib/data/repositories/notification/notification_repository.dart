@@ -8,12 +8,12 @@ abstract interface class NotificationRepository {
   Future<bool> requestNotificationPermission();
   void openNotificationSettings();
 
-  Future<void> showNotification(
-    int id,
-    String title,
-    String body,
+  Future<void> showNotification({
+    required int id,
+    required String title,
+    required String body,
     String? payload,
-  );
+  });
 
   Future<void> scheduleNotificationByHabitId(int habitId);
 
