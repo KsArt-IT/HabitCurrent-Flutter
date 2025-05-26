@@ -64,3 +64,5 @@ final class AppReminderOpenEvent extends AppEvent {}
 final class AppReminderEnabledEvent extends AppEvent {}
 
 final class AppReminderDisabledEvent extends AppEvent {}
+
+final class AppShowTestNotificationEvent extends AppEvent {}
