@@ -3,6 +3,6 @@ abstract interface class SettingsRepository {
   Future<void> saveLanguage(String language);
   Future<String> loadName();
   Future<void> saveName(String language);
-  Future<bool> loadDarkTheme();
-  Future<void> saveDarkTheme(bool theme);
+  Future<String> loadThemeMode();
+  Future<void> saveThemeMode(String theme);
 }
