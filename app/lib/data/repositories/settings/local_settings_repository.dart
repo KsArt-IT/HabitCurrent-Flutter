@@ -28,12 +28,12 @@ final class LocalSettingsRepository implements SettingsRepository {
   }
 
   @override
-  Future<bool> loadDarkTheme() async {
-    return _service.loadDarkTheme();
+  Future<String> loadThemeMode() async {
+    return _service.loadThemeMode();
   }
 
   @override
-  Future<void> saveDarkTheme(bool theme) {
-    return _service.saveDarkTheme(theme);
+  Future<void> saveThemeMode(String theme) {
+    return _service.saveThemeMode(theme);
   }
 }
