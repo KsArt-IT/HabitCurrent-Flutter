@@ -38,12 +38,12 @@ final class LocalSettingsService implements SettingsService {
   }
 
   @override
-  Future<bool> loadDarkTheme() async {
-    return _getBool('darkTheme');
+  Future<String> loadThemeMode() async {
+    return _getValue('themeMode') ?? '';
   }
 
   @override
-  Future<void> saveDarkTheme(bool theme) {
-    return _setBool('darkTheme', theme);
+  Future<void> saveThemeMode(String theme) {
+    return _setValue('themeMode', theme);
   }
 }
