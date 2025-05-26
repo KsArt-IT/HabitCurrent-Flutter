@@ -59,6 +59,7 @@ class _ReminderButtonState extends State<ReminderButton> with WidgetsBindingObse
         },
         padding: const EdgeInsets.all(8),
         iconSize: 24,
+        color: Theme.of(context).colorScheme.onPrimary,
       ),
     );
   }
