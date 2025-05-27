@@ -541,6 +541,34 @@ final class LocalDataService implements DataService {
   }
 
   @override
+  Future<List<HabitNotificationModel>> loadNotificationsByUserId(
+    int userId,
+  ) async {
+    try {
+      final rows =
+          await (database.habitNotificationDatas.select()
+                ..where((f) => f.userId.equals(userId)))
+              .get();
+      return rows
+          .map(
+            (e) => HabitNotificationModel(
+              id: e.id,
+              userId: e.userId,
+              habitId: e.habitId,
+              intervalId: e.intervalId,
+              title: e.title,
+              weekDay: e.weekDay,
+              time: e.time,
+              repeats: e.repeats,
+            ),
+          )
+          .toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  @override
   Future<void> saveNotifications(
     List<HabitNotificationModel> notifications,
   ) async {
