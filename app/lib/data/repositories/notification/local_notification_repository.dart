@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_current/data/models/habit_notification_model.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
@@ -89,10 +90,23 @@ final class LocalNotificationRepository implements NotificationRepository {
   @override
   Future<void> scheduleNotificationByHabitId(int habitId) async {
     final notifications = await _service.loadNotificationsByHabitId(habitId);
+    _scheduleAllNotifications(notifications);
+  }
+
+  @override
+  Future<void> scheduleNotificationByUserId(int userId) async {
+    final notifications = await _service.loadNotificationsByUserId(userId);
+    _scheduleAllNotifications(notifications);
+  }
+
+  Future<void> _scheduleAllNotifications(
+    List<HabitNotificationModel> notifications,
+  ) async {
     print('--------------------------------');
     print(
       "LocalNotificationRepository: notifications: ${notifications.length}",
     );
+    if (notifications.isEmpty) return;
 
     final date = TZDateTime.now(local);
     for (final notification in notifications) {
