@@ -28,6 +28,7 @@ abstract interface class DataService {
   Future<void> deleteHourIntervalCompletedById(int id);
 
   Future<List<HabitNotificationModel>> loadNotificationsByHabitId(int habitId);
+  Future<List<HabitNotificationModel>> loadNotificationsByUserId(int userId);
   Future<void> deleteNotificationById(int id);
   Future<void> deleteNotificationByHabitId(int habitId);
 
