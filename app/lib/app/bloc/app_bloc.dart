@@ -220,10 +220,10 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     if (state.reminder == Reminder.disabled) {
+      if (state.user == null) return;
       // перезапустить все уведомления
       await notificationRepository.cancelAllNotifications();
-      // TODO: перезапустить все уведомления
-      // await notificationRepository.scheduleAllNotifications();
+      await notificationRepository.scheduleNotificationByUserId(state.user!.id);
       emit(
         state.copyWith(status: AppStatus.initial, reminder: Reminder.enabled),
       );
