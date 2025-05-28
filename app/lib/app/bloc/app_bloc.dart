@@ -27,10 +27,8 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppHabitMakeDoneEvent>(_onHabitMakeDoneEvent);
 
     on<AppReminderCheckEvent>(_onReminderCheckEvent);
-    on<AppReminderRequestEvent>(_onReminderRequestEvent);
+    on<AppReminderChangeEvent>(_onReminderChangeEvent);
     on<AppReminderOpenEvent>(_onReminderOpenEvent);
-    on<AppReminderEnabledEvent>(_onReminderEnabledEvent);
-    on<AppReminderDisabledEvent>(_onReminderDisabledEvent);
 
     on<AppShowTestNotificationEvent>(_onShowTestNotification);
     // обрабатываем получение уведомлений
@@ -194,53 +192,43 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
-  void _onReminderRequestEvent(
-    AppReminderRequestEvent event,
+  void _onReminderChangeEvent(
+    AppReminderChangeEvent event,
     Emitter<AppState> emit,
   ) async {
-    final permission =
-        await notificationRepository.requestNotificationPermission();
-    emit(
-      state.copyWith(
-        status: AppStatus.initial,
-        reminder: permission ? Reminder.enabled : Reminder.open,
-      ),
-    );
+    if (state.user == null) return;
+    final Reminder reminder;
+    switch (event.reminder) {
+      case Reminder.open:
+        _onReminderOpenSettings();
+        return;
+      case Reminder.request:
+        final permission = await notificationRepository.requestNotificationPermission();
+        reminder = permission ? Reminder.enabled : Reminder.open;
+      case Reminder.enabled:
+        // отменить все уведомления
+        await notificationRepository.cancelAllNotifications();
+        reminder = Reminder.disabled;
+      case Reminder.disabled:
+        // перезапустить все уведомления
+        await notificationRepository.cancelAllNotifications();
+        await notificationRepository.scheduleNotificationByUserId(
+          state.user!.id,
+        );
+        reminder = Reminder.enabled;
+    }
+    emit(state.copyWith(status: AppStatus.initial, reminder: reminder));
   }
 
   void _onReminderOpenEvent(
     AppReminderOpenEvent event,
     Emitter<AppState> emit,
-  ) async {
+  ) {
+    _onReminderOpenSettings();
+  }
+
+  void _onReminderOpenSettings() {
     notificationRepository.openNotificationSettings();
-  }
-
-  void _onReminderEnabledEvent(
-    AppReminderEnabledEvent event,
-    Emitter<AppState> emit,
-  ) async {
-    if (state.reminder == Reminder.disabled) {
-      if (state.user == null) return;
-      // перезапустить все уведомления
-      await notificationRepository.cancelAllNotifications();
-      await notificationRepository.scheduleNotificationByUserId(state.user!.id);
-      emit(
-        state.copyWith(status: AppStatus.initial, reminder: Reminder.enabled),
-      );
-    }
-  }
-
-  void _onReminderDisabledEvent(
-    AppReminderDisabledEvent event,
-    Emitter<AppState> emit,
-  ) async {
-    if (state.reminder == Reminder.enabled) {
-      // отменить все уведомления
-      await notificationRepository.cancelAllNotifications();
-      emit(
-        state.copyWith(status: AppStatus.initial, reminder: Reminder.disabled),
-      );
-    }
   }
 
   // MARK: - Show Test Notification
