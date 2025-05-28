@@ -5,4 +5,6 @@ abstract interface class SettingsRepository {
   Future<void> saveName(String language);
   Future<String> loadThemeMode();
   Future<void> saveThemeMode(String theme);
+  Future<bool> loadReminder();
+  Future<void> saveReminder(bool reminder);
 }
