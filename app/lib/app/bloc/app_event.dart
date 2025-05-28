@@ -57,12 +57,13 @@ final class AppHabitDeleteEvent extends AppEvent {
 
 final class AppReminderCheckEvent extends AppEvent {}
 
-final class AppReminderRequestEvent extends AppEvent {}
+final class AppReminderChangeEvent extends AppEvent {
+  final Reminder reminder;
+  const AppReminderChangeEvent(this.reminder);
+  @override
+  List<Object?> get props => [reminder];
+}
 
 final class AppReminderOpenEvent extends AppEvent {}
-
-final class AppReminderEnabledEvent extends AppEvent {}
-
-final class AppReminderDisabledEvent extends AppEvent {}
 
 final class AppShowTestNotificationEvent extends AppEvent {}
