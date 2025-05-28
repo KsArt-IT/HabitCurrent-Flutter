@@ -5,4 +5,6 @@ abstract interface class SettingsService {
   Future<void> saveName(String name);
   Future<String> loadThemeMode();
   Future<void> saveThemeMode(String theme);
+  Future<bool> loadReminder();
+  Future<void> saveReminder(bool reminder);
 }
