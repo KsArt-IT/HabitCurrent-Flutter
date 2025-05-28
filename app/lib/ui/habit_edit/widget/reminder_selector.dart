@@ -84,16 +84,16 @@ class _ReminderSelectorState extends State<ReminderSelector>
         children: [
           Text(strings.reminder, style: theme.textTheme.titleMedium),
           const SizedBox(height: Constants.paddingMedium),
-          if (reminder.isGranted)
+          if (reminder.isGranted) ...[
             radioListTile(
               title: strings.withoutReminder,
               value: Reminder.disabled,
             ),
-          if (reminder.isGranted)
             radioListTile(
               title: strings.enableReminders,
               value: Reminder.enabled,
             ),
+          ],
           if (!reminder.isGranted)
             PrimaryButton(
               label:
