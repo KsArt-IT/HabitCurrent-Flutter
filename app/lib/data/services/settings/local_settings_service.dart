@@ -9,7 +9,7 @@ final class LocalSettingsService implements SettingsService {
 
   String? _getValue(String key) => _preferences.getString(key);
 
-  bool _getBool(String key) => _preferences.getBool(key) ?? false;
+  bool _getBool(String key, bool defaultValue) => _preferences.getBool(key) ?? defaultValue;
 
   Future<void> _setValue(String key, String value) =>
       _preferences.setString(key, value);
@@ -45,5 +45,15 @@ final class LocalSettingsService implements SettingsService {
   @override
   Future<void> saveThemeMode(String theme) {
     return _setValue('themeMode', theme);
+  }
+  
+  @override
+  Future<bool> loadReminder() async {
+    return _getBool('reminder', true);
+  }
+  
+  @override
+  Future<void> saveReminder(bool reminder) {
+    return _setBool('reminder', reminder);
   }
 }
