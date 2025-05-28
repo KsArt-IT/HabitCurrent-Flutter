@@ -19,7 +19,7 @@ final class LocalSettingsRepository implements SettingsRepository {
 
   @override
   Future<String> loadName() async {
-    return await _service.loadName();
+    return _service.loadName();
   }
 
   @override
@@ -35,5 +35,15 @@ final class LocalSettingsRepository implements SettingsRepository {
   @override
   Future<void> saveThemeMode(String theme) {
     return _service.saveThemeMode(theme);
+  }
+
+  @override
+  Future<bool> loadReminder() async {
+    return _service.loadReminder();
+  }
+
+  @override
+  Future<void> saveReminder(bool reminder) {
+    return _service.saveReminder(reminder);
   }
 }
