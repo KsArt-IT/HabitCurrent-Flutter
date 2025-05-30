@@ -3,6 +3,7 @@ import 'package:habit_current/data/models/habit_notification_model.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/data/services/data/data_service.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
+import 'package:habit_current/models/notification_response_details.dart';
 import 'package:timezone/timezone.dart';
 
 final class LocalNotificationRepository implements NotificationRepository {
@@ -88,6 +89,23 @@ final class LocalNotificationRepository implements NotificationRepository {
   }
 
   @override
+  Future<void> showNotificationLater({
+    required int id,
+    required String identifier,
+    required int laterMinutes,
+  }) async {
+    final notification = await _service.loadNotificationById(id);
+    if (notification == null) return;
+
+    _notificationService.showNotificationOnDate(
+      id: 1000000 + id,
+      title: notification.title,
+      identifier: identifier,
+      scheduledDate: TZDateTime.now(local).add(Duration(minutes: laterMinutes)),
+    );
+  }
+
+  @override
   Future<void> scheduleNotificationByHabitId(int habitId) async {
     final notifications = await _service.loadNotificationsByHabitId(habitId);
     _scheduleAllNotifications(notifications);
@@ -129,8 +147,13 @@ final class LocalNotificationRepository implements NotificationRepository {
 
   @override
   Future<void> observeNotificationReceived(
-    Function(String identifier, bool isOpen) onReceived,
+    Function(NotificationResponseDetails notification) onReceived,
   ) async {
     _notificationService.observeNotificationReceived(onReceived);
+  }
+
+  @override
+  Future<NotificationResponseDetails?> getNotificationAppLaunchDetails() async {
+    return await _notificationService.getNotificationAppLaunchDetails();
   }
 }
