@@ -4,13 +4,14 @@ import 'package:app_settings/app_settings.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/data/services/notification/notification_service.dart';
+import 'package:habit_current/models/notification_response_details.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:timezone/timezone.dart';
 
 final class LocalNotificationService implements NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  Function(String identifier, bool isOpen)? _onNotificationReceived;
+  Function(NotificationResponseDetails notification)? _onNotificationReceived;
 
   // MARK: - Actions
   static const String openActionId = 'open_action';
@@ -102,50 +103,6 @@ final class LocalNotificationService implements NotificationService {
     macOS: darwinNotificationDetails,
   );
 
-  void _onDidReceiveNotification(NotificationResponse response) {
-    print('--------------------------------');
-    print('onDidReceiveNotification: $response');
-    print('--------------------------------');
-    if (response.payload == null) return;
-
-    // 🟢 Обработка действий
-    switch (response.actionId) {
-      case openActionId:
-        print('Пользователь нажал "открыть"');
-        _onNotificationReceived?.call(response.payload!, true);
-      case laterAction10Id:
-        print('Пользователь нажал "отложить на 10 минут"');
-        showNotificationOnDate(
-          id: 1000000 + (response.id ?? 0),
-          identifier: response.payload!,
-          title: response.payload!,
-          body: response.payload!,
-          scheduledDate: TZDateTime.now(local).add(Duration(seconds: 5)),
-        );
-      case laterAction30Id:
-        print('Пользователь нажал "отложить на 30 минут"');
-        showNotificationOnDate(
-          id: 1000000 + (response.id ?? 0),
-          identifier: response.payload!,
-          title: response.payload!,
-          body: response.payload!,
-          scheduledDate: TZDateTime.now(local).add(Duration(minutes: 30)),
-        );
-      case laterAction60Id:
-        print('Пользователь нажал "отложить на 60 минут"');
-        showNotificationOnDate(
-          id: 1000000 + (response.id ?? 0),
-          identifier: response.payload!,
-          title: response.payload!,
-          body: response.payload!,
-          scheduledDate: TZDateTime.now(local).add(Duration(minutes: 60)),
-        );
-      default:
-        print('Пользователь нажал "Отметить как выполнено"');
-        _onNotificationReceived?.call(response.payload!, false);
-    }
-  }
-
   // MARK: - Initialize Notification
   @override
   Future<void> initialize() async {
@@ -230,7 +187,11 @@ final class LocalNotificationService implements NotificationService {
       return permission;
     }
     final permission = await Permission.notification.request();
-    if (!permission.isGranted && !permission.isDenied && permission.isPermanentlyDenied) return null;
+    if (!permission.isGranted &&
+        !permission.isDenied &&
+        permission.isPermanentlyDenied) {
+      return null;
+    }
     return permission.isGranted;
   }
 
@@ -435,13 +396,82 @@ final class LocalNotificationService implements NotificationService {
     await _flutterLocalNotificationsPlugin.cancel(id);
   }
 
+  // MARK: - Observe Notification Received
   @override
   Future<void> observeNotificationReceived(
-    Function(String identifier, bool isOpen) onReceived,
+    Function(NotificationResponseDetails notification) onReceived,
   ) async {
     _onNotificationReceived = onReceived;
   }
 
+  void _onDidReceiveNotification(NotificationResponse response) {
+    print('--------------------------------');
+    print('onDidReceiveNotification: $response');
+    print('--------------------------------');
+    if (response.payload == null) return;
+    final notification = getNotificationDetails(response);
+    _onNotificationReceived?.call(notification);
+  }
+
+  @override
+  Future<NotificationResponseDetails?> getNotificationAppLaunchDetails() async {
+    final launchDetails =
+        await _flutterLocalNotificationsPlugin
+            .getNotificationAppLaunchDetails();
+    if (launchDetails == null ||
+        launchDetails.didNotificationLaunchApp == false)
+      return null;
+
+    final response = launchDetails.notificationResponse;
+    if (response == null || response.payload == null) return null;
+    return getNotificationDetails(response);
+  }
+
+  NotificationResponseDetails getNotificationDetails(response) {
+    switch (response.actionId) {
+      case laterAction10Id:
+        print('Пользователь нажал "отложить на 10 минут"');
+        return NotificationResponseDetails(
+          id: response.id ?? 0,
+          identifier: response.payload!,
+          laterMinutes: 10,
+        );
+
+      case laterAction30Id:
+        print('Пользователь нажал "отложить на 30 минут"');
+        return NotificationResponseDetails(
+          id: response.id ?? 0,
+          identifier: response.payload!,
+          laterMinutes: 30,
+        );
+
+      case laterAction60Id:
+        print('Пользователь нажал "отложить на 60 минут"');
+        return NotificationResponseDetails(
+          id: response.id ?? 0,
+          identifier: response.payload!,
+          laterMinutes: 60,
+        );
+
+      case openActionId:
+        print('Пользователь нажал "открыть"');
+        return NotificationResponseDetails(
+          id: response.id ?? 0,
+          identifier: response.payload!,
+          isOpen: true,
+        );
+
+      default:
+        print('Пользователь нажал "Отметить как выполнено"');
+        return NotificationResponseDetails(
+          id: response.id ?? 0,
+          identifier: response.payload!,
+          isOpen: false,
+        );
+    }
+  }
+
+  // MARK: - Close
   @override
   Future<void> close() async {
     _onNotificationReceived = null;
