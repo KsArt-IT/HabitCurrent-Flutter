@@ -54,8 +54,8 @@ sealed class AppTheme {
     ),
     unselectedWidgetColor: AppColors.gray600,
     radioTheme: RadioThemeData(
-      fillColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      fillColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.gray900; // выбран
         }
         return AppColors.gray600; // не выбран
@@ -63,10 +63,36 @@ sealed class AppTheme {
       visualDensity: VisualDensity.compact,
     ),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(Colors.transparent),
-      checkColor: MaterialStateProperty.all(AppColors.gray900),
+      fillColor: WidgetStateProperty.all(Colors.transparent),
+      checkColor: WidgetStateProperty.all(AppColors.gray900),
       side: BorderSide(color: AppColors.gray600),
       visualDensity: VisualDensity.compact,
+    ),
+    // Time Picker
+    timePickerTheme: TimePickerThemeData(
+      backgroundColor: AppColors.gray100,
+
+      hourMinuteColor: AppColors.gray950,
+      hourMinuteTextColor: AppColors.gray50,
+      
+      dayPeriodColor: AppColors.gray950,
+      dayPeriodTextColor: AppColors.gray50,
+      
+      dialHandColor: AppColors.gray600,
+      dialBackgroundColor: AppColors.gray950,
+      dialTextColor: AppColors.gray50,
+      
+      entryModeIconColor: AppColors.gray950,
+      timeSelectorSeparatorColor: WidgetStateProperty.all(AppColors.gray950),
+
+      cancelButtonStyle: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.gray950),
+        foregroundColor: WidgetStateProperty.all(AppColors.gray50),
+      ),
+      confirmButtonStyle: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.gray950),
+        foregroundColor: WidgetStateProperty.all(AppColors.gray50),
+      ),
     ),
     // Text Theme
     textTheme: const TextTheme(
@@ -212,8 +238,8 @@ sealed class AppTheme {
     ),
     unselectedWidgetColor: AppColors.gray700,
     radioTheme: RadioThemeData(
-      fillColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      fillColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.brandColor; // выбран
         }
         return AppColors.gray700; // не выбран
@@ -221,10 +247,36 @@ sealed class AppTheme {
       visualDensity: VisualDensity.compact,
     ),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(Colors.transparent),
-      checkColor: MaterialStateProperty.all(AppColors.brandColor),
+      fillColor: WidgetStateProperty.all(Colors.transparent),
+      checkColor: WidgetStateProperty.all(AppColors.brandColor),
       side: BorderSide(color: AppColors.gray700),
       visualDensity: VisualDensity.compact,
+    ),
+    // Time Picker
+    timePickerTheme: TimePickerThemeData(
+      backgroundColor: AppColors.gray900,
+
+      hourMinuteColor: AppColors.gray50,
+      hourMinuteTextColor: AppColors.gray950,
+
+      dayPeriodColor: AppColors.gray50,
+      dayPeriodTextColor: AppColors.gray950,
+
+      dialHandColor: AppColors.gray700,
+      dialBackgroundColor: AppColors.gray950,
+      dialTextColor: AppColors.gray50,
+
+      entryModeIconColor: AppColors.gray50,
+      timeSelectorSeparatorColor: WidgetStateProperty.all(AppColors.gray50),
+
+      cancelButtonStyle: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.gray50),
+        foregroundColor: WidgetStateProperty.all(AppColors.gray950),
+      ),
+      confirmButtonStyle: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(AppColors.gray50),
+        foregroundColor: WidgetStateProperty.all(AppColors.gray950),
+      ),
     ),
     // Text Theme
     textTheme: const TextTheme(
