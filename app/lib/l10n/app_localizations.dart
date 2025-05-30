@@ -112,7 +112,7 @@ abstract class AppLocalizations {
   /// No description provided for @tabFlow.
   ///
   /// In en, this message translates to:
-  /// **'Flow'**
+  /// **'Today'**
   String get tabFlow;
 
   /// No description provided for @tabWeek.

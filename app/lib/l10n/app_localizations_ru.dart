@@ -15,7 +15,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get n_1 => '---Tabs---';
 
   @override
-  String get tabFlow => 'Поток';
+  String get tabFlow => 'Сегодня';
 
   @override
   String get tabWeek => 'Неделя';

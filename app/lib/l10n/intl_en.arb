@@ -2,7 +2,7 @@
     "@@locale": "en",
     "appTitle": "Habit Current",
     "n_1": "---Tabs---",
-    "tabFlow": "Flow",
+    "tabFlow": "Today",
     "tabWeek": "Week",
     "tabMonth": "Month",
     "tabSettings": "Settings",
