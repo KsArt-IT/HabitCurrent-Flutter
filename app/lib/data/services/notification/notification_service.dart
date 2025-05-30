@@ -1,11 +1,13 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:habit_current/models/notification_response_details.dart';
 import 'package:timezone/timezone.dart';
 
 abstract interface class NotificationService {
   Future<void> initialize();
   Future<void> observeNotificationReceived(
-    Function(String identifier, bool isOpen) onReceived,
+    Function(NotificationResponseDetails notification) onReceived,
   );
+  Future<NotificationResponseDetails?> getNotificationAppLaunchDetails();
 
   Future<bool?> getNotificationPermissionStatus();
   Future<bool> checkNotificationPermission();
