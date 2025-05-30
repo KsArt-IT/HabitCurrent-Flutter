@@ -212,6 +212,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _onNotificationReceived(
     NotificationResponseDetails notification,
   ) async {
+    if (notification.identifier.isEmpty) return;
     if (notification.laterMinutes != null) {
       // schedule notification with later minutes
       await notificationRepository.showNotificationLater(
