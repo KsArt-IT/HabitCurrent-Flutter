@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/database/database.dart';
 import 'package:habit_current/data/models/models.dart';
@@ -37,7 +38,7 @@ final class LocalDataService implements DataService {
         updated: data.updated,
       );
     } catch (e) {
-      throw Exception('Error loading last user: $e');
+      throw UserInitialError(e.toString());
     }
   }
 
@@ -57,7 +58,7 @@ final class LocalDataService implements DataService {
         updated: data.updated,
       );
     } catch (e) {
-      throw Exception('Error loading user: $e');
+      throw UserLoadingError(e.toString());
     }
   }
 
@@ -68,22 +69,26 @@ final class LocalDataService implements DataService {
         UsersCompanion.insert(name: name),
       );
       return await loadUserByName(name) ??
-          (throw Exception('User not found after creation'));
+          (throw UserLoadingError('User not found after creation'));
     } catch (e) {
-      throw Exception('Error creation user: $e');
+      throw UserLoadingError(e.toString());
     }
   }
 
   @override
   Future<void> saveUser(UserModel user) {
-    return database.users.insertOnConflictUpdate(
-      UsersCompanion(
-        id: Value(user.id),
-        name: Value(user.name),
-        avatar: Value(user.avatar),
-        created: Value(user.created),
-      ),
-    );
+    try {
+      return database.users.insertOnConflictUpdate(
+        UsersCompanion(
+          id: Value(user.id),
+          name: Value(user.name),
+          avatar: Value(user.avatar),
+          created: Value(user.created),
+        ),
+      );
+    } catch (e) {
+      throw UserSavingError(e.toString());
+    }
   }
 
   // MARK: - Habit
@@ -102,7 +107,7 @@ final class LocalDataService implements DataService {
         await database.habits.deleteOne(HabitsCompanion(id: Value(id)));
       });
     } catch (e) {
-      throw Exception('Error deleting habit: $e');
+      throw DatabaseDeletingError(e.toString());
     }
   }
 
@@ -137,11 +142,11 @@ final class LocalDataService implements DataService {
       // Загружаем созданную привычку
       final habitRow = await loadHabitById(habitId, DateTime.now());
       if (habitRow == null) {
-        throw Exception('Habit not found after creation');
+        throw DatabaseCreatingError('Habit not found after creation');
       }
       return habitRow;
     } catch (e) {
-      throw Exception('Error creating habit: $e');
+      throw DatabaseCreatingError(e.toString());
     }
   }
 
@@ -201,11 +206,11 @@ final class LocalDataService implements DataService {
       // Загружаем созданную привычку
       final habitRow = await loadHabitById(habit.id, DateTime.now());
       if (habitRow == null) {
-        throw Exception('Habit not found after creation');
+        throw DatabaseSavingError('Habit not found after creation');
       }
       return habitRow;
     } catch (e) {
-      throw Exception('Error saving habit: $e');
+      throw DatabaseSavingError(e.toString());
     }
   }
 
@@ -234,7 +239,7 @@ final class LocalDataService implements DataService {
         notifications: await loadNotificationsByHabitId(habitRow.id),
       );
     } catch (e) {
-      throw Exception('Error loading habit by id: $e');
+      throw DatabaseLoadingError(e.toString());
     }
   }
 
@@ -267,7 +272,7 @@ final class LocalDataService implements DataService {
         return habitModels;
       });
     } catch (e) {
-      throw Exception('Error loading habits by user id: $e');
+      throw DatabaseLoadingError(e.toString());
     }
   }
 
@@ -313,7 +318,7 @@ final class LocalDataService implements DataService {
         return habitModels;
       });
     } catch (e) {
-      throw Exception('Error loading habits by user id: $e');
+      throw DatabaseLoadingError(e.toString());
     }
   }
 
@@ -359,7 +364,7 @@ final class LocalDataService implements DataService {
         }),
       );
     } catch (e) {
-      throw Exception('Error loading habits by user id: $e');
+      throw DatabaseLoadingError(e.toString());
     }
   }
 
@@ -367,45 +372,36 @@ final class LocalDataService implements DataService {
   Future<List<HourIntervalModel>> _loadHourIntervalsByHabitId(
     int habitId,
   ) async {
-    try {
-      final rows =
-          await (database.hourIntervals.select()
-                ..where((f) => f.habitId.equals(habitId)))
-              .get();
-      return rows
-          .map(
-            (e) =>
-                HourIntervalModel(id: e.id, habitId: e.habitId, time: e.time),
-          )
-          .toList();
-    } catch (e) {
-      return [];
-    }
+    final rows =
+        await (database.hourIntervals.select()
+              ..where((f) => f.habitId.equals(habitId)))
+            .get();
+    return rows
+        .map(
+          (e) => HourIntervalModel(id: e.id, habitId: e.habitId, time: e.time),
+        )
+        .toList();
   }
 
   // MARK: - HourIntervalCompleted
   Future<List<HourIntervalCompletedModel>> _loadHourIntervalCompletedsByHabitId(
     int habitId,
   ) async {
-    try {
-      final rows =
-          await (database.hourIntervalCompleteds.select()
-                ..where((f) => f.habitId.equals(habitId)))
-              .get();
-      return rows
-          .map(
-            (e) => HourIntervalCompletedModel(
-              id: e.id,
-              habitId: e.habitId,
-              intervalId: e.intervalId,
-              time: e.time,
-              completed: e.completed,
-            ),
-          )
-          .toList();
-    } catch (e) {
-      return [];
-    }
+    final rows =
+        await (database.hourIntervalCompleteds.select()
+              ..where((f) => f.habitId.equals(habitId)))
+            .get();
+    return rows
+        .map(
+          (e) => HourIntervalCompletedModel(
+            id: e.id,
+            habitId: e.habitId,
+            intervalId: e.intervalId,
+            time: e.time,
+            completed: e.completed,
+          ),
+        )
+        .toList();
   }
 
   Future<List<HourIntervalCompletedModel>>
@@ -413,31 +409,27 @@ final class LocalDataService implements DataService {
     int habitId,
     DateTime date,
   ) async {
-    try {
-      final rows =
-          await (database.hourIntervalCompleteds.select()
-                ..where((f) => f.habitId.equals(habitId))
-                ..where(
-                  (f) =>
-                      f.completed.year.equals(date.year) &
-                      f.completed.month.equals(date.month) &
-                      f.completed.day.equals(date.day),
-                ))
-              .get();
-      return rows
-          .map(
-            (e) => HourIntervalCompletedModel(
-              id: e.id,
-              habitId: e.habitId,
-              intervalId: e.intervalId,
-              time: e.time,
-              completed: e.completed,
-            ),
-          )
-          .toList();
-    } catch (e) {
-      return [];
-    }
+    final rows =
+        await (database.hourIntervalCompleteds.select()
+              ..where((f) => f.habitId.equals(habitId))
+              ..where(
+                (f) =>
+                    f.completed.year.equals(date.year) &
+                    f.completed.month.equals(date.month) &
+                    f.completed.day.equals(date.day),
+              ))
+            .get();
+    return rows
+        .map(
+          (e) => HourIntervalCompletedModel(
+            id: e.id,
+            habitId: e.habitId,
+            intervalId: e.intervalId,
+            time: e.time,
+            completed: e.completed,
+          ),
+        )
+        .toList();
   }
 
   Future<List<HourIntervalCompletedModel>>
@@ -446,37 +438,37 @@ final class LocalDataService implements DataService {
     DateTime start,
     DateTime end,
   ) async {
-    try {
-      final rows =
-          await (database.hourIntervalCompleteds.select()
-                ..where((f) => f.habitId.equals(habitId))
-                ..where(
-                  (f) =>
-                      f.completed.isBiggerOrEqualValue(start.toStartOfDay()) &
-                      f.completed.isSmallerOrEqualValue(end.toEndOfDay()),
-                ))
-              .get();
-      return rows
-          .map(
-            (e) => HourIntervalCompletedModel(
-              id: e.id,
-              habitId: e.habitId,
-              intervalId: e.intervalId,
-              time: e.time,
-              completed: e.completed,
-            ),
-          )
-          .toList();
-    } catch (e) {
-      return [];
-    }
+    final rows =
+        await (database.hourIntervalCompleteds.select()
+              ..where((f) => f.habitId.equals(habitId))
+              ..where(
+                (f) =>
+                    f.completed.isBiggerOrEqualValue(start.toStartOfDay()) &
+                    f.completed.isSmallerOrEqualValue(end.toEndOfDay()),
+              ))
+            .get();
+    return rows
+        .map(
+          (e) => HourIntervalCompletedModel(
+            id: e.id,
+            habitId: e.habitId,
+            intervalId: e.intervalId,
+            time: e.time,
+            completed: e.completed,
+          ),
+        )
+        .toList();
   }
 
   @override
   Future<void> deleteHourIntervalCompletedById(int id) {
-    return database.hourIntervalCompleteds.deleteOne(
-      HourIntervalCompletedsCompanion(id: Value(id)),
-    );
+    try {
+      return database.hourIntervalCompleteds.deleteOne(
+        HourIntervalCompletedsCompanion(id: Value(id)),
+      );
+    } catch (e) {
+      throw DatabaseDeletingError(e.toString());
+    }
   }
 
   @override
@@ -497,7 +489,7 @@ final class LocalDataService implements DataService {
                 ..where((f) => f.id.equals(id)))
               .getSingleOrNull();
       if (intervalRow == null) {
-        throw Exception('Interval not found after creation');
+        throw DatabaseCreatingError('Interval not found after creation');
       }
       return HourIntervalCompletedModel(
         id: intervalRow.id,
@@ -507,7 +499,7 @@ final class LocalDataService implements DataService {
         completed: intervalRow.completed,
       );
     } catch (e) {
-      throw Exception('Error creating hour interval completed: $e');
+      throw DatabaseCreatingError(e.toString());
     }
   }
 
@@ -595,8 +587,12 @@ final class LocalDataService implements DataService {
   Future<void> saveNotifications(
     List<HabitNotificationModel> notifications,
   ) async {
-    for (final notification in notifications) {
-      await _saveNotification(notification);
+    try {
+      for (final notification in notifications) {
+        await _saveNotification(notification);
+      }
+    } catch (e) {
+      throw DatabaseSavingError(e.toString());
     }
   }
 
@@ -616,15 +612,23 @@ final class LocalDataService implements DataService {
 
   @override
   Future<void> deleteNotificationByHabitId(int habitId) async {
-    await database.habitNotificationDatas.deleteWhere(
-      (f) => f.habitId.equals(habitId),
-    );
+    try {
+      await database.habitNotificationDatas.deleteWhere(
+        (f) => f.habitId.equals(habitId),
+      );
+    } catch (e) {
+      throw DatabaseDeletingError(e.toString());
+    }
   }
 
   @override
   Future<void> deleteNotificationById(int id) async {
-    await database.habitNotificationDatas.deleteOne(
-      HabitNotificationDatasCompanion(id: Value(id)),
-    );
+    try {
+      await database.habitNotificationDatas.deleteOne(
+        HabitNotificationDatasCompanion(id: Value(id)),
+      );
+    } catch (e) {
+      throw DatabaseDeletingError(e.toString());
+    }
   }
 }
