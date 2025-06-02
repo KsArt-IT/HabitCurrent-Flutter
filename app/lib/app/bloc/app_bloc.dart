@@ -136,6 +136,12 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
               .where((interval) => interval.id == event.intervalId)
               .firstOrNull;
       if (interval == null) return;
+      // Проверить не отмечен ли интервал ранее
+      if (habit.completedIntervals.any(
+        (e) => e.intervalId == event.intervalId,
+      )) {
+        return;
+      }
       // make done
       final completed = HourIntervalCompleted(
         intervalId: interval.id,
@@ -280,6 +286,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         }
       } else {
         print('AppHabitMakeDoneEvent');
+        // Отметим как выполненное
         add(
           AppHabitMakeDoneEvent(
             habitId: habitId,
@@ -287,7 +294,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
             weekDay: weekDay,
           ),
         );
-        add(AppHabitReloadEvent(habitId: habitId));
+        // add(AppHabitReloadEvent(habitId: habitId));
       }
       print('--------------------------------');
     } catch (e) {
