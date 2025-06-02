@@ -53,7 +53,7 @@ class _HabitMonthBody extends StatelessWidget {
             children: [
               MonthSelector(),
               // TODO: тут 2 надписи и статус передать за этот месяц нет или вобще нет привычек
-              if (state.statusHabits.isEmpty)
+              if (state.habits.isEmpty)
                 Expanded(
                   child: Center(
                     child: Text(
@@ -62,7 +62,7 @@ class _HabitMonthBody extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (state.statusHabits.isNotEmpty)
+              if (state.habits.isNotEmpty)
                 Expanded(
                   child: RefreshIndicator(
                     color: theme.colorScheme.primaryFixed,
@@ -78,11 +78,10 @@ class _HabitMonthBody extends StatelessWidget {
                         Constants.paddingMedium,
                         Constants.paddingXLarge,
                       ),
-                      itemCount: state.statusHabits.length,
+                      itemCount: state.habits.length,
                       itemBuilder:
-                          (_, index) => HabitMonthCard(
-                            habitMonth: state.statusHabits[index],
-                          ),
+                          (_, index) =>
+                              HabitMonthCard(habitMonth: state.habits[index]),
                     ),
                   ),
                 ),

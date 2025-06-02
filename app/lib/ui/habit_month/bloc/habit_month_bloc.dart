@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
@@ -44,7 +45,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
         currentDate: currentDate,
         status: HabitStateStatus.success,
         selectedMonth: currentDate,
-        statusHabits: statusHabits,
+        habits: statusHabits,
       ),
     );
   }
@@ -59,7 +60,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       state.copyWith(
         status: HabitStateStatus.success,
         selectedMonth: date,
-        statusHabits: statusHabits,
+        habits: statusHabits,
       ),
     );
   }
@@ -74,7 +75,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       state.copyWith(
         status: HabitStateStatus.success,
         selectedMonth: date,
-        statusHabits: statusHabits,
+        habits: statusHabits,
       ),
     );
   }
@@ -90,7 +91,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       state.copyWith(
         status: HabitStateStatus.success,
         selectedMonth: date,
-        statusHabits: statusHabits,
+        habits: statusHabits,
       ),
     );
   }
