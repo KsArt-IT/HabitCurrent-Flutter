@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/models/habit.dart';
@@ -94,23 +95,34 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
   ) async {
     print("--------------------------------");
     emit(state.copyWith(status: StatsStatus.initial));
-    Habit habit;
-    if (state.habit != null) {
-      // отменим уведомления для habitId
-      await notificationRepository.cancelNotificationByHabitId(state.habit!.id);
-      // сохраним привычку
-      habit = await _saveHabit();
-    } else {
-      habit = await _createHabit();
+    try {
+      Habit habit;
+      if (state.habit != null) {
+        // отменим уведомления для habitId
+        await notificationRepository.cancelNotificationByHabitId(
+          state.habit!.id,
+        );
+        // сохраним привычку
+        habit = await _saveHabit();
+      } else {
+        habit = await _createHabit();
+      }
+      if (state.reminder == Reminder.enabled) {
+        await _saveNotifications(habit);
+        print("HabitEditBloc: scheduleNotificationByHabitId");
+        // создадим новые уведомления для habitId
+        await notificationRepository.scheduleNotificationByHabitId(habit.id);
+      }
+      // завершим
+      emit(state.copyWith(status: StatsStatus.success, habitId: habit.id));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: StatsStatus.failure,
+          error: DatabaseSavingError(e.toString()),
+        ),
+      );
     }
-    if (state.reminder == Reminder.enabled) {
-      await _saveNotifications(habit);
-      print("HabitEditBloc: scheduleNotificationByHabitId");
-      // создадим новые уведомления для habitId
-      await notificationRepository.scheduleNotificationByHabitId(habit.id);
-    }
-    // завершим
-    emit(state.copyWith(status: StatsStatus.success, habitId: habit.id));
     print("--------------------------------");
   }
 
@@ -149,9 +161,13 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     // Максимальное количество интервалов - 12
     if (state.intervals.length >= 12) return;
 
+    // К последнему интервалу добавляем 60 минут
     int time = state.intervals.last.time + 60;
+    // Максимальное значение интервала - 1440 минут (24 часа)
     if (time > 1440) {
       time = 1440;
+    } else if (time < 0) {
+      time = 0;
     }
     emit(
       state.copyWith(intervals: [...state.intervals, HourInterval(time: time)]),
@@ -238,9 +254,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       final permission =
           await notificationRepository.requestNotificationPermission();
       final reminder = _getReminderState(permission, open: true);
-      emit(
-        state.copyWith(reminder: reminder),
-      );
+      emit(state.copyWith(reminder: reminder));
     } else {
       // открыть настройки приложения
       notificationRepository.openNotificationSettings();
