@@ -4,9 +4,9 @@ import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
+import 'package:habit_current/models/habit_day_status.dart';
 import 'package:habit_current/models/habit_month.dart';
 import 'package:habit_current/models/habit_state_status.dart';
-import 'package:habit_current/models/habit_day_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_month_event.dart';
@@ -32,68 +32,104 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     LoadHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
-    emit(
-      state.copyWith(status: HabitStateStatus.loading, userId: event.userId),
-    );
-    final currentDate = DateTime.now().toEndOfDay();
-    final statusHabits = await _loadHabitsAndCheckStatus(
-      event.userId,
-      currentDate,
-    );
-    emit(
-      state.copyWith(
-        currentDate: currentDate,
-        status: HabitStateStatus.success,
-        selectedMonth: currentDate,
-        habits: statusHabits,
-      ),
-    );
+    try {
+      emit(
+        state.copyWith(status: HabitStateStatus.loading, userId: event.userId),
+      );
+      final currentDate = DateTime.now().toEndOfDay();
+      final statusHabits = await _loadHabitsAndCheckStatus(
+        event.userId,
+        currentDate,
+      );
+      emit(
+        state.copyWith(
+          currentDate: currentDate,
+          status: HabitStateStatus.success,
+          selectedMonth: currentDate,
+          habits: statusHabits,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HabitStateStatus.error,
+          error: DatabaseLoadingError(e.toString()),
+        ),
+      );
+    }
   }
 
   void _onChangeHabitMonthEvent(
     ChangeMonthHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
-    final date = event.selectedMonth.toEndOfDay();
-    final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
-    emit(
-      state.copyWith(
-        status: HabitStateStatus.success,
-        selectedMonth: date,
-        habits: statusHabits,
-      ),
-    );
+    try {
+      final date = event.selectedMonth.toEndOfDay();
+      final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
+      emit(
+        state.copyWith(
+          status: HabitStateStatus.success,
+          selectedMonth: date,
+          habits: statusHabits,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HabitStateStatus.error,
+          error: DatabaseLoadingError(e.toString()),
+        ),
+      );
+    }
   }
 
   void _onRefreshHabitMonthEvent(
     RefreshHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
-    final date = state.selectedMonth.toEndOfDay();
-    final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
-    emit(
-      state.copyWith(
-        status: HabitStateStatus.success,
-        selectedMonth: date,
-        habits: statusHabits,
-      ),
-    );
+    try {
+      final date = state.selectedMonth.toEndOfDay();
+      final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
+      emit(
+        state.copyWith(
+          status: HabitStateStatus.success,
+          selectedMonth: date,
+          habits: statusHabits,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HabitStateStatus.error,
+          error: DatabaseLoadingError(e.toString()),
+        ),
+      );
+    }
   }
 
   void _onReloadHabitEvent(
     ReloadHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
-    // TODO: переделать на загрузку 1 habit за месяц
-    final date = state.selectedMonth.toEndOfDay();
-    final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
-    emit(
-      state.copyWith(
-        status: HabitStateStatus.success,
-        selectedMonth: date,
-        habits: statusHabits,
-      ),
-    );
+    try {
+      // TODO: переделать на загрузку 1 habit за месяц
+      final date = state.selectedMonth.toEndOfDay();
+      final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
+      emit(
+        state.copyWith(
+          status: HabitStateStatus.success,
+          selectedMonth: date,
+          habits: statusHabits,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: HabitStateStatus.error,
+          error: DatabaseLoadingError(e.toString()),
+        ),
+      );
+    }
   }
 
   Future<List<HabitMonth>> _loadHabitsAndCheckStatus(
@@ -134,7 +170,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
         return HabitMonth(
           id: habit.id,
           name: habit.name,
-          habitStatus: cleanAndChunkBySeven(habitStatus),
+          habitStatus: _cleanAndChunkBySeven(habitStatus),
         );
       }).toList()
       // Сортируем по имени
@@ -179,7 +215,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     return HabitDayStatus.notCompleted;
   }
 
-  List<List<HabitDayStatus>> cleanAndChunkBySeven(List<HabitDayStatus> list) {
+  List<List<HabitDayStatus>> _cleanAndChunkBySeven(List<HabitDayStatus> list) {
     // оставляем только выполнено, частично выполнено, не выполнено, не начато
     final cleanedList =
         list
@@ -198,10 +234,10 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
         cleanedList.add(HabitDayStatus.skipped);
       }
     }
-    return chunkBySeven(cleanedList);
+    return _chunkBySeven(cleanedList);
   }
 
-  List<List<T>> chunkBySeven<T>(List<T> list) {
+  List<List<T>> _chunkBySeven<T>(List<T> list) {
     final chunks = <List<T>>[];
     for (var i = 0; i < list.length; i += 7) {
       chunks.add(list.sublist(i, i + 7 > list.length ? list.length : i + 7));
