@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/models/habit_state_status.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/habit_edit/widget/frequency_selector.dart';
 import 'package:habit_current/ui/habit_edit/widget/habit_name_edit.dart';
@@ -58,12 +59,13 @@ class _HabitEditBody extends StatelessWidget {
     return BlocConsumer<HabitEditBloc, HabitEditState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        if (state.status == StatsStatus.success) {
+        if (state.status == HabitStateStatus.success) {
           context.read<AppBloc>().add(
             AppHabitReloadEvent(habitId: state.habitId),
           );
           context.router.pop();
-        } else if (state.status == StatsStatus.failure && state.error != null) {
+        } else if (state.status == HabitStateStatus.error &&
+            state.error != null) {
           context.read<AppBloc>().add(AppErrorEvent(state.error!));
         }
       },
@@ -125,7 +127,7 @@ class _HabitEditBody extends StatelessWidget {
                     builder: (context, state) {
                       return PrimaryButton(
                         label: isEdit ? strings.saveBtn : strings.createBtn,
-                        disabled: state.status != StatsStatus.valid,
+                        disabled: state.status != HabitStateStatus.valid,
                         onPressed: () {
                           context.read<HabitEditBloc>().add(SaveHabitEvent());
                         },

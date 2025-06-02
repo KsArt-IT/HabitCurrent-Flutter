@@ -5,6 +5,7 @@ import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/habit_notification.dart';
+import 'package:habit_current/models/habit_state_status.dart';
 import 'package:habit_current/models/hour_interval.dart';
 import 'package:habit_current/models/reminder.dart';
 import 'package:habit_current/models/weekdays.dart';
@@ -47,7 +48,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     StartCreateHabitEvent event,
     Emitter<HabitEditState> emit,
   ) {
-    emit(state.copyWith(status: StatsStatus.initial, userId: event.userId));
+    emit(state.copyWith(status: HabitStateStatus.initial, userId: event.userId));
   }
 
   Future<Habit> _createHabit() async {
@@ -94,7 +95,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     Emitter<HabitEditState> emit,
   ) async {
     print("--------------------------------");
-    emit(state.copyWith(status: StatsStatus.initial));
+    emit(state.copyWith(status: HabitStateStatus.initial));
     try {
       Habit habit;
       if (state.habit != null) {
@@ -114,11 +115,11 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
         await notificationRepository.scheduleNotificationByHabitId(habit.id);
       }
       // завершим
-      emit(state.copyWith(status: StatsStatus.success, habitId: habit.id));
+      emit(state.copyWith(status: HabitStateStatus.success, habitId: habit.id));
     } catch (e) {
       emit(
         state.copyWith(
-          status: StatsStatus.failure,
+          status: HabitStateStatus.error,
           error: DatabaseSavingError(e.toString()),
         ),
       );
