@@ -17,7 +17,7 @@ class AppState extends Equatable {
   final Reminder reminder;
   final Habit? habit;
   final int? habitId;
-  final String? error;
+  final AppError? error;
 
   final int update;
 
@@ -39,7 +39,8 @@ class AppState extends Equatable {
     Reminder? reminder,
     Habit? habit,
     int? habitId,
-    String? error,
+    AppError? error,
+    String? errorMessage,
     int? update,
   }) {
     return AppState(
