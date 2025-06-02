@@ -45,6 +45,9 @@ class _HabitMonthBody extends StatelessWidget {
       },
       child: BlocBuilder<HabitMonthBloc, HabitMonthState>(
         builder: (context, state) {
+          if (state.status == HabitStateStatus.error && state.error != null) {
+            context.read<AppBloc>().add(AppErrorEvent(state.error!));
+          }
           if (state.status == HabitStateStatus.loading) {
             return const Center(child: CircularProgressIndicator());
           }
