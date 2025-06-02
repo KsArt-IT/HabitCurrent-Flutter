@@ -67,3 +67,10 @@ final class AppReminderChangeEvent extends AppEvent {
 final class AppReminderOpenEvent extends AppEvent {}
 
 final class AppShowTestNotificationEvent extends AppEvent {}
+
+final class AppErrorEvent extends AppEvent {
+  final Object error;
+  const AppErrorEvent(this.error);
+  @override
+  List<Object?> get props => [error];
+}
