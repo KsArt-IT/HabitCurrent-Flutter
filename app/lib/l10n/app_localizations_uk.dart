@@ -197,5 +197,35 @@ class AppLocalizationsUk extends AppLocalizations {
   String get sundayShort => 'Вс';
 
   @override
+  String get n_7 => '---Errors---';
+
+  @override
+  String get userInitialError => 'Помилка ініціалізації користувача';
+
+  @override
+  String get userLoadingError => 'Помилка завантаження користувача';
+
+  @override
+  String get userSavingError => 'Помилка збереження користувача';
+
+  @override
+  String get databaseError => 'Помилка бази даних';
+
+  @override
+  String get databaseCreatingError => 'Помилка створення об\'єкта в базі даних';
+
+  @override
+  String get databaseLoadingError => 'Помилка завантаження об\'єкта з бази даних';
+
+  @override
+  String get databaseSavingError => 'Помилка збереження об\'єкта в базі даних';
+
+  @override
+  String get databaseDeletingError => 'Помилка видалення об\'єкта з бази даних';
+
+  @override
+  String get unknownError => 'Невідома помилка';
+
+  @override
   String get n_n => '---';
 }

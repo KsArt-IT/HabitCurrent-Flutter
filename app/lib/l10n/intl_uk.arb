@@ -75,5 +75,16 @@
     "fridayShort": "Пт",
     "saturdayShort": "Сб",
     "sundayShort": "Вс",
+
+    "n_7": "---Errors---",
+    "userInitialError": "Помилка ініціалізації користувача",
+    "userLoadingError": "Помилка завантаження користувача",
+    "userSavingError": "Помилка збереження користувача",
+    "databaseError": "Помилка бази даних",
+    "databaseCreatingError": "Помилка створення об'єкта в базі даних",
+    "databaseLoadingError": "Помилка завантаження об'єкта з бази даних",
+    "databaseSavingError": "Помилка збереження об'єкта в базі даних",
+    "databaseDeletingError": "Помилка видалення об'єкта з бази даних",
+    "unknownError": "Невідома помилка",
     "n_n": "---"
 }

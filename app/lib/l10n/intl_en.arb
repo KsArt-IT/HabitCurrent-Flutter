@@ -76,5 +76,16 @@
     "saturdayShort": "Sat",
     "sundayShort": "Sun",
     
+    "n_7": "---Errors---",
+    "userInitialError": "User Initial Error",
+    "userLoadingError": "User Loading Error",
+    "userSavingError": "User Saving Error",
+    "databaseError": "Database Error",
+    "databaseCreatingError": "Database Creating Object Error",
+    "databaseLoadingError": "Database Loading Object Error",
+    "databaseSavingError": "Database Saving Object Error",
+    "databaseDeletingError": "Database Deleting Object Error",
+    "unknownError": "Unknown Error",
+
     "n_n": "---"
 }

@@ -197,5 +197,35 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sundayShort => 'Вс';
 
   @override
+  String get n_7 => '---Errors---';
+
+  @override
+  String get userInitialError => 'Ошибка инициализации пользователя';
+
+  @override
+  String get userLoadingError => 'Ошибка загрузки пользователя';
+
+  @override
+  String get userSavingError => 'Ошибка сохранения пользователя';
+
+  @override
+  String get databaseError => 'Ошибка базы данных';
+
+  @override
+  String get databaseCreatingError => 'Ошибка создания объекта в базе данных';
+
+  @override
+  String get databaseLoadingError => 'Ошибка загрузки объекта из базы данных';
+
+  @override
+  String get databaseSavingError => 'Ошибка сохранения объекта в базе данных';
+
+  @override
+  String get databaseDeletingError => 'Ошибка удаления объекта из базы данных';
+
+  @override
+  String get unknownError => 'Неизвестная ошибка';
+
+  @override
   String get n_n => '---';
 }

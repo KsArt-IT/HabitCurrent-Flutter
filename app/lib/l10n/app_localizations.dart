@@ -469,6 +469,66 @@ abstract class AppLocalizations {
   /// **'Sun'**
   String get sundayShort;
 
+  /// No description provided for @n_7.
+  ///
+  /// In en, this message translates to:
+  /// **'---Errors---'**
+  String get n_7;
+
+  /// No description provided for @userInitialError.
+  ///
+  /// In en, this message translates to:
+  /// **'User Initial Error'**
+  String get userInitialError;
+
+  /// No description provided for @userLoadingError.
+  ///
+  /// In en, this message translates to:
+  /// **'User Loading Error'**
+  String get userLoadingError;
+
+  /// No description provided for @userSavingError.
+  ///
+  /// In en, this message translates to:
+  /// **'User Saving Error'**
+  String get userSavingError;
+
+  /// No description provided for @databaseError.
+  ///
+  /// In en, this message translates to:
+  /// **'Database Error'**
+  String get databaseError;
+
+  /// No description provided for @databaseCreatingError.
+  ///
+  /// In en, this message translates to:
+  /// **'Database Creating Object Error'**
+  String get databaseCreatingError;
+
+  /// No description provided for @databaseLoadingError.
+  ///
+  /// In en, this message translates to:
+  /// **'Database Loading Object Error'**
+  String get databaseLoadingError;
+
+  /// No description provided for @databaseSavingError.
+  ///
+  /// In en, this message translates to:
+  /// **'Database Saving Object Error'**
+  String get databaseSavingError;
+
+  /// No description provided for @databaseDeletingError.
+  ///
+  /// In en, this message translates to:
+  /// **'Database Deleting Object Error'**
+  String get databaseDeletingError;
+
+  /// No description provided for @unknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Error'**
+  String get unknownError;
+
   /// No description provided for @n_n.
   ///
   /// In en, this message translates to:

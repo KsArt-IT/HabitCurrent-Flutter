@@ -197,5 +197,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sundayShort => 'Sun';
 
   @override
+  String get n_7 => '---Errors---';
+
+  @override
+  String get userInitialError => 'User Initial Error';
+
+  @override
+  String get userLoadingError => 'User Loading Error';
+
+  @override
+  String get userSavingError => 'User Saving Error';
+
+  @override
+  String get databaseError => 'Database Error';
+
+  @override
+  String get databaseCreatingError => 'Database Creating Object Error';
+
+  @override
+  String get databaseLoadingError => 'Database Loading Object Error';
+
+  @override
+  String get databaseSavingError => 'Database Saving Object Error';
+
+  @override
+  String get databaseDeletingError => 'Database Deleting Object Error';
+
+  @override
+  String get unknownError => 'Unknown Error';
+
+  @override
   String get n_n => '---';
 }
