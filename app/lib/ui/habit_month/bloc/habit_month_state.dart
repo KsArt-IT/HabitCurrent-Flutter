@@ -6,6 +6,7 @@ class HabitMonthState extends Equatable {
   final DateTime selectedMonth;
   final HabitStateStatus status;
   final List<HabitMonth> habits;
+  final AppError? error;
 
   const HabitMonthState({
     this.userId = 0,
@@ -13,6 +14,7 @@ class HabitMonthState extends Equatable {
     required this.currentDate,
     required this.selectedMonth,
     this.habits = const [],
+    this.error,
   });
 
   HabitMonthState copyWith({
@@ -21,12 +23,14 @@ class HabitMonthState extends Equatable {
     DateTime? selectedMonth,
     HabitStateStatus? status,
     List<HabitMonth>? habits,
+    AppError? error,
   }) => HabitMonthState(
     userId: userId ?? this.userId,
     currentDate: currentDate ?? this.currentDate,
     selectedMonth: selectedMonth ?? this.selectedMonth,
     status: status ?? this.status,
     habits: habits ?? this.habits,
+    error: error ?? this.error,
   );
 
   @override
@@ -36,5 +40,6 @@ class HabitMonthState extends Equatable {
     currentDate,
     selectedMonth,
     habits,
+    error,
   ];
 }
