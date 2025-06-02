@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
+import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/core/router/app_router.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
 import 'package:habit_current/core/theme/app_theme.dart';
@@ -63,12 +64,42 @@ class HabitCurrentApp extends StatelessWidget {
                 break;
               case AppStatus.error:
                 debugPrint('AppErrorState: ${state.error}');
-              // TODO: отобразить ошибку;
+                if (state.error != null) {
+                  showAppError(context, state.error!);
+                }
             }
           },
           child: child,
         );
       },
     );
+  }
+
+  void showAppError(BuildContext context, AppError error) {
+    final strings = context.l10n;
+    final theme = Theme.of(context);
+
+    String message = switch (error) {
+      UserInitialError() => strings.userInitialError,
+      UserLoadingError() => strings.userLoadingError,
+      UserSavingError() => strings.userSavingError,
+      DatabaseError() => strings.databaseError,
+      DatabaseCreatingError() => strings.databaseCreatingError,
+      DatabaseLoadingError() => strings.databaseLoadingError,
+      DatabaseSavingError() => strings.databaseSavingError,
+      DatabaseDeletingError() => strings.databaseDeletingError,
+      UnknownError() => strings.unknownError,
+    };
+    if (error.message.isNotEmpty) {
+      message += ":\n${error.message}";
+    }
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(message, style: theme.textTheme.bodySmall),
+          duration: const Duration(seconds: 3),
+        ),
+      );
   }
 }
