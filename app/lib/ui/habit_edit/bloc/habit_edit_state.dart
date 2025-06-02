@@ -24,6 +24,8 @@ class HabitEditState extends Equatable {
   final List<HourInterval> intervals;
   // ReminderSelector
   final Reminder reminder;
+  // Error 
+  final AppError? error;
 
   const HabitEditState({
     this.status = StatsStatus.initial,
@@ -40,6 +42,7 @@ class HabitEditState extends Equatable {
     this.weekDays = const {},
     this.intervals = const [HourInterval(time: 420)],
     this.reminder = Reminder.disabled,
+    this.error,
   });
 
   factory HabitEditState.fromHabit(Habit habit) {
@@ -78,6 +81,7 @@ class HabitEditState extends Equatable {
     Set<WeekDays>? weekDays,
     List<HourInterval>? intervals,
     Reminder? reminder,
+    AppError? error,
   }) {
     StatsStatus checkStatus = status ?? StatsStatus.valid;
     if ((name ?? this.name).isEmpty ||
@@ -102,6 +106,7 @@ class HabitEditState extends Equatable {
       weekDays: weekDays ?? this.weekDays,
       intervals: intervals ?? this.intervals,
       reminder: reminder ?? this.reminder,
+      error: error ?? this.error,
     );
   }
 
@@ -122,5 +127,6 @@ class HabitEditState extends Equatable {
     weekDays,
     intervals,
     reminder,
+    error,
   ];
 }
