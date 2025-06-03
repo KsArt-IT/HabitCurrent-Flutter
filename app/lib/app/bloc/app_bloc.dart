@@ -259,22 +259,9 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _reactToNotification(String identifier, bool isOpen) async {
-    final params = identifier.split('_');
-    if (params.length < 8) return;
     try {
-      final userId = int.parse(params[1]);
-      final habitId = int.parse(params[3]);
-      final intervalId = int.parse(params[5]);
-      final weekDay = int.parse(params[7]);
-
-      print('--------------------------------');
-      print('identifier: $identifier');
-      print('isOpen: $isOpen');
-      print('userId: $userId login: ${state.user?.id}');
-      print('habitId: $habitId');
-      print('intervalId: $intervalId');
-      print('weekDay: $weekDay');
-      print('--------------------------------');
+      final (userId, habitId, intervalId, weekDay) = notificationRepository
+          .decomposeIdentifier(identifier);
       if (userId != state.user?.id) return;
       if (isOpen) {
         final habit = await dataRepository.loadHabitById(
