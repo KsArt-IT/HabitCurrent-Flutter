@@ -528,6 +528,29 @@ final class LocalDataService implements DataService {
   }
 
   @override
+  Future<HabitNotificationModel?> loadNotificationByIntervalId(int intervalId) async {
+    try {
+      final row =
+          await (database.habitNotificationDatas.select()
+                ..where((f) => f.intervalId.equals(intervalId)))
+              .getSingleOrNull();
+      if (row == null) return null;
+      return HabitNotificationModel(
+        id: row.id,
+        userId: row.userId,
+        habitId: row.habitId,
+        intervalId: row.intervalId,
+        title: row.title,
+        weekDay: row.weekDay,
+        time: row.time,
+        repeats: row.repeats,
+      );
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
   Future<List<HabitNotificationModel>> loadNotificationsByHabitId(
     int habitId,
   ) async {
