@@ -117,6 +117,38 @@ final class LocalNotificationRepository implements NotificationRepository {
     _scheduleAllNotifications(notifications);
   }
 
+  @override
+  Future<void> scheduleNotificationByIntervalId(
+    int intervalId,
+    bool tomorrow,
+  ) async {
+    // получить уведомление по intervalId
+    final notification = await _service.loadNotificationByIntervalId(
+      intervalId,
+    );
+    // если не было уведомления, то ничего не делаем
+    if (notification == null || !notification.repeats) return;
+    // удалим уведомление из системы
+    await _notificationService.cancelNotification(notification.id);
+    // запланируем уведомление с учетом даты на завтра или сегодня
+    final date = TZDateTime.now(local).add(Duration(days: tomorrow ? 1 : 0));
+    await _notificationService.scheduleNotificationOnWeekday(
+      id: notification.id,
+      identifier: createIdentifier(
+        userId: notification.userId,
+        habitId: notification.habitId,
+        intervalId: notification.intervalId,
+        weekDay: notification.weekDay,
+      ),
+      title: notification.title,
+      date: date,
+      time: notification.time,
+      weekday: notification.weekDay,
+      // для уведомлений на завтра не повторять, перезапланируем позже
+      repeats: tomorrow ? false : notification.repeats,
+    );
+  }
+
   Future<void> _scheduleAllNotifications(
     List<HabitNotificationModel> notifications,
   ) async {
@@ -133,9 +165,12 @@ final class LocalNotificationRepository implements NotificationRepository {
       // 2. на день недели, каждую неделю
       _notificationService.scheduleNotificationOnWeekday(
         id: notification.id,
-        identifier:
-            "user_${notification.userId}_habit_${notification.habitId //
-            }_time_${notification.intervalId}_day_${notification.weekDay}",
+        identifier: createIdentifier(
+          userId: notification.userId,
+          habitId: notification.habitId,
+          intervalId: notification.intervalId,
+          weekDay: notification.weekDay,
+        ),
         title: notification.title,
         date: date,
         time: notification.time,
@@ -143,6 +178,32 @@ final class LocalNotificationRepository implements NotificationRepository {
       );
     }
     print('--------------------------------');
+  }
+
+  @override
+  String createIdentifier({
+    required int userId,
+    required int habitId,
+    required int intervalId,
+    required int weekDay,
+  }) {
+    return "user_${userId}_habit_${habitId}_time_${intervalId}_day_${weekDay}";
+  }
+
+  @override
+  (int userId, int habitId, int intervalId, int weekDay) decomposeIdentifier(
+    String identifier,
+  ) {
+    final parts = identifier.split('_');
+    if (parts.length != 8) {
+      throw Exception('Invalid identifier: $identifier');
+    }
+    return (
+      int.parse(parts[1]),
+      int.parse(parts[3]),
+      int.parse(parts[5]),
+      int.parse(parts[7]),
+    );
   }
 
   @override
