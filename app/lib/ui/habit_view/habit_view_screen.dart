@@ -15,6 +15,13 @@ class HabitViewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final habit = context.read<AppBloc>().state.habit;
 
+    if (habit == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.router.pop();
+      });
+      return const SizedBox();
+    }
+
     return BlocProvider(
       create:
           (context) => HabitViewBloc(
