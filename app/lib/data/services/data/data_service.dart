@@ -30,6 +30,7 @@ abstract interface class DataService {
   Future<HabitNotificationModel?> loadNotificationById(int id);
   Future<List<HabitNotificationModel>> loadNotificationsByHabitId(int habitId);
   Future<List<HabitNotificationModel>> loadNotificationsByUserId(int userId);
+  Future<HabitNotificationModel?> loadNotificationByIntervalId(int intervalId);
   Future<void> deleteNotificationById(int id);
   Future<void> deleteNotificationByHabitId(int habitId);
 
