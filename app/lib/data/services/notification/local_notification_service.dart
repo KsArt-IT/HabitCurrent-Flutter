@@ -324,6 +324,7 @@ final class LocalNotificationService implements NotificationService {
     required TZDateTime date, // current date and time
     required int time, // minutes since midnight
     required int weekday, // 1 = Monday, ..., 7 = Sunday // 127 = every day
+    bool repeats = true,
   }) async {
     var scheduledDate = TZDateTime(
       local,
@@ -341,7 +342,9 @@ final class LocalNotificationService implements NotificationService {
       }
     }
 
-    print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
+    print(
+      'scheduleNotificationOnWeekday: $id, $title, $body, $weekday, $scheduledDate',
+    );
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
       id,
@@ -352,9 +355,11 @@ final class LocalNotificationService implements NotificationService {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       payload: identifier,
       matchDateTimeComponents:
-          weekday < 8
-              ? DateTimeComponents.dayOfWeekAndTime
-              : DateTimeComponents.time,
+          repeats
+              ? weekday < 8
+                  ? DateTimeComponents.dayOfWeekAndTime
+                  : DateTimeComponents.time
+              : null, // не повторять, чтобы отложить на завтра
     );
   }
 
@@ -370,7 +375,7 @@ final class LocalNotificationService implements NotificationService {
     print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
     print('--------------------------------');
 
-    _flutterLocalNotificationsPlugin.zonedSchedule(
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
       body,
@@ -412,6 +417,7 @@ final class LocalNotificationService implements NotificationService {
 
   @override
   Future<void> cancelNotification(int id) async {
+    print('cancelNotification: $id');
     await _flutterLocalNotificationsPlugin.cancel(id);
   }
 
@@ -428,7 +434,7 @@ final class LocalNotificationService implements NotificationService {
     print('onDidReceiveNotification: $response');
     print('--------------------------------');
     if (response.payload == null) return;
-    final notification = getNotificationDetails(response);
+    final notification = _getNotificationDetails(response);
     _onNotificationReceived?.call(notification);
   }
 
@@ -442,10 +448,10 @@ final class LocalNotificationService implements NotificationService {
 
     final response = launchDetails.notificationResponse;
     if (response == null || response.payload == null) return null;
-    return getNotificationDetails(response);
+    return _getNotificationDetails(response);
   }
 
-  NotificationResponseDetails getNotificationDetails(response) {
+  NotificationResponseDetails _getNotificationDetails(response) {
     print('--------------------------------');
     print('getNotificationDetails: ${response.actionId}');
     switch (response.actionId) {
@@ -486,7 +492,9 @@ final class LocalNotificationService implements NotificationService {
         return NotificationResponseDetails(id: 0, identifier: "");
 
       default:
-        print('Пользователь нажал "Отметить как выполнено"');
+        print(
+          'Пользователь нажал "Отметить как выполнено" id: ${response.id} ${response.payload!}',
+        );
         return NotificationResponseDetails(
           id: response.id ?? 0,
           identifier: response.payload!,
