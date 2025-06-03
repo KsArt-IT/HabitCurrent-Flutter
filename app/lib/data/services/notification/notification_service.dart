@@ -39,6 +39,7 @@ abstract interface class NotificationService {
     required TZDateTime date, // current date and time
     required int time, // minutes since midnight
     required int weekday, // 1 = Monday, ..., 7 = Sunday // 127 = every day
+    bool repeats = true,
   });
 
   Future<void> cancelNotification(int id);
