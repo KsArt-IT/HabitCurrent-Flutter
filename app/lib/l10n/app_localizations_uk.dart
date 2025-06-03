@@ -224,6 +224,9 @@ class AppLocalizationsUk extends AppLocalizations {
   String get databaseDeletingError => 'Помилка видалення об\'єкта з бази даних';
 
   @override
+  String get notificationError => 'Помилка сповіщень';
+
+  @override
   String get unknownError => 'Невідома помилка';
 
   @override

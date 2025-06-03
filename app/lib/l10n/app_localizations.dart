@@ -523,6 +523,12 @@ abstract class AppLocalizations {
   /// **'Database Deleting Object Error'**
   String get databaseDeletingError;
 
+  /// No description provided for @notificationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Error'**
+  String get notificationError;
+
   /// No description provided for @unknownError.
   ///
   /// In en, this message translates to:

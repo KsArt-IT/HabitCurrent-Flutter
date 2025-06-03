@@ -224,6 +224,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get databaseDeletingError => 'Ошибка удаления объекта из базы данных';
 
   @override
+  String get notificationError => 'Ошибка уведомлений';
+
+  @override
   String get unknownError => 'Неизвестная ошибка';
 
   @override

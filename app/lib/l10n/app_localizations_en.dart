@@ -224,6 +224,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get databaseDeletingError => 'Database Deleting Object Error';
 
   @override
+  String get notificationError => 'Notification Error';
+
+  @override
   String get unknownError => 'Unknown Error';
 
   @override

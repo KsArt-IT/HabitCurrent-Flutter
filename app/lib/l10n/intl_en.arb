@@ -85,6 +85,7 @@
     "databaseLoadingError": "Database Loading Object Error",
     "databaseSavingError": "Database Saving Object Error",
     "databaseDeletingError": "Database Deleting Object Error",
+    "notificationError": "Notification Error",
     "unknownError": "Unknown Error",
 
     "n_n": "---"

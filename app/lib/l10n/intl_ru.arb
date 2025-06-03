@@ -85,6 +85,7 @@
     "databaseLoadingError": "Ошибка загрузки объекта из базы данных",
     "databaseSavingError": "Ошибка сохранения объекта в базе данных",
     "databaseDeletingError": "Ошибка удаления объекта из базы данных",
+    "notificationError": "Ошибка уведомлений",
     "unknownError": "Неизвестная ошибка",
     "n_n": "---"
 }
