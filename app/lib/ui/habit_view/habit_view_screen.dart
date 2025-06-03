@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/int_ext.dart';
+import 'package:habit_current/models/habit_state_status.dart';
 import 'package:habit_current/ui/habit_view/bloc/habit_view_bloc.dart';
 
 @RoutePage()
@@ -16,8 +17,11 @@ class HabitViewScreen extends StatelessWidget {
 
     return BlocProvider(
       create:
-          (context) =>
-              HabitViewBloc(dataRepository: context.read(), habit: habit!),
+          (context) => HabitViewBloc(
+            dataRepository: context.read(),
+            notificationRepository: context.read(),
+            habit: habit,
+          ),
       child: _HabitViewBody(),
     );
   }
@@ -46,7 +50,14 @@ class _HabitViewBody extends StatelessWidget {
           },
         ),
       ),
-      body: BlocBuilder<HabitViewBloc, HabitViewState>(
+      body: BlocConsumer<HabitViewBloc, HabitViewState>(
+        listener: (context, state) {
+          if (state.status == HabitStateStatus.error && state.error != null) {
+            context.read<AppBloc>().add(AppErrorEvent(state.error!));
+            context.router.pop();
+          }
+        },
+        buildWhen: (previous, current) => previous.habit != current.habit,
         builder: (context, state) {
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(
