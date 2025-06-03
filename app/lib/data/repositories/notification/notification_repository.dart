@@ -23,6 +23,7 @@ abstract interface class NotificationRepository {
 
   Future<void> scheduleNotificationByHabitId(int habitId);
   Future<void> scheduleNotificationByUserId(int userId);
+  Future<void> scheduleNotificationByIntervalId(int intervalId, bool tomorrow);
 
   Future<void> cancelNotificationByHabitId(int habitId);
   Future<void> cancelAllNotifications();
@@ -34,6 +35,17 @@ abstract interface class NotificationRepository {
     Function(NotificationResponseDetails notification) onReceived,
   );
   Future<NotificationResponseDetails?> getNotificationAppLaunchDetails();
+
+  String createIdentifier({
+    required int userId,
+    required int habitId,
+    required int intervalId,
+    required int weekDay,
+  });
+
+  (int userId, int habitId, int intervalId, int weekDay) decomposeIdentifier(
+    String identifier,
+  );
 
   Future<void> close();
 }
