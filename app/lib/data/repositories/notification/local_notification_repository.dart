@@ -139,6 +139,7 @@ final class LocalNotificationRepository implements NotificationRepository {
         habitId: notification.habitId,
         intervalId: notification.intervalId,
         weekDay: notification.weekDay,
+        reschedule: tomorrow,
       ),
       title: notification.title,
       date: date,
@@ -186,23 +187,24 @@ final class LocalNotificationRepository implements NotificationRepository {
     required int habitId,
     required int intervalId,
     required int weekDay,
+    bool reschedule = false,
   }) {
-    return "user_${userId}_habit_${habitId}_time_${intervalId}_day_${weekDay}";
+    return "user_${userId}_habit_${habitId}_time_${intervalId}_day_${weekDay}_reschedule_${reschedule ? '1' : '0'}";
   }
 
   @override
-  (int userId, int habitId, int intervalId, int weekDay) decomposeIdentifier(
-    String identifier,
-  ) {
+  (int userId, int habitId, int intervalId, int weekDay, bool reschedule)
+  parseIdentifier(String identifier) {
     final parts = identifier.split('_');
-    if (parts.length != 8) {
+    if (parts.length != 10) {
       throw Exception('Invalid identifier: $identifier');
     }
     return (
-      int.parse(parts[1]),
-      int.parse(parts[3]),
-      int.parse(parts[5]),
-      int.parse(parts[7]),
+      int.parse(parts[1]), // userId
+      int.parse(parts[3]), // habitId
+      int.parse(parts[5]), // intervalId
+      int.parse(parts[7]), // weekDay
+      parts[9] == '1', // reschedule
     );
   }
 

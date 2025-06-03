@@ -41,11 +41,11 @@ abstract interface class NotificationRepository {
     required int habitId,
     required int intervalId,
     required int weekDay,
+    bool reschedule = false,
   });
 
-  (int userId, int habitId, int intervalId, int weekDay) decomposeIdentifier(
-    String identifier,
-  );
+  (int userId, int habitId, int intervalId, int weekDay, bool reschedule)
+  parseIdentifier(String identifier);
 
   Future<void> close();
 }

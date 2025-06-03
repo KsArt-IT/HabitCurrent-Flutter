@@ -343,7 +343,7 @@ final class LocalNotificationService implements NotificationService {
     }
 
     print(
-      'scheduleNotificationOnWeekday: $id, $title, $body, $weekday, $scheduledDate',
+      'scheduleNotificationOnWeekday: $id, $title, $body, $weekday, $repeats, $scheduledDate',
     );
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
@@ -372,7 +372,7 @@ final class LocalNotificationService implements NotificationService {
     required TZDateTime scheduledDate,
   }) async {
     print('--------------------------------');
-    print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
+    print('showNotificationOnDate: $id, $title, $body, $scheduledDate');
     print('--------------------------------');
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
@@ -395,7 +395,7 @@ final class LocalNotificationService implements NotificationService {
     String? payload,
   }) async {
     print('--------------------------------');
-    print('scheduleNotificationOnWeekday: $id, $title, $body, $scheduledDate');
+    print('showNotification: $id, $title, $body, $scheduledDate');
     print('--------------------------------');
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(

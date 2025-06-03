@@ -260,9 +260,21 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
 
   Future<void> _reactToNotification(String identifier, bool isOpen) async {
     try {
-      final (userId, habitId, intervalId, weekDay) = notificationRepository
-          .decomposeIdentifier(identifier);
+      final (
+        userId,
+        habitId,
+        intervalId,
+        weekDay,
+        reschedule,
+      ) = notificationRepository.parseIdentifier(identifier);
       if (userId != state.user?.id) return;
+      if (reschedule) {
+        // перепланируем уведомление
+        await notificationRepository.scheduleNotificationByIntervalId(
+          intervalId,
+          false,
+        );
+      }
       if (isOpen) {
         final habit = await dataRepository.loadHabitById(
           habitId,
