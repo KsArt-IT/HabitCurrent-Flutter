@@ -36,6 +36,10 @@ final class DatabaseDeletingError extends AppError {
   DatabaseDeletingError(super.message);
 }
 
+final class NotificationError extends AppError {
+  NotificationError(super.message);
+}
+
 final class UnknownError extends AppError {
   UnknownError(super.message);
 }
