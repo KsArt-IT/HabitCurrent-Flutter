@@ -40,6 +40,10 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   @override
   Widget build(BuildContext context) {
+    final isGranted = context.select(
+      (AppBloc bloc) => bloc.state.reminder.isGranted,
+    );
+
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
         final strings = context.l10n;
@@ -137,24 +141,24 @@ class _SettingsScreenState extends State<SettingsScreen>
                     },
                   ),
                   const SizedBox(height: Constants.paddingMedium),
-                  BlocBuilder<AppBloc, AppState>(
-                    buildWhen:
-                        (previous, current) =>
-                            previous.reminder.isGranted !=
-                            current.reminder.isGranted,
-                    builder: (context, state) {
-                      print("reminder: ${state.reminder}");
-                      return Text(
-                        strings.notification,
-                        style: theme.textTheme.displaySmall?.copyWith(
-                          color:
-                              state.reminder.isGranted
-                                  ? theme.colorScheme.onPrimary
-                                  : theme.colorScheme.error,
-                        ),
-                      );
-                    },
+                  Text(
+                    strings.notification,
+                    style: theme.textTheme.displaySmall?.copyWith(
+                      color:
+                          isGranted
+                              ? theme.colorScheme.onPrimary
+                              : theme.colorScheme.error,
+                    ),
                   ),
+                  if (!isGranted) ...[
+                    const SizedBox(height: Constants.paddingMedium),
+                    SizedOutlinedButton(
+                      label: strings.requestPermission,
+                      onPressed: () {
+                        context.read<AppBloc>().add(AppReminderRequestEvent());
+                      },
+                    ),
+                  ],
                   const SizedBox(height: Constants.paddingMedium),
                   SizedOutlinedButton(
                     label: strings.showTestNotification,
