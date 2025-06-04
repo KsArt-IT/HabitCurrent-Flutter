@@ -13,8 +13,8 @@ final class LocalSettingsRepository implements SettingsRepository {
   }
 
   @override
-  Future<void> saveLanguage(String language) {
-    return _service.saveLanguage(language);
+  Future<void> saveLanguage(String language) async {
+    await _service.saveLanguage(language);
   }
 
   @override
@@ -23,8 +23,8 @@ final class LocalSettingsRepository implements SettingsRepository {
   }
 
   @override
-  Future<void> saveName(String name) {
-    return _service.saveName(name);
+  Future<void> saveName(String name) async {
+    await _service.saveName(name);
   }
 
   @override
@@ -33,8 +33,8 @@ final class LocalSettingsRepository implements SettingsRepository {
   }
 
   @override
-  Future<void> saveThemeMode(String theme) {
-    return _service.saveThemeMode(theme);
+  Future<void> saveThemeMode(String theme) async {
+    await _service.saveThemeMode(theme);
   }
 
   @override
@@ -43,7 +43,7 @@ final class LocalSettingsRepository implements SettingsRepository {
   }
 
   @override
-  Future<void> saveReminder(bool reminder) {
-    return _service.saveReminder(reminder);
+  Future<void> saveReminder(bool reminder) async {
+    await _service.saveReminder(reminder);
   }
 }
