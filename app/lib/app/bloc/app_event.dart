@@ -64,6 +64,8 @@ final class AppReminderChangeEvent extends AppEvent {
   List<Object?> get props => [reminder];
 }
 
+final class AppReminderRequestEvent extends AppEvent {}
+
 final class AppReminderOpenEvent extends AppEvent {}
 
 final class AppShowTestNotificationEvent extends AppEvent {}

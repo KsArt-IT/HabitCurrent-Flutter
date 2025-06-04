@@ -30,6 +30,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
 
     on<AppReminderCheckEvent>(_onReminderCheckEvent);
     on<AppReminderChangeEvent>(_onReminderChangeEvent);
+    on<AppReminderRequestEvent>(_onReminderRequestEvent);
     on<AppReminderOpenEvent>(_onReminderOpenEvent);
 
     on<AppShowTestNotificationEvent>(_onShowTestNotification);
@@ -220,6 +221,14 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     } catch (e) {
       _showError(e, emit);
     }
+  }
+
+  void _onReminderRequestEvent(
+    AppReminderRequestEvent event,
+    Emitter<AppState> emit,
+  ) async {
+    await notificationRepository.requestNotificationPermission();
+    add(AppReminderCheckEvent());
   }
 
   void _onReminderOpenEvent(
