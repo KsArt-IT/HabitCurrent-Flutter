@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/int_ext.dart';
-import 'package:habit_current/models/habit_state_status.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_view/bloc/habit_view_bloc.dart';
 
 @RoutePage()
@@ -59,7 +59,7 @@ class _HabitViewBody extends StatelessWidget {
       ),
       body: BlocConsumer<HabitViewBloc, HabitViewState>(
         listener: (context, state) {
-          if (state.status == HabitStateStatus.error && state.error != null) {
+          if (state.status == StateStatus.error && state.error != null) {
             context.read<AppBloc>().add(AppErrorEvent(state.error!));
             context.router.pop();
           }

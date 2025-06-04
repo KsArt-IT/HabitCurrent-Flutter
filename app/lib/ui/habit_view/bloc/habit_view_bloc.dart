@@ -4,7 +4,7 @@ import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/models/habit.dart';
-import 'package:habit_current/models/habit_state_status.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/models/hour_interval.dart';
 import 'package:habit_current/models/hour_interval_completed.dart';
 
@@ -48,14 +48,14 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
       // обновим список выполненных интервалов
       emit(
         state.copyWith(
-          status: HabitStateStatus.initial,
+          status: StateStatus.initial,
           habit: state.habit.copyWith(completedIntervals: completedIntervals),
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitStateStatus.error,
+          status: StateStatus.error,
           error: e is AppError ? e : UnknownError(e.toString()),
         ),
       );

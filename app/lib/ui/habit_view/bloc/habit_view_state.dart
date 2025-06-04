@@ -2,18 +2,18 @@ part of 'habit_view_bloc.dart';
 
 class HabitViewState extends Equatable {
   final Habit habit;
-  final HabitStateStatus status;
+  final StateStatus status;
   final AppError? error;
 
   const HabitViewState({
     required this.habit,
-    this.status = HabitStateStatus.initial,
+    this.status = StateStatus.initial,
     this.error,
   });
 
   HabitViewState copyWith({
     Habit? habit,
-    HabitStateStatus? status,
+    StateStatus? status,
     AppError? error,
   }) {
     return HabitViewState(

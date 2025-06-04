@@ -4,13 +4,13 @@ class HabitMonthState extends Equatable {
   final int userId;
   final DateTime currentDate;
   final DateTime selectedMonth;
-  final HabitStateStatus status;
+  final StateStatus status;
   final List<HabitMonth> habits;
   final AppError? error;
 
   const HabitMonthState({
     this.userId = 0,
-    this.status = HabitStateStatus.initial,
+    this.status = StateStatus.initial,
     required this.currentDate,
     required this.selectedMonth,
     this.habits = const [],
@@ -21,7 +21,7 @@ class HabitMonthState extends Equatable {
     int? userId,
     DateTime? currentDate,
     DateTime? selectedMonth,
-    HabitStateStatus? status,
+    StateStatus? status,
     List<HabitMonth>? habits,
     AppError? error,
   }) => HabitMonthState(

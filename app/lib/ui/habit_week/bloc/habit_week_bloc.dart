@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
-import 'package:habit_current/models/habit_state_status.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/models/habit_week.dart';
 import 'package:habit_current/models/habit_day_status.dart';
 import 'package:habit_current/models/weekdays.dart';
@@ -25,14 +25,14 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     LoadHabitWeekEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
-    emit(state.copyWith(status: HabitStateStatus.loading));
+    emit(state.copyWith(status: StateStatus.loading));
     final currentDate = DateTime.now().toEndOfDay();
     final completedHabits = await _loadHabits(event.userId, currentDate);
     emit(
       state.copyWith(
         userId: event.userId,
         date: currentDate,
-        status: HabitStateStatus.success,
+        status: StateStatus.success,
         completedHabits: completedHabits,
       ),
     );
@@ -49,7 +49,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
       state.copyWith(
         userId: state.userId,
         date: currentDate,
-        status: HabitStateStatus.success,
+        status: StateStatus.success,
         completedHabits: completedHabits,
       ),
     );
@@ -65,7 +65,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
       state.copyWith(
         userId: state.userId,
         date: currentDate,
-        status: HabitStateStatus.success,
+        status: StateStatus.success,
         completedHabits: completedHabits,
       ),
     );

@@ -1,7 +1,8 @@
-enum HabitStateStatus {
+enum StateStatus {
   initial,
   loading,
   valid,
   success,
-  error, //
+  error,
+  //
 }

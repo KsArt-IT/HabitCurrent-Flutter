@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
-import 'package:habit_current/models/habit_state_status.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_week/bloc/habit_week_bloc.dart';
 import 'package:habit_current/ui/habit_week/widgets/habit_week_card.dart';
 
@@ -44,7 +44,7 @@ class _HabitWeekBody extends StatelessWidget {
       },
       child: BlocBuilder<HabitWeekBloc, HabitWeekState>(
         builder: (context, state) {
-          if (state.status == HabitStateStatus.loading) {
+          if (state.status == StateStatus.loading) {
             return const Center(child: CircularProgressIndicator());
           }
 

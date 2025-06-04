@@ -3,7 +3,7 @@ part of 'habit_edit_bloc.dart';
 enum Frequency { daily, weekly }
 
 class HabitEditState extends Equatable {
-  final HabitStateStatus status;
+  final StateStatus status;
   get isEditing => habit != null;
   final Habit? habit;
   final DateTime? startTime;
@@ -26,7 +26,7 @@ class HabitEditState extends Equatable {
   final AppError? error;
 
   const HabitEditState({
-    this.status = HabitStateStatus.initial,
+    this.status = StateStatus.initial,
     this.habit,
     this.startTime,
     this.endTime,
@@ -64,7 +64,7 @@ class HabitEditState extends Equatable {
   }
 
   HabitEditState copyWith({
-    HabitStateStatus? status,
+    StateStatus? status,
 
     Habit? habit,
     DateTime? startTime,
@@ -81,11 +81,11 @@ class HabitEditState extends Equatable {
     Reminder? reminder,
     AppError? error,
   }) {
-    HabitStateStatus checkStatus = status ?? HabitStateStatus.valid;
+    StateStatus checkStatus = status ?? StateStatus.valid;
     if ((name ?? this.name).isEmpty ||
         (frequency ?? this.frequency) == Frequency.weekly &&
             (weekDays ?? this.weekDays).isEmpty) {
-      checkStatus = HabitStateStatus.error;
+      checkStatus = StateStatus.error;
     }
 
     return HabitEditState(

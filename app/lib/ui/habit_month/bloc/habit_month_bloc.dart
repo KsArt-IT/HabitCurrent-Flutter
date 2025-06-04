@@ -6,7 +6,7 @@ import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/habit_day_status.dart';
 import 'package:habit_current/models/habit_month.dart';
-import 'package:habit_current/models/habit_state_status.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_month_event.dart';
@@ -33,9 +33,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     Emitter<HabitMonthState> emit,
   ) async {
     try {
-      emit(
-        state.copyWith(status: HabitStateStatus.loading, userId: event.userId),
-      );
+      emit(state.copyWith(status: StateStatus.loading, userId: event.userId));
       final currentDate = DateTime.now().toEndOfDay();
       final statusHabits = await _loadHabitsAndCheckStatus(
         event.userId,
@@ -44,7 +42,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       emit(
         state.copyWith(
           currentDate: currentDate,
-          status: HabitStateStatus.success,
+          status: StateStatus.success,
           selectedMonth: currentDate,
           habits: statusHabits,
         ),
@@ -52,7 +50,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitStateStatus.error,
+          status: StateStatus.error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
@@ -68,7 +66,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
       emit(
         state.copyWith(
-          status: HabitStateStatus.success,
+          status: StateStatus.success,
           selectedMonth: date,
           habits: statusHabits,
         ),
@@ -76,7 +74,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitStateStatus.error,
+          status: StateStatus.error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
@@ -92,7 +90,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
       emit(
         state.copyWith(
-          status: HabitStateStatus.success,
+          status: StateStatus.success,
           selectedMonth: date,
           habits: statusHabits,
         ),
@@ -100,7 +98,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitStateStatus.error,
+          status: StateStatus.error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
@@ -117,7 +115,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
       emit(
         state.copyWith(
-          status: HabitStateStatus.success,
+          status: StateStatus.success,
           selectedMonth: date,
           habits: statusHabits,
         ),
@@ -125,7 +123,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: HabitStateStatus.error,
+          status: StateStatus.error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
