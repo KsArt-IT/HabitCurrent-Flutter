@@ -6,12 +6,17 @@ final class SettingsState extends Equatable {
     this.language = '',
     this.themeName = 'system',
     this.reminder = true,
+    this.status = StateStatus.initial,
+    this.error,
   });
 
   final String name;
   final String language;
   final String themeName;
   final bool reminder;
+
+  final StateStatus status;
+  final AppError? error;
 
   String get languageCode => locale.languageCode;
   Locale get locale =>
@@ -30,12 +35,18 @@ final class SettingsState extends Equatable {
     String? language,
     String? themeName,
     bool? reminder,
+
+    StateStatus? status,
+    AppError? error,
   }) {
     return SettingsState(
       name: name ?? this.name,
       language: language ?? this.language,
       themeName: themeName ?? this.themeName,
       reminder: reminder ?? this.reminder,
+
+      status: status ?? this.status,
+      error: error ?? this.error,
     );
   }
 
@@ -45,6 +56,8 @@ final class SettingsState extends Equatable {
     language,
     theme,
     reminder,
+    status,
+    error,
     //
   ];
 }
