@@ -85,6 +85,8 @@
     "databaseSavingError": "Database Saving Object Error",
     "databaseDeletingError": "Database Deleting Object Error",
     "notificationError": "Notification Error",
+    "settingsLoadingError": "Settings Loading Error",
+    "settingsSavingError": "Settings Saving Error",
     "unknownError": "Unknown Error",
 
     "n_n": "---"

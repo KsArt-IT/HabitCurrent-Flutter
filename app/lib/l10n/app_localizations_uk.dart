@@ -224,6 +224,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get notificationError => 'Помилка сповіщень';
 
   @override
+  String get settingsLoadingError => 'Помилка завантаження налаштуваннь';
+
+  @override
+  String get settingsSavingError => 'Помилка збереження налаштуваннь';
+
+  @override
   String get unknownError => 'Невідома помилка';
 
   @override

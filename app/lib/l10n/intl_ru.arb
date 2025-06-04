@@ -30,7 +30,7 @@
     "requestPermission": "Запросить разрешение",
     "openNotificationSettings": "Открыть настройки уведомлений",
     "showTestNotification": "Показать тестовое уведомление",
-    
+
     "n_4": "---Habits---",
     "createHabit": "Создать привычку",
     "editHabit": "Редактировать: {name}",
@@ -85,6 +85,8 @@
     "databaseSavingError": "Ошибка сохранения объекта в базе данных",
     "databaseDeletingError": "Ошибка удаления объекта из базы данных",
     "notificationError": "Ошибка уведомлений",
+    "settingsLoadingError": "Ошибка загрузки настроек",
+    "settingsSavingError": "Ошибка сохранения настроек",
     "unknownError": "Неизвестная ошибка",
     "n_n": "---"
 }

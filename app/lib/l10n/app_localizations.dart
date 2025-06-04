@@ -523,6 +523,18 @@ abstract class AppLocalizations {
   /// **'Notification Error'**
   String get notificationError;
 
+  /// No description provided for @settingsLoadingError.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings Loading Error'**
+  String get settingsLoadingError;
+
+  /// No description provided for @settingsSavingError.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings Saving Error'**
+  String get settingsSavingError;
+
   /// No description provided for @unknownError.
   ///
   /// In en, this message translates to:

@@ -224,6 +224,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get notificationError => 'Ошибка уведомлений';
 
   @override
+  String get settingsLoadingError => 'Ошибка загрузки настроек';
+
+  @override
+  String get settingsSavingError => 'Ошибка сохранения настроек';
+
+  @override
   String get unknownError => 'Неизвестная ошибка';
 
   @override

@@ -224,6 +224,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationError => 'Notification Error';
 
   @override
+  String get settingsLoadingError => 'Settings Loading Error';
+
+  @override
+  String get settingsSavingError => 'Settings Saving Error';
+
+  @override
   String get unknownError => 'Unknown Error';
 
   @override

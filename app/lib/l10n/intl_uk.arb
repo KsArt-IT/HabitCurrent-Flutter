@@ -85,6 +85,8 @@
     "databaseSavingError": "Помилка збереження об'єкта в базі даних",
     "databaseDeletingError": "Помилка видалення об'єкта з бази даних",
     "notificationError": "Помилка сповіщень",
+    "settingsLoadingError": "Помилка завантаження налаштуваннь",
+    "settingsSavingError": "Помилка збереження налаштуваннь",
     "unknownError": "Невідома помилка",
     "n_n": "---"
 }
