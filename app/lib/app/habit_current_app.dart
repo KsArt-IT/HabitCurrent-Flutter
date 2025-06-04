@@ -26,19 +26,8 @@ class HabitCurrentApp extends StatelessWidget {
       themeMode: settings.theme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale(settings.language),
-      localeResolutionCallback: (locale, supportedLocales) {
-        if (locale == null) {
-          return supportedLocales.first;
-        }
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
-          }
-        }
-        return supportedLocales.first;
-      },
+      locale: settings.locale,
+      localeResolutionCallback: _localeCallback,
       routerConfig: router.config(),
       builder: (context, child) {
         return BlocListener<AppBloc, AppState>(
@@ -65,7 +54,7 @@ class HabitCurrentApp extends StatelessWidget {
               case AppStatus.error:
                 debugPrint('AppErrorState: ${state.error}');
                 if (state.error != null) {
-                  showAppError(context, state.error!);
+                  _showAppError(context, state.error!);
                 }
             }
           },
@@ -75,7 +64,19 @@ class HabitCurrentApp extends StatelessWidget {
     );
   }
 
-  void showAppError(BuildContext context, AppError error) {
+  Locale _localeCallback(Locale? locale, Iterable<Locale> supportedLocales) {
+    if (locale == null) {
+      return supportedLocales.first;
+    }
+    for (var supportedLocale in supportedLocales) {
+      if (supportedLocale.languageCode == locale.languageCode) {
+        return supportedLocale;
+      }
+    }
+    return supportedLocales.first;
+  }
+
+  void _showAppError(BuildContext context, AppError error) {
     final strings = context.l10n;
     final theme = Theme.of(context);
 
