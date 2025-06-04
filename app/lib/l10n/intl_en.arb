@@ -10,8 +10,6 @@
     "language": "Language",
     "theme": "Theme",
     "notification": "Notification Permission",
-    "showTestNotification": "Show Test Notification",
-    "openNotificationSettings": "Open Notification Settings",
 
     "n_2": "---Hello---",
     "welcome": "Welcome to the useful habits tracker",
@@ -29,8 +27,9 @@
     "addNewHabit": "Add new habit",
     "delete": "Delete",
     "addTime": "Add Time",
-    "request": "Request Permission",
-    "openSettings": "Open Notification Settings",
+    "requestPermission": "Request Permission",
+    "openNotificationSettings": "Open Notification Settings",
+    "showTestNotification": "Show Test Notification",
 
     "n_4": "---Habits Create---",
     "createHabit": "Create a Habit",

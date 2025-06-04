@@ -36,12 +36,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notification => 'Notification Permission';
 
   @override
-  String get showTestNotification => 'Show Test Notification';
-
-  @override
-  String get openNotificationSettings => 'Open Notification Settings';
-
-  @override
   String get n_2 => '---Hello---';
 
   @override
@@ -87,10 +81,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addTime => 'Add Time';
 
   @override
-  String get request => 'Request Permission';
+  String get requestPermission => 'Request Permission';
 
   @override
-  String get openSettings => 'Open Notification Settings';
+  String get openNotificationSettings => 'Open Notification Settings';
+
+  @override
+  String get showTestNotification => 'Show Test Notification';
 
   @override
   String get n_4 => '---Habits Create---';

@@ -151,18 +151,6 @@ abstract class AppLocalizations {
   /// **'Notification Permission'**
   String get notification;
 
-  /// No description provided for @showTestNotification.
-  ///
-  /// In en, this message translates to:
-  /// **'Show Test Notification'**
-  String get showTestNotification;
-
-  /// No description provided for @openNotificationSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Open Notification Settings'**
-  String get openNotificationSettings;
-
   /// No description provided for @n_2.
   ///
   /// In en, this message translates to:
@@ -253,17 +241,23 @@ abstract class AppLocalizations {
   /// **'Add Time'**
   String get addTime;
 
-  /// No description provided for @request.
+  /// No description provided for @requestPermission.
   ///
   /// In en, this message translates to:
   /// **'Request Permission'**
-  String get request;
+  String get requestPermission;
 
-  /// No description provided for @openSettings.
+  /// No description provided for @openNotificationSettings.
   ///
   /// In en, this message translates to:
   /// **'Open Notification Settings'**
-  String get openSettings;
+  String get openNotificationSettings;
+
+  /// No description provided for @showTestNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Test Notification'**
+  String get showTestNotification;
 
   /// No description provided for @n_4.
   ///

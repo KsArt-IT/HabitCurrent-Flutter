@@ -10,8 +10,6 @@
     "language": "Язык",
     "theme": "Тема",
     "notification": "Разрешение на уведомления",
-    "showTestNotification": "Показать тестовое уведомление",
-    "openNotificationSettings": "Открыть настройки уведомлений",
 
     "n_2": "---Hello---",
     "welcome": "Добро пожаловать в полезный трекер привычек",
@@ -29,9 +27,10 @@
     "addNewHabit": "Добавить привычку",
     "delete": "Удалить",
     "addTime": "Добавить время",
-    "request": "Запросить разрешение",
-    "openSettings": "Открыть настройки уведомлений",
-
+    "requestPermission": "Запросить разрешение",
+    "openNotificationSettings": "Открыть настройки уведомлений",
+    "showTestNotification": "Показать тестовое уведомление",
+    
     "n_4": "---Habits---",
     "createHabit": "Создать привычку",
     "editHabit": "Редактировать: {name}",

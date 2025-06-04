@@ -36,12 +36,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get notification => 'Разрешение на уведомления';
 
   @override
-  String get showTestNotification => 'Показать тестовое уведомление';
-
-  @override
-  String get openNotificationSettings => 'Открыть настройки уведомлений';
-
-  @override
   String get n_2 => '---Hello---';
 
   @override
@@ -87,10 +81,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addTime => 'Добавить время';
 
   @override
-  String get request => 'Запросить разрешение';
+  String get requestPermission => 'Запросить разрешение';
 
   @override
-  String get openSettings => 'Открыть настройки уведомлений';
+  String get openNotificationSettings => 'Открыть настройки уведомлений';
+
+  @override
+  String get showTestNotification => 'Показать тестовое уведомление';
 
   @override
   String get n_4 => '---Habits---';

@@ -10,8 +10,6 @@
     "language": "Мова",
     "theme": "Тема",
     "notification": "Дозвіл на сповіщення",
-    "showTestNotification": "Показати тестове сповіщення",
-    "openNotificationSettings": "Відкрити налаштування сповіщень",
 
     "n_2": "---Hello---",
     "welcome": "Ласкаво просимо в полезний трекер звичок",
@@ -29,8 +27,9 @@
     "addNewHabit": "Додати звичку",
     "delete": "Видалити",
     "addTime": "Додати час",
-    "request": "Запитати дозвіл",
-    "openSettings": "Відкрити налаштування сповіщень",
+    "requestPermission": "Запитати дозвіл",
+    "openNotificationSettings": "Відкрити налаштування сповіщень",
+    "showTestNotification": "Показати тестове сповіщення",
 
     "n_4": "---Habits---",
     "createHabit": "Створити звичку",
