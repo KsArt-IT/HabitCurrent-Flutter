@@ -3,7 +3,7 @@ part of 'settings_bloc.dart';
 final class SettingsState extends Equatable {
   const SettingsState({
     this.name = '',
-    this.language = 'en',
+    this.language = '',
     this.themeName = 'system',
     this.reminder = true,
   });
@@ -13,6 +13,13 @@ final class SettingsState extends Equatable {
   final String themeName;
   final bool reminder;
 
+  String get languageCode => locale.languageCode;
+  Locale get locale =>
+      language.isNotEmpty
+          ? Locale(language)
+          : WidgetsBinding.instance.platformDispatcher.locale;
+
+  String get themeCode => theme.name;
   ThemeMode get theme => ThemeMode.values.firstWhere(
     (e) => e.name == themeName,
     orElse: () => ThemeMode.system,
