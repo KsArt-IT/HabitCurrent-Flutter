@@ -100,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       return radioListStyle<String>(
                         title: value,
                         value: value,
-                        groupValue: state.language,
+                        groupValue: state.languageCode,
                         theme: theme,
                         onChanged: (value) {
                           context.read<SettingsBloc>().add(
@@ -126,7 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                       return radioListStyle<String>(
                         title: value,
                         value: value,
-                        groupValue: state.themeName,
+                        groupValue: state.themeCode,
                         theme: theme,
                         onChanged: (value) {
                           context.read<SettingsBloc>().add(
