@@ -98,8 +98,8 @@ class _ReminderSelectorState extends State<ReminderSelector>
             PrimaryButton(
               label:
                   reminder == Reminder.request
-                      ? context.l10n.request
-                      : context.l10n.openSettings,
+                      ? strings.requestPermission
+                      : strings.openNotificationSettings,
               onPressed: () {
                 context.read<HabitEditBloc>().add(RequestPermissionEvent());
               },
