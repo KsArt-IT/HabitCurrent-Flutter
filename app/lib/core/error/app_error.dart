@@ -40,6 +40,14 @@ final class NotificationError extends AppError {
   NotificationError(super.message);
 }
 
+final class SettingsLoadingError extends AppError {
+  SettingsLoadingError(super.message);
+}
+
+final class SettingsSavingError extends AppError {
+  SettingsSavingError(super.message);
+}
+
 final class UnknownError extends AppError {
   UnknownError(super.message);
 }
