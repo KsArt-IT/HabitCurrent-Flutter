@@ -5,6 +5,7 @@ import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/l10n/app_localizations.dart';
 import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/settings/bloc/settings_bloc.dart';
 import 'package:habit_current/ui/widgets/sized_outlined_button.dart';
 
@@ -44,7 +45,13 @@ class _SettingsScreenState extends State<SettingsScreen>
       (AppBloc bloc) => bloc.state.reminder.isGranted,
     );
 
-    return BlocBuilder<SettingsBloc, SettingsState>(
+    return BlocConsumer<SettingsBloc, SettingsState>(
+      listener: (context, state) {
+        if (state.status == StateStatus.error && state.error != null) {
+          context.read<AppBloc>().add(AppErrorEvent(state.error!));
+        }
+      },
+      listenWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         final strings = context.l10n;
         final theme = Theme.of(context);
