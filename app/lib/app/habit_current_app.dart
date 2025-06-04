@@ -90,6 +90,8 @@ class HabitCurrentApp extends StatelessWidget {
       DatabaseSavingError() => strings.databaseSavingError,
       DatabaseDeletingError() => strings.databaseDeletingError,
       NotificationError() => strings.notificationError,
+      SettingsLoadingError() => strings.settingsLoadingError,
+      SettingsSavingError() => strings.settingsSavingError,
       UnknownError() => strings.unknownError,
     };
     if (error.message.isNotEmpty) {
