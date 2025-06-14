@@ -21,21 +21,19 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   # Navigation
-  auto_route: ^10.0.1
+  auto_route: ^10.1.0
   # Settings
   shared_preferences: ^2.5.3
   # Database
   drift: ^2.26.1
   drift_flutter: ^0.2.4
-  sqlite3_flutter_libs: ^0.5.32
+  sqlite3_flutter_libs: ^0.5.34
   # Local Notifications
-  flutter_local_notifications: ^19.2.0
-  flutter_timezone: ^4.1.0
+  flutter_local_notifications: ^19.2.1
+  flutter_timezone: ^4.1.1
   timezone: ^0.10.1
   # Permission
   permission_handler: ^12.0.0
-  # Settings
-  app_settings: ^6.1.1
   # Device info
   device_info_plus: ^11.4.0
   # Others
@@ -47,8 +45,8 @@ dev_dependencies:
     sdk: flutter
   
   build_runner: ^2.4.15
-  auto_route_generator: ^10.0.1
-  flutter_launcher_icons: ^0.14.3
+  auto_route_generator: ^10.2.3
+  flutter_launcher_icons: ^0.14.4
   drift_dev: ^2.26.1
   analyzer: ^7.4.5
   

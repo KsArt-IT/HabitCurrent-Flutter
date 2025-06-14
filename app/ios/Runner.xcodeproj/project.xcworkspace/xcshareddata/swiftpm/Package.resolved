@@ -1,0 +1,14 @@
+{
+  "originHash" : "2fa3c993224d1d21d05d556fdfdc976d98f2a4543670bd83e8f9d72c0d5f6f5c",
+  "pins" : [
+    {
+      "identity" : "csqlite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/simolus3/CSQLite.git",
+      "state" : {
+        "revision" : "18517bdeb5ae69cb3d864d4fd0f4ab4d4809f18b"
+      }
+    }
+  ],
+  "version" : 3
+}
