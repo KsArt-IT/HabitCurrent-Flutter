@@ -17,12 +17,12 @@ class LoadHabitWeekEvent extends HabitWeekEvent {
 }
 
 class RefreshHabitWeekEvent extends HabitWeekEvent {
-  final DateTime date;
+  final Completer completer;
 
-  const RefreshHabitWeekEvent(this.date);
+  const RefreshHabitWeekEvent(this.completer);
 
   @override
-  List<Object?> get props => [date];
+  List<Object?> get props => [completer];
 }
 
 class ReloadHabitEvent extends HabitWeekEvent {

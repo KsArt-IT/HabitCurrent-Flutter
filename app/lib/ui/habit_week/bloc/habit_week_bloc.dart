@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:habit_current/core/extension/datetime_ext.dart';
@@ -59,16 +61,22 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     RefreshHabitWeekEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
-    final currentDate = DateTime.now().toEndOfDay();
-    final completedHabits = await _loadHabits(state.userId, currentDate);
-    emit(
-      state.copyWith(
-        userId: state.userId,
-        date: currentDate,
-        status: StateStatus.success,
-        completedHabits: completedHabits,
-      ),
-    );
+    try {
+      final currentDate = DateTime.now().toEndOfDay();
+      final completedHabits = await _loadHabits(state.userId, currentDate);
+      emit(
+        state.copyWith(
+          userId: state.userId,
+          date: currentDate,
+          status: StateStatus.success,
+          completedHabits: completedHabits,
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(status: StateStatus.error));
+    } finally {
+      event.completer.complete();
+    }
   }
 
   Future<List<HabitWeek>> _loadHabits(int userId, DateTime date) async {

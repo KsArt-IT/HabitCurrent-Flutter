@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,10 +58,12 @@ class _HabitWeekBody extends StatelessWidget {
 
           return RefreshIndicator(
             color: theme.colorScheme.primaryFixed,
-            onRefresh: () async {
+            onRefresh: () {
+              final completer = Completer<void>();
               context.read<HabitWeekBloc>().add(
-                RefreshHabitWeekEvent(DateTime.now()),
+                RefreshHabitWeekEvent(completer),
               );
+              return completer.future;
             },
             child: ListView.builder(
               padding: const EdgeInsets.fromLTRB(
