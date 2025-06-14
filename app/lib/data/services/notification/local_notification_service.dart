@@ -1,4 +1,3 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -282,19 +281,7 @@ final class LocalNotificationService implements NotificationService {
 
   @override
   void openNotificationSettings() {
-    if (_isIOS) {
-      AppSettings.openAppSettings(
-        type: AppSettingsType.appLocale,
-        asAnotherTask: true,
-      );
-    } else if (_isAndroid) {
-      AppSettings.openAppSettings(
-        type: AppSettingsType.notification,
-        asAnotherTask: true,
-      );
-    } else {
-      openAppSettings();
-    }
+    openAppSettings();
   }
 
   // MARK: - Get Pending and Active Notifications
