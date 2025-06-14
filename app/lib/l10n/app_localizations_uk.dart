@@ -42,7 +42,8 @@ class AppLocalizationsUk extends AppLocalizations {
   String get welcome => 'Ласкаво просимо в полезний трекер звичок';
 
   @override
-  String get enterYourName => 'Будь ласка, введіть ваше ім\'я, щоб ми знали, як до вас звертатися';
+  String get enterYourName =>
+      'Будь ласка, введіть ваше ім\'я, щоб ми знали, як до вас звертатися';
 
   @override
   String get namePlaceholder => 'Введіть ваше ім\'я';
@@ -131,7 +132,8 @@ class AppLocalizationsUk extends AppLocalizations {
   String get enableReminders => 'Увімкнути нагадування';
 
   @override
-  String get habitEnterNameError => 'Будь ласка, введіть звичку, повинна містити 3-20 букв';
+  String get habitEnterNameError =>
+      'Будь ласка, введіть звичку, повинна містити 3-20 букв';
 
   @override
   String get n_5 => '---Flow---';
@@ -212,7 +214,8 @@ class AppLocalizationsUk extends AppLocalizations {
   String get databaseCreatingError => 'Помилка створення об\'єкта в базі даних';
 
   @override
-  String get databaseLoadingError => 'Помилка завантаження об\'єкта з бази даних';
+  String get databaseLoadingError =>
+      'Помилка завантаження об\'єкта з бази даних';
 
   @override
   String get databaseSavingError => 'Помилка збереження об\'єкта в базі даних';

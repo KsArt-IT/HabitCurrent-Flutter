@@ -42,7 +42,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get welcome => 'Добро пожаловать в полезный трекер привычек';
 
   @override
-  String get enterYourName => 'Пожалуйста, введите ваше имя, чтобы мы знали, как к вам обращаться';
+  String get enterYourName =>
+      'Пожалуйста, введите ваше имя, чтобы мы знали, как к вам обращаться';
 
   @override
   String get namePlaceholder => 'Введите ваше имя';
@@ -131,7 +132,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get enableReminders => 'Включить напоминания';
 
   @override
-  String get habitEnterNameError => 'Пожалуйста, введите привычку, должна содержать 3-20 букв';
+  String get habitEnterNameError =>
+      'Пожалуйста, введите привычку, должна содержать 3-20 букв';
 
   @override
   String get n_5 => '---Flow---';

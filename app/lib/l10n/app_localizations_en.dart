@@ -42,7 +42,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome => 'Welcome to the useful habits tracker';
 
   @override
-  String get enterYourName => 'Please enter your name so we know how to address you';
+  String get enterYourName =>
+      'Please enter your name so we know how to address you';
 
   @override
   String get namePlaceholder => 'Enter your name';
@@ -131,7 +132,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enableReminders => 'Enable Reminders';
 
   @override
-  String get habitEnterNameError => 'Please enter a habit name, it must contain 3-20 letters';
+  String get habitEnterNameError =>
+      'Please enter a habit name, it must contain 3-20 letters';
 
   @override
   String get n_5 => '---Flow---';
