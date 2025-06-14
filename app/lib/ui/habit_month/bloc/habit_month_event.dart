@@ -18,6 +18,7 @@ class LoadHabitEvent extends HabitMonthEvent {
 
 class ChangeMonthHabitEvent extends HabitMonthEvent {
   final DateTime selectedMonth;
+
   const ChangeMonthHabitEvent(this.selectedMonth);
 
   @override
@@ -25,18 +26,19 @@ class ChangeMonthHabitEvent extends HabitMonthEvent {
 }
 
 class RefreshHabitEvent extends HabitMonthEvent {
-  final DateTime date;
+  final Completer completer;
 
-  const RefreshHabitEvent(this.date);
+  const RefreshHabitEvent(this.completer);
 
   @override
-  List<Object?> get props => [date];
+  List<Object?> get props => [completer];
 }
 
 class ReloadHabitEvent extends HabitMonthEvent {
   final int? habitId;
 
   const ReloadHabitEvent({this.habitId});
+
   @override
   List<Object?> get props => [habitId];
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:habit_current/core/error/app_error.dart';
@@ -102,6 +104,8 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
           error: DatabaseLoadingError(e.toString()),
         ),
       );
+    } finally {
+      event.completer.complete();
     }
   }
 
