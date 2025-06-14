@@ -8,7 +8,11 @@ class LoadHabitsEvent extends HabitFlowEvent {
   LoadHabitsEvent({required this.userId});
 }
 
-class RefreshHabitsEvent extends HabitFlowEvent {}
+class RefreshHabitsEvent extends HabitFlowEvent {
+  final Completer completer;
+  
+  RefreshHabitsEvent(this.completer);
+}
 
 class HabitCreatedEvent extends HabitFlowEvent {}
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
@@ -79,6 +81,8 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       emit(
         state.copyWith(status: StateStatus.error, errorMessage: e.toString()),
       );
+    } finally {
+      event.completer.complete();
     }
   }
 

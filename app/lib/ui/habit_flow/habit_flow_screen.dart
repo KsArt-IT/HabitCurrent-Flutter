@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,8 +47,10 @@ class _HabitFlowBody extends StatelessWidget {
       },
       child: RefreshIndicator(
         color: theme.colorScheme.primaryFixed,
-        onRefresh: () async {
-          context.read<HabitFlowBloc>().add(RefreshHabitsEvent());
+        onRefresh: () {
+          final completer = Completer<void>();
+          context.read<HabitFlowBloc>().add(RefreshHabitsEvent(completer));
+          return completer.future;
         },
         child: BlocBuilder<HabitFlowBloc, HabitFlowState>(
           builder: (context, state) {
