@@ -17,25 +17,25 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   # State Management
-  bloc: ^9.0.0
+  bloc: ^9.0.1
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
   # Navigation
-  auto_route: ^10.1.0
+  auto_route: ^10.1.2
   # Settings
   shared_preferences: ^2.5.3
   # Database
-  drift: ^2.26.1
-  drift_flutter: ^0.2.4
-  sqlite3_flutter_libs: ^0.5.34
+  drift: ^2.28.2
+  drift_flutter: ^0.2.7
+  sqlite3_flutter_libs: ^0.5.40
   # Local Notifications
-  flutter_local_notifications: ^19.2.1
-  flutter_timezone: ^4.1.1
+  flutter_local_notifications: ^19.4.2
+  flutter_timezone: ^5.0.0
   timezone: ^0.10.1
   # Permission
-  permission_handler: ^12.0.0
+  permission_handler: ^12.0.1
   # Device info
-  device_info_plus: ^11.4.0
+  device_info_plus: ^12.1.0
   # Others
   path_provider: ^2.1.5
   path: ^1.9.1
@@ -45,12 +45,12 @@ dev_dependencies:
     sdk: flutter
   
   build_runner: ^2.4.15
-  auto_route_generator: ^10.2.3
+  auto_route_generator: ^10.2.4
   flutter_launcher_icons: ^0.14.4
-  drift_dev: ^2.26.1
+  drift_dev: ^2.28.3
   analyzer: ^7.4.5
   
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   uses-material-design: true
