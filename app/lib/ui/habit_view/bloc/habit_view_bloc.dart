@@ -25,7 +25,7 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
     on<HabitViewChangedEvent>(_onHabitViewChangedEvent);
   }
 
-  void _onHabitViewChangedEvent(
+  Future<void> _onHabitViewChangedEvent(
     HabitViewChangedEvent event,
     Emitter<HabitViewState> emit,
   ) async {
@@ -65,12 +65,9 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
   Future<(List<HourIntervalCompleted>, bool)> _changeAndGetCompleted(
     HourInterval interval,
   ) async {
-    bool todayCompleted = true;
+    var todayCompleted = true;
     final completedIntervals = state.habit.completedIntervals.toList();
-    HourIntervalCompleted? completed =
-        completedIntervals
-            .where((e) => e.intervalId == interval.id)
-            .firstOrNull;
+    var completed = completedIntervals.where((e) => e.intervalId == interval.id).firstOrNull;
     if (completed == null) {
       completed = HourIntervalCompleted(
         intervalId: interval.id,
