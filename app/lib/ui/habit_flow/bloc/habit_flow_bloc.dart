@@ -92,7 +92,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
   ) async {
     try {
       final date = DateTime.now();
-      List<Habit> habits = List<Habit>.from(state.habits);
+      var habits = List<Habit>.from(state.habits);
       if (event.habitId != null) {
         final habit = await _repository.loadHabitById(event.habitId!, date);
         if (habit == null) return;
@@ -127,7 +127,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
   ) async {
     try {
       await _repository.deleteHabitById(event.habitId);
-      List<Habit> habits = List<Habit>.from(state.habits);
+      final habits = List<Habit>.from(state.habits);
       habits.removeWhere((e) => e.id == event.habitId);
       emit(state.copyWith(status: StateStatus.success, habits: habits));
     } catch (e) {
