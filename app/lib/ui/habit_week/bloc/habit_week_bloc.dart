@@ -16,14 +16,13 @@ part 'habit_week_state.dart';
 class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
   final DataRepository repository;
 
-  HabitWeekBloc({required this.repository})
-    : super(HabitWeekState(date: DateTime.now())) {
+  HabitWeekBloc({required this.repository}) : super(HabitWeekState(date: DateTime.now())) {
     on<LoadHabitWeekEvent>(_onLoadHabitWeekEvent);
     on<ReloadHabitEvent>(_onReloadHabitEvent);
     on<RefreshHabitWeekEvent>(_onRefreshHabitWeekEvent);
   }
 
-  void _onLoadHabitWeekEvent(
+  Future<void> _onLoadHabitWeekEvent(
     LoadHabitWeekEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
@@ -40,7 +39,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     );
   }
 
-  void _onReloadHabitEvent(
+  Future<void> _onReloadHabitEvent(
     ReloadHabitEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
@@ -57,7 +56,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     );
   }
 
-  void _onRefreshHabitWeekEvent(
+  Future<void> _onRefreshHabitWeekEvent(
     RefreshHabitWeekEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
@@ -98,9 +97,9 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     final dayEnd = weekRange.end;
     return (habits.map((habit) {
         final habitLength = habit.intervals.length;
-        final List<HabitDayStatus> weekStatuses = [];
+        final weekStatuses = <HabitDayStatus>[];
 
-        DateTime day = dayStart;
+        var day = dayStart;
         while (day.isBeforeOrEqual(dayEnd)) {
           final status = _calculateStatus(
             habit: habit,
@@ -150,9 +149,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
 
     // сколько выполнено
     final completedCount =
-        habit.completedIntervals
-            .where((e) => e.completed.isSameDate(day))
-            .length;
+        habit.completedIntervals.where((e) => e.completed.isSameDate(day)).length;
 
     if (completedCount == habitLength) return HabitDayStatus.completed;
     if (completedCount > 0) return HabitDayStatus.partiallyCompleted;
