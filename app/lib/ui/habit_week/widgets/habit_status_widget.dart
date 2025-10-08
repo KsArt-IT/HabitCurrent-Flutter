@@ -51,7 +51,7 @@ class HabitStatusWidget extends StatelessWidget {
       HabitDayStatus.skipped => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.transparent,
           shape: BoxShape.circle,
         ),
@@ -59,7 +59,7 @@ class HabitStatusWidget extends StatelessWidget {
       HabitDayStatus.notStarted => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.transparent,
           shape: BoxShape.circle,
         ),
@@ -67,7 +67,7 @@ class HabitStatusWidget extends StatelessWidget {
       HabitDayStatus.closed => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.transparent,
           shape: BoxShape.circle,
         ),
@@ -76,10 +76,7 @@ class HabitStatusWidget extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children:
-          weekStatus
-              .map((d) => Expanded(child: Center(child: _buildWeekStatus(d))))
-              .toList(),
+      children: weekStatus.map((d) => Expanded(child: Center(child: _buildWeekStatus(d)))).toList(),
     );
   }
 }
