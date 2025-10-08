@@ -32,8 +32,7 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
           ),
           body: child,
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
             shape: const CircleBorder(),
             key: const Key('homeView_add_floatingActionButton'),
@@ -71,7 +70,7 @@ class HomeScreen extends StatelessWidget {
         active: tabsRouter.activeIndex,
         onTap: tabsRouter.setActiveIndex,
       ),
-      ReminderButton(),
+      const ReminderButton(),
       TabItemButton(
         tab: HomeTab.month,
         active: tabsRouter.activeIndex,
