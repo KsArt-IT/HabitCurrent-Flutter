@@ -30,7 +30,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     on<ReloadHabitEvent>(_onReloadHabitEvent);
   }
 
-  void _onLoadHabitMonthEvent(
+  Future<void> _onLoadHabitMonthEvent(
     LoadHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
@@ -59,7 +59,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     }
   }
 
-  void _onChangeHabitMonthEvent(
+  Future<void> _onChangeHabitMonthEvent(
     ChangeMonthHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
@@ -83,7 +83,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     }
   }
 
-  void _onRefreshHabitMonthEvent(
+  Future<void> _onRefreshHabitMonthEvent(
     RefreshHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
@@ -109,7 +109,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     }
   }
 
-  void _onReloadHabitEvent(
+  Future<void> _onReloadHabitEvent(
     ReloadHabitEvent event,
     Emitter<HabitMonthState> emit,
   ) async {
@@ -156,9 +156,9 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     final currentDate = DateTime.now().toEndOfDay();
     return (habits.map((habit) {
         final habitLength = habit.intervals.length;
-        final List<HabitDayStatus> habitStatus = [];
+        final habitStatus = <HabitDayStatus>[];
 
-        DateTime day = monthRange.start;
+        var day = monthRange.start;
         while (day.isBeforeOrEqual(monthRange.end)) {
           final status = _calculateStatus(
             habit: habit,
@@ -208,9 +208,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
 
     // сколько выполнено
     final completedCount =
-        habit.completedIntervals
-            .where((e) => e.completed.isSameDate(day))
-            .length;
+        habit.completedIntervals.where((e) => e.completed.isSameDate(day)).length;
 
     if (completedCount == habitLength) return HabitDayStatus.completed;
     if (completedCount > 0) return HabitDayStatus.partiallyCompleted;
@@ -223,10 +221,10 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
         list
             .where(
               (e) =>
-                  (e == HabitDayStatus.completed ||
-                      e == HabitDayStatus.partiallyCompleted ||
-                      e == HabitDayStatus.notCompleted ||
-                      e == HabitDayStatus.awaitsExecution),
+                  e == HabitDayStatus.completed ||
+                  e == HabitDayStatus.partiallyCompleted ||
+                  e == HabitDayStatus.notCompleted ||
+                  e == HabitDayStatus.awaitsExecution,
             )
             .toList();
     // добавляем пропущенные дни, если не хватает до 7
