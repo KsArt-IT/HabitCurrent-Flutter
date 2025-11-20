@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_flow/bloc/habit_flow_bloc.dart';
 import 'package:habit_current/ui/habit_flow/widgets/habit_flow_card.dart';
@@ -19,10 +19,8 @@ class HabitFlowScreen extends StatelessWidget {
     final userId = context.read<AppBloc>().state.user?.id ?? 0;
 
     return BlocProvider(
-      create:
-          (context) =>
-              HabitFlowBloc(repository: context.read())
-                ..add(LoadHabitsEvent(userId: userId)),
+      create: (context) =>
+          HabitFlowBloc(repository: context.read())..add(LoadHabitsEvent(userId: userId)),
       child: const _HabitFlowBody(),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/models/reminder.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
@@ -13,8 +13,7 @@ class ReminderSelector extends StatefulWidget {
   State<ReminderSelector> createState() => _ReminderSelectorState();
 }
 
-class _ReminderSelectorState extends State<ReminderSelector>
-    with WidgetsBindingObserver {
+class _ReminderSelectorState extends State<ReminderSelector> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -50,12 +49,11 @@ class _ReminderSelectorState extends State<ReminderSelector>
       return RadioListTile(
         title: Text(
           title,
-          style:
-              reminder == value
-                  ? theme.textTheme.titleSmall?.copyWith(
-                    color: theme.colorScheme.primaryFixed,
-                  )
-                  : theme.textTheme.titleSmall,
+          style: reminder == value
+              ? theme.textTheme.titleSmall?.copyWith(
+                  color: theme.colorScheme.primaryFixed,
+                )
+              : theme.textTheme.titleSmall,
         ),
         visualDensity: VisualDensity.compact,
         dense: true,
@@ -96,10 +94,9 @@ class _ReminderSelectorState extends State<ReminderSelector>
           ],
           if (!reminder.isGranted)
             PrimaryButton(
-              label:
-                  reminder == Reminder.request
-                      ? strings.requestPermission
-                      : strings.openNotificationSettings,
+              label: reminder == Reminder.request
+                  ? strings.requestPermission
+                  : strings.openNotificationSettings,
               onPressed: () {
                 context.read<HabitEditBloc>().add(RequestPermissionEvent());
               },

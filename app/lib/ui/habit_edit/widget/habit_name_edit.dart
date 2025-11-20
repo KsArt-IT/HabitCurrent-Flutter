@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/widgets/text_form_title.dart';
 
 class HabitNameEditWidget extends StatefulWidget {
   final String? initialName;
   final bool isEditing;
-  const HabitNameEditWidget({super.key, this.initialName})
-    : isEditing = initialName != null;
+  const HabitNameEditWidget({super.key, this.initialName}) : isEditing = initialName != null;
 
   @override
   State<HabitNameEditWidget> createState() => _HabitNameEditWidgetState();
@@ -27,8 +26,7 @@ class _HabitNameEditWidgetState extends State<HabitNameEditWidget> {
   @override
   void didUpdateWidget(HabitNameEditWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.initialName != oldWidget.initialName &&
-        widget.initialName != _controller.text) {
+    if (widget.initialName != oldWidget.initialName && widget.initialName != _controller.text) {
       _controller.text = widget.initialName ?? '';
     }
   }

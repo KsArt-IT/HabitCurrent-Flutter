@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/app_localizations.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
+import 'package:habit_current/gen/app_localizations.dart';
 import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/settings/bloc/settings_bloc.dart';
 import 'package:habit_current/ui/widgets/sized_outlined_button.dart';
@@ -17,8 +17,7 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen>
-    with WidgetsBindingObserver {
+class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -66,12 +65,11 @@ class _SettingsScreenState extends State<SettingsScreen>
           return RadioListTile<T>(
             title: Text(
               title,
-              style:
-                  value == groupValue
-                      ? theme.textTheme.titleSmall?.copyWith(
-                        color: theme.colorScheme.primaryFixed,
-                      )
-                      : theme.textTheme.titleSmall,
+              style: value == groupValue
+                  ? theme.textTheme.titleSmall?.copyWith(
+                      color: theme.colorScheme.primaryFixed,
+                    )
+                  : theme.textTheme.titleSmall,
             ),
             visualDensity: VisualDensity.compact,
             dense: true,
@@ -106,8 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: AppLocalizations.supportedLocales.length,
                     itemBuilder: (context, index) {
-                      final value =
-                          AppLocalizations.supportedLocales[index].languageCode;
+                      final value = AppLocalizations.supportedLocales[index].languageCode;
                       return radioListStyle<String>(
                         title: value,
                         value: value,
@@ -151,10 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   Text(
                     strings.notification,
                     style: theme.textTheme.displaySmall?.copyWith(
-                      color:
-                          isGranted
-                              ? theme.colorScheme.onPrimary
-                              : theme.colorScheme.error,
+                      color: isGranted ? theme.colorScheme.onPrimary : theme.colorScheme.error,
                     ),
                   ),
                   if (!isGranted) ...[

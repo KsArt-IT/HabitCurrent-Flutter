@@ -1,5 +1,4 @@
-import 'package:flutter/widgets.dart';
-import 'package:habit_current/l10n/app_localizations.dart';
+import 'package:habit_current/gen/app_localizations.dart';
 
 enum WeekDays {
   monday,
@@ -8,7 +7,8 @@ enum WeekDays {
   thursday,
   friday,
   saturday,
-  sunday;
+  sunday,
+  ;
 
   int get toBit => switch (this) {
     WeekDays.monday => 1,
@@ -28,23 +28,23 @@ enum WeekDays {
     WeekDays.saturday => 6,
     WeekDays.sunday => 7,
   };
-  String getDayName(BuildContext context) => switch (this) {
-    WeekDays.monday => AppLocalizations.of(context).monday,
-    WeekDays.tuesday => AppLocalizations.of(context).tuesday,
-    WeekDays.wednesday => AppLocalizations.of(context).wednesday,
-    WeekDays.thursday => AppLocalizations.of(context).thursday,
-    WeekDays.friday => AppLocalizations.of(context).friday,
-    WeekDays.saturday => AppLocalizations.of(context).saturday,
-    WeekDays.sunday => AppLocalizations.of(context).sunday,
+  String getDayName(AppLocalizations locale) => switch (this) {
+    WeekDays.monday => locale.monday,
+    WeekDays.tuesday => locale.tuesday,
+    WeekDays.wednesday => locale.wednesday,
+    WeekDays.thursday => locale.thursday,
+    WeekDays.friday => locale.friday,
+    WeekDays.saturday => locale.saturday,
+    WeekDays.sunday => locale.sunday,
   };
-  String getShortDayName(BuildContext context) => switch (this) {
-    WeekDays.monday => AppLocalizations.of(context).mondayShort,
-    WeekDays.tuesday => AppLocalizations.of(context).tuesdayShort,
-    WeekDays.wednesday => AppLocalizations.of(context).wednesdayShort,
-    WeekDays.thursday => AppLocalizations.of(context).thursdayShort,
-    WeekDays.friday => AppLocalizations.of(context).fridayShort,
-    WeekDays.saturday => AppLocalizations.of(context).saturdayShort,
-    WeekDays.sunday => AppLocalizations.of(context).sundayShort,
+  String getShortDayName(AppLocalizations locale) => switch (this) {
+    WeekDays.monday => locale.mondayShort,
+    WeekDays.tuesday => locale.tuesdayShort,
+    WeekDays.wednesday => locale.wednesdayShort,
+    WeekDays.thursday => locale.thursdayShort,
+    WeekDays.friday => locale.fridayShort,
+    WeekDays.saturday => locale.saturdayShort,
+    WeekDays.sunday => locale.sundayShort,
   };
   static const int none = 0;
   static const int allDays = 127;

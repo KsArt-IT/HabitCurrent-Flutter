@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 
 enum HomeTab { flow, week, month, settings }
 

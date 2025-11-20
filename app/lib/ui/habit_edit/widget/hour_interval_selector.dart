@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/int_ext.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/habit_edit/widget/time_container.dart';
 import 'package:habit_current/ui/habit_edit/widget/time_picker.dart';
@@ -82,14 +82,13 @@ class HourIntervalSelector extends StatelessWidget {
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: intervals.length,
-            itemBuilder:
-                (context, index) => buildTimeContainer(
-                  context,
-                  intervals[index].time,
-                  (time) => bloc.add(
-                    ChangeTimeIntervalEvent(index: index, time: time),
-                  ),
-                ),
+            itemBuilder: (context, index) => buildTimeContainer(
+              context,
+              intervals[index].time,
+              (time) => bloc.add(
+                ChangeTimeIntervalEvent(index: index, time: time),
+              ),
+            ),
           ),
         ],
       ),

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_month/bloc/habit_month_bloc.dart';
 import 'package:habit_current/ui/habit_month/widgets/habit_month_card.dart';
@@ -20,10 +20,8 @@ class HabitMonthScreen extends StatelessWidget {
     final userId = context.read<AppBloc>().state.user?.id ?? 0;
 
     return BlocProvider(
-      create:
-          (_) =>
-              HabitMonthBloc(repository: context.read())
-                ..add(LoadHabitEvent(userId: userId)),
+      create: (_) =>
+          HabitMonthBloc(repository: context.read())..add(LoadHabitEvent(userId: userId)),
       child: const _HabitMonthBody(),
     );
   }
@@ -86,9 +84,7 @@ class _HabitMonthBody extends StatelessWidget {
                         Constants.paddingXLarge,
                       ),
                       itemCount: state.habits.length,
-                      itemBuilder:
-                          (_, index) =>
-                              HabitMonthCard(habitMonth: state.habits[index]),
+                      itemBuilder: (_, index) => HabitMonthCard(habitMonth: state.habits[index]),
                     ),
                   ),
                 ),

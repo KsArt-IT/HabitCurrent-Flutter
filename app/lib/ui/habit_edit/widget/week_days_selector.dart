@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/models/weekdays.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 
@@ -11,11 +11,12 @@ class WeekDaysSelector extends StatelessWidget {
       (HabitEditBloc bloc) => bloc.state.weekDays,
     );
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(context.l10n.chooseDay, style: theme.textTheme.titleMedium),
+        Text(l10n.chooseDay, style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         GridView.builder(
           shrinkWrap: true,
@@ -31,13 +32,12 @@ class WeekDaysSelector extends StatelessWidget {
             final isSelected = weekDays.contains(day);
             return CheckboxListTile(
               title: Text(
-                day.getDayName(context),
-                style:
-                    isSelected
-                        ? theme.textTheme.titleSmall?.copyWith(
-                          color: theme.colorScheme.primaryFixed,
-                        )
-                        : theme.textTheme.titleSmall,
+                day.getDayName(l10n),
+                style: isSelected
+                    ? theme.textTheme.titleSmall?.copyWith(
+                        color: theme.colorScheme.primaryFixed,
+                      )
+                    : theme.textTheme.titleSmall,
               ),
               value: isSelected,
               contentPadding: EdgeInsets.zero,

@@ -4,8 +4,8 @@ enum Frequency { daily, weekly }
 
 class HabitEditState extends Equatable {
   final StateStatus status;
-  get isEditing => habit != null;
   final Habit? habit;
+  bool get isEditing => habit != null;
   final DateTime? startTime;
   final DateTime? endTime;
 
@@ -54,12 +54,10 @@ class HabitEditState extends Equatable {
 
       name: habit.name,
       details: habit.details,
-      frequency:
-          habit.weekDays.length == 7 ? Frequency.daily : Frequency.weekly,
+      frequency: habit.weekDays.length == 7 ? Frequency.daily : Frequency.weekly,
       weekDays: habit.weekDays,
       intervals: habit.intervals,
-      reminder:
-          habit.notifications.isNotEmpty ? Reminder.enabled : Reminder.disabled,
+      reminder: habit.notifications.isNotEmpty ? Reminder.enabled : Reminder.disabled,
     );
   }
 
@@ -83,8 +81,7 @@ class HabitEditState extends Equatable {
   }) {
     StateStatus checkStatus = status ?? StateStatus.valid;
     if ((name ?? this.name).isEmpty ||
-        (frequency ?? this.frequency) == Frequency.weekly &&
-            (weekDays ?? this.weekDays).isEmpty) {
+        (frequency ?? this.frequency) == Frequency.weekly && (weekDays ?? this.weekDays).isEmpty) {
       checkStatus = StateStatus.error;
     }
 

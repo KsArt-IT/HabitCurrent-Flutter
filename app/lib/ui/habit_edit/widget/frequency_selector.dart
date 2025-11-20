@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/widgets/text_form_title.dart';
 
@@ -24,12 +24,11 @@ class FrequencySelector extends StatelessWidget {
       return RadioListTile(
         title: Text(
           title,
-          style:
-              frequency == value
-                  ? theme.textTheme.titleSmall?.copyWith(
-                    color: theme.colorScheme.primaryFixed,
-                  )
-                  : theme.textTheme.titleSmall,
+          style: frequency == value
+              ? theme.textTheme.titleSmall?.copyWith(
+                  color: theme.colorScheme.primaryFixed,
+                )
+              : theme.textTheme.titleSmall,
         ),
         visualDensity: VisualDensity.compact,
         dense: true,
@@ -60,8 +59,7 @@ class FrequencySelector extends StatelessWidget {
           const SizedBox(height: Constants.paddingMedium),
           radioListTile(title: strings.daily, value: Frequency.daily),
           radioListTile(title: strings.yourSchedule, value: Frequency.weekly),
-          if (frequency == Frequency.weekly)
-            const SizedBox(height: Constants.paddingMedium),
+          if (frequency == Frequency.weekly) const SizedBox(height: Constants.paddingMedium),
           if (frequency == Frequency.weekly) selectorDays,
         ],
       ),

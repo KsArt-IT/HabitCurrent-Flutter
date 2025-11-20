@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_week/bloc/habit_week_bloc.dart';
 import 'package:habit_current/ui/habit_week/widgets/habit_week_card.dart';
@@ -19,10 +19,8 @@ class HabitWeekScreen extends StatelessWidget {
     final userId = context.read<AppBloc>().state.user?.id ?? 0;
 
     return BlocProvider(
-      create:
-          (context) =>
-              HabitWeekBloc(repository: context.read())
-                ..add(LoadHabitWeekEvent(userId: userId)),
+      create: (context) =>
+          HabitWeekBloc(repository: context.read())..add(LoadHabitWeekEvent(userId: userId)),
       child: const _HabitWeekBody(),
     );
   }
@@ -73,9 +71,7 @@ class _HabitWeekBody extends StatelessWidget {
                 Constants.paddingXLarge,
               ),
               itemCount: state.completedHabits.length,
-              itemBuilder:
-                  (_, index) =>
-                      HabitWeekCard(habitWeek: state.completedHabits[index]),
+              itemBuilder: (_, index) => HabitWeekCard(habitWeek: state.completedHabits[index]),
             ),
           );
         },

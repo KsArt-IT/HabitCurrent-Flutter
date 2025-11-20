@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
-import 'package:habit_current/l10n/intl_exp.dart';
+import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/habit_edit/widget/frequency_selector.dart';
@@ -30,11 +30,10 @@ class HabitEditScreen extends StatelessWidget {
     }
 
     return BlocProvider(
-      create:
-          (context) => HabitEditBloc(
-            dataRepository: context.read(),
-            notificationRepository: context.read(),
-          )..add(habitEvent),
+      create: (context) => HabitEditBloc(
+        dataRepository: context.read(),
+        notificationRepository: context.read(),
+      )..add(habitEvent),
       child: const _HabitEditBody(),
     );
   }
@@ -73,9 +72,7 @@ class _HabitEditBody extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              isEdit
-                  ? strings.editHabit(state.habit!.name)
-                  : strings.createHabit,
+              isEdit ? strings.editHabit(state.habit!.name) : strings.createHabit,
               style: theme.textTheme.titleLarge,
             ),
             centerTitle: true,
@@ -120,9 +117,7 @@ class _HabitEditBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(Constants.paddingMedium),
                   child: BlocBuilder<HabitEditBloc, HabitEditState>(
-                    buildWhen:
-                        (previous, current) =>
-                            previous.status != current.status,
+                    buildWhen: (previous, current) => previous.status != current.status,
                     builder: (context, state) {
                       return PrimaryButton(
                         label: isEdit ? strings.saveBtn : strings.createBtn,
