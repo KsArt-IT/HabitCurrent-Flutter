@@ -19,11 +19,11 @@ abstract class TimeZone {
     if (Platform.isWindows) {
       return;
     }
-    final TimezoneInfo? timeZoneName = await FlutterTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZoneName?.identifier ?? ''));
+    final TimezoneInfo timeZoneName = await FlutterTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName.identifier));
     if (kDebugMode) {
       print('--------------------------------');
-      print('Local timezone: ${timeZoneName?.identifier}');
+      print('Local timezone: ${timeZoneName.identifier}');
       print('--------------------------------');
     }
   }
