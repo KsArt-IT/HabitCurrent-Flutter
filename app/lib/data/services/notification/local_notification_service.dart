@@ -325,7 +325,7 @@ final class LocalNotificationService implements NotificationService {
     // Обеспечиваем установку на следующий нужный день
     if (weekday < 8) {
       while (scheduledDate.weekday != weekday || scheduledDate.isBefore(date)) {
-        scheduledDate = scheduledDate.add(Duration(days: 1));
+        scheduledDate = scheduledDate.add(const Duration(days: 1));
       }
     }
 

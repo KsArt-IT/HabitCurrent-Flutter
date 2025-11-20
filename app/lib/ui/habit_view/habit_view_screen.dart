@@ -29,7 +29,7 @@ class HabitViewScreen extends StatelessWidget {
             notificationRepository: context.read(),
             habit: habit,
           ),
-      child: _HabitViewBody(),
+      child: const _HabitViewBody(),
     );
   }
 }

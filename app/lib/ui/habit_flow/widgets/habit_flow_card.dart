@@ -57,7 +57,7 @@ class HabitFlowCard extends StatelessWidget {
                   style: theme.textTheme.displayMedium,
                 ),
                 IconButton(
-                  padding: EdgeInsets.all(Constants.paddingMedium),
+                  padding: const EdgeInsets.all(Constants.paddingMedium),
                   onPressed: onPressed,
                   color: theme.colorScheme.onPrimaryFixed,
                   style: ButtonStyle(
@@ -65,7 +65,7 @@ class HabitFlowCard extends StatelessWidget {
                       theme.colorScheme.secondaryFixed,
                     ),
                   ),
-                  icon: Icon(size: Constants.iconSize, Icons.north_east),
+                  icon: const Icon(size: Constants.iconSize, Icons.north_east),
                 ),
               ],
             ),

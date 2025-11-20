@@ -52,7 +52,7 @@ class _HabitNameEditWidgetState extends State<HabitNameEditWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormTitle(strings.habitEnterName),
-          SizedBox(height: Constants.paddingMedium),
+          const SizedBox(height: Constants.paddingMedium),
           TextField(
             controller: _controller,
             style: theme.textTheme.bodyLarge,

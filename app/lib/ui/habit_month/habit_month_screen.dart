@@ -54,7 +54,7 @@ class _HabitMonthBody extends StatelessWidget {
 
           return Column(
             children: [
-              MonthSelector(),
+              const MonthSelector(),
               // TODO: тут 2 надписи и статус передать за этот месяц нет или вобще нет привычек
               if (state.habits.isEmpty)
                 Expanded(

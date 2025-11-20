@@ -20,7 +20,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
   HabitEditBloc({
     required this.dataRepository,
     required this.notificationRepository,
-  }) : super(HabitEditState()) {
+  }) : super(const HabitEditState()) {
     // проверим разрешения
     on<CheckPermissionEvent>(_onCheckPermissionEvent);
 

@@ -59,7 +59,7 @@ class App extends StatelessWidget {
             create:
                 (context) => SettingsBloc(
                   settingsRepository: context.read<SettingsRepository>(),
-                )..add(SettingsLoadEvent()),
+                )..add(const SettingsLoadEvent()),
           ),
         ],
         child: HabitCurrentApp(router: _router),

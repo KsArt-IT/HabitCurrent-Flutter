@@ -77,7 +77,7 @@ final class LocalNotificationRepository implements NotificationRepository {
     required String body,
     String? payload,
   }) async {
-    final scheduledDate = TZDateTime.now(local).add(Duration(seconds: 5));
+    final scheduledDate = TZDateTime.now(local).add(const Duration(seconds: 5));
 
     _notificationService.showNotification(
       id: id,

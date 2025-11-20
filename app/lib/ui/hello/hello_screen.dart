@@ -72,7 +72,7 @@ class _HelloScreenState extends State<HelloScreen> {
             children: [
               Text(strings.welcome, style: theme.textTheme.displayLarge),
               Text(strings.enterYourName, style: theme.textTheme.displaySmall),
-              Spacer(),
+              const Spacer(),
               TextFormField(
                 controller: _nameController,
                 style: theme.textTheme.bodyLarge,
@@ -135,7 +135,7 @@ class _HelloScreenState extends State<HelloScreen> {
                 validator: _getNameErrorText,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
-              SizedBox(height: Constants.textFieldSpacing),
+              const SizedBox(height: Constants.textFieldSpacing),
               PrimaryButton(
                 label: strings.continueBtn,
                 disabled: !_isNameValid,

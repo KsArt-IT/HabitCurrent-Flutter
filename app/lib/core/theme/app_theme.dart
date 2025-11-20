@@ -8,9 +8,9 @@ sealed class AppTheme {
     brightness: Brightness.light,
     useMaterial3: true,
     fontFamily: _fontFamily,
-    appBarTheme: AppBarTheme(backgroundColor: AppColors.gray50),
+    appBarTheme: const AppBarTheme(backgroundColor: AppColors.gray50),
     scaffoldBackgroundColor: AppColors.gray50,
-    colorScheme: ColorScheme.light().copyWith(
+    colorScheme: const ColorScheme.light().copyWith(
       primary: AppColors.gray100,
       onPrimary: AppColors.gray950,
       inversePrimary: AppColors.gray950,
@@ -65,7 +65,7 @@ sealed class AppTheme {
     checkboxTheme: CheckboxThemeData(
       fillColor: WidgetStateProperty.all(Colors.transparent),
       checkColor: WidgetStateProperty.all(AppColors.gray900),
-      side: BorderSide(color: AppColors.gray600),
+      side: const BorderSide(color: AppColors.gray600),
       visualDensity: VisualDensity.compact,
     ),
     // Time Picker
@@ -191,9 +191,9 @@ sealed class AppTheme {
     brightness: Brightness.dark,
     useMaterial3: true,
     fontFamily: _fontFamily,
-    appBarTheme: AppBarTheme(backgroundColor: AppColors.gray950),
+    appBarTheme: const AppBarTheme(backgroundColor: AppColors.gray950),
     scaffoldBackgroundColor: AppColors.gray950,
-    colorScheme: ColorScheme.dark().copyWith(
+    colorScheme: const ColorScheme.dark().copyWith(
       // Primary gray50 gray950
       primary: AppColors.gray900,
       onPrimary: AppColors.gray50,
@@ -249,7 +249,7 @@ sealed class AppTheme {
     checkboxTheme: CheckboxThemeData(
       fillColor: WidgetStateProperty.all(Colors.transparent),
       checkColor: WidgetStateProperty.all(AppColors.brandColor),
-      side: BorderSide(color: AppColors.gray700),
+      side: const BorderSide(color: AppColors.gray700),
       visualDensity: VisualDensity.compact,
     ),
     // Time Picker

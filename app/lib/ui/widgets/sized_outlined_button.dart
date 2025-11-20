@@ -47,7 +47,7 @@ class SizedOutlinedButton extends StatelessWidget {
         child: Text(
           label,
           textAlign: TextAlign.center,
-          textScaler: TextScaler.linear(1),
+          textScaler: const TextScaler.linear(1),
           maxLines: 1,
         ),
       ),

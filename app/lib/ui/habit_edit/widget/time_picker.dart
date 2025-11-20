@@ -35,7 +35,7 @@ Future<TimeOfDay?> pickTime(
                   );
                 },
               ),
-              Spacer(),
+              const Spacer(),
               SizedBox(
                 width: double.infinity,
                 height: Constants.buttonHeight,

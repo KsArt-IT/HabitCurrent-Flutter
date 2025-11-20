@@ -13,7 +13,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   SettingsBloc({required SettingsRepository settingsRepository})
     : _settingsRepository = settingsRepository,
-      super(SettingsState()) {
+      super(const SettingsState()) {
     on<SettingsLoadEvent>(_onLoadEvent);
     on<SettingsUpdateNameEvent>(_onNameChanged);
     on<SettingsUpdateLanguageEvent>(_onLanguageChanged);
@@ -135,8 +135,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   }
 
   void _onReset(SettingsResetEvent event, Emitter<SettingsState> emit) async {
-    final newState = SettingsState();
-    add(SettingsSaveEvent());
+    final newState = const SettingsState();
+    add(const SettingsSaveEvent());
     emit(newState);
   }
 }

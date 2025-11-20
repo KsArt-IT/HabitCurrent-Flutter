@@ -31,7 +31,7 @@ class AppState extends Equatable {
     this.update = 0,
   });
 
-  factory AppState.initial() => AppState(status: AppStatus.initial);
+  factory AppState.initial() => const AppState(status: AppStatus.initial);
 
   AppState copyWith({
     AppStatus? status,

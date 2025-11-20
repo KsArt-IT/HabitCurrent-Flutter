@@ -24,7 +24,7 @@ class OnboardScreen extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset(theme.getImagePath('onboard_hello.png')),
-                Spacer(),
+                const Spacer(),
                 PrimaryButton(
                   label: strings.continueBtn,
                   onPressed: () {
