@@ -5,9 +5,9 @@ import 'package:equatable/equatable.dart';
 import 'package:habit_current/core/extension/datetime_ext.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/habit.dart';
-import 'package:habit_current/models/state_status.dart';
-import 'package:habit_current/models/habit_week.dart';
 import 'package:habit_current/models/habit_day_status.dart';
+import 'package:habit_current/models/habit_week.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_week_event.dart';

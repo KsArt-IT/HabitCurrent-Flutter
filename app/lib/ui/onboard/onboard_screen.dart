@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:habit_current/core/theme/app_theme.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
+import 'package:habit_current/core/theme/app_theme.dart';
 import 'package:habit_current/ui/initial/bloc/initial_bloc.dart';
 import 'package:habit_current/ui/widgets/primary_button.dart';
 import 'package:habit_current/ui/widgets/radial_gradient_background.dart';

@@ -5,9 +5,9 @@ import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/models/habit.dart';
 import 'package:habit_current/models/habit_notification.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/models/hour_interval.dart';
 import 'package:habit_current/models/reminder.dart';
+import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 part 'habit_edit_event.dart';
@@ -171,7 +171,12 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       time = 0;
     }
     emit(
-      state.copyWith(intervals: [...state.intervals, HourInterval(time: time)]),
+      state.copyWith(
+        intervals: [
+          ...state.intervals,
+          HourInterval(time: time),
+        ],
+      ),
     );
   }
 
@@ -226,10 +231,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     if (!permission) {
       reminder = open ? Reminder.open : Reminder.request;
     } else if (state.habit != null) {
-      reminder =
-          state.habit!.notifications.isNotEmpty
-              ? Reminder.enabled
-              : Reminder.disabled;
+      reminder = state.habit!.notifications.isNotEmpty ? Reminder.enabled : Reminder.disabled;
     }
     return reminder;
   }
@@ -238,8 +240,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     CheckPermissionEvent event,
     Emitter<HabitEditState> emit,
   ) async {
-    final permission =
-        await notificationRepository.checkNotificationPermission();
+    final permission = await notificationRepository.checkNotificationPermission();
     final reminder = _getReminderState(
       permission,
       open: state.reminder == Reminder.open,
@@ -252,8 +253,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     Emitter<HabitEditState> emit,
   ) async {
     if (state.reminder == Reminder.request) {
-      final permission =
-          await notificationRepository.requestNotificationPermission();
+      final permission = await notificationRepository.requestNotificationPermission();
       final reminder = _getReminderState(permission, open: true);
       emit(state.copyWith(reminder: reminder));
     } else {

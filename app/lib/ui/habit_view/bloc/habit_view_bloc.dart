@@ -4,9 +4,9 @@ import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
 import 'package:habit_current/models/habit.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/models/hour_interval.dart';
 import 'package:habit_current/models/hour_interval_completed.dart';
+import 'package:habit_current/models/state_status.dart';
 
 part 'habit_view_event.dart';
 part 'habit_view_state.dart';
