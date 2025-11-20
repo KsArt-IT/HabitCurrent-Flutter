@@ -1,76 +1,147 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
-
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
+# Персоналізовані налаштування аналізатора та лінтера.
+# Базовий набір flutter_lints + додаткові посилення.
 include: package:flutter_lints/flutter.yaml
 
+formatter:
+  page_width: 100
+  trailing_commas: preserve
+
 analyzer:
+  exclude:
+    - "build/**"                   # Виключаємо артефакти зборки (код, що генерується, кеш, ресурси)
+    - "android/**"                 # Платформний код Android (Java/Kotlin, Gradle) не аналізуємо Dart лінтером
+    - "ios/**"                     # Платформовий код iOS (Swift/ObjC) поза областю Dart аналізу
+    - "assets/**"                  # Статичні ассети (шрифти, зображення, json та ін.)
+    - "**/*.g.dart"                # Згенеровані файли build_runner/json_serializable
+    - "**/*.freezed.dart"          # Згенеровані моделі пакетом freezed
+    - "**/*.gen.dart"              # Загальний патерн для дод. генераторів
+    - "**/*.gr.dart"               # Генеровані маршрути (auto_route / інші)
+    - "**/*.config.dart"           # Згенеровані конфігураційні файли
+    - "**/generated/**"            # Папки з автогенерованими вихідними джерелами
+    - "**/gen/**"                  # Папки з автогенерованими вихідними джерелами
+    - "**/*.lock"                  # Тимчасові/lock файли генераторів (якщо створюються)
+    - "**/*.mapping.dart"
+    - "**/*.chopper.dart"
+    - "**/**.swagger.dart"
+    - "**/generated_icons.dart"
+    - "**/firebase_options.dart"
   language:
     strict-inference: true
     strict-raw-types: true
   errors:
     dead_code: info
     invalid_annotation_target: ignore
-  exclude:
-    - "**/*.g.dart"
-    - "**/*.gr.dart"
-    - "**/*.mapping.dart"
-    - "**/*.chopper.dart"
-    - "**/*.freezed.dart"
-    - "**/**.swagger.dart"
-    - "**/**.gen.dart"
-    - "**/generated_icons.dart"
-    - "**/firebase_options.dart"
-
-formatter:
-  page_width: 100
-  trailing_commas: preserve
+    avoid_dynamic_calls: error              # Заборона неявних dynamic викликів (безпека безпеки)
+    avoid_returning_null_for_future: error  # Future не повинен завершуватися null без явної моделі
+    avoid_slow_async_io: warning            # Підказка про потенційно повільні IO операції
+    avoid_type_to_string: warning           # Попередження проти використання Type.toString для логіки
+    cancel_subscriptions: error             # Вимога скасовувати StreamSubscription для запобігання витоку
+    close_sinks: error                      # Обов'язкове закриття Sink (ресурсне керування)
+    comment_references: warning             # Перевірка коректності посилань у документаційних коментарях
+    always_declare_return_types: error      # Явний тип значення, що повертається, підвищує читаність
+    avoid_bool_literals_in_conditional_expressions: warning # Уникати виразів виду condition? true : false
+    avoid_return_types_on_setters: warning  # Сетери не повинні оголошувати тип повернення
+    avoid_returning_null: warning           # Переважно nullable типи / Option об'єкти замість raw null
+    avoid_setters_without_getters: error    # Сеттер без геттера може приховувати стан
+    avoid_void_async: error                 # async void небажаний (важко ловити помилки)
+    constant_identifier_names: error        # Єдиний стиль іменування констант (UPPER_CASE)
+    unnecessary_new: warning                # Зниження шуму: new не потрібен у сучасному Dart
+    use_decorated_box: warning              # Оптимізація: DecoratedBox замість контейнера без зайвих віджетів
+    use_colored_box: warning                # Оптимізація: ColoredBox для простого кольору фону
 
 linter:
   rules:
-    unawaited_futures: true
-    always_put_required_named_parameters_first: false
-    avoid_bool_literals_in_conditional_expressions: true
-    avoid_escaping_inner_quotes: true
-    avoid_positional_boolean_parameters: true
-    avoid_types_on_closure_parameters: true
-    avoid_unused_constructor_parameters: true
-    literal_only_boolean_expressions: true
-    only_throw_errors: true
-    parameter_assignments: true
-    prefer_asserts_in_initializer_lists: true
-    prefer_const_constructors: true
-    prefer_const_declarations: true
-    prefer_const_literals_to_create_immutables: true
-    prefer_constructors_over_static_methods: true
-    prefer_final_in_for_each: true
-    prefer_final_locals: true
-    prefer_if_elements_to_conditional_expressions: true
-    sort_pub_dependencies: false
-    sort_unnamed_constructors_first: true
-    type_annotate_public_apis: true
-    unnecessary_await_in_return: true
-    unnecessary_lambdas: true
-    unnecessary_parenthesis: true
-    unnecessary_raw_strings: true
-    use_is_even_rather_than_modulo: true
-    use_raw_strings: true
-    use_setters_to_change_properties: true
-    avoid_private_typedef_functions: true
-    avoid_setters_without_getters: false
-    cancel_subscriptions: true
-    close_sinks: true
-    test_types_in_equals: true
-    unnecessary_statements: true
-    avoid_void_async: true
-    always_declare_return_types: true
-    avoid_null_checks_in_equality_operators: true
-    avoid_types_as_parameter_names: false
-    library_names: true
-    omit_local_variable_types: true
-    prefer_single_quotes: true
+    # === Найменування та стиль ===
+    - always_put_required_named_parameters_first: false # Обов'язкові іменовані параметри першими підвищують читання (false)
+    - always_use_package_imports                   # Єдиний стиль імпорту через package: спрощує refactoring
+    - curly_braces_in_flow_control_structures      # Обов'язкові фігурні дужки в if/for/while для безпеки
+    - directives_ordering                          # Упорядкування імпортів (dart → package → relative)
+    - eol_at_end_of_file                           # Порожній рядок наприкінці файлу (POSIX standard)
+    - prefer_single_quotes                         # Єдиний стиль лапок (одинарні швидше друкувати) true
+    - slash_for_doc_comments                       # Використовувати /// замість /** */ для документації
+    - sort_constructors_first                      # Конструктори на початку класу – швидкий огляд API
+    
+    # === Обробка помилок та типобезпека ===
+    - avoid_catching_errors                        # Не перехоплювати Error (тільки Exception) — системні помилки
+    - await_only_futures                           # await тільки для Future (ловить помилки типізації)
+    - control_flow_in_finally                      # Заборона return/break/continue у finally блоках
+    - empty_catches                                # Попередження про порожні catch (приховані баги)
+    - hash_and_equals                              # Потрібно перевизначати hashCode і == разом
+    - only_throw_errors                            # Кидати Error/Exception типи, а не довільні об'єкти
+    - test_types_in_equals                         # Перевірка типу в equals для безпеки true
+    - unrelated_type_equality_checks               # Заборона порівняння несумісних типів
+    - use_build_context_synchronously              # КРИТИЧНО: заборона BuildContext після async gap
+    - use_rethrow_when_possible                    # Використовувати rethrow замість throw e (зберігає stacktrace)
+    - discarded_futures                            # Виявляє несподівані Future без await
+    - unawaited_futures                            # Явно позначати навмисно не очікувані Future
+    
+    # === Імутабельність та const ===
+    - avoid_equals_and_hash_code_on_mutable_classes # hashCode/== на змінюваних класах призводить до баг в колекціях
+    - prefer_const_constructors                    # Константні конструктори для продуктивності
+    - prefer_const_constructors_in_immutables      # Обов'язкові const у незмінних класах
+    - prefer_const_literals_to_create_immutables   # Константні літерали колекцій
+    - prefer_final_fields                          # final для полів де можливо
+    - prefer_final_in_for_each                     # final у forEach запобігає випадковим змінам
+    - prefer_final_locals                          # final локальні змінні - прагнемо іммутабельності
+    - parameter_assignments                        # Не призначати параметри — вводить плутанину
+    
+    # === Flutter оптимізації ===
+    - avoid_unnecessary_containers                 # Прибирає зайві Container віджети
+    - sized_box_for_whitespace                     # SizedBox замість Container для відступів
+    - sized_box_shrink_expand                      # Спеціалізовані конструктори SizedBox.shrink/expand
+    - sort_child_properties_last                   # child/children останніми у віджетах
+    - use_colored_box                              # ColoredBox для простого кольору фону
+    - use_decorated_box                            # DecoratedBox замість контейнера без зайвих віджетів
+    - use_key_in_widget_constructors               # Ключ дозволяє коректно застосувати дифф до дерева віджетів
+    
+    # === Сучасний Dart (2.17+, 3.x) ===
+    - use_super_parameters                         # super параметри для стислості
+    - combinators_ordering                         # Сортировка show/hide в импортах
+    - implicit_call_tearoffs                       # Дозволити неявні tearoffs
+    - matching_super_parameters                    # Автоматичне відповідність параметрам супер-конструктора
+    - use_enums                                    # Вважати за краще enums замість статичних констант
+    
+    # === Читання коду ===
+    - avoid_escaping_inner_quotes                  # Переважно змінювати тип лапок замість екранування.
+    - avoid_field_initializers_in_const_classes    # Ініціалізація в константних класах важковагова/надлишкова
+    - avoid_implementing_value_types               # Не реалізовувати value-type інтерфейси вручну (ризик розбіжностей)
+    - avoid_positional_boolean_parameters          # Бульові позиційні параметри погано читаються (використовувати іменовані)
+    - avoid_private_typedef_functions              # Приватні typedef ускладнюють повторне використання / читання
+    - avoid_redundant_argument_values              # Видаляти аргументи, що збігаються зі значеннями за умовчанням
+    - avoid_returning_this                         # Повернення це ускладнює fluent API і може приховувати помилки
+    - cascade_invocations                          # Використовувати каскади для послідовності операцій над об'єктом
+    - deprecated_consistency                       # Єдиний стиль позначок @deprecated
+    - leading_newlines_in_multiline_strings        # Багаторядкові рядки починають із нового рядка — чистіше diff
+    - no_literal_bool_comparisons                  # Виключити порівняння виду flag == true
+    - no_runtimeType_toString                      # runtimeType.toString нестабільний для логіки (тільки налагодження)
+    - prefer_asserts_with_message                  # Повідомлення в assert полегшує діагностику
+    - prefer_constructors_over_static_methods      # Конструктори краще висловлюють створення екземпляра
+    - comment_references                           # Коректні посилання в коментарях (небиті, видимі)
+    
+    # === Цукор та ідіоми ===
+    - avoid_init_to_null                           # Не писати = null явно (за замовчуванням)
+    - prefer_if_null_operators                     # ?? оператор замість тернарника з null
+    - prefer_interpolation_to_compose_strings      # Інтерполяція замість конкатенації
+    - prefer_is_empty                              # .isEmpty замість .length == 0
+    - prefer_is_not_empty                          # .isNotEmpty замість .length > 0
+    - use_is_even_rather_than_modulo               # isEven більш явно і може бути ефективніше
+    - use_setters_to_change_properties             # Зміна полів через сетери (інкапсуляція)
+    - use_string_buffers                           # StringBuffer ефективніше при конкатенації у циклах
+    - use_to_and_as_if_applicable                  # Використовувати to*/as* якщо семантика перетворення доступна
+    
+    # === Видалення надмірності ===
+    - avoid_return_types_on_setters                # Сетери не повинні оголошувати тип повернення
+    - unnecessary_const                            # Прибирає зайві const
+    - unnecessary_new                              # Забирає зайві new
+    - unnecessary_this                             # Забирає зайві this
+    - unnecessary_parenthesis                      # Зайві дужки
+    
+    # === Продакшн / налагодження ===
+    - avoid_print                                  # Заборона print у продакшені (використовувати logger)
+
+bloc:
+  rules:
+    - avoid_flutter_imports                        # Логіка блоку має бути платформно незалежною
+    - avoid_public_bloc_methods                    # Публічні методи можуть порушувати чистоту патерну (використовувати події)
+    - avoid_public_fields                          # Публічні поля оминають інкапсуляцію; використовувати стан/події
+    - prefer_file_naming_conventions               # Одноманітність іменування файлів блоків підвищує навігацію
