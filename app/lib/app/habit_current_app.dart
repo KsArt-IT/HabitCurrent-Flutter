@@ -95,7 +95,7 @@ class HabitCurrentApp extends StatelessWidget {
       UnknownError() => strings.unknownError,
     };
     if (error.message.isNotEmpty) {
-      message += ":\n${error.message}";
+      message += ':\n${error.message}';
     }
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()

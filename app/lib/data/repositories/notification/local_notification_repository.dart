@@ -155,7 +155,7 @@ final class LocalNotificationRepository implements NotificationRepository {
   ) async {
     print('--------------------------------');
     print(
-      "LocalNotificationRepository: notifications: ${notifications.length}",
+      'LocalNotificationRepository: notifications: ${notifications.length}',
     );
     if (notifications.isEmpty) return;
 

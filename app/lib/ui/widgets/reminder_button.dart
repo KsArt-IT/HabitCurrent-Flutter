@@ -45,7 +45,7 @@ class _ReminderButtonState extends State<ReminderButton>
                     ? Reminder.enabled
                     : Reminder.disabled
                 : state.reminder;
-        debugPrint("reminder: $reminder");
+        debugPrint('reminder: $reminder');
 
         return Padding(
           padding: const EdgeInsets.only(top: Constants.paddingXLarge),

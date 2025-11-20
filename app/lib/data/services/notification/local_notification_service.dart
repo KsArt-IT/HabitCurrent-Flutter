@@ -180,7 +180,7 @@ final class LocalNotificationService implements NotificationService {
                 IOSFlutterLocalNotificationsPlugin
               >();
       final permission = await plugin?.checkPermissions();
-      print("permission: ${permission?.isEnabled}");
+      print('permission: ${permission?.isEnabled}');
       if (permission == null) return null;
       return permission.isEnabled;
     }
@@ -476,7 +476,7 @@ final class LocalNotificationService implements NotificationService {
 
       case skipActionId:
         print('Пользователь нажал "пропустить"');
-        return NotificationResponseDetails(id: 0, identifier: "");
+        return NotificationResponseDetails(id: 0, identifier: '');
 
       default:
         print(

@@ -94,7 +94,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     SaveHabitEvent event,
     Emitter<HabitEditState> emit,
   ) async {
-    print("--------------------------------");
+    print('--------------------------------');
     emit(state.copyWith(status: StateStatus.initial));
     try {
       Habit habit;
@@ -110,7 +110,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       }
       if (state.reminder == Reminder.enabled) {
         await _saveNotifications(habit);
-        print("HabitEditBloc: scheduleNotificationByHabitId");
+        print('HabitEditBloc: scheduleNotificationByHabitId');
         // создадим новые уведомления для habitId
         await notificationRepository.scheduleNotificationByHabitId(habit.id);
       }
@@ -124,7 +124,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
         ),
       );
     }
-    print("--------------------------------");
+    print('--------------------------------');
   }
 
   // Редактирование параметров привычки
@@ -266,7 +266,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     Set<WeekDays> weekDays,
     List<HourInterval> intervals,
   ) {
-    print("HabitEditBloc: intervals: ${intervals.length}");
+    print('HabitEditBloc: intervals: ${intervals.length}');
     if (intervals.isEmpty) return [];
     final allDays = weekDays.isEmpty || weekDays.length == 7;
     final notifications = <HabitNotification>[];
