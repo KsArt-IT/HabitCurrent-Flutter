@@ -52,14 +52,14 @@ analyzer:
 linter:
   rules:
     # === Найменування та стиль ===
-    - always_put_required_named_parameters_first: false # Обов'язкові іменовані параметри першими підвищують читання (false)
+    - always_put_required_named_parameters_first: false # Обов'язкові іменовані параметри першими підвищують читання
+    - sort_constructors_first: false               # Конструктори на початку класу – швидкий огляд API
     - always_use_package_imports                   # Єдиний стиль імпорту через package: спрощує refactoring
     - curly_braces_in_flow_control_structures      # Обов'язкові фігурні дужки в if/for/while для безпеки
     - directives_ordering                          # Упорядкування імпортів (dart → package → relative)
     - eol_at_end_of_file                           # Порожній рядок наприкінці файлу (POSIX standard)
     - prefer_single_quotes                         # Єдиний стиль лапок (одинарні швидше друкувати) true
     - slash_for_doc_comments                       # Використовувати /// замість /** */ для документації
-    - sort_constructors_first                      # Конструктори на початку класу – швидкий огляд API
     
     # === Обробка помилок та типобезпека ===
     - avoid_catching_errors                        # Не перехоплювати Error (тільки Exception) — системні помилки
