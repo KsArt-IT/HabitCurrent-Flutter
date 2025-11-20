@@ -39,7 +39,6 @@ class SizedOutlinedButton extends StatelessWidget {
                     : (negative
                         ? theme.colorScheme.error
                         : theme.colorScheme.onTertiaryContainer),
-            width: 1,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Constants.buttonRadius),

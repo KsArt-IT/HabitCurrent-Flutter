@@ -94,7 +94,6 @@ class _HabitEditBody extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         // MARK: - Habit name edit
                         HabitNameEditWidget(

@@ -95,7 +95,6 @@ class _HelloScreenState extends State<HelloScreen> {
                     ),
                     borderSide: BorderSide(
                       color: theme.colorScheme.outlineVariant,
-                      width: 1,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
@@ -104,7 +103,6 @@ class _HelloScreenState extends State<HelloScreen> {
                     ),
                     borderSide: BorderSide(
                       color: theme.colorScheme.outlineVariant,
-                      width: 1,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
@@ -122,7 +120,6 @@ class _HelloScreenState extends State<HelloScreen> {
                     ),
                     borderSide: BorderSide(
                       color: theme.colorScheme.error,
-                      width: 1,
                     ),
                   ),
                   focusedErrorBorder: OutlineInputBorder(

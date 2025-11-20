@@ -56,7 +56,6 @@ class App extends StatelessWidget {
                 )..add(AppInitialEvent()),
           ),
           BlocProvider<SettingsBloc>(
-            lazy: true,
             create:
                 (context) => SettingsBloc(
                   settingsRepository: context.read<SettingsRepository>(),

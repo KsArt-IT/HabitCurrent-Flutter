@@ -90,8 +90,6 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
             child: Padding(
               padding: const EdgeInsets.all(Constants.paddingMedium),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     strings.language,

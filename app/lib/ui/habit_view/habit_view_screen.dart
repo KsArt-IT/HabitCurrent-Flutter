@@ -83,7 +83,6 @@ class _HabitViewBody extends StatelessWidget {
                   crossAxisCount: 2,
                   childAspectRatio: 4.0,
                   crossAxisSpacing: Constants.paddingMedium,
-                  mainAxisSpacing: 0,
                 ),
                 padding: EdgeInsets.zero,
                 itemCount: state.habit.intervals.length,

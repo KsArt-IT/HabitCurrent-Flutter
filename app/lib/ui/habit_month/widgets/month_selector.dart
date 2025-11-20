@@ -10,9 +10,7 @@ class MonthSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HabitMonthBloc, HabitMonthState>(
-      buildWhen:
-          (previous, current) =>
-              previous.selectedMonth != current.selectedMonth,
+      buildWhen: (previous, current) => previous.selectedMonth != current.selectedMonth,
       builder: (context, state) {
         final selectedMonth = state.selectedMonth;
         final previousMonth = DateTime(
@@ -25,7 +23,6 @@ class MonthSelector extends StatelessWidget {
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
           children: [
             ArrowButton(
               left: true,

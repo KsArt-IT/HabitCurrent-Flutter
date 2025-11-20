@@ -3,7 +3,7 @@ typedef MonthRange = ({DateTime start, DateTime end});
 
 extension IntWeekDay on DateTime {
   DateTime toEndOfDay() => DateTime(year, month, day, 23, 59, 59, 999);
-  DateTime toStartOfDay() => DateTime(year, month, day, 0, 0, 0, 0);
+  DateTime toStartOfDay() => DateTime(year, month, day);
   
   WeekRange toWeekRange() {
     final DateTime startOfWeek = subtract(Duration(days: weekday - 1));

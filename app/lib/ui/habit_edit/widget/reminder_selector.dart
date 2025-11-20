@@ -77,7 +77,6 @@ class _ReminderSelectorState extends State<ReminderSelector> with WidgetsBinding
 
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(strings.reminder, style: theme.textTheme.titleMedium),
