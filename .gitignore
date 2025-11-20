@@ -8,8 +8,9 @@
 .vscode/
 
 # Cursor AI
-.cursor
+.cursor/
+
+.kiro/
 
 .project/
 .srs/
-.srs

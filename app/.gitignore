@@ -22,16 +22,9 @@ migrate_working_dir/
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
 .vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
+.cursor/
+.kiro/
+.project/
 
 # Symbolication related
 app.*.symbols
@@ -44,6 +37,100 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-untranslated_messages.json
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+*.last_build_id
+*.lock
+**/pubspec_overrides.yaml
+lcov.info
 
-/web/drift_worker.dart.*
+# FVM Version Cache
+.fvm/
+
+# Android related
+local.properties
+*.iml
+.gradle/
+/captures/
+output.json
+
+# iOS related
+Pods/
+Podfile.lock
+ios/Podfile.lock
+macos/Podfile.lock
+Flutter/Flutter.framework
+Flutter/Flutter.podspec
+Runner.xcworkspace/
+DerivedData/
+ios/build/
+packages/*/build/
+*.xcactivitylog
+
+# Node
+**/node_modules/
+node_modules/
+
+# Web related
+lib/generated_plugin_registrant.dart
+web/.dart_tool/
+web/build/
+web/drift_worker.dart.*
+
+# Generated files
+*.g.dart
+*.gr.dart
+*.freezed.dart
+*.gen.dart
+*.moor.dart
+*.mocks.dart
+*.hive.dart
+*.config.dart
+*.chopper.dart
+*.module.dart
+**/generated/
+**/gen
+# don't check in golden failure output
+**/failures/*.png
+
+# Service key
+firebase.json
+firebase_options.dart
+google-services.json
+GoogleService-Info.plist
+
+/lib/firebase_options.dart
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+/ios/Runner/GoogleService-Info-*.plist
+
+# Firebase related
+.firebase
+.firebaserc
+public
+*Key.json*
+firebase.json
+firebaseKey.json
+**/GoogleService-Info.plist
+**/firebase_app_id_file.json
+**/google-services.json
+**/firebase_options.dart
+
+# Ignore environment files
+.env
+.env.*
+/env/
+/config/*.env
+
+# Others
+*.log
+.temp
+tmp-dir/*
