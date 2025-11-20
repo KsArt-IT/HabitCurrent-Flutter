@@ -20,9 +20,7 @@ final class SettingsState extends Equatable {
 
   String get languageCode => locale.languageCode;
   Locale get locale =>
-      language.isNotEmpty
-          ? Locale(language)
-          : WidgetsBinding.instance.platformDispatcher.locale;
+      language.isNotEmpty ? Locale(language) : WidgetsBinding.instance.platformDispatcher.locale;
 
   String get themeCode => theme.name;
   ThemeMode get theme => ThemeMode.values.firstWhere(

@@ -9,10 +9,9 @@ final class Settings {
     required this.darkMode,
   });
 
-  Settings copyWith({String? name, String? language, bool? darkMode}) =>
-      Settings(
-        name: name ?? this.name,
-        language: language ?? this.language,
-        darkMode: darkMode ?? this.darkMode,
-      );
+  Settings copyWith({String? name, String? language, bool? darkMode}) => Settings(
+    name: name ?? this.name,
+    language: language ?? this.language,
+    darkMode: darkMode ?? this.darkMode,
+  );
 }

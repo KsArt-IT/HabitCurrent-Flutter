@@ -11,15 +11,14 @@ class MonthStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children:
-          weeksStatus.map((week) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: Constants.paddingSmaller,
-              ),
-              child: HabitStatusWidget(weekStatus: week),
-            );
-          }).toList(),
+      children: weeksStatus.map((week) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: Constants.paddingSmaller,
+          ),
+          child: HabitStatusWidget(weekStatus: week),
+        );
+      }).toList(),
     );
   }
 }

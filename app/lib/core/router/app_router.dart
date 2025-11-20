@@ -46,6 +46,7 @@ final class AppRouter extends RootStackRouter {
     ),
   ];
 }
+
 /*
 dart run build_runner build
 */

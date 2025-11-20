@@ -24,10 +24,9 @@ extension HabitToModel on Habit {
     weekDaysRaw: weekDays.isNotEmpty ? weekDays.toInt() : WeekDays.allDays,
     intervals: intervals.map((e) => e.toModel(id)).toList(),
     completedIntervals: completedIntervals.map((e) => e.toModel(id)).toList(),
-    notifications:
-        notifications
-            .map((e) => e.toModel(userId: userId, habitId: id, title: name))
-            .toList(),
+    notifications: notifications
+        .map((e) => e.toModel(userId: userId, habitId: id, title: name))
+        .toList(),
   );
 }
 

@@ -44,8 +44,9 @@ abstract interface class NotificationRepository {
     bool reschedule = false,
   });
 
-  (int userId, int habitId, int intervalId, int weekDay, bool reschedule)
-  parseIdentifier(String identifier);
+  (int userId, int habitId, int intervalId, int weekDay, bool reschedule) parseIdentifier(
+    String identifier,
+  );
 
   Future<void> close();
 }

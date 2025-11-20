@@ -14,7 +14,7 @@ final class HabitNotificationModel {
     required this.userId,
     required this.habitId,
     required this.intervalId,
-    
+
     required this.title,
     required this.weekDay,
     required this.time,

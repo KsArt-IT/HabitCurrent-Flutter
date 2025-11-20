@@ -9,8 +9,7 @@ enum SettingsKey {
 }
 
 final class LocalSettingsService implements SettingsService {
-  LocalSettingsService({required SharedPreferences preferences})
-    : _preferences = preferences;
+  LocalSettingsService({required SharedPreferences preferences}) : _preferences = preferences;
 
   final SharedPreferences _preferences;
 
@@ -61,12 +60,12 @@ final class LocalSettingsService implements SettingsService {
   Future<void> saveThemeMode(String theme) async {
     await _setValue(SettingsKey.themeMode.name, theme);
   }
-  
+
   @override
   Future<bool> loadReminder() async {
     return _getBool(SettingsKey.reminder.name);
   }
-  
+
   @override
   Future<void> saveReminder(bool reminder) async {
     await _setBool(SettingsKey.reminder.name, reminder);

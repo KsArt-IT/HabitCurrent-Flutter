@@ -25,20 +25,16 @@ class SizedOutlinedButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: disabled ? null : onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor:
-              negative
-                  ? theme.colorScheme.error
-                  : theme.colorScheme.onTertiaryContainer,
+          foregroundColor: negative
+              ? theme.colorScheme.error
+              : theme.colorScheme.onTertiaryContainer,
           disabledForegroundColor: theme.colorScheme.onTertiaryFixed,
           disabledBackgroundColor: theme.colorScheme.tertiaryFixed,
           textStyle: theme.textTheme.labelLarge,
           side: BorderSide(
-            color:
-                disabled
-                    ? Colors.transparent
-                    : (negative
-                        ? theme.colorScheme.error
-                        : theme.colorScheme.onTertiaryContainer),
+            color: disabled
+                ? Colors.transparent
+                : (negative ? theme.colorScheme.error : theme.colorScheme.onTertiaryContainer),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(Constants.buttonRadius),

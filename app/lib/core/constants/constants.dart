@@ -21,11 +21,11 @@ abstract final class Constants {
 
   static const double tabItemButtonSize = 70;
   static const double tabItemRadius = tabItemButtonSize / 2;
-  
+
   static const double fabSpacing = 48;
-  
+
   static const double iconSize = 22;
-  
+
   static const double statusSize = 16;
 
   static final regExpName = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$');

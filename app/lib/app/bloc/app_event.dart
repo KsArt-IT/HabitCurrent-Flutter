@@ -19,8 +19,12 @@ final class AppHabitMakeDoneEvent extends AppEvent {
   final int habitId;
   final int intervalId;
   final int weekDay;
-  const AppHabitMakeDoneEvent({required this.habitId, required this.intervalId, required this.weekDay});
-  
+  const AppHabitMakeDoneEvent({
+    required this.habitId,
+    required this.intervalId,
+    required this.weekDay,
+  });
+
   @override
   List<Object?> get props => [habitId, intervalId, weekDay];
 }

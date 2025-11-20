@@ -24,23 +24,19 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<SettingsRepository>(
-          create:
-              (context) => LocalSettingsRepository(
-                service: context.read<SettingsService>(),
-              ),
+          create: (context) => LocalSettingsRepository(
+            service: context.read<SettingsService>(),
+          ),
         ),
         RepositoryProvider<DataRepository>(
-          create:
-              (context) =>
-                  LocalDataRepository(service: context.read<DataService>()),
+          create: (context) => LocalDataRepository(service: context.read<DataService>()),
           dispose: (repository) => repository.close(),
         ),
         RepositoryProvider<NotificationRepository>(
-          create:
-              (context) => LocalNotificationRepository(
-                service: context.read<DataService>(),
-                notification: context.read<NotificationService>(),
-              ),
+          create: (context) => LocalNotificationRepository(
+            service: context.read<DataService>(),
+            notification: context.read<NotificationService>(),
+          ),
           dispose: (repository) => repository.close(),
         ),
       ],
@@ -48,18 +44,15 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider<AppBloc>(
             lazy: false,
-            create:
-                (context) => AppBloc(
-                  dataRepository: context.read<DataRepository>(),
-                  notificationRepository:
-                      context.read<NotificationRepository>(),
-                )..add(AppInitialEvent()),
+            create: (context) => AppBloc(
+              dataRepository: context.read<DataRepository>(),
+              notificationRepository: context.read<NotificationRepository>(),
+            )..add(AppInitialEvent()),
           ),
           BlocProvider<SettingsBloc>(
-            create:
-                (context) => SettingsBloc(
-                  settingsRepository: context.read<SettingsRepository>(),
-                )..add(const SettingsLoadEvent()),
+            create: (context) => SettingsBloc(
+              settingsRepository: context.read<SettingsRepository>(),
+            )..add(const SettingsLoadEvent()),
           ),
         ],
         child: HabitCurrentApp(router: _router),

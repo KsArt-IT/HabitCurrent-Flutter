@@ -193,8 +193,9 @@ final class LocalNotificationRepository implements NotificationRepository {
   }
 
   @override
-  (int userId, int habitId, int intervalId, int weekDay, bool reschedule)
-  parseIdentifier(String identifier) {
+  (int userId, int habitId, int intervalId, int weekDay, bool reschedule) parseIdentifier(
+    String identifier,
+  ) {
     final parts = identifier.split('_');
     if (parts.length != 10) {
       throw Exception('Invalid identifier: $identifier');

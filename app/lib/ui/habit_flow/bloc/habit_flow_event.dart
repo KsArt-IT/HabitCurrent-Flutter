@@ -10,7 +10,7 @@ class LoadHabitsEvent extends HabitFlowEvent {
 
 class RefreshHabitsEvent extends HabitFlowEvent {
   final Completer completer;
-  
+
   RefreshHabitsEvent(this.completer);
 }
 

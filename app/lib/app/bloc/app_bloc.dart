@@ -132,10 +132,9 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         DateTime.now(),
       );
       if (habit == null) return;
-      final interval =
-          habit.intervals
-              .where((interval) => interval.id == event.intervalId)
-              .firstOrNull;
+      final interval = habit.intervals
+          .where((interval) => interval.id == event.intervalId)
+          .firstOrNull;
       if (interval == null) return;
       // Проверить не отмечен ли интервал ранее
       if (habit.completedIntervals.any(
@@ -172,17 +171,15 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     try {
-      final permission =
-          await notificationRepository.getNotificationPermissionStatus();
+      final permission = await notificationRepository.getNotificationPermissionStatus();
       emit(
         state.copyWith(
           status: AppStatus.initial,
-          reminder:
-              permission == null
-                  ? Reminder.request
-                  : permission
-                  ? Reminder.enabled
-                  : Reminder.open,
+          reminder: permission == null
+              ? Reminder.request
+              : permission
+              ? Reminder.enabled
+              : Reminder.open,
         ),
       );
     } catch (e) {
@@ -202,8 +199,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
           _onReminderOpenSettings();
           return;
         case Reminder.request:
-          final permission =
-              await notificationRepository.requestNotificationPermission();
+          final permission = await notificationRepository.requestNotificationPermission();
           reminder = permission ? Reminder.enabled : Reminder.open;
         case Reminder.enabled:
           // отменить все уведомления
@@ -244,8 +240,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
 
   // MARK: - Notification Received
   Future<void> _onNotificationReceivedAppLaunch() async {
-    final notification =
-        await notificationRepository.getNotificationAppLaunchDetails();
+    final notification = await notificationRepository.getNotificationAppLaunchDetails();
     if (notification != null) {
       await _onNotificationReceived(notification);
     }
@@ -275,7 +270,9 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         intervalId,
         weekDay,
         reschedule,
-      ) = notificationRepository.parseIdentifier(identifier);
+      ) = notificationRepository.parseIdentifier(
+        identifier,
+      );
       if (userId != state.user?.id) return;
       if (reschedule) {
         // перепланируем уведомление

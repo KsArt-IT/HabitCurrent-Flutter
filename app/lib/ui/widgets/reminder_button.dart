@@ -12,8 +12,7 @@ class ReminderButton extends StatefulWidget {
   State<ReminderButton> createState() => _ReminderButtonState();
 }
 
-class _ReminderButtonState extends State<ReminderButton>
-    with WidgetsBindingObserver {
+class _ReminderButtonState extends State<ReminderButton> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -39,12 +38,11 @@ class _ReminderButtonState extends State<ReminderButton>
     return BlocBuilder<AppBloc, AppState>(
       buildWhen: (previous, current) => previous.reminder != current.reminder,
       builder: (context, state) {
-        final reminder =
-            state.reminder.isGranted
-                ? context.read<SettingsBloc>().state.reminder
-                    ? Reminder.enabled
-                    : Reminder.disabled
-                : state.reminder;
+        final reminder = state.reminder.isGranted
+            ? context.read<SettingsBloc>().state.reminder
+                  ? Reminder.enabled
+                  : Reminder.disabled
+            : state.reminder;
         debugPrint('reminder: $reminder');
 
         return Padding(

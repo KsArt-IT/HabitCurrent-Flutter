@@ -4,8 +4,7 @@ import 'package:habit_current/data/services/settings/settings_service.dart';
 final class LocalSettingsRepository implements SettingsRepository {
   final SettingsService _service;
 
-  LocalSettingsRepository({required SettingsService service})
-    : _service = service;
+  LocalSettingsRepository({required SettingsService service}) : _service = service;
 
   @override
   Future<String> loadLanguage() async {

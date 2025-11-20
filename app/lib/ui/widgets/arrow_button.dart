@@ -17,10 +17,7 @@ class ArrowButton extends StatelessWidget {
 
     return IconButton(
       color: theme.colorScheme.onPrimary,
-      icon:
-          left
-              ? const Icon(Icons.chevron_left)
-              : const Icon(Icons.chevron_right),
+      icon: left ? const Icon(Icons.chevron_left) : const Icon(Icons.chevron_right),
       onPressed: disabled ? null : onPressed,
     );
   }

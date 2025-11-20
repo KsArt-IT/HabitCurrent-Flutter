@@ -27,47 +27,44 @@ final class LocalNotificationService implements NotificationService {
   // MARK: - Android Notification Channel
   static const String notificationChannelId = 'habit_notification_channel_id';
   static const String notificationChannelName = 'Notification main channel';
-  static const String notificationChannelDescription =
-      'For regular notifications';
-  static const AndroidNotificationChannel notificationChannel =
-      AndroidNotificationChannel(
-        notificationChannelId,
-        notificationChannelName,
-        description: notificationChannelDescription,
-        importance: Importance.high,
-        playSound: true,
-        enableVibration: true,
-        showBadge: true,
-      );
-  static const AndroidNotificationDetails androidNotificationDetails =
-      AndroidNotificationDetails(
-        notificationChannelId,
-        notificationChannelName,
-        channelDescription: notificationChannelDescription,
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker',
-        playSound: true,
-        enableVibration: true,
-        // max 3 actions
-        actions: <AndroidNotificationAction>[
-          AndroidNotificationAction(
-            skipActionId,
-            skipAction,
-            showsUserInterface: false,
-          ),
-          AndroidNotificationAction(
-            laterAction30Id,
-            laterAction30,
-            showsUserInterface: true,
-          ),
-          AndroidNotificationAction(
-            openActionId,
-            openAction,
-            showsUserInterface: true,
-          ),
-        ],
-      );
+  static const String notificationChannelDescription = 'For regular notifications';
+  static const AndroidNotificationChannel notificationChannel = AndroidNotificationChannel(
+    notificationChannelId,
+    notificationChannelName,
+    description: notificationChannelDescription,
+    importance: Importance.high,
+    playSound: true,
+    enableVibration: true,
+    showBadge: true,
+  );
+  static const AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
+    notificationChannelId,
+    notificationChannelName,
+    channelDescription: notificationChannelDescription,
+    importance: Importance.max,
+    priority: Priority.high,
+    ticker: 'ticker',
+    playSound: true,
+    enableVibration: true,
+    // max 3 actions
+    actions: <AndroidNotificationAction>[
+      AndroidNotificationAction(
+        skipActionId,
+        skipAction,
+        showsUserInterface: false,
+      ),
+      AndroidNotificationAction(
+        laterAction30Id,
+        laterAction30,
+        showsUserInterface: true,
+      ),
+      AndroidNotificationAction(
+        openActionId,
+        openAction,
+        showsUserInterface: true,
+      ),
+    ],
+  );
 
   // MARK: - iOS Notification Category
   static const String notificationCategoryId = 'habit_notification_category';
@@ -158,9 +155,7 @@ final class LocalNotificationService implements NotificationService {
       // Android 8.0 (API level 26) and higher
       // Create the notification channel
       await _flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin
-          >()
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(notificationChannel);
     }
   }
@@ -174,40 +169,29 @@ final class LocalNotificationService implements NotificationService {
   @override
   Future<bool?> getNotificationPermissionStatus() async {
     if (_isIOS) {
-      final plugin =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin
-              >();
+      final plugin = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
       final permission = await plugin?.checkPermissions();
       print('permission: ${permission?.isEnabled}');
       if (permission == null) return null;
       return permission.isEnabled;
     }
     if (_isMacOS) {
-      final plugin =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                MacOSFlutterLocalNotificationsPlugin
-              >();
+      final plugin = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<MacOSFlutterLocalNotificationsPlugin>();
       final permission = await plugin?.checkPermissions();
       if (permission == null) return null;
       return permission.isEnabled;
     }
     if (_isAndroid) {
-      final plugin =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin
-              >();
+      final plugin = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
       final permission = await plugin?.areNotificationsEnabled();
       if (permission == null) return null;
       return permission;
     }
     final permission = await Permission.notification.request();
-    if (!permission.isGranted &&
-        !permission.isDenied &&
-        permission.isPermanentlyDenied) {
+    if (!permission.isGranted && !permission.isDenied && permission.isPermanentlyDenied) {
       return null;
     }
     return permission.isGranted;
@@ -216,30 +200,21 @@ final class LocalNotificationService implements NotificationService {
   @override
   Future<bool> checkNotificationPermission() async {
     if (_isAndroid) {
-      final plugin =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin
-              >();
+      final plugin = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
       final permission = await plugin?.areNotificationsEnabled();
       return permission ?? false;
     }
     if (_isIOS) {
-      final plugin =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin
-              >();
+      final plugin = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
 
       final permission = await plugin?.checkPermissions();
       return permission?.isEnabled ?? false;
     }
     if (_isMacOS) {
-      final plugin =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                MacOSFlutterLocalNotificationsPlugin
-              >();
+      final plugin = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<MacOSFlutterLocalNotificationsPlugin>();
 
       final permission = await plugin?.checkPermissions();
       return permission?.isEnabled ?? false;
@@ -252,26 +227,19 @@ final class LocalNotificationService implements NotificationService {
   Future<bool> requestNotificationPermission() async {
     if (_isIOS) {
       final permission = await _flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin
-          >()
+          .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(alert: true, badge: true, sound: true);
       return permission ?? false;
     }
     if (_isMacOS) {
       final permission = await _flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-            MacOSFlutterLocalNotificationsPlugin
-          >()
+          .resolvePlatformSpecificImplementation<MacOSFlutterLocalNotificationsPlugin>()
           ?.requestPermissions(alert: true, badge: true, sound: true);
       return permission ?? false;
     }
     if (_isAndroid) {
-      final plugin =
-          _flutterLocalNotificationsPlugin
-              .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin
-              >();
+      final plugin = _flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
       final permission = await plugin?.requestNotificationsPermission();
       return permission ?? false;
     }
@@ -294,8 +262,8 @@ final class LocalNotificationService implements NotificationService {
 
   @override
   Future<List<ActiveNotification>> getActiveNotifications() async {
-    final List<ActiveNotification> activeNotifications =
-        await _flutterLocalNotificationsPlugin.getActiveNotifications();
+    final List<ActiveNotification> activeNotifications = await _flutterLocalNotificationsPlugin
+        .getActiveNotifications();
     return activeNotifications;
   }
 
@@ -341,12 +309,11 @@ final class LocalNotificationService implements NotificationService {
       notificationDetails,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       payload: identifier,
-      matchDateTimeComponents:
-          repeats
-              ? weekday < 8
-                  ? DateTimeComponents.dayOfWeekAndTime
-                  : DateTimeComponents.time
-              : null, // не повторять, чтобы отложить на завтра
+      matchDateTimeComponents: repeats
+          ? weekday < 8
+                ? DateTimeComponents.dayOfWeekAndTime
+                : DateTimeComponents.time
+          : null, // не повторять, чтобы отложить на завтра
     );
   }
 
@@ -427,9 +394,7 @@ final class LocalNotificationService implements NotificationService {
 
   @override
   Future<NotificationResponseDetails?> getNotificationAppLaunchDetails() async {
-    final launchDetails =
-        await _flutterLocalNotificationsPlugin
-            .getNotificationAppLaunchDetails();
+    final launchDetails = await _flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
     if (launchDetails == null) return null;
     if (!launchDetails.didNotificationLaunchApp) return null;
 

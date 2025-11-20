@@ -19,18 +19,15 @@ class MonthNameWidget extends StatelessWidget {
     return disabled
         ? const SizedBox(width: 50)
         : SizedBox(
-          width: 50,
-          child: Text(
-            DateFormat('MMM').format(month),
-            style: theme.textTheme.titleMedium?.copyWith(
-              color:
-                  selected
-                      ? theme.colorScheme.onPrimary
-                      : theme.colorScheme.onTertiaryFixed,
-              fontWeight: selected ? FontWeight.w500 : FontWeight.w300,
+            width: 50,
+            child: Text(
+              DateFormat('MMM').format(month),
+              style: theme.textTheme.titleMedium?.copyWith(
+                color: selected ? theme.colorScheme.onPrimary : theme.colorScheme.onTertiaryFixed,
+                fontWeight: selected ? FontWeight.w500 : FontWeight.w300,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        );
+          );
   }
 }

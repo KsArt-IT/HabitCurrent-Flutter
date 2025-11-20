@@ -124,16 +124,15 @@ final class LocalDataRepository implements DataRepository {
     required String title,
     required List<HabitNotification> notifications,
   }) {
-    final notificationsModel =
-        notifications
-            .map(
-              (e) => e.toModel(
-                userId: userId,
-                habitId: habitId,
-                title: title, //
-              ),
-            )
-            .toList();
+    final notificationsModel = notifications
+        .map(
+          (e) => e.toModel(
+            userId: userId,
+            habitId: habitId,
+            title: title, //
+          ),
+        )
+        .toList();
 
     return _service.saveNotifications(notificationsModel);
   }

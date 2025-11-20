@@ -74,14 +74,14 @@ sealed class AppTheme {
 
       hourMinuteColor: AppColors.gray950,
       hourMinuteTextColor: AppColors.gray50,
-      
+
       dayPeriodColor: AppColors.gray950,
       dayPeriodTextColor: AppColors.gray50,
-      
+
       dialHandColor: AppColors.gray600,
       dialBackgroundColor: AppColors.gray950,
       dialTextColor: AppColors.gray50,
-      
+
       entryModeIconColor: AppColors.gray950,
       timeSelectorSeparatorColor: WidgetStateProperty.all(AppColors.gray950),
 
@@ -361,6 +361,5 @@ sealed class AppTheme {
 extension ThemeX on ThemeData {
   String get _themeFolder => brightness == Brightness.dark ? 'dark' : 'light';
 
-  String getImagePath(String imageName) =>
-      'assets/images/$_themeFolder/$imageName';
+  String getImagePath(String imageName) => 'assets/images/$_themeFolder/$imageName';
 }

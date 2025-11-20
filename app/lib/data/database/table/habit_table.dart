@@ -7,7 +7,7 @@ class Habits extends Table {
   TextColumn get name => text().withLength(min: 1, max: 50)();
   TextColumn get details => text().nullable()();
 
-  DateTimeColumn get created => dateTime().clientDefault(()=> DateTime.now())();
+  DateTimeColumn get created => dateTime().clientDefault(() => DateTime.now())();
   DateTimeColumn get updated => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get completed => dateTime().nullable()();
 

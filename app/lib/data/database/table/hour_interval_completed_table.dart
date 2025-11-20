@@ -5,5 +5,5 @@ class HourIntervalCompleteds extends Table {
   IntColumn get habitId => integer()();
   IntColumn get intervalId => integer()();
   IntColumn get time => integer()();
-  DateTimeColumn get completed => dateTime().clientDefault(()=> DateTime.now())();
+  DateTimeColumn get completed => dateTime().clientDefault(() => DateTime.now())();
 }

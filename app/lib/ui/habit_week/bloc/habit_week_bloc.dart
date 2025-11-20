@@ -148,8 +148,9 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     }
 
     // сколько выполнено
-    final completedCount =
-        habit.completedIntervals.where((e) => e.completed.isSameDate(day)).length;
+    final completedCount = habit.completedIntervals
+        .where((e) => e.completed.isSameDate(day))
+        .length;
 
     if (completedCount == habitLength) return HabitDayStatus.completed;
     if (completedCount > 0) return HabitDayStatus.partiallyCompleted;

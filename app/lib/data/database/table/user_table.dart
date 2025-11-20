@@ -5,8 +5,6 @@ class Users extends Table {
 
   TextColumn get name => text().unique()();
   TextColumn get avatar => text().nullable()();
-  DateTimeColumn get created =>
-      dateTime().clientDefault(() => DateTime.now())();
-  DateTimeColumn get updated =>
-      dateTime().clientDefault(() => DateTime.now())();
+  DateTimeColumn get created => dateTime().clientDefault(() => DateTime.now())();
+  DateTimeColumn get updated => dateTime().clientDefault(() => DateTime.now())();
 }

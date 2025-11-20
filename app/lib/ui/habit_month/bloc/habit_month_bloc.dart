@@ -207,8 +207,9 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     }
 
     // сколько выполнено
-    final completedCount =
-        habit.completedIntervals.where((e) => e.completed.isSameDate(day)).length;
+    final completedCount = habit.completedIntervals
+        .where((e) => e.completed.isSameDate(day))
+        .length;
 
     if (completedCount == habitLength) return HabitDayStatus.completed;
     if (completedCount > 0) return HabitDayStatus.partiallyCompleted;
@@ -217,16 +218,15 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
 
   List<List<HabitDayStatus>> _cleanAndChunkBySeven(List<HabitDayStatus> list) {
     // оставляем только выполнено, частично выполнено, не выполнено, не начато
-    final cleanedList =
-        list
-            .where(
-              (e) =>
-                  e == HabitDayStatus.completed ||
-                  e == HabitDayStatus.partiallyCompleted ||
-                  e == HabitDayStatus.notCompleted ||
-                  e == HabitDayStatus.awaitsExecution,
-            )
-            .toList();
+    final cleanedList = list
+        .where(
+          (e) =>
+              e == HabitDayStatus.completed ||
+              e == HabitDayStatus.partiallyCompleted ||
+              e == HabitDayStatus.notCompleted ||
+              e == HabitDayStatus.awaitsExecution,
+        )
+        .toList();
     // добавляем пропущенные дни, если не хватает до 7
     final added = cleanedList.length % 7;
     if (added > 0) {

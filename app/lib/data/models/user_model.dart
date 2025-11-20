@@ -18,12 +18,11 @@ final class UserModel {
     String? avatar,
     DateTime? created,
     DateTime? updated,
-  }) =>
-      UserModel(
-        id: id,
-        name: name ?? this.name,
-        avatar: avatar ?? this.avatar,
-        created: created ?? this.created,
-        updated: updated ?? this.updated,
-      );
+  }) => UserModel(
+    id: id,
+    name: name ?? this.name,
+    avatar: avatar ?? this.avatar,
+    created: created ?? this.created,
+    updated: updated ?? this.updated,
+  );
 }

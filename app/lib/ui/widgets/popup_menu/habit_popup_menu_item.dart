@@ -13,23 +13,22 @@ class HabitPopupMenuItem extends PopupMenuItem<HabitPopupMenuValue> {
     required super.value,
   }) : super(
          child: Builder(
-           builder:
-               (context) => Row(
-                 children: [
-                   Icon(
-                     icon,
-                     size: Constants.iconSize,
-                     color: Theme.of(context).colorScheme.onPrimary,
-                   ),
-                   const SizedBox(width: Constants.paddingSmall),
-                   Text(
-                     label,
-                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                       color: Theme.of(context).colorScheme.onPrimary,
-                     ),
-                   ),
-                 ],
+           builder: (context) => Row(
+             children: [
+               Icon(
+                 icon,
+                 size: Constants.iconSize,
+                 color: Theme.of(context).colorScheme.onPrimary,
                ),
+               const SizedBox(width: Constants.paddingSmall),
+               Text(
+                 label,
+                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                   color: Theme.of(context).colorScheme.onPrimary,
+                 ),
+               ),
+             ],
+           ),
          ),
        );
 }

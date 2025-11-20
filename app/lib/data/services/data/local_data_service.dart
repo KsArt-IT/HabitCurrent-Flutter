@@ -24,10 +24,8 @@ final class LocalDataService implements DataService {
   @override
   Future<UserModel?> loadLastUser() async {
     try {
-      final data =
-          await (database.users.select()
-                ..orderBy([(f) => OrderingTerm.desc(f.updated)]))
-              .getSingleOrNull();
+      final data = await (database.users.select()..orderBy([(f) => OrderingTerm.desc(f.updated)]))
+          .getSingleOrNull();
       if (data == null) return null;
 
       return UserModel(
@@ -45,9 +43,8 @@ final class LocalDataService implements DataService {
   @override
   Future<UserModel?> loadUserByName(String name) async {
     try {
-      final data =
-          await (database.users.select()..where((f) => f.name.equals(name)))
-              .getSingleOrNull();
+      final data = await (database.users.select()..where((f) => f.name.equals(name)))
+          .getSingleOrNull();
       if (data == null) return null;
 
       return UserModel(
@@ -189,14 +186,14 @@ final class LocalDataService implements DataService {
           await database.hourIntervals.insertOnConflictUpdate(
             interval.id == 0
                 ? HourIntervalsCompanion.insert(
-                  habitId: habit.id,
-                  time: interval.time,
-                )
+                    habitId: habit.id,
+                    time: interval.time,
+                  )
                 : HourIntervalsCompanion(
-                  id: Value(interval.id),
-                  habitId: Value(habit.id),
-                  time: Value(interval.time),
-                ),
+                    id: Value(interval.id),
+                    habitId: Value(habit.id),
+                    time: Value(interval.time),
+                  ),
           );
         }
 
@@ -217,9 +214,8 @@ final class LocalDataService implements DataService {
   @override
   Future<HabitModel?> loadHabitById(int id, DateTime date) async {
     try {
-      final habitRow =
-          await (database.habits.select()..where((f) => f.id.equals(id)))
-              .getSingleOrNull();
+      final habitRow = await (database.habits.select()..where((f) => f.id.equals(id)))
+          .getSingleOrNull();
       if (habitRow == null) return null;
 
       return HabitModel(
@@ -246,10 +242,7 @@ final class LocalDataService implements DataService {
   @override
   Future<List<HabitModel>> loadHabitsByUserId(int userId) async {
     try {
-      final rows =
-          await (database.habits.select()
-                ..where((f) => f.userId.equals(userId)))
-              .get();
+      final rows = await (database.habits.select()..where((f) => f.userId.equals(userId))).get();
       return Future.wait(
         rows.map((habitRow) async {
           return HabitModel(
@@ -306,11 +299,10 @@ final class LocalDataService implements DataService {
             completed: habitRow.completed,
             weekDaysRaw: habitRow.weekDaysRaw,
             intervals: await _loadHourIntervalsByHabitId(habitRow.id),
-            completedIntervals:
-                await _loadHourIntervalCompletedsByHabitIdFromDate(
-                  habitRow.id,
-                  date,
-                ),
+            completedIntervals: await _loadHourIntervalCompletedsByHabitIdFromDate(
+              habitRow.id,
+              date,
+            ),
             notifications: await loadNotificationsByHabitId(habitRow.id),
           );
         }),
@@ -353,12 +345,11 @@ final class LocalDataService implements DataService {
             completed: habitRow.completed,
             weekDaysRaw: habitRow.weekDaysRaw,
             intervals: await _loadHourIntervalsByHabitId(habitRow.id),
-            completedIntervals:
-                await _loadHourIntervalCompletedsByHabitIdFromDateRange(
-                  habitRow.id,
-                  start,
-                  end,
-                ),
+            completedIntervals: await _loadHourIntervalCompletedsByHabitIdFromDateRange(
+              habitRow.id,
+              start,
+              end,
+            ),
             notifications: await loadNotificationsByHabitId(habitRow.id),
           );
         }),
@@ -372,10 +363,8 @@ final class LocalDataService implements DataService {
   Future<List<HourIntervalModel>> _loadHourIntervalsByHabitId(
     int habitId,
   ) async {
-    final rows =
-        await (database.hourIntervals.select()
-              ..where((f) => f.habitId.equals(habitId)))
-            .get();
+    final rows = await (database.hourIntervals.select()..where((f) => f.habitId.equals(habitId)))
+        .get();
     return rows
         .map(
           (e) => HourIntervalModel(id: e.id, habitId: e.habitId, time: e.time),
@@ -388,8 +377,7 @@ final class LocalDataService implements DataService {
     int habitId,
   ) async {
     final rows =
-        await (database.hourIntervalCompleteds.select()
-              ..where((f) => f.habitId.equals(habitId)))
+        await (database.hourIntervalCompleteds.select()..where((f) => f.habitId.equals(habitId)))
             .get();
     return rows
         .map(
@@ -404,8 +392,7 @@ final class LocalDataService implements DataService {
         .toList();
   }
 
-  Future<List<HourIntervalCompletedModel>>
-  _loadHourIntervalCompletedsByHabitIdFromDate(
+  Future<List<HourIntervalCompletedModel>> _loadHourIntervalCompletedsByHabitIdFromDate(
     int habitId,
     DateTime date,
   ) async {
@@ -432,8 +419,7 @@ final class LocalDataService implements DataService {
         .toList();
   }
 
-  Future<List<HourIntervalCompletedModel>>
-  _loadHourIntervalCompletedsByHabitIdFromDateRange(
+  Future<List<HourIntervalCompletedModel>> _loadHourIntervalCompletedsByHabitIdFromDateRange(
     int habitId,
     DateTime start,
     DateTime end,
@@ -485,8 +471,7 @@ final class LocalDataService implements DataService {
         ),
       );
       final intervalRow =
-          await (database.hourIntervalCompleteds.select()
-                ..where((f) => f.id.equals(id)))
+          await (database.hourIntervalCompleteds.select()..where((f) => f.id.equals(id)))
               .getSingleOrNull();
       if (intervalRow == null) {
         throw DatabaseCreatingError('Interval not found after creation');
@@ -507,10 +492,8 @@ final class LocalDataService implements DataService {
   @override
   Future<HabitNotificationModel?> loadNotificationById(int id) async {
     try {
-      final row =
-          await (database.habitNotificationDatas.select()
-                ..where((f) => f.id.equals(id)))
-              .getSingleOrNull();
+      final row = await (database.habitNotificationDatas.select()..where((f) => f.id.equals(id)))
+          .getSingleOrNull();
       if (row == null) return null;
       return HabitNotificationModel(
         id: row.id,
@@ -556,8 +539,7 @@ final class LocalDataService implements DataService {
   ) async {
     try {
       final rows =
-          await (database.habitNotificationDatas.select()
-                ..where((f) => f.habitId.equals(habitId)))
+          await (database.habitNotificationDatas.select()..where((f) => f.habitId.equals(habitId)))
               .get();
       return rows
           .map(
@@ -584,8 +566,7 @@ final class LocalDataService implements DataService {
   ) async {
     try {
       final rows =
-          await (database.habitNotificationDatas.select()
-                ..where((f) => f.userId.equals(userId)))
+          await (database.habitNotificationDatas.select()..where((f) => f.userId.equals(userId)))
               .get();
       return rows
           .map(

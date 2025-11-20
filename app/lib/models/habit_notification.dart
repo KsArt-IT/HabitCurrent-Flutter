@@ -9,7 +9,7 @@ final class HabitNotification {
   HabitNotification({
     this.id = 0,
     required this.intervalId,
-    
+
     required this.weekDay,
     required this.time,
     required this.repeats,

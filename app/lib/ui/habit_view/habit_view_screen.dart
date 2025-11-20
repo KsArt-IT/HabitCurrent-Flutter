@@ -23,12 +23,11 @@ class HabitViewScreen extends StatelessWidget {
     }
 
     return BlocProvider(
-      create:
-          (context) => HabitViewBloc(
-            dataRepository: context.read(),
-            notificationRepository: context.read(),
-            habit: habit,
-          ),
+      create: (context) => HabitViewBloc(
+        dataRepository: context.read(),
+        notificationRepository: context.read(),
+        habit: habit,
+      ),
       child: const _HabitViewBody(),
     );
   }
@@ -95,12 +94,11 @@ class _HabitViewBody extends StatelessWidget {
                   return CheckboxListTile(
                     title: Text(
                       interval.time.toTime(),
-                      style:
-                          isSelected
-                              ? theme.textTheme.titleSmall?.copyWith(
-                                color: theme.colorScheme.primaryFixed,
-                              )
-                              : theme.textTheme.titleSmall,
+                      style: isSelected
+                          ? theme.textTheme.titleSmall?.copyWith(
+                              color: theme.colorScheme.primaryFixed,
+                            )
+                          : theme.textTheme.titleSmall,
                     ),
                     contentPadding: EdgeInsets.zero,
                     controlAffinity: ListTileControlAffinity.leading,

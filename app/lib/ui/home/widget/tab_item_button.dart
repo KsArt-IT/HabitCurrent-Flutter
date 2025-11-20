@@ -26,10 +26,7 @@ class TabItemButton extends StatelessWidget {
         height: Constants.tabItemButtonSize,
         width: Constants.tabItemButtonSize,
         decoration: BoxDecoration(
-          color:
-              isActive
-                  ? theme.colorScheme.inversePrimary
-                  : theme.colorScheme.primary,
+          color: isActive ? theme.colorScheme.inversePrimary : theme.colorScheme.primary,
           borderRadius: BorderRadius.circular(Constants.tabItemRadius),
         ),
         child: Column(
@@ -37,20 +34,16 @@ class TabItemButton extends StatelessWidget {
           children: [
             Icon(
               tab.icon,
-              color:
-                  isActive
-                      ? theme.colorScheme.primary
-                      : theme.colorScheme.inversePrimary,
+              color: isActive ? theme.colorScheme.primary : theme.colorScheme.inversePrimary,
             ),
             Text(
               tab.getLabel(context),
               overflow: TextOverflow.ellipsis,
-              style:
-                  isActive
-                      ? theme.textTheme.headlineMedium!.copyWith(
-                        color: theme.colorScheme.primary,
-                      )
-                      : theme.textTheme.headlineMedium,
+              style: isActive
+                  ? theme.textTheme.headlineMedium!.copyWith(
+                      color: theme.colorScheme.primary,
+                    )
+                  : theme.textTheme.headlineMedium,
             ),
           ],
         ),

@@ -13,10 +13,8 @@ class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) =>
-              InitialBloc(dataRepository: context.read<DataRepository>())
-                ..add(InitialLoadNameEvent()),
+      create: (context) =>
+          InitialBloc(dataRepository: context.read<DataRepository>())..add(InitialLoadNameEvent()),
       child: const _InitialScreenBody(),
     );
   }
