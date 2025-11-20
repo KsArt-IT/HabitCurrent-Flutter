@@ -431,7 +431,7 @@ final class LocalNotificationService implements NotificationService {
         await _flutterLocalNotificationsPlugin
             .getNotificationAppLaunchDetails();
     if (launchDetails == null) return null;
-    if (launchDetails.didNotificationLaunchApp == false) return null;
+    if (!launchDetails.didNotificationLaunchApp) return null;
 
     final response = launchDetails.notificationResponse;
     if (response == null || response.payload == null) return null;
