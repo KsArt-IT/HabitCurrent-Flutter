@@ -50,7 +50,7 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
   ) async {
     try {
       // Получить пользователя по имени в базе данных
-      User user =
+      final user =
           await dataRepository.loadUserByName(event.name) ??
           // Создать имя в базе данных
           await dataRepository.createUserByName(event.name);

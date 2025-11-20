@@ -269,7 +269,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     print("HabitEditBloc: intervals: ${intervals.length}");
     if (intervals.isEmpty) return [];
     final allDays = weekDays.isEmpty || weekDays.length == 7;
-    List<HabitNotification> notifications = [];
+    final notifications = <HabitNotification>[];
     for (final interval in intervals) {
       if (allDays) {
         notifications.add(
