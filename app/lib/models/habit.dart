@@ -44,8 +44,8 @@ final class Habit {
     List<HourIntervalCompleted>? completedIntervals,
     List<HabitNotification>? notifications,
   }) => Habit(
-    id: this.id,
-    userId: this.userId,
+    id: id,
+    userId: userId,
 
     name: name ?? this.name,
     details: details ?? this.details,

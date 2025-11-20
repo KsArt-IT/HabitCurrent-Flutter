@@ -66,5 +66,5 @@ enum WeekDays {
 }
 
 extension Raw on Set<WeekDays> {
-  int toInt() => this.fold(0, (value, element) => value | element.toBit);
+  int toInt() => fold(0, (value, element) => value | element.toBit);
 }

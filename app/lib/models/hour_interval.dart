@@ -5,7 +5,7 @@ final class HourInterval {
   const HourInterval({this.id = 0, required this.time});
 
   HourInterval copyWith({int? time}) => HourInterval(
-    id: this.id,
-    time: time ?? this.time, //
+    id: id,
+    time: time ?? this.time,
   );
 }
