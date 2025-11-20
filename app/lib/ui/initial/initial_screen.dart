@@ -23,7 +23,7 @@ class InitialScreen extends StatelessWidget {
 }
 
 class _InitialScreenBody extends StatelessWidget {
-  const _InitialScreenBody({super.key});
+  const _InitialScreenBody();
 
   @override
   Widget build(BuildContext context) {

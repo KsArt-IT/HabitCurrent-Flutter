@@ -28,7 +28,7 @@ class HabitFlowScreen extends StatelessWidget {
 
 // MARK: - HabitFlowBody
 class _HabitFlowBody extends StatelessWidget {
-  const _HabitFlowBody({super.key});
+  const _HabitFlowBody();
 
   @override
   Widget build(BuildContext context) {

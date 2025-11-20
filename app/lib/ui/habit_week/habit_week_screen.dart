@@ -27,7 +27,7 @@ class HabitWeekScreen extends StatelessWidget {
 }
 
 class _HabitWeekBody extends StatelessWidget {
-  const _HabitWeekBody({super.key});
+  const _HabitWeekBody();
 
   @override
   Widget build(BuildContext context) {

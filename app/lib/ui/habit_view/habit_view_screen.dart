@@ -35,7 +35,7 @@ class HabitViewScreen extends StatelessWidget {
 }
 
 class _HabitViewBody extends StatelessWidget {
-  const _HabitViewBody({super.key});
+  const _HabitViewBody();
 
   @override
   Widget build(BuildContext context) {
