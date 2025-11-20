@@ -10,7 +10,7 @@ class HabitStatusWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    Widget _buildWeekStatus(HabitDayStatus status) => switch (status) {
+    Widget buildWeekStatus(HabitDayStatus status) => switch (status) {
       HabitDayStatus.completed => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
@@ -76,7 +76,7 @@ class HabitStatusWidget extends StatelessWidget {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: weekStatus.map((d) => Expanded(child: Center(child: _buildWeekStatus(d)))).toList(),
+      children: weekStatus.map((d) => Expanded(child: Center(child: buildWeekStatus(d)))).toList(),
     );
   }
 }
