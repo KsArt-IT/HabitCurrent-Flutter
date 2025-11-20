@@ -20,7 +20,7 @@ class RadialGradientBackground extends StatelessWidget {
             theme.colorScheme.onTertiaryFixedVariant,
           ],
           center: Alignment.topCenter,
-          stops: [0.3, 1.0],
+          stops: const [0.3, 1.0],
           radius: 2,
         ),
       ),
