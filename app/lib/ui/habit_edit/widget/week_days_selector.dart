@@ -5,6 +5,8 @@ import 'package:habit_current/models/weekdays.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 
 class WeekDaysSelector extends StatelessWidget {
+  const WeekDaysSelector({super.key});
+
   @override
   Widget build(BuildContext context) {
     final weekDays = context.select(
