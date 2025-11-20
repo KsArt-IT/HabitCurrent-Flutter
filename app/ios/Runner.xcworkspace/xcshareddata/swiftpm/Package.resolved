@@ -6,7 +6,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/simolus3/CSQLite.git",
       "state" : {
-        "revision" : "18517bdeb5ae69cb3d864d4fd0f4ab4d4809f18b"
+        "revision" : "a268235ae86718e66d6a29feef3bd22c772eb82b"
       }
     }
   ],
