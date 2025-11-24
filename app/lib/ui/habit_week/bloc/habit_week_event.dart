@@ -17,7 +17,7 @@ class LoadHabitWeekEvent extends HabitWeekEvent {
 }
 
 class RefreshHabitWeekEvent extends HabitWeekEvent {
-  final Completer completer;
+  final Completer<void> completer;
 
   const RefreshHabitWeekEvent(this.completer);
 
