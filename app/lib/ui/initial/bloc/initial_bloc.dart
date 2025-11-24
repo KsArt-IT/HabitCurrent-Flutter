@@ -8,9 +8,11 @@ part 'initial_event.dart';
 part 'initial_state.dart';
 
 class InitialBloc extends Bloc<InitialEvent, InitialState> {
-  final DataRepository dataRepository;
+  final DataRepository _dataRepository;
 
-  InitialBloc({required this.dataRepository}) : super(InitialLoadingState()) {
+  InitialBloc({required DataRepository dataRepository})
+    : _dataRepository = dataRepository,
+      super(InitialLoadingState()) {
     on<InitialLoadNameEvent>(_onLoadNameEvent);
     on<InitialHelloEvent>(_onInitNameEvent);
     on<InitialUpdateNameEvent>(_onUpdateNameEvent);
@@ -22,16 +24,16 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
   ) async {
     try {
       // await Future.delayed(const Duration(seconds: 3));
-      final user = await dataRepository.loadLastUser();
+      final user = await _dataRepository.loadLastUser();
       if (user == null) {
         // If the user is not found, emit the onboard state
         emit(InitialOnboardState());
         return;
       }
       // Обновим последнее посещение
-      dataRepository.saveUser(user);
+      await _dataRepository.saveUser(user);
       // Simulate a delay
-      await Future.delayed(const Duration(seconds: 1));
+      await Future<dynamic>.delayed(const Duration(seconds: 1));
       // Emit the loaded state with the name
       emit(InitialLoadedState(user));
     } catch (e) {
@@ -51,11 +53,11 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
     try {
       // Получить пользователя по имени в базе данных
       final user =
-          await dataRepository.loadUserByName(event.name) ??
+          await _dataRepository.loadUserByName(event.name) ??
           // Создать имя в базе данных
-          await dataRepository.createUserByName(event.name);
+          await _dataRepository.createUserByName(event.name);
       // Обновим последнее посещение
-      dataRepository.saveUser(user);
+      await _dataRepository.saveUser(user);
       // и перейти на главный экран
       emit(InitialLoadedState(user));
     } catch (e) {
