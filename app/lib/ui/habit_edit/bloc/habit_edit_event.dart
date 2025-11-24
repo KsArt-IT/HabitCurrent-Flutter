@@ -69,7 +69,7 @@ final class ChangeTimeIntervalEvent extends HabitEditEvent {
 }
 
 final class ToggleReminderEvent extends HabitEditEvent {
-  final Reminder value;
+  final Reminder? value;
   const ToggleReminderEvent(this.value);
   @override
   List<Object?> get props => [value];
