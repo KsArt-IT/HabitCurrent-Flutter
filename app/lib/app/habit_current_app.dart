@@ -33,23 +33,23 @@ class HabitCurrentApp extends StatelessWidget {
       routerConfig: router.config(),
       builder: (context, child) {
         return BlocListener<AppBloc, AppState>(
-          listener: (context, state) {
+          listener: (context, state) async {
             switch (state.status) {
               case AppStatus.initial:
                 log('AppInitialState', name: 'HabitCurrentApp');
                 break;
               case AppStatus.userLoaded:
                 log('AppLoadedState: ${state.user?.name}', name: 'HabitCurrentApp');
-                router.replace(const HomeRoute());
+                await router.replace(const HomeRoute());
               case AppStatus.habitView:
                 log('AppHabitViewState', name: 'HabitCurrentApp');
-                router.push(const HabitViewRoute());
+                await router.push(const HabitViewRoute());
               case AppStatus.habitCreate:
                 log('AppHabitCreateState', name: 'HabitCurrentApp');
-                router.push(const HabitEditRoute());
+                await router.push(const HabitEditRoute());
               case AppStatus.habitEdit:
                 log('AppHabitEditState: ${state.habitId}', name: 'HabitCurrentApp');
-                router.push(const HabitEditRoute());
+                await router.push(const HabitEditRoute());
               case AppStatus.habitReload:
                 log('AppHabitsReloadState: ${state.habitId}', name: 'HabitCurrentApp');
                 break;
