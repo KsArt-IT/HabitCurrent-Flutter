@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -16,10 +15,11 @@ part 'habit_month_event.dart';
 part 'habit_month_state.dart';
 
 class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
-  final DataRepository repository;
+  final DataRepository _repository;
 
-  HabitMonthBloc({required this.repository})
-    : super(
+  HabitMonthBloc({required DataRepository repository})
+    : _repository = repository,
+      super(
         HabitMonthState(
           currentDate: DateTime.now(),
           selectedMonth: DateTime.now(),
@@ -141,7 +141,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
   ) async {
     final monthRange = date.toMonthRange();
 
-    final habits = await repository.loadHabitsByUserIdFromDateRange(
+    final habits = await _repository.loadHabitsByUserIdFromDateRange(
       userId: userId,
       start: monthRange.start,
       end: monthRange.end,
