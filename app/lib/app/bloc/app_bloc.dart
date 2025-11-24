@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
@@ -15,11 +16,15 @@ part 'app_event.dart';
 part 'app_state.dart';
 
 final class AppBloc extends Bloc<AppEvent, AppState> {
-  final DataRepository dataRepository;
-  final NotificationRepository notificationRepository;
+  final DataRepository _dataRepository;
+  final NotificationRepository _notificationRepository;
 
-  AppBloc({required this.dataRepository, required this.notificationRepository})
-    : super(AppState.initial()) {
+  AppBloc({
+    required DataRepository dataRepository,
+    required NotificationRepository notificationRepository,
+  }) : _notificationRepository = notificationRepository,
+       _dataRepository = dataRepository,
+       super(AppState.initial()) {
     on<AppInitialEvent>(_onInitialEvent);
     on<AppUserLoadedEvent>(_onUserLoadedEvent);
 
@@ -39,7 +44,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
 
     on<AppErrorEvent>(_onErrorEvent);
     // обрабатываем получение уведомлений
-    notificationRepository.observeNotificationReceived(_onNotificationReceived);
+    unawaited(_notificationRepository.observeNotificationReceived(_onNotificationReceived));
   }
 
   void _onInitialEvent(AppInitialEvent event, Emitter<AppState> emit) async {
@@ -53,7 +58,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     emit(state.copyWith(status: AppStatus.userLoaded, user: event.user));
     // Проверяем, было ли приложение запущено через уведомление
-    _onNotificationReceivedAppLaunch();
+    await _onNotificationReceivedAppLaunch();
   }
 
   // MARK: - Habit Events
@@ -110,7 +115,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     if (event.habitId == null) return;
 
     try {
-      await dataRepository.deleteHabitById(event.habitId!);
+      await _dataRepository.deleteHabitById(event.habitId!);
       emit(
         state.copyWith(
           status: AppStatus.habitReload,
@@ -129,7 +134,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     log('_onHabitMakeDoneEvent: ${event.habitId} ${event.intervalId}', name: 'AppBloc');
     try {
-      final habit = await dataRepository.loadHabitById(
+      final habit = await _dataRepository.loadHabitById(
         event.habitId,
         DateTime.now(),
       );
@@ -150,7 +155,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         time: interval.time,
         completed: DateTime.now(),
       );
-      await dataRepository.createHourIntervalCompleted(
+      await _dataRepository.createHourIntervalCompleted(
         event.habitId,
         completed,
       );
@@ -173,7 +178,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     try {
-      final permission = await notificationRepository.getNotificationPermissionStatus();
+      final permission = await _notificationRepository.getNotificationPermissionStatus();
       emit(
         state.copyWith(
           status: AppStatus.initial,
@@ -201,16 +206,16 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
           _onReminderOpenSettings();
           return;
         case Reminder.request:
-          final permission = await notificationRepository.requestNotificationPermission();
+          final permission = await _notificationRepository.requestNotificationPermission();
           reminder = permission ? Reminder.enabled : Reminder.open;
         case Reminder.enabled:
           // отменить все уведомления
-          await notificationRepository.cancelAllNotifications();
+          await _notificationRepository.cancelAllNotifications();
           reminder = Reminder.disabled;
         case Reminder.disabled:
           // перезапустить все уведомления
-          await notificationRepository.cancelAllNotifications();
-          await notificationRepository.scheduleNotificationByUserId(
+          await _notificationRepository.cancelAllNotifications();
+          await _notificationRepository.scheduleNotificationByUserId(
             state.user!.id,
           );
           reminder = Reminder.enabled;
@@ -225,7 +230,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppReminderRequestEvent event,
     Emitter<AppState> emit,
   ) async {
-    await notificationRepository.requestNotificationPermission();
+    await _notificationRepository.requestNotificationPermission();
     add(AppReminderCheckEvent());
   }
 
@@ -237,12 +242,12 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onReminderOpenSettings() {
-    notificationRepository.openNotificationSettings();
+    _notificationRepository.openNotificationSettings();
   }
 
   // MARK: - Notification Received
   Future<void> _onNotificationReceivedAppLaunch() async {
-    final notification = await notificationRepository.getNotificationAppLaunchDetails();
+    final notification = await _notificationRepository.getNotificationAppLaunchDetails();
     if (notification != null) {
       await _onNotificationReceived(notification);
     }
@@ -254,7 +259,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     if (notification.identifier.isEmpty) return;
     if (notification.laterMinutes != null) {
       // schedule notification with later minutes
-      await notificationRepository.showNotificationLater(
+      await _notificationRepository.showNotificationLater(
         id: notification.id,
         identifier: notification.identifier,
         laterMinutes: notification.laterMinutes!,
@@ -272,19 +277,19 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         intervalId,
         weekDay,
         reschedule,
-      ) = notificationRepository.parseIdentifier(
+      ) = _notificationRepository.parseIdentifier(
         identifier,
       );
       if (userId != state.user?.id) return;
       if (reschedule) {
         // перепланируем уведомление
-        await notificationRepository.scheduleNotificationByIntervalId(
+        await _notificationRepository.scheduleNotificationByIntervalId(
           intervalId,
           false,
         );
       }
       if (isOpen) {
-        final habit = await dataRepository.loadHabitById(
+        final habit = await _dataRepository.loadHabitById(
           habitId,
           DateTime.now(),
         );
@@ -329,7 +334,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppShowTestNotificationEvent event,
     Emitter<AppState> emit,
   ) async {
-    await notificationRepository.showNotification(
+    await _notificationRepository.showNotification(
       id: 1000001,
       title: 'Test Notification',
       body: 'This is a test notification',
