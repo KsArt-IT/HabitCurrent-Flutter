@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/models/notification_response_details.dart';
 
@@ -31,9 +32,7 @@ abstract interface class NotificationRepository {
   Future<List<PendingNotificationRequest>> getPendingNotifications();
   Future<List<ActiveNotification>> getActiveNotifications();
 
-  Future<void> observeNotificationReceived(
-    Function(NotificationResponseDetails notification) onReceived,
-  );
+  Future<void> observeNotificationReceived(ValueChanged<NotificationResponseDetails> onReceived);
   Future<NotificationResponseDetails?> getNotificationAppLaunchDetails();
 
   String createIdentifier({
