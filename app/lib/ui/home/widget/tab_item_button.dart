@@ -5,7 +5,7 @@ import 'package:habit_current/ui/home/home_tab.dart';
 class TabItemButton extends StatelessWidget {
   final HomeTab tab;
   final int active;
-  final Function(int) onTap;
+  final ValueChanged<int> onTap;
 
   const TabItemButton({
     super.key,
