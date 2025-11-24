@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/data/models/habit_notification_model.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
@@ -33,7 +34,7 @@ final class LocalNotificationRepository implements NotificationRepository {
   Future<void> cancelNotificationByHabitId(int habitId) async {
     final notifications = await _service.loadNotificationsByHabitId(habitId);
     for (final notification in notifications) {
-      _notificationService.cancelNotification(notification.id);
+      await _notificationService.cancelNotification(notification.id);
     }
   }
 
@@ -81,7 +82,7 @@ final class LocalNotificationRepository implements NotificationRepository {
   }) async {
     final scheduledDate = TZDateTime.now(local).add(const Duration(seconds: 5));
 
-    _notificationService.showNotification(
+    await _notificationService.showNotification(
       id: id,
       title: title,
       body: body,
@@ -99,7 +100,7 @@ final class LocalNotificationRepository implements NotificationRepository {
     final notification = await _service.loadNotificationById(id);
     if (notification == null) return;
 
-    _notificationService.showNotificationOnDate(
+    await _notificationService.showNotificationOnDate(
       id: 1000000 + id,
       title: notification.title,
       identifier: identifier,
@@ -110,13 +111,13 @@ final class LocalNotificationRepository implements NotificationRepository {
   @override
   Future<void> scheduleNotificationByHabitId(int habitId) async {
     final notifications = await _service.loadNotificationsByHabitId(habitId);
-    _scheduleAllNotifications(notifications);
+    await _scheduleAllNotifications(notifications);
   }
 
   @override
   Future<void> scheduleNotificationByUserId(int userId) async {
     final notifications = await _service.loadNotificationsByUserId(userId);
-    _scheduleAllNotifications(notifications);
+    await _scheduleAllNotifications(notifications);
   }
 
   @override
@@ -157,7 +158,8 @@ final class LocalNotificationRepository implements NotificationRepository {
   ) async {
     log('--------------------------------', name: 'LocalNotificationRepository');
     log(
-      'LocalNotificationRepository: notifications: ${notifications.length}', name: 'LocalNotificationRepository'
+      'LocalNotificationRepository: notifications: ${notifications.length}',
+      name: 'LocalNotificationRepository',
     );
     if (notifications.isEmpty) return;
 
@@ -166,7 +168,7 @@ final class LocalNotificationRepository implements NotificationRepository {
       // отправляем 2 типа уведомлений
       // 1. на время, каждый день
       // 2. на день недели, каждую неделю
-      _notificationService.scheduleNotificationOnWeekday(
+      await _notificationService.scheduleNotificationOnWeekday(
         id: notification.id,
         identifier: createIdentifier(
           userId: notification.userId,
@@ -213,9 +215,9 @@ final class LocalNotificationRepository implements NotificationRepository {
 
   @override
   Future<void> observeNotificationReceived(
-    Function(NotificationResponseDetails notification) onReceived,
+    ValueChanged<NotificationResponseDetails> onReceived,
   ) async {
-    _notificationService.observeNotificationReceived(onReceived);
+    await _notificationService.observeNotificationReceived(onReceived);
   }
 
   @override
