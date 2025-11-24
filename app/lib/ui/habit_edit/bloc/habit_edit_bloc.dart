@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/error/app_error.dart';
@@ -94,7 +96,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     SaveHabitEvent event,
     Emitter<HabitEditState> emit,
   ) async {
-    print('--------------------------------');
+    log('--------------------------------', name: 'HabitEditBloc');
     emit(state.copyWith(status: StateStatus.initial));
     try {
       Habit habit;
@@ -110,7 +112,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       }
       if (state.reminder == Reminder.enabled) {
         await _saveNotifications(habit);
-        print('HabitEditBloc: scheduleNotificationByHabitId');
+        log('HabitEditBloc: scheduleNotificationByHabitId', name: 'HabitEditBloc');
         // создадим новые уведомления для habitId
         await notificationRepository.scheduleNotificationByHabitId(habit.id);
       }
@@ -124,7 +126,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
         ),
       );
     }
-    print('--------------------------------');
+    log('--------------------------------', name: 'HabitEditBloc');
   }
 
   // Редактирование параметров привычки
@@ -266,7 +268,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     Set<WeekDays> weekDays,
     List<HourInterval> intervals,
   ) {
-    print('HabitEditBloc: intervals: ${intervals.length}');
+    log('HabitEditBloc: intervals: ${intervals.length}', name: 'HabitEditBloc');
     if (intervals.isEmpty) return [];
     final allDays = weekDays.isEmpty || weekDays.length == 7;
     final notifications = <HabitNotification>[];

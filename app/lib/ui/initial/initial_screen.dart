@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,21 +31,21 @@ class _InitialScreenBody extends StatelessWidget {
       listener: (context, state) {
         switch (state) {
           case InitialLoadingState():
-            debugPrint('InitialLoadingState');
+            log('InitialLoadingState', name: 'InitialScreen');
             break;
           case InitialOnboardState():
-            debugPrint('InitialOnboardState');
+            log('InitialOnboardState', name: 'InitialScreen');
             context.router.replace(const OnboardRoute());
           case InitialHelloState():
-            debugPrint('InitialHelloState');
+            log('InitialHelloState', name: 'InitialScreen');
             context.router.replace(const HelloRoute());
           case InitialLoadedState(:final user):
-            debugPrint('InitialLoadedState');
+            log('InitialLoadedState', name: 'InitialScreen');
             context.read<AppBloc>().add(AppUserLoadedEvent(user: user));
-            debugPrint('InitialLoadedState pop');
+            log('InitialLoadedState pop', name: 'InitialScreen');
             context.router.pop();
           case InitialErrorState():
-            debugPrint('InitialErrorState');
+            log('InitialErrorState', name: 'InitialScreen');
             context.router.pop();
         }
       },

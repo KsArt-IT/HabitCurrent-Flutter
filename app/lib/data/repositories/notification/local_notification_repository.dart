@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:habit_current/data/models/habit_notification_model.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
@@ -153,9 +155,9 @@ final class LocalNotificationRepository implements NotificationRepository {
   Future<void> _scheduleAllNotifications(
     List<HabitNotificationModel> notifications,
   ) async {
-    print('--------------------------------');
-    print(
-      'LocalNotificationRepository: notifications: ${notifications.length}',
+    log('--------------------------------', name: 'LocalNotificationRepository');
+    log(
+      'LocalNotificationRepository: notifications: ${notifications.length}', name: 'LocalNotificationRepository'
     );
     if (notifications.isEmpty) return;
 
@@ -178,7 +180,7 @@ final class LocalNotificationRepository implements NotificationRepository {
         weekday: notification.weekDay,
       );
     }
-    print('--------------------------------');
+    log('--------------------------------', name: 'LocalNotificationRepository');
   }
 
   @override

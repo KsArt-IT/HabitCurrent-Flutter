@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/models/user.dart';
@@ -33,7 +35,7 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
       // Emit the loaded state with the name
       emit(InitialLoadedState(user));
     } catch (e) {
-      print(e);
+      log(e.toString(), name: 'InitialBloc');
       emit(InitialErrorState(e.toString()));
     }
   }
@@ -57,7 +59,7 @@ class InitialBloc extends Bloc<InitialEvent, InitialState> {
       // и перейти на главный экран
       emit(InitialLoadedState(user));
     } catch (e) {
-      print(e);
+      log(e.toString(), name: 'InitialBloc');
       emit(InitialErrorState(e.toString()));
     }
   }

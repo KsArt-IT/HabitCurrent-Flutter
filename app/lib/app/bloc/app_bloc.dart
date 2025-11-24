@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/core/error/app_error.dart';
@@ -59,9 +61,9 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitCreateEvent event,
     Emitter<AppState> emit,
   ) async {
-    print('--------------------------------');
-    print('onHabitCreateEvent');
-    print('--------------------------------');
+    log('--------------------------------', name: 'AppBloc');
+    log('onHabitCreateEvent', name: 'AppBloc');
+    log('--------------------------------', name: 'AppBloc');
     if (state.user != null) {
       emit(
         state.copyWith(
@@ -125,7 +127,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitMakeDoneEvent event,
     Emitter<AppState> emit,
   ) async {
-    print('_onHabitMakeDoneEvent: ${event.habitId} ${event.intervalId}');
+    log('_onHabitMakeDoneEvent: ${event.habitId} ${event.intervalId}', name: 'AppBloc');
     try {
       final habit = await dataRepository.loadHabitById(
         event.habitId,
@@ -290,7 +292,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
           add(AppHabitViewEvent(habit: habit));
         }
       } else {
-        print('AppHabitMakeDoneEvent');
+        log('AppHabitMakeDoneEvent', name: 'AppBloc');
         // Отметим как выполненное
         add(
           AppHabitMakeDoneEvent(
@@ -301,7 +303,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         );
         // add(AppHabitReloadEvent(habitId: habitId));
       }
-      print('--------------------------------');
+      log('--------------------------------', name: 'AppBloc');
     } catch (e) {
       add(AppErrorEvent(e));
     }

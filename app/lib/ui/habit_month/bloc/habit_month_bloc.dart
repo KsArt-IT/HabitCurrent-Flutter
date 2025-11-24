@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -192,7 +193,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
 
     // не начато
     if (habit.created != null && day.isBefore(habit.created!)) {
-      // print('notStarted: $day habit: ${habit.name} ${habit.created}');
+      // log('notStarted: $day habit: ${habit.name} ${habit.created}', name: 'HabitMonthBloc');
       return HabitDayStatus.notStarted;
     }
 

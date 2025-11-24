@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
@@ -43,7 +45,7 @@ class _ReminderButtonState extends State<ReminderButton> with WidgetsBindingObse
                   ? Reminder.enabled
                   : Reminder.disabled
             : state.reminder;
-        debugPrint('reminder: $reminder');
+        log('reminder: $reminder', name: 'ReminderButton');
 
         return Padding(
           padding: const EdgeInsets.only(top: Constants.paddingXLarge),

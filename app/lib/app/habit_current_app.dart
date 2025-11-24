@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
@@ -34,25 +36,25 @@ class HabitCurrentApp extends StatelessWidget {
           listener: (context, state) {
             switch (state.status) {
               case AppStatus.initial:
-                debugPrint('AppInitialState');
+                log('AppInitialState', name: 'HabitCurrentApp');
                 break;
               case AppStatus.userLoaded:
-                debugPrint('AppLoadedState: ${state.user?.name}');
+                log('AppLoadedState: ${state.user?.name}', name: 'HabitCurrentApp');
                 router.replace(const HomeRoute());
               case AppStatus.habitView:
-                debugPrint('AppHabitViewState');
+                log('AppHabitViewState', name: 'HabitCurrentApp');
                 router.push(const HabitViewRoute());
               case AppStatus.habitCreate:
-                debugPrint('AppHabitCreateState');
+                log('AppHabitCreateState', name: 'HabitCurrentApp');
                 router.push(const HabitEditRoute());
               case AppStatus.habitEdit:
-                debugPrint('AppHabitEditState: ${state.habitId}');
+                log('AppHabitEditState: ${state.habitId}', name: 'HabitCurrentApp');
                 router.push(const HabitEditRoute());
               case AppStatus.habitReload:
-                debugPrint('AppHabitsReloadState: ${state.habitId}');
+                log('AppHabitsReloadState: ${state.habitId}', name: 'HabitCurrentApp');
                 break;
               case AppStatus.error:
-                debugPrint('AppErrorState: ${state.error}');
+                log('AppErrorState: ${state.error}', name: 'HabitCurrentApp');
                 if (state.error != null) {
                   _showAppError(context, state.error!);
                 }

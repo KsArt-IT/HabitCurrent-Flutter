@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -22,9 +23,9 @@ abstract class TimeZone {
     final TimezoneInfo timeZoneName = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZoneName.identifier));
     if (kDebugMode) {
-      print('--------------------------------');
-      print('Local timezone: ${timeZoneName.identifier}');
-      print('--------------------------------');
+      log('--------------------------------', name: 'AppBloc');
+      log('Local timezone: ${timeZoneName.identifier}', name: 'AppBloc');
+      log('--------------------------------', name: 'AppBloc');
     }
   }
 }

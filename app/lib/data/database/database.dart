@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:habit_current/data/database/tables.dart';
@@ -28,9 +30,9 @@ class AppDatabase extends _$AppDatabase {
         driftWorker: Uri.parse('drift_worker.dart.js'),
         onResult: (result) {
           if (result.missingFeatures.isNotEmpty) {
-            print(
+            log(
               'Using ${result.chosenImplementation} due to unsupported '
-              'browser features: ${result.missingFeatures}',
+              'browser features: ${result.missingFeatures}', name: 'AppDatabase'
             );
           }
         },

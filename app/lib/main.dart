@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/app.dart';
@@ -31,9 +33,9 @@ void main() async {
   // Path to the application documents directory
   assert(() {
     getApplicationDocumentsDirectory().then((dir) {
-      print('--------------------------------');
-      print(dir);
-      print('--------------------------------');
+      log('--------------------------------', name: 'main');
+      log(dir.path, name: 'main');
+      log('--------------------------------', name: 'main');
     });
     return true;
   }());

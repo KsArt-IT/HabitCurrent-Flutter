@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -9,7 +10,7 @@ class AppBlocObserver extends BlocObserver {
   void onCreate(BlocBase<dynamic> bloc) {
     super.onCreate(bloc);
     if (_show) {
-      debugPrint('onCreate -- bloc: ${bloc.runtimeType}');
+      log('onCreate -- bloc: ${bloc.runtimeType}', name: 'AppBlocObserver');
     }
   }
 
@@ -17,7 +18,7 @@ class AppBlocObserver extends BlocObserver {
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     super.onEvent(bloc, event);
     if (_show) {
-      debugPrint('onEvent -- bloc: ${bloc.runtimeType}, event: $event');
+      log('onEvent -- bloc: ${bloc.runtimeType}, event: $event', name: 'AppBlocObserver');
     }
   }
 
@@ -25,7 +26,7 @@ class AppBlocObserver extends BlocObserver {
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
     if (_show) {
-      debugPrint('onChange -- bloc: ${bloc.runtimeType}, event: $change');
+      log('onChange -- bloc: ${bloc.runtimeType}, event: $change', name: 'AppBlocObserver');
     }
   }
 
@@ -36,8 +37,9 @@ class AppBlocObserver extends BlocObserver {
   ) {
     super.onTransition(bloc, transition);
     if (_show) {
-      debugPrint(
+      log(
         'onTransition -- bloc: ${bloc.runtimeType}, transition: $transition',
+        name: 'AppBlocObserver',
       );
     }
   }
@@ -45,7 +47,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     if (_show) {
-      debugPrint('onError -- bloc: ${bloc.runtimeType}, error: $error');
+      log('onError -- bloc: ${bloc.runtimeType}, error: $error', name: 'AppBlocObserver');
     }
     super.onError(bloc, error, stackTrace);
   }

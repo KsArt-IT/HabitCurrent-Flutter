@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:habit_current/core/error/app_error.dart';
@@ -29,13 +31,13 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
     HabitViewChangedEvent event,
     Emitter<HabitViewState> emit,
   ) async {
-    print('--------------------------------');
-    print('event.index: ${event.index}');
-    print('--------------------------------');
+    log('--------------------------------', name: 'HabitViewBloc');
+    log('event.index: ${event.index}', name: 'HabitViewBloc');
+    log('--------------------------------', name: 'HabitViewBloc');
     if (event.index < 0 || event.index >= state.habit.intervals.length) return;
     try {
       final interval = state.habit.intervals[event.index];
-      print('interval: ${interval.id}');
+      log('interval: ${interval.id}', name: 'HabitViewBloc');
       // изменим статус выполнения интервала и получим список выполненных интервалов
       final (completedIntervals, todayCompleted) = await _changeAndGetCompleted(
         interval,
@@ -83,7 +85,7 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
       } catch (e) {
         throw DatabaseCreatingError(e.toString());
       }
-      print('completed: ${completed.id} ${completed.intervalId}');
+      log('completed: ${completed.id} ${completed.intervalId}', name: 'HabitViewBloc');
     } else {
       try {
         await _dataRepository.deleteHourIntervalCompletedById(completed.id);
@@ -92,7 +94,7 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
       }
       completedIntervals.remove(completed);
       todayCompleted = false;
-      print('remove: ${completed.id} ${completed.intervalId}');
+      log('remove: ${completed.id} ${completed.intervalId}', name: 'HabitViewBloc');
     }
     return (completedIntervals, todayCompleted);
   }
