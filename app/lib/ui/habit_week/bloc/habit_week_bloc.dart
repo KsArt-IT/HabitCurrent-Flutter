@@ -14,9 +14,11 @@ part 'habit_week_event.dart';
 part 'habit_week_state.dart';
 
 class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
-  final DataRepository repository;
+  final DataRepository _repository;
 
-  HabitWeekBloc({required this.repository}) : super(HabitWeekState(date: DateTime.now())) {
+  HabitWeekBloc({required DataRepository repository})
+    : _repository = repository,
+      super(HabitWeekState(date: DateTime.now())) {
     on<LoadHabitWeekEvent>(_onLoadHabitWeekEvent);
     on<ReloadHabitEvent>(_onReloadHabitEvent);
     on<RefreshHabitWeekEvent>(_onRefreshHabitWeekEvent);
@@ -81,7 +83,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
   Future<List<HabitWeek>> _loadHabits(int userId, DateTime date) async {
     final weekRange = date.toWeekRange();
 
-    final habits = await repository.loadHabitsByUserIdFromDateRange(
+    final habits = await _repository.loadHabitsByUserIdFromDateRange(
       userId: userId,
       start: weekRange.start,
       end: weekRange.end,
