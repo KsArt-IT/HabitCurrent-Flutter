@@ -42,7 +42,7 @@ class _ReminderSelectorState extends State<ReminderSelector> with WidgetsBinding
     final strings = context.l10n;
     final theme = Theme.of(context);
 
-    RadioListTile radioListTile({
+    RadioListTile<Reminder> radioListTile({
       required String title,
       required Reminder value,
     }) {
