@@ -9,7 +9,7 @@ class LoadHabitsEvent extends HabitFlowEvent {
 }
 
 class RefreshHabitsEvent extends HabitFlowEvent {
-  final Completer completer;
+  final Completer<void> completer;
 
   RefreshHabitsEvent(this.completer);
 }
