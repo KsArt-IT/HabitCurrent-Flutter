@@ -127,8 +127,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
   ) async {
     try {
       await _repository.deleteHabitById(event.habitId);
-      final habits = List<Habit>.from(state.habits);
-      habits.removeWhere((e) => e.id == event.habitId);
+      final habits = List<Habit>.from(state.habits)..removeWhere((e) => e.id == event.habitId);
       emit(state.copyWith(status: StateStatus.success, habits: habits));
     } catch (e) {
       emit(
