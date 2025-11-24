@@ -17,7 +17,7 @@ class FrequencySelector extends StatelessWidget {
     final strings = context.l10n;
     final theme = Theme.of(context);
 
-    RadioListTile radioListTile({
+    RadioListTile<Frequency> radioListTile({
       required String title,
       required Frequency value,
     }) {
