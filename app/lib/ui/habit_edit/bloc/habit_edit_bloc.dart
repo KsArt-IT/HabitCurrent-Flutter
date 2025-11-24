@@ -16,13 +16,15 @@ part 'habit_edit_event.dart';
 part 'habit_edit_state.dart';
 
 class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
-  final DataRepository dataRepository;
-  final NotificationRepository notificationRepository;
+  final DataRepository _dataRepository;
+  final NotificationRepository _notificationRepository;
 
   HabitEditBloc({
-    required this.dataRepository,
-    required this.notificationRepository,
-  }) : super(const HabitEditState()) {
+    required DataRepository dataRepository,
+    required NotificationRepository notificationRepository,
+  }) : _notificationRepository = notificationRepository,
+       _dataRepository = dataRepository,
+       super(const HabitEditState()) {
     // проверим разрешения
     on<CheckPermissionEvent>(_onCheckPermissionEvent);
 
@@ -55,7 +57,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
 
   Future<Habit> _createHabit() async {
     // Save the habit to the database
-    final habit = await dataRepository.createHabit(
+    final habit = await _dataRepository.createHabit(
       Habit(
         userId: state.userId,
         name: state.name,
@@ -73,7 +75,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     StartEditHabitEvent event,
     Emitter<HabitEditState> emit,
   ) async {
-    final habit = await dataRepository.loadHabitById(
+    final habit = await _dataRepository.loadHabitById(
       event.habitId,
       DateTime.now(),
     );
@@ -88,7 +90,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       weekDays: state.frequency == Frequency.weekly ? state.weekDays : {},
       intervals: state.intervals,
     );
-    return await dataRepository.saveHabit(habit);
+    return await _dataRepository.saveHabit(habit);
   }
 
   // Сохранение привычки
@@ -102,7 +104,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       Habit habit;
       if (state.habit != null) {
         // отменим уведомления для habitId
-        await notificationRepository.cancelNotificationByHabitId(
+        await _notificationRepository.cancelNotificationByHabitId(
           state.habit!.id,
         );
         // сохраним привычку
@@ -114,7 +116,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
         await _saveNotifications(habit);
         log('HabitEditBloc: scheduleNotificationByHabitId', name: 'HabitEditBloc');
         // создадим новые уведомления для habitId
-        await notificationRepository.scheduleNotificationByHabitId(habit.id);
+        await _notificationRepository.scheduleNotificationByHabitId(habit.id);
       }
       // завершим
       emit(state.copyWith(status: StateStatus.success, habitId: habit.id));
@@ -220,7 +222,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       habit.weekDays,
       habit.intervals,
     );
-    await dataRepository.saveNotifications(
+    await _dataRepository.saveNotifications(
       userId: habit.userId,
       habitId: habit.id,
       title: habit.name,
@@ -242,7 +244,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     CheckPermissionEvent event,
     Emitter<HabitEditState> emit,
   ) async {
-    final permission = await notificationRepository.checkNotificationPermission();
+    final permission = await _notificationRepository.checkNotificationPermission();
     final reminder = _getReminderState(
       permission,
       open: state.reminder == Reminder.open,
@@ -255,12 +257,12 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     Emitter<HabitEditState> emit,
   ) async {
     if (state.reminder == Reminder.request) {
-      final permission = await notificationRepository.requestNotificationPermission();
+      final permission = await _notificationRepository.requestNotificationPermission();
       final reminder = _getReminderState(permission, open: true);
       emit(state.copyWith(reminder: reminder));
     } else {
       // открыть настройки приложения
-      notificationRepository.openNotificationSettings();
+      _notificationRepository.openNotificationSettings();
     }
   }
 
