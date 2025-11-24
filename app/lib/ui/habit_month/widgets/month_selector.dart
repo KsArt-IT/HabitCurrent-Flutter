@@ -25,6 +25,7 @@ class MonthSelector extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ArrowButton(
+              // ignore: avoid_redundant_argument_values
               left: true,
               disabled: isFirstMonth,
               onPressed: () {
