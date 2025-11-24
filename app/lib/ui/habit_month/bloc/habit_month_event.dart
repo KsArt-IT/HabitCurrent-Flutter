@@ -26,7 +26,7 @@ class ChangeMonthHabitEvent extends HabitMonthEvent {
 }
 
 class RefreshHabitEvent extends HabitMonthEvent {
-  final Completer completer;
+  final Completer<void> completer;
 
   const RefreshHabitEvent(this.completer);
 
