@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:developer';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -11,7 +13,7 @@ import 'package:timezone/timezone.dart';
 final class LocalNotificationService implements NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  Function(NotificationResponseDetails notification)? _onNotificationReceived;
+  ValueChanged<NotificationResponseDetails>? _onNotificationReceived;
 
   // MARK: - Actions
   static const String openActionId = 'open_action';
@@ -250,8 +252,8 @@ final class LocalNotificationService implements NotificationService {
   }
 
   @override
-  void openNotificationSettings() {
-    openAppSettings();
+  Future<void> openNotificationSettings() async {
+    await openAppSettings();
   }
 
   // MARK: - Get Pending and Active Notifications
@@ -384,7 +386,7 @@ final class LocalNotificationService implements NotificationService {
   // MARK: - Observe Notification Received
   @override
   Future<void> observeNotificationReceived(
-    Function(NotificationResponseDetails notification) onReceived,
+    ValueChanged<NotificationResponseDetails> onReceived,
   ) async {
     _onNotificationReceived = onReceived;
   }
@@ -409,7 +411,7 @@ final class LocalNotificationService implements NotificationService {
     return _getNotificationDetails(response);
   }
 
-  NotificationResponseDetails _getNotificationDetails(response) {
+  NotificationResponseDetails _getNotificationDetails(NotificationResponse response) {
     log('--------------------------------', name: 'LocalNotificationService');
     log('getNotificationDetails: ${response.actionId}', name: 'LocalNotificationService');
     switch (response.actionId) {
@@ -475,7 +477,9 @@ final class LocalNotificationService implements NotificationService {
 
   bool get _isMacOS => defaultTargetPlatform == TargetPlatform.macOS;
 
+  // ignore: unused_element
   bool get _isLinux => defaultTargetPlatform == TargetPlatform.linux;
 
+  // ignore: unused_element
   bool get _isWindows => defaultTargetPlatform == TargetPlatform.windows;
 }
