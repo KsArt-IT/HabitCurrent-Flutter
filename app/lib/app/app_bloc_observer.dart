@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
-  final _show = false;
+  static const _show = false;
 
   @override
   void onCreate(BlocBase<dynamic> bloc) {
