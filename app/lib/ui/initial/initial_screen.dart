@@ -28,17 +28,17 @@ class _InitialScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<InitialBloc, InitialState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         switch (state) {
           case InitialLoadingState():
             log('InitialLoadingState', name: 'InitialScreen');
             break;
           case InitialOnboardState():
             log('InitialOnboardState', name: 'InitialScreen');
-            context.router.replace(const OnboardRoute());
+            await context.router.replace(const OnboardRoute());
           case InitialHelloState():
             log('InitialHelloState', name: 'InitialScreen');
-            context.router.replace(const HelloRoute());
+            await context.router.replace(const HelloRoute());
           case InitialLoadedState(:final user):
             log('InitialLoadedState', name: 'InitialScreen');
             context.read<AppBloc>().add(AppUserLoadedEvent(user: user));
