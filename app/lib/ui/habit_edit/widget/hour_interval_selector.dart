@@ -23,7 +23,7 @@ class HourIntervalSelector extends StatelessWidget {
     Widget buildTimeContainer(
       BuildContext context,
       int time,
-      Function(int) action,
+      ValueChanged<int> action,
     ) {
       return TimeContainer(
         time: time,
