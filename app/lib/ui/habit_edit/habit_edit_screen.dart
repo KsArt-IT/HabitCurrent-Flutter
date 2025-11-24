@@ -102,7 +102,7 @@ class _HabitEditBody extends StatelessWidget {
                         const SizedBox(height: Constants.paddingMedium),
                         // MARK: - Frequency selector
                         const SizedBox(height: Constants.paddingMedium),
-                        FrequencySelector(selectorDays: WeekDaysSelector()),
+                        const FrequencySelector(selectorDays: WeekDaysSelector()),
                         // MARK: - Time interval selector
                         const SizedBox(height: Constants.paddingMedium),
                         const HourIntervalSelector(),
