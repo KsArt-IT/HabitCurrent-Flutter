@@ -22,16 +22,14 @@ class AppState extends Equatable {
   final int update;
 
   const AppState({
-    required this.status,
+    this.status = .initial,
     this.user,
-    this.reminder = Reminder.enabled,
+    this.reminder = .enabled,
     this.habit,
     this.habitId,
     this.error,
     this.update = 0,
   });
-
-  factory AppState.initial() => const AppState(status: AppStatus.initial);
 
   AppState copyWith({
     AppStatus? status,
