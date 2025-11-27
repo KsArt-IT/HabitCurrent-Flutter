@@ -38,13 +38,11 @@ class HabitEditScreen extends StatelessWidget {
     );
   }
 
-  HabitEditEvent? _stateToHabitEvent(AppState state) {
-    return switch (state.status) {
-      AppStatus.habitCreate => StartCreateHabitEvent(userId: state.user!.id),
-      AppStatus.habitEdit => StartEditHabitEvent(habitId: state.habitId!),
-      _ => null,
-    };
-  }
+  HabitEditEvent? _stateToHabitEvent(AppState state) => switch (state.status) {
+    .habitCreate => StartCreateHabitEvent(userId: state.user!.id),
+    .habitEdit => StartEditHabitEvent(habitId: state.habitId!),
+    _ => null,
+  };
 }
 
 class _HabitEditBody extends StatelessWidget {
