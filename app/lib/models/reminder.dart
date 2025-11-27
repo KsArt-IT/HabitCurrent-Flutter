@@ -2,8 +2,8 @@ enum Reminder {
   enabled,
   disabled,
   request,
-  open
+  open,
   ;
 
-  bool get isGranted => this == Reminder.enabled || this == Reminder.disabled;
+  bool get isGranted => this == .enabled || this == .disabled;
 }
