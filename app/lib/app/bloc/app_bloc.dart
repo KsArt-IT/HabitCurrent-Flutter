@@ -24,7 +24,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     required NotificationRepository notificationRepository,
   }) : _notificationRepository = notificationRepository,
        _dataRepository = dataRepository,
-       super(AppState.initial()) {
+       super(const AppState()) {
     on<AppInitialEvent>(_onInitialEvent);
     on<AppUserLoadedEvent>(_onUserLoadedEvent);
 
@@ -48,7 +48,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   void _onInitialEvent(AppInitialEvent event, Emitter<AppState> emit) async {
-    emit(AppState.initial());
+    emit(const AppState());
   }
 
   // MARK: - User Loaded
@@ -56,7 +56,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppUserLoadedEvent event,
     Emitter<AppState> emit,
   ) async {
-    emit(state.copyWith(status: AppStatus.userLoaded, user: event.user));
+    emit(state.copyWith(status: .userLoaded, user: event.user));
     // Проверяем, было ли приложение запущено через уведомление
     await _onNotificationReceivedAppLaunch();
   }
@@ -72,8 +72,8 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     if (state.user != null) {
       emit(
         state.copyWith(
-          status: AppStatus.habitCreate,
-          update: state.update + 1, //
+          status: .habitCreate,
+          update: state.update + 1,
         ),
       );
     } else {
@@ -85,7 +85,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitViewEvent event,
     Emitter<AppState> emit,
   ) async {
-    emit(state.copyWith(status: AppStatus.habitView, habit: event.habit));
+    emit(state.copyWith(status: .habitView, habit: event.habit));
   }
 
   void _onHabitEditEvent(
@@ -94,7 +94,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     emit(
       state.copyWith(
-        status: AppStatus.habitEdit,
+        status: .habitEdit,
         habitId: event.habitId,
         update: state.update + 1,
       ),
@@ -105,7 +105,12 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     AppHabitReloadEvent event,
     Emitter<AppState> emit,
   ) async {
-    emit(state.copyWith(status: AppStatus.habitReload, habitId: event.habitId));
+    emit(
+      state.copyWith(
+        status: .habitReload,
+        habitId: event.habitId,
+      ),
+    );
   }
 
   void _onHabitDeleteEvent(
@@ -118,7 +123,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
       await _dataRepository.deleteHabitById(event.habitId!);
       emit(
         state.copyWith(
-          status: AppStatus.habitReload,
+          status: .habitReload,
           habitId: event.habitId,
           update: state.update + 1,
         ),
@@ -162,7 +167,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
       // update
       emit(
         state.copyWith(
-          status: AppStatus.habitReload,
+          status: .habitReload,
           habitId: event.habitId,
           update: state.update + 1,
         ),
@@ -181,12 +186,12 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
       final permission = await _notificationRepository.getNotificationPermissionStatus();
       emit(
         state.copyWith(
-          status: AppStatus.initial,
+          status: .initial,
           reminder: permission == null
-              ? Reminder.request
+              ? .request
               : permission
-              ? Reminder.enabled
-              : Reminder.open,
+              ? .enabled
+              : .open,
         ),
       );
     } catch (e) {
@@ -202,25 +207,25 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     try {
       final Reminder reminder;
       switch (event.reminder) {
-        case Reminder.open:
+        case .open:
           _onReminderOpenSettings();
           return;
-        case Reminder.request:
+        case .request:
           final permission = await _notificationRepository.requestNotificationPermission();
-          reminder = permission ? Reminder.enabled : Reminder.open;
-        case Reminder.enabled:
+          reminder = permission ? .enabled : .open;
+        case .enabled:
           // отменить все уведомления
           await _notificationRepository.cancelAllNotifications();
-          reminder = Reminder.disabled;
-        case Reminder.disabled:
+          reminder = .disabled;
+        case .disabled:
           // перезапустить все уведомления
           await _notificationRepository.cancelAllNotifications();
           await _notificationRepository.scheduleNotificationByUserId(
             state.user!.id,
           );
-          reminder = Reminder.enabled;
+          reminder = .enabled;
       }
-      emit(state.copyWith(status: AppStatus.initial, reminder: reminder));
+      emit(state.copyWith(status: .initial, reminder: reminder));
     } catch (e) {
       _showError(e, emit);
     }
@@ -318,7 +323,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
   void _showError(Object error, Emitter<AppState> emit) {
     emit(
       state.copyWith(
-        status: AppStatus.error,
+        status: .error,
         error: error is AppError ? error : UnknownError(error.toString()),
         update: state.update + 1,
       ),
