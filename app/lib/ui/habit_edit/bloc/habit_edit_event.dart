@@ -37,8 +37,7 @@ final class UpdateHabitNameEvent extends HabitEditEvent {
 // Daily or Week days
 final class ToggleDailyOrWeekEvent extends HabitEditEvent {
   final Frequency frequency;
-
-  const ToggleDailyOrWeekEvent(Frequency? value) : frequency = value ?? Frequency.daily;
+  const ToggleDailyOrWeekEvent(Frequency? value) : frequency = value ?? .daily;
 
   @override
   List<Object?> get props => [frequency];
@@ -46,9 +45,7 @@ final class ToggleDailyOrWeekEvent extends HabitEditEvent {
 
 final class ChangeWeekDayEvent extends HabitEditEvent {
   final WeekDays weekDay;
-
   const ChangeWeekDayEvent(this.weekDay);
-
   @override
   List<Object?> get props => [weekDay];
 }
@@ -61,9 +58,7 @@ class RemoveTimeIntervalEvent extends HabitEditEvent {}
 final class ChangeTimeIntervalEvent extends HabitEditEvent {
   final int index;
   final int time;
-
   const ChangeTimeIntervalEvent({required this.index, required this.time});
-
   @override
   List<Object?> get props => [index, time];
 }
