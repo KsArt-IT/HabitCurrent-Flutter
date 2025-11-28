@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_edit/bloc/habit_edit_bloc.dart';
 import 'package:habit_current/ui/habit_edit/widget/frequency_selector.dart';
 import 'package:habit_current/ui/habit_edit/widget/habit_name_edit.dart';
@@ -56,12 +55,12 @@ class _HabitEditBody extends StatelessWidget {
     return BlocConsumer<HabitEditBloc, HabitEditState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        if (state.status == StateStatus.success) {
+        if (state.status == .success) {
           context.read<AppBloc>().add(
             AppHabitReloadEvent(habitId: state.habitId),
           );
           context.router.pop();
-        } else if (state.status == StateStatus.error && state.error != null) {
+        } else if (state.status == .error && state.error != null) {
           context.read<AppBloc>().add(AppErrorEvent(state.error!));
         }
       },
@@ -88,10 +87,10 @@ class _HabitEditBody extends StatelessWidget {
               children: [
                 Expanded(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(Constants.paddingMedium),
+                    padding: const .all(Constants.paddingMedium),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: .stretch,
+                      mainAxisSize: .min,
                       children: [
                         // MARK: - Habit name edit
                         HabitNameEditWidget(
@@ -112,13 +111,13 @@ class _HabitEditBody extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(Constants.paddingMedium),
+                  padding: const .all(Constants.paddingMedium),
                   child: BlocBuilder<HabitEditBloc, HabitEditState>(
                     buildWhen: (previous, current) => previous.status != current.status,
                     builder: (context, state) {
                       return PrimaryButton(
                         label: isEdit ? strings.saveBtn : strings.createBtn,
-                        disabled: state.status != StateStatus.valid,
+                        disabled: state.status != .valid,
                         onPressed: () {
                           context.read<HabitEditBloc>().add(SaveHabitEvent());
                         },
