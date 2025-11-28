@@ -20,19 +20,19 @@ final class AppRouter extends RootStackRouter {
     ),
     AutoRoute(
       page: OnboardRoute.page,
-      path: '/${OnboardRoute.name}', //
+      path: '/${OnboardRoute.name}',
     ),
     AutoRoute(
       page: HelloRoute.page,
-      path: '/${HelloRoute.name}', //
+      path: '/${HelloRoute.name}',
     ),
     AutoRoute(
       page: HabitEditRoute.page,
-      path: '/${HabitEditRoute.name}', //
+      path: '/${HabitEditRoute.name}',
     ),
     AutoRoute(
       page: HabitViewRoute.page,
-      path: '/${HabitViewRoute.name}', //
+      path: '/${HabitViewRoute.name}',
     ),
     AutoRoute(
       page: HomeRoute.page,
@@ -46,7 +46,3 @@ final class AppRouter extends RootStackRouter {
     ),
   ];
 }
-
-/*
-dart run build_runner build
-*/
