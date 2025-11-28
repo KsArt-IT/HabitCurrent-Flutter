@@ -26,7 +26,7 @@ class HabitEditState extends Equatable {
   final AppError? error;
 
   const HabitEditState({
-    this.status = StateStatus.initial,
+    this.status = .initial,
     this.habit,
     this.startTime,
     this.endTime,
@@ -36,10 +36,10 @@ class HabitEditState extends Equatable {
 
     this.name = '',
     this.details,
-    this.frequency = Frequency.daily,
+    this.frequency = .daily,
     this.weekDays = const {},
-    this.intervals = const [HourInterval(time: 420)],
-    this.reminder = Reminder.disabled,
+    this.intervals = const [.new(time: 420)],
+    this.reminder = .disabled,
     this.error,
   });
 
@@ -54,10 +54,10 @@ class HabitEditState extends Equatable {
 
       name: habit.name,
       details: habit.details,
-      frequency: habit.weekDays.length == 7 ? Frequency.daily : Frequency.weekly,
+      frequency: habit.weekDays.length == 7 ? .daily : .weekly,
       weekDays: habit.weekDays,
       intervals: habit.intervals,
-      reminder: habit.notifications.isNotEmpty ? Reminder.enabled : Reminder.disabled,
+      reminder: habit.notifications.isNotEmpty ? .enabled : .disabled,
     );
   }
 
@@ -79,10 +79,10 @@ class HabitEditState extends Equatable {
     Reminder? reminder,
     AppError? error,
   }) {
-    StateStatus checkStatus = status ?? StateStatus.valid;
+    var checkStatus = status ?? .valid;
     if ((name ?? this.name).isEmpty ||
-        (frequency ?? this.frequency) == Frequency.weekly && (weekDays ?? this.weekDays).isEmpty) {
-      checkStatus = StateStatus.error;
+        (frequency ?? this.frequency) == .weekly && (weekDays ?? this.weekDays).isEmpty) {
+      checkStatus = .error;
     }
 
     return HabitEditState(
