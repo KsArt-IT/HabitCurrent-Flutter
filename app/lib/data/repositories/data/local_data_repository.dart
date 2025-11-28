@@ -129,7 +129,7 @@ final class LocalDataRepository implements DataRepository {
           (e) => e.toModel(
             userId: userId,
             habitId: habitId,
-            title: title, //
+            title: title,
           ),
         )
         .toList();
