@@ -38,13 +38,13 @@ class HourIntervalSelector extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(Constants.paddingMedium),
+      padding: const .all(Constants.paddingMedium),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(Constants.borderRadius),
+        borderRadius: .circular(Constants.borderRadius),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           TextFormTitle(strings.chooseTime),
           const SizedBox(height: Constants.paddingMedium),
@@ -63,9 +63,7 @@ class HourIntervalSelector extends StatelessWidget {
                 child: SizedOutlinedButton(
                   label: strings.addTime,
                   disabled: intervals.length >= 12,
-                  onPressed: () {
-                    bloc.add(AddTimeIntervalEvent());
-                  },
+                  onPressed: () => bloc.add(AddTimeIntervalEvent()),
                 ),
               ),
             ],
@@ -79,15 +77,13 @@ class HourIntervalSelector extends StatelessWidget {
               crossAxisSpacing: Constants.paddingMedium,
               mainAxisSpacing: Constants.paddingSmall,
             ),
-            padding: EdgeInsets.zero,
+            padding: .zero,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: intervals.length,
             itemBuilder: (context, index) => buildTimeContainer(
               context,
               intervals[index].time,
-              (time) => bloc.add(
-                ChangeTimeIntervalEvent(index: index, time: time),
-              ),
+              (time) => bloc.add(ChangeTimeIntervalEvent(index: index, time: time)),
             ),
           ),
         ],
