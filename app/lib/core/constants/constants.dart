@@ -1,32 +1,32 @@
 abstract final class Constants {
-  static const double buttonHeight = 48;
-  static const double buttonRadius = buttonHeight / 2;
+  static const buttonHeight = 48.0;
+  static const buttonRadius = buttonHeight / 2.0;
 
-  static const double textFieldHeight = 44;
-  static const double textFieldRadius = textFieldHeight / 2;
-  static const double textFieldPaddingHorizontal = 16;
-  static const double textFieldPaddingVertical = 12;
-  static const double textFieldSpacing = 24;
+  static const textFieldHeight = 44.0;
+  static const textFieldRadius = textFieldHeight / 2.0;
+  static const textFieldPaddingHorizontal = 16.0;
+  static const textFieldPaddingVertical = 12.0;
+  static const textFieldSpacing = 24.0;
 
-  static const double paddingSmaller = 6;
-  static const double paddingAdjust = 10;
-  static const double paddingSmall = 8;
-  static const double paddingMedium = 16;
-  static const double paddingLarge = 24;
-  static const double paddingXLarge = 32;
+  static const paddingSmaller = 6.0;
+  static const paddingAdjust = 10.0;
+  static const paddingSmall = 8.0;
+  static const paddingMedium = 16.0;
+  static const paddingLarge = 24.0;
+  static const paddingXLarge = 32.0;
 
-  static const double borderRadius = 24;
-  static const double timeContainerHeight = 44;
-  static const double timeContainerRadius = 16;
+  static const borderRadius = 24.0;
+  static const timeContainerHeight = 44.0;
+  static const timeContainerRadius = 16.0;
 
-  static const double tabItemButtonSize = 70;
-  static const double tabItemRadius = tabItemButtonSize / 2;
+  static const tabItemButtonSize = 70.0;
+  static const tabItemRadius = tabItemButtonSize / 2.0;
 
-  static const double fabSpacing = 48;
+  static const fabSpacing = 48.0;
 
-  static const double iconSize = 22;
+  static const iconSize = 22.0;
 
-  static const double statusSize = 16;
+  static const statusSize = 16.0;
 
   static final regExpName = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$');
   static final regExpHabit = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z0-9\s]+$');
