@@ -43,13 +43,13 @@ class _HabitNameEditWidgetState extends State<HabitNameEditWidget> {
     final strings = context.l10n;
 
     return Container(
-      padding: const EdgeInsets.all(Constants.paddingMedium),
+      padding: const .all(Constants.paddingMedium),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(Constants.borderRadius),
+        color: theme.colorScheme.surface,
+        borderRadius: .circular(Constants.borderRadius),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           TextFormTitle(strings.habitEnterName),
           const SizedBox(height: Constants.paddingMedium),
@@ -59,16 +59,16 @@ class _HabitNameEditWidgetState extends State<HabitNameEditWidget> {
             cursorColor: theme.colorScheme.onPrimary,
             decoration: InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Constants.textFieldRadius),
-                borderSide: BorderSide.none,
+                borderRadius: .circular(Constants.textFieldRadius),
+                borderSide: .none,
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Constants.textFieldRadius),
-                borderSide: BorderSide.none,
+                borderRadius: .circular(Constants.textFieldRadius),
+                borderSide: .none,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(Constants.textFieldRadius),
-                borderSide: BorderSide.none,
+                borderRadius: .circular(Constants.textFieldRadius),
+                borderSide: .none,
               ),
               filled: true,
               fillColor: theme.colorScheme.secondaryContainer,
@@ -77,7 +77,7 @@ class _HabitNameEditWidgetState extends State<HabitNameEditWidget> {
               errorStyle: theme.textTheme.headlineSmall?.copyWith(
                 color: theme.colorScheme.error,
               ),
-              contentPadding: const EdgeInsets.symmetric(
+              contentPadding: const .symmetric(
                 horizontal: Constants.textFieldPaddingHorizontal,
                 vertical: Constants.textFieldPaddingVertical,
               ),
