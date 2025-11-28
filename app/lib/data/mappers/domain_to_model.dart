@@ -3,7 +3,7 @@ import 'package:habit_current/models/models.dart';
 import 'package:habit_current/models/weekdays.dart';
 
 extension UserToModel on User {
-  UserModel toModel() => UserModel(
+  UserModel toModel() => .new(
     id: id,
     name: name,
     avatar: avatar,
@@ -13,7 +13,7 @@ extension UserToModel on User {
 }
 
 extension HabitToModel on Habit {
-  HabitModel toModel() => HabitModel(
+  HabitModel toModel() => .new(
     id: id,
     userId: userId,
     name: name,
@@ -31,15 +31,15 @@ extension HabitToModel on Habit {
 }
 
 extension HourIntervalToModel on HourInterval {
-  HourIntervalModel toModel(int habitId) => HourIntervalModel(
+  HourIntervalModel toModel(int habitId) => .new(
     id: id,
     habitId: habitId,
-    time: time, //
+    time: time,
   );
 }
 
 extension HourIntervalCompletedToModel on HourIntervalCompleted {
-  HourIntervalCompletedModel toModel(int habitId) => HourIntervalCompletedModel(
+  HourIntervalCompletedModel toModel(int habitId) => .new(
     id: id,
     habitId: habitId,
     intervalId: intervalId,
@@ -53,7 +53,7 @@ extension HabitNotificationToModel on HabitNotification {
     required int userId,
     required int habitId,
     required String title,
-  }) => HabitNotificationModel(
+  }) => .new(
     id: id,
     userId: userId,
     habitId: habitId,
