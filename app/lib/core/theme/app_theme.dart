@@ -5,7 +5,7 @@ sealed class AppTheme {
   static final _fontFamily = 'Inter';
 
   static final lightTheme = ThemeData(
-    brightness: Brightness.light,
+    brightness: .light,
     useMaterial3: true,
     fontFamily: _fontFamily,
     appBarTheme: const AppBarTheme(backgroundColor: AppColors.gray50),
@@ -53,23 +53,23 @@ sealed class AppTheme {
       outlineVariant: AppColors.gray300,
     ),
     unselectedWidgetColor: AppColors.gray600,
-    radioTheme: RadioThemeData(
-      fillColor: WidgetStateProperty.resolveWith((states) {
+    radioTheme: .new(
+      fillColor: .resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return AppColors.gray900; // выбран
         }
         return AppColors.gray600; // не выбран
       }),
-      visualDensity: VisualDensity.compact,
+      visualDensity: .compact,
     ),
-    checkboxTheme: CheckboxThemeData(
-      fillColor: WidgetStateProperty.all(Colors.transparent),
-      checkColor: WidgetStateProperty.all(AppColors.gray900),
-      side: const BorderSide(color: AppColors.gray600),
-      visualDensity: VisualDensity.compact,
+    checkboxTheme: .new(
+      fillColor: .all(Colors.transparent),
+      checkColor: .all(AppColors.gray900),
+      side: const .new(color: AppColors.gray600),
+      visualDensity: .compact,
     ),
     // Time Picker
-    timePickerTheme: TimePickerThemeData(
+    timePickerTheme: .new(
       backgroundColor: AppColors.gray100,
 
       hourMinuteColor: AppColors.gray950,
@@ -83,89 +83,89 @@ sealed class AppTheme {
       dialTextColor: AppColors.gray50,
 
       entryModeIconColor: AppColors.gray950,
-      timeSelectorSeparatorColor: WidgetStateProperty.all(AppColors.gray950),
+      timeSelectorSeparatorColor: .all(AppColors.gray950),
 
-      cancelButtonStyle: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(AppColors.gray950),
-        foregroundColor: WidgetStateProperty.all(AppColors.gray50),
+      cancelButtonStyle: .new(
+        backgroundColor: .all(AppColors.gray950),
+        foregroundColor: .all(AppColors.gray50),
       ),
-      confirmButtonStyle: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(AppColors.gray950),
-        foregroundColor: WidgetStateProperty.all(AppColors.gray50),
+      confirmButtonStyle: .new(
+        backgroundColor: .all(AppColors.gray950),
+        foregroundColor: .all(AppColors.gray50),
       ),
     ),
     // Text Theme
-    textTheme: const TextTheme(
-      displayLarge: TextStyle(
+    textTheme: const .new(
+      displayLarge: .new(
         fontSize: 48,
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w600,
+        fontStyle: .normal,
+        fontWeight: .w600,
         color: AppColors.gray950,
       ),
-      displayMedium: TextStyle(
+      displayMedium: .new(
         fontSize: 24,
-        fontWeight: FontWeight.w500,
+        fontWeight: .w500,
         color: AppColors.gray950,
       ),
-      displaySmall: TextStyle(
+      displaySmall: .new(
         fontSize: 20,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray800,
       ),
-      titleLarge: TextStyle(
+      titleLarge: .new(
         fontSize: 32,
-        fontWeight: FontWeight.w600,
+        fontWeight: .w600,
         color: AppColors.gray950,
       ),
-      titleMedium: TextStyle(
+      titleMedium: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray950,
       ),
-      titleSmall: TextStyle(
+      titleSmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray600,
       ),
       // hint light
-      headlineSmall: TextStyle(
+      headlineSmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w300,
+        fontWeight: .w300,
         color: AppColors.gray800,
       ),
-      headlineMedium: TextStyle(
+      headlineMedium: .new(
         fontSize: 12,
-        fontWeight: FontWeight.w300,
+        fontWeight: .w300,
         color: AppColors.gray950,
       ),
-      bodyLarge: TextStyle(
+      bodyLarge: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray950,
       ),
-      bodyMedium: TextStyle(
+      bodyMedium: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: .w500,
         color: AppColors.gray600,
       ),
-      bodySmall: TextStyle(
+      bodySmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray600,
       ),
-      labelLarge: TextStyle(
+      labelLarge: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: .w500,
         color: AppColors.gray50,
       ),
-      labelMedium: TextStyle(
+      labelMedium: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray50,
       ),
-      labelSmall: TextStyle(
+      labelSmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w300,
+        fontWeight: .w300,
         color: AppColors.gray950,
       ),
     ),
@@ -173,22 +173,22 @@ sealed class AppTheme {
       filled: true,
       fillColor: AppColors.gray50,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        borderSide: BorderSide.none,
+        borderRadius: .all(Radius.circular(8)),
+        borderSide: .none,
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        borderSide: BorderSide.none,
+        borderRadius: .all(Radius.circular(8)),
+        borderSide: .none,
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        borderSide: BorderSide.none,
+        borderRadius: .all(Radius.circular(8)),
+        borderSide: .none,
       ),
     ),
   );
 
   static final darkTheme = ThemeData(
-    brightness: Brightness.dark,
+    brightness: .dark,
     useMaterial3: true,
     fontFamily: _fontFamily,
     appBarTheme: const AppBarTheme(backgroundColor: AppColors.gray950),
@@ -237,23 +237,23 @@ sealed class AppTheme {
       onSurface: AppColors.gray50,
     ),
     unselectedWidgetColor: AppColors.gray700,
-    radioTheme: RadioThemeData(
-      fillColor: WidgetStateProperty.resolveWith((states) {
+    radioTheme: .new(
+      fillColor: .resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
           return AppColors.brandColor; // выбран
         }
         return AppColors.gray700; // не выбран
       }),
-      visualDensity: VisualDensity.compact,
+      visualDensity: .compact,
     ),
-    checkboxTheme: CheckboxThemeData(
-      fillColor: WidgetStateProperty.all(Colors.transparent),
-      checkColor: WidgetStateProperty.all(AppColors.brandColor),
-      side: const BorderSide(color: AppColors.gray700),
-      visualDensity: VisualDensity.compact,
+    checkboxTheme: .new(
+      fillColor: .all(Colors.transparent),
+      checkColor: .all(AppColors.brandColor),
+      side: const .new(color: AppColors.gray700),
+      visualDensity: .compact,
     ),
     // Time Picker
-    timePickerTheme: TimePickerThemeData(
+    timePickerTheme: .new(
       backgroundColor: AppColors.gray900,
 
       hourMinuteColor: AppColors.gray50,
@@ -267,91 +267,91 @@ sealed class AppTheme {
       dialTextColor: AppColors.gray50,
 
       entryModeIconColor: AppColors.gray50,
-      timeSelectorSeparatorColor: WidgetStateProperty.all(AppColors.gray50),
+      timeSelectorSeparatorColor: .all(AppColors.gray50),
 
-      cancelButtonStyle: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(AppColors.gray50),
-        foregroundColor: WidgetStateProperty.all(AppColors.gray950),
+      cancelButtonStyle: .new(
+        backgroundColor: .all(AppColors.gray50),
+        foregroundColor: .all(AppColors.gray950),
       ),
-      confirmButtonStyle: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(AppColors.gray50),
-        foregroundColor: WidgetStateProperty.all(AppColors.gray950),
+      confirmButtonStyle: .new(
+        backgroundColor: .all(AppColors.gray50),
+        foregroundColor: .all(AppColors.gray950),
       ),
     ),
     // Text Theme
-    textTheme: const TextTheme(
-      displayLarge: TextStyle(
+    textTheme: const .new(
+      displayLarge: .new(
         fontSize: 48,
-        fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w600,
+        fontStyle: .normal,
+        fontWeight: .w600,
         color: AppColors.gray50,
       ),
-      displayMedium: TextStyle(
+      displayMedium: .new(
         fontSize: 24,
-        fontWeight: FontWeight.w500,
+        fontWeight: .w500,
         color: AppColors.brandColor,
       ),
-      displaySmall: TextStyle(
+      displaySmall: .new(
         fontSize: 20,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray600,
       ),
       // AppBar
-      titleLarge: TextStyle(
+      titleLarge: .new(
         fontSize: 32,
-        fontWeight: FontWeight.w600,
+        fontWeight: .w600,
         color: AppColors.gray50,
       ),
-      titleMedium: TextStyle(
+      titleMedium: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray50,
       ),
-      titleSmall: TextStyle(
+      titleSmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray700,
       ),
       // hint light
-      headlineSmall: TextStyle(
+      headlineSmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w300,
+        fontWeight: .w300,
         color: AppColors.gray800,
       ),
-      headlineMedium: TextStyle(
+      headlineMedium: .new(
         fontSize: 12,
-        fontWeight: FontWeight.w300,
+        fontWeight: .w300,
         color: AppColors.gray50,
       ),
-      bodyLarge: TextStyle(
+      bodyLarge: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray50,
       ),
-      bodyMedium: TextStyle(
+      bodyMedium: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: .w500,
         color: AppColors.gray600,
       ),
-      bodySmall: TextStyle(
+      bodySmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray600,
       ),
       // Buttons
-      labelLarge: TextStyle(
+      labelLarge: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w500,
+        fontWeight: .w500,
         color: AppColors.gray950,
       ),
-      labelMedium: TextStyle(
+      labelMedium: .new(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
+        fontWeight: .w400,
         color: AppColors.gray950,
       ),
-      labelSmall: TextStyle(
+      labelSmall: .new(
         fontSize: 14,
-        fontWeight: FontWeight.w300,
+        fontWeight: .w300,
         color: AppColors.gray50,
       ),
     ),
@@ -359,7 +359,7 @@ sealed class AppTheme {
 }
 
 extension ThemeX on ThemeData {
-  String get _themeFolder => brightness == Brightness.dark ? 'dark' : 'light';
+  String get _themeFolder => brightness == .dark ? 'dark' : 'light';
 
   String getImagePath(String imageName) => 'assets/images/$_themeFolder/$imageName';
 }
