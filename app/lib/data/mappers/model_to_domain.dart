@@ -36,7 +36,7 @@ extension HourIntervalToDomain on HourIntervalModel {
   HourInterval toDomain() {
     return HourInterval(
       id: id,
-      time: time, //
+      time: time,
     );
   }
 }
@@ -47,7 +47,7 @@ extension HourIntervalCompletedToDomain on HourIntervalCompletedModel {
       id: id,
       intervalId: intervalId,
       time: time,
-      completed: completed, //
+      completed: completed,
     );
   }
 }
