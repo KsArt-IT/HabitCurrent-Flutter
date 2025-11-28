@@ -30,10 +30,10 @@ class FrequencySelector extends StatelessWidget {
                 )
               : theme.textTheme.titleSmall,
         ),
-        visualDensity: VisualDensity.compact,
+        visualDensity: .compact,
         dense: true,
-        contentPadding: EdgeInsets.zero,
-        controlAffinity: ListTileControlAffinity.leading,
+        contentPadding: .zero,
+        controlAffinity: .leading,
         radioScaleFactor: 1.2,
         value: value,
         groupValue: frequency,
@@ -44,22 +44,22 @@ class FrequencySelector extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(Constants.paddingMedium),
+      padding: const .all(Constants.paddingMedium),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(Constants.borderRadius),
+        borderRadius: .circular(Constants.borderRadius),
       ),
 
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
         children: [
           TextFormTitle(strings.howOften),
           const SizedBox(height: Constants.paddingMedium),
-          radioListTile(title: strings.daily, value: Frequency.daily),
-          radioListTile(title: strings.yourSchedule, value: Frequency.weekly),
-          if (frequency == Frequency.weekly) const SizedBox(height: Constants.paddingMedium),
-          if (frequency == Frequency.weekly) selectorDays,
+          radioListTile(title: strings.daily, value: .daily),
+          radioListTile(title: strings.yourSchedule, value: .weekly),
+          if (frequency == .weekly) const SizedBox(height: Constants.paddingMedium),
+          if (frequency == .weekly) selectorDays,
         ],
       ),
     );
