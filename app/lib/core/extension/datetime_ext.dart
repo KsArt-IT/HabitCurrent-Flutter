@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 typedef WeekRange = ({DateTime start, DateTime end});
 typedef MonthRange = ({DateTime start, DateTime end});
 
@@ -16,6 +18,8 @@ extension IntWeekDay on DateTime {
     final end = DateTime(year, month + 1, 0, 23, 59, 59, 999);
     return (start: start, end: end);
   }
+
+  String toShortMonth() => DateFormat('MMM').format(this);
 
   bool isBeforeOrEqual(DateTime other) => isBefore(other) || isAtSameMomentAs(other);
 
