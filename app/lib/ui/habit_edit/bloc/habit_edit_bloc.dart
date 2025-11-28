@@ -52,7 +52,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     StartCreateHabitEvent event,
     Emitter<HabitEditState> emit,
   ) {
-    emit(state.copyWith(status: StateStatus.initial, userId: event.userId));
+    emit(state.copyWith(status: .initial, userId: event.userId));
   }
 
   Future<Habit> _createHabit() async {
@@ -63,7 +63,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
         name: state.name,
         details: state.details,
         // если Frequency.weekly, то передаем список, иначе пустой список
-        weekDays: state.frequency == Frequency.weekly ? state.weekDays : {},
+        weekDays: state.frequency == .weekly ? state.weekDays : {},
         intervals: state.intervals,
       ),
     );
@@ -77,17 +77,17 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
   ) async {
     final habit = await _dataRepository.loadHabitById(
       event.habitId,
-      DateTime.now(),
+      .now(),
     );
     if (habit == null) return;
-    emit(HabitEditState.fromHabit(habit));
+    emit(.fromHabit(habit));
   }
 
   Future<Habit> _saveHabit() async {
     final habit = state.habit!.copyWith(
       name: state.name,
       details: state.details,
-      weekDays: state.frequency == Frequency.weekly ? state.weekDays : {},
+      weekDays: state.frequency == .weekly ? state.weekDays : {},
       intervals: state.intervals,
     );
     return await _dataRepository.saveHabit(habit);
@@ -99,7 +99,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     Emitter<HabitEditState> emit,
   ) async {
     log('--------------------------------', name: 'HabitEditBloc');
-    emit(state.copyWith(status: StateStatus.initial));
+    emit(state.copyWith(status: .initial));
     try {
       Habit habit;
       if (state.habit != null) {
@@ -112,18 +112,18 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
       } else {
         habit = await _createHabit();
       }
-      if (state.reminder == Reminder.enabled) {
+      if (state.reminder == .enabled) {
         await _saveNotifications(habit);
         log('HabitEditBloc: scheduleNotificationByHabitId', name: 'HabitEditBloc');
         // создадим новые уведомления для habitId
         await _notificationRepository.scheduleNotificationByHabitId(habit.id);
       }
       // завершим
-      emit(state.copyWith(status: StateStatus.success, habitId: habit.id));
+      emit(state.copyWith(status: .success, habitId: habit.id));
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: DatabaseSavingError(e.toString()),
         ),
       );
@@ -161,7 +161,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
 
   void _onAddTimeIntervalEvent(
     AddTimeIntervalEvent event,
-    Emitter<HabitEditState> emit, //
+    Emitter<HabitEditState> emit,
   ) {
     // Максимальное количество интервалов - 12
     if (state.intervals.length >= 12) return;
@@ -231,11 +231,11 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
   }
 
   Reminder _getReminderState(bool permission, {bool open = false}) {
-    Reminder reminder = Reminder.disabled;
+    Reminder reminder = .disabled;
     if (!permission) {
-      reminder = open ? Reminder.open : Reminder.request;
+      reminder = open ? .open : .request;
     } else if (state.habit != null) {
-      reminder = state.habit!.notifications.isNotEmpty ? Reminder.enabled : Reminder.disabled;
+      reminder = state.habit!.notifications.isNotEmpty ? .enabled : .disabled;
     }
     return reminder;
   }
@@ -247,7 +247,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     final permission = await _notificationRepository.checkNotificationPermission();
     final reminder = _getReminderState(
       permission,
-      open: state.reminder == Reminder.open,
+      open: state.reminder == .open,
     );
     emit(state.copyWith(reminder: reminder));
   }
@@ -256,7 +256,7 @@ class HabitEditBloc extends Bloc<HabitEditEvent, HabitEditState> {
     RequestPermissionEvent event,
     Emitter<HabitEditState> emit,
   ) async {
-    if (state.reminder == Reminder.request) {
+    if (state.reminder == .request) {
       final permission = await _notificationRepository.requestNotificationPermission();
       final reminder = _getReminderState(permission, open: true);
       emit(state.copyWith(reminder: reminder));
