@@ -12,8 +12,8 @@ final class HourIntervalModel {
   HourIntervalModel copyWith({
     int? id,
     int? habitId,
-    int? time, //
-  }) => HourIntervalModel(
+    int? time,
+  }) => .new(
     id: id ?? this.id,
     habitId: habitId ?? this.habitId,
     time: time ?? this.time,
