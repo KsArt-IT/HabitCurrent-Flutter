@@ -27,10 +27,10 @@ class TabItemButton extends StatelessWidget {
         width: Constants.tabItemButtonSize,
         decoration: BoxDecoration(
           color: isActive ? theme.colorScheme.inversePrimary : theme.colorScheme.primary,
-          borderRadius: BorderRadius.circular(Constants.tabItemRadius),
+          borderRadius: .circular(Constants.tabItemRadius),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: [
             Icon(
               tab.icon,
@@ -38,7 +38,7 @@ class TabItemButton extends StatelessWidget {
             ),
             Text(
               tab.getLabel(context),
-              overflow: TextOverflow.ellipsis,
+              overflow: .ellipsis,
               style: isActive
                   ? theme.textTheme.headlineMedium!.copyWith(
                       color: theme.colorScheme.primary,
