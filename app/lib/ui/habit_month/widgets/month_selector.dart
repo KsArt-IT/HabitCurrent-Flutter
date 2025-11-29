@@ -22,7 +22,7 @@ class MonthSelector extends StatelessWidget {
         final isLastMonth = selectedMonth.month == 12;
 
         return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             ArrowButton(
               // ignore: avoid_redundant_argument_values
