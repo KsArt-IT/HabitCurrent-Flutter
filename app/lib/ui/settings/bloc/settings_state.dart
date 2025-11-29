@@ -6,7 +6,7 @@ final class SettingsState extends Equatable {
     this.language = '',
     this.themeName = 'system',
     this.reminder = true,
-    this.status = StateStatus.initial,
+    this.status = .initial,
     this.error,
   });
 
@@ -23,9 +23,9 @@ final class SettingsState extends Equatable {
       language.isNotEmpty ? Locale(language) : WidgetsBinding.instance.platformDispatcher.locale;
 
   String get themeCode => theme.name;
-  ThemeMode get theme => ThemeMode.values.firstWhere(
+  ThemeMode get theme => .values.firstWhere(
     (e) => e.name == themeName,
-    orElse: () => ThemeMode.system,
+    orElse: () => .system,
   );
 
   SettingsState copyWith({
@@ -36,17 +36,15 @@ final class SettingsState extends Equatable {
 
     StateStatus? status,
     AppError? error,
-  }) {
-    return SettingsState(
-      name: name ?? this.name,
-      language: language ?? this.language,
-      themeName: themeName ?? this.themeName,
-      reminder: reminder ?? this.reminder,
+  }) => .new(
+    name: name ?? this.name,
+    language: language ?? this.language,
+    themeName: themeName ?? this.themeName,
+    reminder: reminder ?? this.reminder,
 
-      status: status ?? this.status,
-      error: error ?? this.error,
-    );
-  }
+    status: status ?? this.status,
+    error: error ?? this.error,
+  );
 
   @override
   List<Object?> get props => [
@@ -56,6 +54,5 @@ final class SettingsState extends Equatable {
     reminder,
     status,
     error,
-    //
   ];
 }
