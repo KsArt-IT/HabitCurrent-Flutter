@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:habit_current/core/extension/datetime_ext.dart';
 
 class MonthNameWidget extends StatelessWidget {
   final DateTime month;
@@ -21,12 +21,12 @@ class MonthNameWidget extends StatelessWidget {
         : SizedBox(
             width: 50,
             child: Text(
-              DateFormat('MMM').format(month),
+              month.toShortMonth(),
               style: theme.textTheme.titleMedium?.copyWith(
                 color: selected ? theme.colorScheme.onPrimary : theme.colorScheme.onTertiaryFixed,
-                fontWeight: selected ? FontWeight.w500 : FontWeight.w300,
+                fontWeight: selected ? .w500 : .w300,
               ),
-              textAlign: TextAlign.center,
+              textAlign: .center,
             ),
           );
   }
