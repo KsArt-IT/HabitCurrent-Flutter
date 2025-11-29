@@ -50,14 +50,14 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
       // обновим список выполненных интервалов
       emit(
         state.copyWith(
-          status: StateStatus.initial,
+          status: .initial,
           habit: state.habit.copyWith(completedIntervals: completedIntervals),
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: e is AppError ? e : UnknownError(e.toString()),
         ),
       );
@@ -74,7 +74,7 @@ class HabitViewBloc extends Bloc<HabitViewEvent, HabitViewState> {
       completed = HourIntervalCompleted(
         intervalId: interval.id,
         time: interval.time,
-        completed: DateTime.now(),
+        completed: .now(),
       );
       try {
         completed = await _dataRepository.createHourIntervalCompleted(
