@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_month/bloc/habit_month_bloc.dart';
 import 'package:habit_current/ui/habit_month/widgets/habit_month_card.dart';
 import 'package:habit_current/ui/habit_month/widgets/month_selector.dart';
@@ -37,7 +36,7 @@ class _HabitMonthBody extends StatelessWidget {
 
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
-        if (state.status == AppStatus.habitReload) {
+        if (state.status == .habitReload) {
           context.read<HabitMonthBloc>().add(
             ReloadHabitEvent(habitId: state.habitId),
           );
@@ -45,10 +44,10 @@ class _HabitMonthBody extends StatelessWidget {
       },
       child: BlocBuilder<HabitMonthBloc, HabitMonthState>(
         builder: (context, state) {
-          if (state.status == StateStatus.error && state.error != null) {
+          if (state.status == .error && state.error != null) {
             context.read<AppBloc>().add(AppErrorEvent(state.error!));
           }
-          if (state.status == StateStatus.loading) {
+          if (state.status == .loading) {
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -77,7 +76,7 @@ class _HabitMonthBody extends StatelessWidget {
                       return completer.future;
                     },
                     child: ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(
+                      padding: const .fromLTRB(
                         Constants.paddingMedium,
                         Constants.paddingSmall,
                         Constants.paddingMedium,
