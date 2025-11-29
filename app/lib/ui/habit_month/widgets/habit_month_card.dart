@@ -5,28 +5,28 @@ import 'package:habit_current/ui/habit_month/widgets/month_status_widget.dart';
 import 'package:habit_current/ui/widgets/popup_menu/habit_popup_menu.dart';
 
 class HabitMonthCard extends StatelessWidget {
-  final HabitMonth habitMonth;
-
   const HabitMonthCard({super.key, required this.habitMonth});
+
+  final HabitMonth habitMonth;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: Constants.paddingSmall),
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, Constants.paddingAdjust),
+      margin: const .symmetric(vertical: Constants.paddingSmall),
+      padding: const .fromLTRB(0, 0, 0, Constants.paddingAdjust),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(Constants.borderRadius),
+        borderRadius: .circular(Constants.borderRadius),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: .start,
+        mainAxisSize: .min,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: .spaceBetween,
+            mainAxisSize: .min,
             children: [
               const SizedBox(width: Constants.paddingMedium),
               Expanded(
@@ -34,7 +34,7 @@ class HabitMonthCard extends StatelessWidget {
                   habitMonth.name,
                   style: theme.textTheme.titleMedium,
                   maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: .ellipsis,
                 ),
               ),
               HabitPopupMenu(habitId: habitMonth.id),
@@ -42,9 +42,7 @@ class HabitMonthCard extends StatelessWidget {
           ),
           // const SizedBox(height: Constants.paddingSmall),
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Constants.paddingMedium,
-            ),
+            padding: const .symmetric(horizontal: Constants.paddingMedium),
             child: MonthStatusWidget(weeksStatus: habitMonth.habitStatus),
           ),
         ],
