@@ -8,7 +8,7 @@ Future<TimeOfDay?> pickTime(
   TimeOfDay? initialTime,
 }) async {
   final theme = Theme.of(context);
-  TimeOfDay selectedTime = initialTime ?? TimeOfDay.now();
+  var selectedTime = initialTime ?? .now();
 
   if (Platform.isIOS) {
     // Cupertino picker
@@ -18,7 +18,7 @@ Future<TimeOfDay?> pickTime(
         return Container(
           height: 350,
           color: theme.colorScheme.surface,
-          padding: const EdgeInsets.all(Constants.paddingMedium),
+          padding: const .all(Constants.paddingMedium),
           child: Column(
             children: [
               CupertinoTimerPicker(
@@ -37,12 +37,12 @@ Future<TimeOfDay?> pickTime(
               ),
               const Spacer(),
               SizedBox(
-                width: double.infinity,
+                width: .infinity,
                 height: Constants.buttonHeight,
                 child: CupertinoButton(
                   color: theme.colorScheme.surfaceContainerLow,
-                  padding: EdgeInsets.zero,
-                  borderRadius: BorderRadius.circular(Constants.buttonRadius),
+                  padding: .zero,
+                  borderRadius: .circular(Constants.buttonRadius),
                   child: Text('Done', style: theme.textTheme.labelLarge),
                   onPressed: () {
                     Navigator.of(context).pop(selectedTime);
