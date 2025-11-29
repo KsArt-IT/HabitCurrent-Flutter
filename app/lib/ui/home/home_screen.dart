@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/core/router/app_router.gr.dart';
-import 'package:habit_current/ui/home/home_tab.dart';
 import 'package:habit_current/ui/home/widget/tab_item_button.dart';
 import 'package:habit_current/ui/widgets/reminder_button.dart';
 
@@ -32,10 +31,10 @@ class HomeScreen extends StatelessWidget {
             centerTitle: true,
           ),
           body: child,
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation: .centerDocked,
           floatingActionButton: FloatingActionButton(
             shape: const CircleBorder(),
-            key: const Key('homeView_add_floatingActionButton'),
+            key: const .new('homeView_add_floatingActionButton'),
             onPressed: () {
               context.read<AppBloc>().add(AppHabitCreateEvent());
             },
@@ -45,11 +44,11 @@ class HomeScreen extends StatelessWidget {
             child: const Icon(Icons.add),
           ),
           bottomNavigationBar: BottomAppBar(
-            padding: EdgeInsets.zero,
+            padding: .zero,
             color: theme.colorScheme.surface,
             shape: const CircularNotchedRectangle(),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: .spaceAround,
               children: _buildNavigationItems(tabsRouter),
             ),
           ),
@@ -58,29 +57,27 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildNavigationItems(TabsRouter tabsRouter) {
-    return [
-      TabItemButton(
-        tab: HomeTab.flow,
-        active: tabsRouter.activeIndex,
-        onTap: tabsRouter.setActiveIndex,
-      ),
-      TabItemButton(
-        tab: HomeTab.week,
-        active: tabsRouter.activeIndex,
-        onTap: tabsRouter.setActiveIndex,
-      ),
-      const ReminderButton(),
-      TabItemButton(
-        tab: HomeTab.month,
-        active: tabsRouter.activeIndex,
-        onTap: tabsRouter.setActiveIndex,
-      ),
-      TabItemButton(
-        tab: HomeTab.settings,
-        active: tabsRouter.activeIndex,
-        onTap: tabsRouter.setActiveIndex,
-      ),
-    ];
-  }
+  List<Widget> _buildNavigationItems(TabsRouter tabsRouter) => [
+    TabItemButton(
+      tab: .flow,
+      active: tabsRouter.activeIndex,
+      onTap: tabsRouter.setActiveIndex,
+    ),
+    TabItemButton(
+      tab: .week,
+      active: tabsRouter.activeIndex,
+      onTap: tabsRouter.setActiveIndex,
+    ),
+    const ReminderButton(),
+    TabItemButton(
+      tab: .month,
+      active: tabsRouter.activeIndex,
+      onTap: tabsRouter.setActiveIndex,
+    ),
+    TabItemButton(
+      tab: .settings,
+      active: tabsRouter.activeIndex,
+      onTap: tabsRouter.setActiveIndex,
+    ),
+  ];
 }
