@@ -15,19 +15,19 @@ class HabitWeekCard extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: Constants.paddingSmall),
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, Constants.paddingMedium),
+      margin: const .symmetric(vertical: Constants.paddingSmall),
+      padding: const .fromLTRB(0, 0, 0, Constants.paddingMedium),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(Constants.borderRadius),
+        borderRadius: .circular(Constants.borderRadius),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: .start,
+        mainAxisSize: .min,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: .spaceBetween,
+            mainAxisSize: .min,
             children: [
               const SizedBox(width: Constants.paddingMedium),
               Expanded(
@@ -35,14 +35,14 @@ class HabitWeekCard extends StatelessWidget {
                   habitWeek.name,
                   style: theme.textTheme.titleMedium,
                   maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  overflow: .ellipsis,
                 ),
               ),
               HabitPopupMenu(habitId: habitWeek.id),
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
+            padding: const .symmetric(
               horizontal: Constants.paddingMedium,
             ),
             child: Column(
