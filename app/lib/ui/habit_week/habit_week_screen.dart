@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_week/bloc/habit_week_bloc.dart';
 import 'package:habit_current/ui/habit_week/widgets/habit_week_card.dart';
 
@@ -36,7 +35,7 @@ class _HabitWeekBody extends StatelessWidget {
 
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
-        if (state.status == AppStatus.habitReload) {
+        if (state.status == .habitReload) {
           context.read<HabitWeekBloc>().add(
             ReloadHabitEvent(habitId: state.habitId),
           );
@@ -44,7 +43,7 @@ class _HabitWeekBody extends StatelessWidget {
       },
       child: BlocBuilder<HabitWeekBloc, HabitWeekState>(
         builder: (context, state) {
-          if (state.status == StateStatus.loading) {
+          if (state.status == .loading) {
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -64,7 +63,7 @@ class _HabitWeekBody extends StatelessWidget {
               return completer.future;
             },
             child: ListView.builder(
-              padding: const EdgeInsets.fromLTRB(
+              padding: const .fromLTRB(
                 Constants.paddingMedium,
                 Constants.paddingSmall,
                 Constants.paddingMedium,
