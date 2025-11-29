@@ -56,7 +56,9 @@ final class SettingsUpdateThemeEvent extends SettingsEvent {
 
 final class SettingsUpdateReminderEvent extends SettingsEvent {
   final bool reminder;
+
   const SettingsUpdateReminderEvent(this.reminder);
+
   @override
   List<Object?> get props => [reminder];
 }
