@@ -34,7 +34,7 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     LoadHabitsEvent event,
     Emitter<HabitFlowState> emit,
   ) async {
-    emit(state.copyWith(userId: event.userId, status: StateStatus.loading));
+    emit(state.copyWith(userId: event.userId, status: .loading));
 
     try {
       final date = DateTime.now();
@@ -43,19 +43,19 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
         date,
       );
       if (habits.isEmpty) {
-        emit(state.copyWith(status: StateStatus.success, habits: []));
+        emit(state.copyWith(status: .success, habits: []));
         return;
       }
 
       emit(
         state.copyWith(
-          status: StateStatus.success,
+          status: .success,
           habits: _filterAndSortHabits(habits, date),
         ),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: StateStatus.error, errorMessage: e.toString()),
+        state.copyWith(status: .error, errorMessage: e.toString()),
       );
     }
   }
@@ -73,13 +73,13 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
 
       emit(
         state.copyWith(
-          status: StateStatus.success,
+          status: .success,
           habits: _filterAndSortHabits(habits, date),
         ),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: StateStatus.error, errorMessage: e.toString()),
+        state.copyWith(status: .error, errorMessage: e.toString()),
       );
     } finally {
       event.completer.complete();
@@ -110,13 +110,13 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
       }
       emit(
         state.copyWith(
-          status: StateStatus.success,
+          status: .success,
           habits: _filterAndSortHabits(habits, date),
         ),
       );
     } catch (e) {
       emit(
-        state.copyWith(status: StateStatus.error, errorMessage: e.toString()),
+        state.copyWith(status: .error, errorMessage: e.toString()),
       );
     }
   }
@@ -128,10 +128,10 @@ class HabitFlowBloc extends Bloc<HabitFlowEvent, HabitFlowState> {
     try {
       await _repository.deleteHabitById(event.habitId);
       final habits = List<Habit>.from(state.habits)..removeWhere((e) => e.id == event.habitId);
-      emit(state.copyWith(status: StateStatus.success, habits: habits));
+      emit(state.copyWith(status: .success, habits: habits));
     } catch (e) {
       emit(
-        state.copyWith(status: StateStatus.error, errorMessage: e.toString()),
+        state.copyWith(status: .error, errorMessage: e.toString()),
       );
     }
   }
