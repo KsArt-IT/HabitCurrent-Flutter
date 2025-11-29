@@ -5,7 +5,6 @@ import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
 import 'package:habit_current/gen/app_localizations.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/settings/bloc/settings_bloc.dart';
 import 'package:habit_current/ui/widgets/sized_outlined_button.dart';
 
@@ -18,11 +17,13 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver {
+  late AppBloc _appBloc;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    context.read<AppBloc>().add(AppReminderCheckEvent());
+    _appBloc = context.read()..add(AppReminderCheckEvent());
   }
 
   @override
@@ -34,7 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      context.read<AppBloc>().add(AppReminderCheckEvent());
+      _appBloc.add(AppReminderCheckEvent());
     }
   }
 
@@ -46,8 +47,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
     return BlocConsumer<SettingsBloc, SettingsState>(
       listener: (context, state) {
-        if (state.status == StateStatus.error && state.error != null) {
-          context.read<AppBloc>().add(AppErrorEvent(state.error!));
+        if (state.status == .error && state.error != null) {
+          _appBloc.add(AppErrorEvent(state.error!));
         }
       },
       listenWhen: (previous, current) => previous.status != current.status,
@@ -71,11 +72,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                     )
                   : theme.textTheme.titleSmall,
             ),
-            visualDensity: VisualDensity.compact,
+            visualDensity: .compact,
             dense: true,
-            contentPadding: EdgeInsets.zero,
-            controlAffinity: ListTileControlAffinity.leading,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            contentPadding: .zero,
+            controlAffinity: .leading,
+            materialTapTargetSize: .shrinkWrap,
             value: value,
             groupValue: groupValue,
             onChanged: (val) {
@@ -88,9 +89,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
         return SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(Constants.paddingMedium),
+              padding: const .all(Constants.paddingMedium),
               child: Column(
-                children: <Widget>[
+                children: [
                   Text(
                     strings.language,
                     style: theme.textTheme.displaySmall?.copyWith(
@@ -108,11 +109,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                         value: value,
                         groupValue: state.languageCode,
                         theme: theme,
-                        onChanged: (value) {
-                          context.read<SettingsBloc>().add(
-                            SettingsUpdateLanguageEvent(language: value),
-                          );
-                        },
+                        onChanged: (value) => context.read<SettingsBloc>().add(
+                          SettingsUpdateLanguageEvent(language: value),
+                        ),
                       );
                     },
                   ),
@@ -134,11 +133,9 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                         value: value,
                         groupValue: state.themeCode,
                         theme: theme,
-                        onChanged: (value) {
-                          context.read<SettingsBloc>().add(
-                            SettingsUpdateThemeEvent(value),
-                          );
-                        },
+                        onChanged: (value) => context.read<SettingsBloc>().add(
+                          SettingsUpdateThemeEvent(value),
+                        ),
                       );
                     },
                   ),
@@ -153,26 +150,18 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                     const SizedBox(height: Constants.paddingMedium),
                     SizedOutlinedButton(
                       label: strings.requestPermission,
-                      onPressed: () {
-                        context.read<AppBloc>().add(AppReminderRequestEvent());
-                      },
+                      onPressed: () => _appBloc.add(AppReminderRequestEvent()),
                     ),
                   ],
                   const SizedBox(height: Constants.paddingMedium),
                   SizedOutlinedButton(
                     label: strings.showTestNotification,
-                    onPressed: () {
-                      context.read<AppBloc>().add(
-                        AppShowTestNotificationEvent(),
-                      );
-                    },
+                    onPressed: () => _appBloc.add(AppShowTestNotificationEvent()),
                   ),
                   const SizedBox(height: Constants.paddingMedium),
                   SizedOutlinedButton(
                     label: strings.openNotificationSettings,
-                    onPressed: () {
-                      context.read<AppBloc>().add(AppReminderOpenEvent());
-                    },
+                    onPressed: () => _appBloc.add(AppReminderOpenEvent()),
                   ),
                 ],
               ),
