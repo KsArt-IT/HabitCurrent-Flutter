@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/int_ext.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_view/bloc/habit_view_bloc.dart';
 
 @RoutePage()
@@ -19,7 +18,7 @@ class HabitViewScreen extends StatelessWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.router.pop();
       });
-      return const SizedBox();
+      return const SizedBox.shrink();
     }
 
     return BlocProvider(
@@ -58,7 +57,7 @@ class _HabitViewBody extends StatelessWidget {
       ),
       body: BlocConsumer<HabitViewBloc, HabitViewState>(
         listener: (context, state) {
-          if (state.status == StateStatus.error && state.error != null) {
+          if (state.status == .error && state.error != null) {
             context.read<AppBloc>().add(AppErrorEvent(state.error!));
             context.router.pop();
           }
@@ -66,14 +65,14 @@ class _HabitViewBody extends StatelessWidget {
         buildWhen: (previous, current) => previous.habit != current.habit,
         builder: (context, state) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
+            padding: const .symmetric(
               horizontal: Constants.paddingMedium,
             ),
             child: Container(
-              padding: const EdgeInsets.all(Constants.paddingMedium),
+              padding: const .all(Constants.paddingMedium),
               decoration: BoxDecoration(
                 color: theme.colorScheme.surface,
-                borderRadius: BorderRadius.circular(Constants.borderRadius),
+                borderRadius: .circular(Constants.borderRadius),
               ),
               child: GridView.builder(
                 shrinkWrap: true,
@@ -83,7 +82,7 @@ class _HabitViewBody extends StatelessWidget {
                   childAspectRatio: 4.0,
                   crossAxisSpacing: Constants.paddingMedium,
                 ),
-                padding: EdgeInsets.zero,
+                padding: .zero,
                 itemCount: state.habit.intervals.length,
                 itemBuilder: (context, index) {
                   final interval = state.habit.intervals[index];
@@ -100,9 +99,9 @@ class _HabitViewBody extends StatelessWidget {
                             )
                           : theme.textTheme.titleSmall,
                     ),
-                    contentPadding: EdgeInsets.zero,
-                    controlAffinity: ListTileControlAffinity.leading,
-                    visualDensity: VisualDensity.compact,
+                    contentPadding: .zero,
+                    controlAffinity: .leading,
+                    visualDensity: .compact,
                     dense: true,
                     value: isSelected,
                     onChanged: (_) {
