@@ -16,7 +16,7 @@ class WeekDaysSelector extends StatelessWidget {
     final l10n = context.l10n;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Text(l10n.chooseDay, style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
@@ -27,7 +27,7 @@ class WeekDaysSelector extends StatelessWidget {
             crossAxisCount: 2,
             childAspectRatio: 4,
           ),
-          padding: EdgeInsets.zero,
+          padding: .zero,
           itemCount: WeekDays.values.length,
           itemBuilder: (context, index) {
             final day = WeekDays.values[index];
@@ -42,8 +42,8 @@ class WeekDaysSelector extends StatelessWidget {
                     : theme.textTheme.titleSmall,
               ),
               value: isSelected,
-              contentPadding: EdgeInsets.zero,
-              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: .zero,
+              controlAffinity: .leading,
               onChanged: (_) {
                 context.read<HabitEditBloc>().add(ChangeWeekDayEvent(day));
               },
