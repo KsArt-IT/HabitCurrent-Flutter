@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
-import 'package:habit_current/models/state_status.dart';
 import 'package:habit_current/ui/habit_flow/bloc/habit_flow_bloc.dart';
 import 'package:habit_current/ui/habit_flow/widgets/habit_flow_card.dart';
 
@@ -37,7 +36,7 @@ class _HabitFlowBody extends StatelessWidget {
 
     return BlocListener<AppBloc, AppState>(
       listener: (context, state) {
-        if (state.status == AppStatus.habitReload) {
+        if (state.status == .habitReload) {
           context.read<HabitFlowBloc>().add(
             ReloadHabitEvent(habitId: state.habitId),
           );
@@ -52,11 +51,11 @@ class _HabitFlowBody extends StatelessWidget {
         },
         child: BlocBuilder<HabitFlowBloc, HabitFlowState>(
           builder: (context, state) {
-            if (state.status == StateStatus.loading) {
+            if (state.status == .loading) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state.status == StateStatus.error) {
+            if (state.status == .error) {
               return Center(
                 child: Text(
                   state.errorMessage ?? strings.errorUnknown,
@@ -83,7 +82,7 @@ class _HabitFlowBody extends StatelessWidget {
             }
 
             return GridView.builder(
-              padding: const EdgeInsets.fromLTRB(
+              padding: const .fromLTRB(
                 Constants.paddingMedium,
                 Constants.paddingSmall,
                 Constants.paddingMedium,
@@ -100,11 +99,7 @@ class _HabitFlowBody extends StatelessWidget {
                 final habit = state.habits[index];
                 return HabitFlowCard(
                   habit: habit,
-                  onPressed: () {
-                    context.read<AppBloc>().add(
-                      AppHabitViewEvent(habit: habit),
-                    );
-                  },
+                  onPressed: () => context.read<AppBloc>().add(AppHabitViewEvent(habit: habit)),
                 );
               },
             );
