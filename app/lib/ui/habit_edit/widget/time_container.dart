@@ -17,13 +17,13 @@ class TimeContainer extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(Constants.timeContainerRadius),
+          borderRadius: .circular(Constants.timeContainerRadius),
           child: Ink(
             height: Constants.timeContainerHeight,
-            width: double.infinity,
+            width: .infinity,
             decoration: BoxDecoration(
               color: theme.colorScheme.secondaryContainer,
-              borderRadius: BorderRadius.circular(
+              borderRadius: .circular(
                 Constants.timeContainerRadius,
               ),
             ),
