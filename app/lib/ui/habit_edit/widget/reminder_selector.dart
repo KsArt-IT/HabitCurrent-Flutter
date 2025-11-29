@@ -55,10 +55,10 @@ class _ReminderSelectorState extends State<ReminderSelector> with WidgetsBinding
                 )
               : theme.textTheme.titleSmall,
         ),
-        visualDensity: VisualDensity.compact,
+        visualDensity: .compact,
         dense: true,
-        contentPadding: EdgeInsets.zero,
-        controlAffinity: ListTileControlAffinity.leading,
+        contentPadding: .zero,
+        controlAffinity: .leading,
         radioScaleFactor: 1.2,
         value: value,
         groupValue: reminder,
@@ -69,31 +69,31 @@ class _ReminderSelectorState extends State<ReminderSelector> with WidgetsBinding
     }
 
     return Container(
-      padding: const EdgeInsets.all(Constants.paddingMedium),
+      padding: const .all(Constants.paddingMedium),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(Constants.borderRadius),
+        borderRadius: .circular(Constants.borderRadius),
       ),
 
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
         children: [
           Text(strings.reminder, style: theme.textTheme.titleMedium),
           const SizedBox(height: Constants.paddingMedium),
           if (reminder.isGranted) ...[
             radioListTile(
               title: strings.withoutReminder,
-              value: Reminder.disabled,
+              value: .disabled,
             ),
             radioListTile(
               title: strings.enableReminders,
-              value: Reminder.enabled,
+              value: .enabled,
             ),
           ],
           if (!reminder.isGranted)
             PrimaryButton(
-              label: reminder == Reminder.request
+              label: reminder == .request
                   ? strings.requestPermission
                   : strings.openNotificationSettings,
               onPressed: () {
