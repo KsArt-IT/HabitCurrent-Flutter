@@ -12,14 +12,14 @@ class RadialGradientBackground extends StatelessWidget {
     // final radius = MediaQuery.of(context).size.longestSide / MediaQuery.of(context).size.shortestSide;
 
     return Container(
-      padding: const EdgeInsets.all(Constants.paddingMedium),
+      padding: const .all(Constants.paddingMedium),
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [
             theme.colorScheme.tertiaryFixedDim,
             theme.colorScheme.onTertiaryFixedVariant,
           ],
-          center: Alignment.topCenter,
+          center: .topCenter,
           stops: const [0.3, 1.0],
           radius: 2,
         ),
