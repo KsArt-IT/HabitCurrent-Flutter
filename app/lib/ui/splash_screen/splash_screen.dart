@@ -19,7 +19,7 @@ class SplashScreen extends StatelessWidget {
           Expanded(child: Image.asset(theme.getImagePath('onboard_logo.png'))),
           Expanded(
             child: Align(
-              alignment: Alignment.bottomCenter,
+              alignment: .bottomCenter,
               child: Text(strings.appTitle, style: theme.textTheme.titleLarge),
             ),
           ),
