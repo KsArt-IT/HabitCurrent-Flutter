@@ -15,11 +15,13 @@ class ReminderButton extends StatefulWidget {
 }
 
 class _ReminderButtonState extends State<ReminderButton> with WidgetsBindingObserver {
+  late AppBloc _appBloc;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    context.read<AppBloc>().add(AppReminderCheckEvent());
+    _appBloc = context.read<AppBloc>()..add(AppReminderCheckEvent());
   }
 
   @override
@@ -31,12 +33,14 @@ class _ReminderButtonState extends State<ReminderButton> with WidgetsBindingObse
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      context.read<AppBloc>().add(AppReminderCheckEvent());
+      _appBloc.add(AppReminderCheckEvent());
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<AppBloc, AppState>(
       buildWhen: (previous, current) => previous.reminder != current.reminder,
       builder: (context, state) {
@@ -48,24 +52,24 @@ class _ReminderButtonState extends State<ReminderButton> with WidgetsBindingObse
         log('reminder: $reminder', name: 'ReminderButton');
 
         return Padding(
-          padding: const EdgeInsets.only(top: Constants.paddingXLarge),
+          padding: const .only(top: Constants.paddingXLarge),
           child: IconButton(
             onPressed: () {
-              context.read<AppBloc>().add(AppReminderChangeEvent(reminder));
+              _appBloc.add(AppReminderChangeEvent(reminder));
               context.read<SettingsBloc>().add(
                 // если уведомления включены, то выключить, иначе включить.
-                SettingsUpdateReminderEvent(reminder != Reminder.enabled),
+                SettingsUpdateReminderEvent(reminder != .enabled),
               );
             },
             icon: switch (reminder) {
-              Reminder.enabled => const Icon(Icons.notifications_active),
-              Reminder.disabled => const Icon(Icons.notifications_off),
-              Reminder.request => const Icon(Icons.notification_important),
-              Reminder.open => const Icon(Icons.edit_notifications),
+              .enabled => const Icon(Icons.notifications_active),
+              .disabled => const Icon(Icons.notifications_off),
+              .request => const Icon(Icons.notification_important),
+              .open => const Icon(Icons.edit_notifications),
             },
-            padding: const EdgeInsets.all(Constants.paddingSmall),
+            padding: const .all(Constants.paddingSmall),
             iconSize: Constants.iconSize,
-            color: Theme.of(context).colorScheme.onPrimary,
+            color: theme.colorScheme.onPrimary,
           ),
         );
       },
