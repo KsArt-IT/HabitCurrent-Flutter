@@ -7,7 +7,7 @@ class HabitViewState extends Equatable {
 
   const HabitViewState({
     required this.habit,
-    this.status = StateStatus.initial,
+    this.status = .initial,
     this.error,
   });
 
@@ -15,13 +15,11 @@ class HabitViewState extends Equatable {
     Habit? habit,
     StateStatus? status,
     AppError? error,
-  }) {
-    return HabitViewState(
-      habit: habit ?? this.habit,
-      status: status ?? this.status,
-      error: error ?? this.error,
-    );
-  }
+  }) => .new(
+    habit: habit ?? this.habit,
+    status: status ?? this.status,
+    error: error ?? this.error,
+  );
 
   @override
   List<Object?> get props => [habit, status, error];
