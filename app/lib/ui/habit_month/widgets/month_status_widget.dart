@@ -13,7 +13,7 @@ class MonthStatusWidget extends StatelessWidget {
     return Column(
       children: weeksStatus.map((week) {
         return Padding(
-          padding: const EdgeInsets.symmetric(
+          padding: const .symmetric(
             vertical: Constants.paddingSmaller,
           ),
           child: HabitStatusWidget(weekStatus: week),
