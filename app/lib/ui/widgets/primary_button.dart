@@ -18,7 +18,7 @@ class PrimaryButton extends StatelessWidget {
     final theme = Theme.of(context);
 
     return SizedBox(
-      width: double.infinity,
+      width: .infinity,
       height: Constants.buttonHeight,
       child: ElevatedButton(
         onPressed: disabled ? null : onPressed,
@@ -32,7 +32,7 @@ class PrimaryButton extends StatelessWidget {
           textStyle: theme.textTheme.labelLarge,
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Constants.buttonRadius),
+            borderRadius: .circular(Constants.buttonRadius),
           ),
         ),
         child: Text(label),
