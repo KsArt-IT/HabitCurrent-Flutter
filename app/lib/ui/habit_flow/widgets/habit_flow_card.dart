@@ -19,9 +19,9 @@ class HabitFlowCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {},
-      borderRadius: BorderRadius.circular(Constants.borderRadius),
+      borderRadius: .circular(Constants.borderRadius),
       child: Ink(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const .fromLTRB(
           Constants.paddingMedium,
           Constants.paddingMedium,
           Constants.paddingSmall,
@@ -29,20 +29,20 @@ class HabitFlowCard extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
-          borderRadius: BorderRadius.circular(Constants.borderRadius),
+          borderRadius: .circular(Constants.borderRadius),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Expanded(
                   child: Text(
                     habit.name,
                     style: theme.textTheme.titleMedium,
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    overflow: .ellipsis,
                   ),
                 ),
                 HabitPopupMenu(habitId: habit.id),
@@ -50,22 +50,18 @@ class HabitFlowCard extends StatelessWidget {
             ),
             const Spacer(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   '${habit.completedIntervals.length}/${habit.intervals.length}',
                   style: theme.textTheme.displayMedium,
                 ),
                 IconButton(
-                  padding: const EdgeInsets.all(Constants.paddingMedium),
+                  padding: const .all(Constants.paddingMedium),
                   onPressed: onPressed,
                   color: theme.colorScheme.onPrimaryFixed,
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(
-                      theme.colorScheme.secondaryFixed,
-                    ),
-                  ),
-                  icon: const Icon(size: Constants.iconSize, Icons.north_east),
+                  style: .new(backgroundColor: .all(theme.colorScheme.secondaryFixed)),
+                  icon: const Icon(Icons.north_east, size: Constants.iconSize),
                 ),
               ],
             ),
