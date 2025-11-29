@@ -20,7 +20,7 @@ class SizedOutlinedButton extends StatelessWidget {
     final theme = Theme.of(context);
 
     return SizedBox(
-      width: double.infinity,
+      width: .infinity,
       height: Constants.buttonHeight,
       child: OutlinedButton(
         onPressed: disabled ? null : onPressed,
@@ -31,19 +31,19 @@ class SizedOutlinedButton extends StatelessWidget {
           disabledForegroundColor: theme.colorScheme.onTertiaryFixed,
           disabledBackgroundColor: theme.colorScheme.tertiaryFixed,
           textStyle: theme.textTheme.labelLarge,
-          side: BorderSide(
+          side: .new(
             color: disabled
                 ? Colors.transparent
                 : (negative ? theme.colorScheme.error : theme.colorScheme.onTertiaryContainer),
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Constants.buttonRadius),
+            borderRadius: .circular(Constants.buttonRadius),
           ),
         ),
         child: Text(
           label,
-          textAlign: TextAlign.center,
-          textScaler: const TextScaler.linear(1),
+          textAlign: .center,
+          textScaler: const .linear(1),
           maxLines: 1,
         ),
       ),
