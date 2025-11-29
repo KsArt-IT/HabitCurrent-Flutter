@@ -28,7 +28,9 @@ class _HelloScreenState extends State<HelloScreen> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _nameController
+      ..removeListener(_validateName)
+      ..dispose();
     super.dispose();
   }
 
@@ -85,55 +87,39 @@ class _HelloScreenState extends State<HelloScreen> {
                   ),
                   filled: true,
                   fillColor: theme.colorScheme.tertiaryContainer,
-                  contentPadding: const EdgeInsets.symmetric(
+                  contentPadding: const .symmetric(
                     horizontal: Constants.textFieldPaddingHorizontal,
                     vertical: Constants.textFieldPaddingVertical,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      Constants.textFieldRadius,
-                    ),
-                    borderSide: BorderSide(
-                      color: theme.colorScheme.outlineVariant,
-                    ),
+                    borderRadius: .circular(Constants.textFieldRadius),
+                    borderSide: .new(color: theme.colorScheme.outlineVariant),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      Constants.textFieldRadius,
-                    ),
-                    borderSide: BorderSide(
-                      color: theme.colorScheme.outlineVariant,
-                    ),
+                    borderRadius: .circular(Constants.textFieldRadius),
+                    borderSide: .new(color: theme.colorScheme.outlineVariant),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      Constants.textFieldRadius,
-                    ),
-                    borderSide: BorderSide(
+                    borderRadius: .circular(Constants.textFieldRadius),
+                    borderSide: .new(
                       color: theme.colorScheme.outlineVariant,
                       width: 2,
                     ),
                   ),
                   errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      Constants.textFieldRadius,
-                    ),
-                    borderSide: BorderSide(
-                      color: theme.colorScheme.error,
-                    ),
+                    borderRadius: .circular(Constants.textFieldRadius),
+                    borderSide: .new(color: theme.colorScheme.error),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      Constants.textFieldRadius,
-                    ),
-                    borderSide: BorderSide(
+                    borderRadius: .circular(Constants.textFieldRadius),
+                    borderSide: .new(
                       color: theme.colorScheme.error,
                       width: 2,
                     ),
                   ),
                 ),
                 validator: _getNameErrorText,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: .onUserInteraction,
               ),
               const SizedBox(height: Constants.textFieldSpacing),
               PrimaryButton(
