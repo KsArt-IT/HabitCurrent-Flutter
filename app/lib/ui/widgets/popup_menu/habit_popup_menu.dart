@@ -12,32 +12,31 @@ class HabitPopupMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appBloc = context.read<AppBloc>();
+
     return PopupMenuButton<HabitPopupMenuValue>(
-      padding: EdgeInsets.zero,
-      color: Theme.of(context).colorScheme.onTertiaryFixedVariant,
+      padding: .zero,
+      color: theme.colorScheme.onTertiaryFixedVariant,
       icon: Icon(
         Icons.more_horiz,
-        color: Theme.of(context).colorScheme.secondaryFixed,
+        color: theme.colorScheme.secondaryFixed,
         size: Constants.iconSize,
       ),
-      onSelected: (value) {
-        switch (value) {
-          case HabitPopupMenuValue.edit:
-            context.read<AppBloc>().add(AppHabitEditEvent(habitId: habitId));
-          case HabitPopupMenuValue.delete:
-            context.read<AppBloc>().add(AppHabitDeleteEvent(habitId: habitId));
-        }
-      },
+      onSelected: (value) => appBloc.add(switch (value) {
+        .edit => AppHabitEditEvent(habitId: habitId),
+        .delete => AppHabitDeleteEvent(habitId: habitId),
+      }),
       itemBuilder: (context) => [
         HabitPopupMenuItem(
           label: context.l10n.edit,
           icon: Icons.edit,
-          value: HabitPopupMenuValue.edit,
+          value: .edit,
         ),
         HabitPopupMenuItem(
           label: context.l10n.delete,
           icon: Icons.delete,
-          value: HabitPopupMenuValue.delete,
+          value: .delete,
         ),
       ],
     );
