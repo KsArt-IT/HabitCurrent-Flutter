@@ -7,21 +7,18 @@ class WeekDaysWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.titleSmall?.copyWith(
-      color: Theme.of(context).colorScheme.onSecondary,
+    final theme = Theme.of(context);
+    final textStyle = theme.textTheme.titleSmall?.copyWith(
+      color: theme.colorScheme.onSecondary,
     );
     final l10n = context.l10n;
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: .spaceEvenly,
       children: WeekDays.values
           .map(
             (day) => Expanded(
-              child: Text(
-                day.getShortDayName(l10n),
-                textAlign: TextAlign.center,
-                style: textStyle,
-              ),
+              child: Text(day.getShortDayName(l10n), textAlign: .center, style: textStyle),
             ),
           )
           .toList(),
