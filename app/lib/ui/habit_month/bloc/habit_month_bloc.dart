@@ -36,7 +36,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     Emitter<HabitMonthState> emit,
   ) async {
     try {
-      emit(state.copyWith(status: StateStatus.loading, userId: event.userId));
+      emit(state.copyWith(status: .loading, userId: event.userId));
       final currentDate = DateTime.now().toEndOfDay();
       final statusHabits = await _loadHabitsAndCheckStatus(
         event.userId,
@@ -45,7 +45,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       emit(
         state.copyWith(
           currentDate: currentDate,
-          status: StateStatus.success,
+          status: .success,
           selectedMonth: currentDate,
           habits: statusHabits,
         ),
@@ -53,7 +53,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
@@ -69,7 +69,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
       emit(
         state.copyWith(
-          status: StateStatus.success,
+          status: .success,
           selectedMonth: date,
           habits: statusHabits,
         ),
@@ -77,7 +77,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
@@ -93,7 +93,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
       emit(
         state.copyWith(
-          status: StateStatus.success,
+          status: .success,
           selectedMonth: date,
           habits: statusHabits,
         ),
@@ -101,7 +101,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
@@ -120,7 +120,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
       final statusHabits = await _loadHabitsAndCheckStatus(state.userId, date);
       emit(
         state.copyWith(
-          status: StateStatus.success,
+          status: .success,
           selectedMonth: date,
           habits: statusHabits,
         ),
@@ -128,7 +128,7 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: DatabaseLoadingError(e.toString()),
         ),
       );
@@ -188,23 +188,23 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
   }) {
     // закрыто
     if (habit.completed != null && day.isAfter(habit.completed!.toEndOfDay())) {
-      return HabitDayStatus.closed;
+      return .closed;
     }
 
     // не начато
     if (habit.created != null && day.isBefore(habit.created!)) {
       // log('notStarted: $day habit: ${habit.name} ${habit.created}', name: 'HabitMonthBloc');
-      return HabitDayStatus.notStarted;
+      return .notStarted;
     }
 
     // не в этот день, пропуск
     if (!habit.weekDays.contains(WeekDays.fromDate(day))) {
-      return HabitDayStatus.skipped;
+      return .skipped;
     }
 
     // ожидает выполнения, завтра
     if (day.isAfter(currentDate)) {
-      return HabitDayStatus.awaitsExecution;
+      return .awaitsExecution;
     }
 
     // сколько выполнено
@@ -212,9 +212,9 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
         .where((e) => e.completed.isSameDate(day))
         .length;
 
-    if (completedCount == habitLength) return HabitDayStatus.completed;
-    if (completedCount > 0) return HabitDayStatus.partiallyCompleted;
-    return HabitDayStatus.notCompleted;
+    if (completedCount == habitLength) return .completed;
+    if (completedCount > 0) return .partiallyCompleted;
+    return .notCompleted;
   }
 
   List<List<HabitDayStatus>> _cleanAndChunkBySeven(List<HabitDayStatus> list) {
@@ -222,17 +222,17 @@ class HabitMonthBloc extends Bloc<HabitMonthEvent, HabitMonthState> {
     final cleanedList = list
         .where(
           (e) =>
-              e == HabitDayStatus.completed ||
-              e == HabitDayStatus.partiallyCompleted ||
-              e == HabitDayStatus.notCompleted ||
-              e == HabitDayStatus.awaitsExecution,
+              e == .completed ||
+              e == .partiallyCompleted ||
+              e == .notCompleted ||
+              e == .awaitsExecution,
         )
         .toList();
     // добавляем пропущенные дни, если не хватает до 7
     final added = cleanedList.length % 7;
     if (added > 0) {
       for (var i = 0; i < 7 - added; i++) {
-        cleanedList.add(HabitDayStatus.skipped);
+        cleanedList.add(.skipped);
       }
     }
     return _chunkBySeven(cleanedList);
