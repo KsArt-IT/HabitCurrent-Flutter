@@ -28,14 +28,14 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
     LoadHabitWeekEvent event,
     Emitter<HabitWeekState> emit,
   ) async {
-    emit(state.copyWith(status: StateStatus.loading));
+    emit(state.copyWith(status: .loading));
     final currentDate = DateTime.now().toEndOfDay();
     final completedHabits = await _loadHabits(event.userId, currentDate);
     emit(
       state.copyWith(
         userId: event.userId,
         date: currentDate,
-        status: StateStatus.success,
+        status: .success,
         completedHabits: completedHabits,
       ),
     );
@@ -52,7 +52,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
       state.copyWith(
         userId: state.userId,
         date: currentDate,
-        status: StateStatus.success,
+        status: .success,
         completedHabits: completedHabits,
       ),
     );
@@ -69,12 +69,12 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
         state.copyWith(
           userId: state.userId,
           date: currentDate,
-          status: StateStatus.success,
+          status: .success,
           completedHabits: completedHabits,
         ),
       );
     } catch (e) {
-      emit(state.copyWith(status: StateStatus.error));
+      emit(state.copyWith(status: .error));
     } finally {
       event.completer.complete();
     }
@@ -110,7 +110,7 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
             currentDate: date,
           );
           weekStatuses.add(status);
-          day = day.add(const Duration(days: 1));
+          day = day.add(const .new(days: 1));
         }
 
         return HabitWeek(
@@ -131,22 +131,22 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
   }) {
     // закрыто
     if (habit.completed != null && day.isAfter(habit.completed!.toEndOfDay())) {
-      return HabitDayStatus.closed;
+      return .closed;
     }
 
     // не начато
     if (habit.created != null && day.isBefore(habit.created!)) {
-      return HabitDayStatus.notStarted;
+      return .notStarted;
     }
 
     // не в этот день, пропуск
     if (!habit.weekDays.contains(WeekDays.fromDate(day))) {
-      return HabitDayStatus.skipped;
+      return .skipped;
     }
 
     // ожидает выполнения, завтра
     if (day.isAfter(currentDate)) {
-      return HabitDayStatus.awaitsExecution;
+      return .awaitsExecution;
     }
 
     // сколько выполнено
@@ -154,8 +154,8 @@ class HabitWeekBloc extends Bloc<HabitWeekEvent, HabitWeekState> {
         .where((e) => e.completed.isSameDate(day))
         .length;
 
-    if (completedCount == habitLength) return HabitDayStatus.completed;
-    if (completedCount > 0) return HabitDayStatus.partiallyCompleted;
-    return HabitDayStatus.notCompleted;
+    if (completedCount == habitLength) return .completed;
+    if (completedCount > 0) return .partiallyCompleted;
+    return .notCompleted;
   }
 }
