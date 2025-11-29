@@ -8,75 +8,85 @@ class HabitStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: .spaceEvenly,
+      children: weekStatus
+          .map((status) => Expanded(child: Center(child: _HabitStatus(status))))
+          .toList(),
+    );
+  }
+}
+
+class _HabitStatus extends StatelessWidget {
+  const _HabitStatus(this.status);
+  final HabitDayStatus status;
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    Widget buildWeekStatus(HabitDayStatus status) => switch (status) {
-      HabitDayStatus.completed => Container(
+    return switch (status) {
+      .completed => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
           color: theme.colorScheme.primaryFixedDim,
-          shape: BoxShape.circle,
+          shape: .circle,
         ),
       ),
-      HabitDayStatus.partiallyCompleted => Container(
+      .partiallyCompleted => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
-          color: theme.colorScheme.secondaryFixed.withAlpha(100),
-          shape: BoxShape.circle,
+          color: theme.colorScheme.secondaryFixed.withValues(alpha: 0.4),
+          shape: .circle,
         ),
       ),
-      HabitDayStatus.notCompleted => Container(
+      .notCompleted => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
-          color: theme.colorScheme.secondaryFixed.withAlpha(100),
+          color: theme.colorScheme.secondaryFixed.withValues(alpha: 0.4),
           // color: theme.colorScheme.error,
-          shape: BoxShape.circle,
+          shape: .circle,
         ),
       ),
-      HabitDayStatus.awaitsExecution => Container(
+      .awaitsExecution => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: BoxDecoration(
           color: Colors.transparent,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: theme.colorScheme.primaryFixedDim.withAlpha(100),
+          shape: .circle,
+          border: .all(
+            color: theme.colorScheme.primaryFixedDim.withValues(alpha: 0.4),
             width: 2,
           ),
         ),
       ),
-      HabitDayStatus.skipped => Container(
+      .skipped => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: const BoxDecoration(
           color: Colors.transparent,
-          shape: BoxShape.circle,
+          shape: .circle,
         ),
       ),
-      HabitDayStatus.notStarted => Container(
+      .notStarted => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: const BoxDecoration(
           color: Colors.transparent,
-          shape: BoxShape.circle,
+          shape: .circle,
         ),
       ),
-      HabitDayStatus.closed => Container(
+      .closed => Container(
         width: Constants.statusSize,
         height: Constants.statusSize,
         decoration: const BoxDecoration(
           color: Colors.transparent,
-          shape: BoxShape.circle,
+          shape: .circle,
         ),
       ),
     };
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: weekStatus.map((d) => Expanded(child: Center(child: buildWeekStatus(d)))).toList(),
-    );
   }
 }
