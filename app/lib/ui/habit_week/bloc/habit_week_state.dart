@@ -8,7 +8,7 @@ class HabitWeekState extends Equatable {
 
   const HabitWeekState({
     this.userId = 0,
-    this.status = StateStatus.initial,
+    this.status = .initial,
     required this.date,
     this.completedHabits = const [],
   });
@@ -18,14 +18,12 @@ class HabitWeekState extends Equatable {
     DateTime? date,
     StateStatus? status,
     List<HabitWeek>? completedHabits,
-  }) {
-    return HabitWeekState(
-      userId: userId ?? this.userId,
-      status: status ?? this.status,
-      date: date ?? this.date,
-      completedHabits: completedHabits ?? this.completedHabits,
-    );
-  }
+  }) => .new(
+    userId: userId ?? this.userId,
+    status: status ?? this.status,
+    date: date ?? this.date,
+    completedHabits: completedHabits ?? this.completedHabits,
+  );
 
   @override
   List<Object?> get props => [userId, status, date, completedHabits];
