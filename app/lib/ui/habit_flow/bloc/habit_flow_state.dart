@@ -8,7 +8,7 @@ class HabitFlowState extends Equatable {
 
   const HabitFlowState({
     this.userId = 0,
-    this.status = StateStatus.initial,
+    this.status = .initial,
     this.habits = const [],
     this.errorMessage,
   });
