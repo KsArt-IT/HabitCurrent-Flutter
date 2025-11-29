@@ -43,7 +43,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: SettingsLoadingError(e.toString()),
         ),
       );
@@ -60,7 +60,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: SettingsSavingError(e.toString()),
         ),
       );
@@ -77,7 +77,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: SettingsSavingError(e.toString()),
         ),
       );
@@ -94,7 +94,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: SettingsSavingError(e.toString()),
         ),
       );
@@ -111,7 +111,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: SettingsSavingError(e.toString()),
         ),
       );
@@ -127,7 +127,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(
         state.copyWith(
-          status: StateStatus.error,
+          status: .error,
           error: SettingsSavingError(e.toString()),
         ),
       );
