@@ -1,3 +1,4 @@
+import 'package:habit_current/gen/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 typedef WeekRange = ({DateTime start, DateTime end});
@@ -8,8 +9,8 @@ extension IntWeekDay on DateTime {
   DateTime toStartOfDay() => DateTime(year, month, day);
 
   WeekRange toWeekRange() {
-    final DateTime startOfWeek = subtract(Duration(days: weekday - 1));
-    final DateTime endOfWeek = startOfWeek.add(const Duration(days: 6));
+    final startOfWeek = subtract(Duration(days: weekday - 1));
+    final endOfWeek = startOfWeek.add(const Duration(days: 6));
     return (start: startOfWeek.toEndOfDay(), end: endOfWeek.toEndOfDay());
   }
 
@@ -19,7 +20,11 @@ extension IntWeekDay on DateTime {
     return (start: start, end: end);
   }
 
-  String toShortMonth() => DateFormat('MMM').format(this);
+  String toShortMonthName(AppLocalizations locale) {
+    final name = DateFormat('MMM', locale.localeName).format(this);
+
+    return name.substring(0, 1).toUpperCase() + name.substring(1);
+  }
 
   bool isBeforeOrEqual(DateTime other) => isBefore(other) || isAtSameMomentAs(other);
 
