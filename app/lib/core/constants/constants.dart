@@ -25,8 +25,16 @@ abstract final class Constants {
   static const fabSpacing = 48.0;
 
   static const iconSize = 22.0;
+  static const logoSize = 100.0;
 
   static const statusSize = 16.0;
+
+  static const testNotificationId = 1000001;
+
+  static const iconArrowLeft = 'assets/icons/arrow-left-02-round.svg';
+  static const iconAddSquare = 'assets/icons/add-square.svg';
+  static const iconOnboardLogo = 'onboard_logo.svg';
+  static const iconOnboardIcony = 'onboard_icony.svg';
 
   static final regExpName = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z\s]+$');
   static final regExpHabit = RegExp(r'^[іІїЇєЄґҐʼа-яА-Яa-zA-Z0-9\s]+$');
