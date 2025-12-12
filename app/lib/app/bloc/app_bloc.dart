@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/error/app_error.dart';
 import 'package:habit_current/data/repositories/data/data_repository.dart';
 import 'package:habit_current/data/repositories/notification/notification_repository.dart';
@@ -270,6 +271,7 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
         laterMinutes: notification.laterMinutes!,
       );
     } else {
+      if (notification.id == Constants.testNotificationId) return;
       await _reactToNotification(notification.identifier, notification.isOpen);
     }
   }
@@ -340,10 +342,10 @@ final class AppBloc extends Bloc<AppEvent, AppState> {
     Emitter<AppState> emit,
   ) async {
     await _notificationRepository.showNotification(
-      id: 1000001,
-      title: 'Test Notification',
-      body: 'This is a test notification',
-      payload: 'test',
+      id: Constants.testNotificationId,
+      title: event.title,
+      body: event.body,
+      payload: event.payload,
     );
   }
 }
