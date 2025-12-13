@@ -72,7 +72,20 @@ final class AppReminderRequestEvent extends AppEvent {}
 
 final class AppReminderOpenEvent extends AppEvent {}
 
-final class AppShowTestNotificationEvent extends AppEvent {}
+final class AppShowTestNotificationEvent extends AppEvent {
+  final String title;
+  final String body;
+  final String payload;
+
+  const AppShowTestNotificationEvent({
+    required this.title,
+    required this.body,
+    required this.payload,
+  });
+
+  @override
+  List<Object?> get props => [title, body, payload];
+}
 
 final class AppErrorEvent extends AppEvent {
   final Object error;

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habit_current/app/bloc/app_bloc.dart';
 import 'package:habit_current/core/constants/constants.dart';
 import 'package:habit_current/core/extension/intl_exp.dart';
+import 'package:habit_current/core/extension/string_ext.dart';
 import 'package:habit_current/gen/app_localizations.dart';
 import 'package:habit_current/ui/settings/bloc/settings_bloc.dart';
 import 'package:habit_current/ui/widgets/sized_outlined_button.dart';
@@ -101,11 +102,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                   ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: AppLocalizations.supportedLocales.length,
+                    itemCount: AppLocalizations.supportedLocales.length + 1,
                     itemBuilder: (context, index) {
-                      final value = AppLocalizations.supportedLocales[index].languageCode;
+                      final value = index == 0
+                          ? Constants.system
+                          : AppLocalizations.supportedLocales[index - 1].languageCode;
                       return radioListStyle<String>(
-                        title: value,
+                        title: value.toLanguageTitle(strings),
                         value: value,
                         groupValue: state.languageCode,
                         theme: theme,
@@ -129,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                     itemBuilder: (context, index) {
                       final value = ThemeMode.values[index].name;
                       return radioListStyle<String>(
-                        title: value,
+                        title: value.toThemeTitle(strings),
                         value: value,
                         groupValue: state.themeCode,
                         theme: theme,
@@ -156,7 +159,13 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                   const SizedBox(height: Constants.paddingMedium),
                   SizedOutlinedButton(
                     label: strings.showTestNotification,
-                    onPressed: () => _appBloc.add(AppShowTestNotificationEvent()),
+                    onPressed: () => _appBloc.add(
+                      AppShowTestNotificationEvent(
+                        title: strings.notificationTestTitle,
+                        body: strings.notificationTestBody,
+                        payload: strings.notificationTestPayload,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: Constants.paddingMedium),
                   SizedOutlinedButton(
